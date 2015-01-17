@@ -1,0 +1,124 @@
+﻿@model Monei.MvcApplication.Models.RegistryCreateRecordModel
+
+<script>
+    
+    function data_loaded() {
+
+        var selectedCategoryId = "@Model.Record.Category.Id";
+        var selectedSubcategoryId = null;
+        @if (Model.Record.Subcategory != null)
+        { 
+            @Html.Raw("selectedSubcategoryId = \"" + Model.Record.Subcategory.Id + "\";");
+        }
+
+        var $form = $('#modal_form');
+
+        var $date = $form.find('#date');
+        $form.find('#date_plusOne').click(function () {
+            var date = moment($date.val()).add('d', 1);
+            $date.val(date.format('L'));
+        });
+
+        $form.find('#date_minusOne').click(function () {
+            var date = moment($date.val()).add('d', -1);
+            $date.val(date.format('L'));
+        });
+
+        var $categorySelect = $form.find('#CategorySelect');
+        $categorySelect.change(function () {
+            var categoryId = $(this).val();
+            monei.loadSubcategories($form.find('#SubcategorySelect'), categoryId, selectedSubcategoryId);
+        });
+        monei.loadCategories($categorySelect, selectedCategoryId, function () { $categorySelect.change(); });
+
+        var operationType = '@((int)Model.Record.OperationType)';
+        //monei.debug(operationType);
+        setOperationType(operationType);
+    }
+
+    function setOperationType(operationType) {
+
+        var $form = $('#modal_form');
+
+        $form.find('#operationType').val(operationType);
+        $form.find('#btnOperationType_Outcome').empty().text('Outcome').removeClass('active');
+        $form.find('#btnOperationType_Income').empty().text("Income").removeClass('active');
+        $form.find('#btnOperationType_Transfer').empty().text("Transfer").removeClass('active');
+        var selectedControl;
+        switch (operationType) {
+            case "-1": selectedControl = $form.find('#btnOperationType_Outcome'); break;
+            case "+1": selectedControl = $form.find('#btnOperationType_Income'); break;
+            case "0": selectedControl = $form.find('#btnOperationType_Transfer'); break;
+        }
+        selectedControl.addClass('active');
+        selectedControl.prepend(' ').prepend($('<i class="icon-ok icon-big icon-white"></i>')); //<span class="glyphicon glyphicon-search"></span>
+    }
+
+</script>
+
+@using (Html.BeginForm("Edit", "Registry", FormMethod.Post ))
+{ 
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.Record.Id);
+
+<fieldset id="modal_form"><legend></legend>
+    <div class="row">
+        <div class="span6">
+            <ol>
+                <li>
+                    @Html.LabelFor(m => m.Record.Date)
+                    <div class="input-prepend input-append">
+                        <span class="add-on pointer" id="date_minusOne"><i class="icon-minus"></i></span>                        
+                        @Html.TextBoxFor(m => m.Record.Date, String.Format( Monei.MvcApplication.Helpers.ViewHelper.GetDateFormat(), Model.Record.Date), new { id="date", ng_model= "dateFrom", placeHolder=Monei.MvcApplication.Helpers.ViewHelper.GetDatePlaceHolder(), required="", Style="width:6em;", Class="datepicker" })
+                        <span class="add-on pointer" id="date_plusOne"><i class="icon-plus"></i></span>
+                    </div>
+                </li>        
+                <li>
+                    @Html.LabelFor(m=>m.Record.Category)
+                    <select id="CategorySelect" name="Category.Id" class=".no-selectpicker" tabindex="1" autofocus></select>
+                    <a href="@Url.Action("Create", "Category", new {area="Management", returnUrl=HttpContext.Current.Request.RawUrl})" class="add-dropdown" tabindex="-1"><small>Create new</small></a>
+                </li>
+                <li>
+                    <label for="Record_Subcategory">Subcategory</label>
+                    <select id="SubcategorySelect" name="Subcategory.Id" class="dropdown" tabindex="2"></select>
+                    <span class="btn btn-link" onclick="showCreateSubcategory()"><small>Create new</small></span>
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.Record.Amount)
+                    @Html.TextBoxFor(m => m.Record.Amount, new {MaxLength="12", Class="amount form-control input-small", Tabindex="3"})
+                    <div class="btn-group">
+                        <a class="btn btn-mini btn-danger white" id="btnOperationType_Outcome" href="javascript: setOperationType('-1');">Outcome</a>
+                        <a class="btn btn-mini btn-success white" id="btnOperationType_Income" href="javascript: setOperationType('+1');">Income</a>
+                        <a class="btn btn-mini btn-info white" id="btnOperationType_Transfer" href="javascript: setOperationType('0');"><span class="info">Transfer</span></a>
+                    </div>
+                    <input type="hidden" name="operationType" id="operationType" />
+                </li>
+            </ol>
+        </div>
+        <div class="span6">
+            <ol>
+                <li>
+                    @Html.LabelFor(m => m.Record.Note)
+                    @Html.TextAreaFor(m => m.Record.Note, new { Rows=5, Cols=120, Tabindex="4" })
+                </li>
+                <li>            
+                    <div class="row">
+                        <div class="span3">
+                            @Html.EditorFor(m => m.Record.IsTaxDeductible)
+                            <label for="Record_IsTaxDeductible" class="display-inline">Tax deductible</label>
+                        </div>
+                        <div class="span3">
+                            @Html.EditorFor(m => m.Record.IsSpecialEvent)
+                            <label for="Record_IsSpecialEvent" class="display-inline">Special event</label>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+    
+</fieldset> 
+}
+
+        

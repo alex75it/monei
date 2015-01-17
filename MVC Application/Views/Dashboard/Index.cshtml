@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+@section css {
+	<style>		
+		/*#monthsContainer, #yearContainer {overflow:hidden; margin-bottom:5px; margin:0 auto;}*/
+		
+		.dashboard-month {position:relative; float:left; margin:5px; overflow:hidden; _border: solid 1px #808080; }		
+		.dashboard-month .name {font-weight:bold; font-size:1.1em}
+		.dashboard-month ._label {font-size:small; width:100px; float:left}
+		.dashboard-month .data {font-weight:bold; float:left}
+
+		/*.chart { border: solid 1px #A0A0A0; border-radius:3px; }*/
+
+		.monthName { text-align:center;	}		
+		
+		#monthsContainer, #yearContainer { width: 780px;}
+		.dashboard-month {width:250px; height:100%;}
+
+		@@media (min-width:1000px) {
+			#monthsContainer, #yearContainer {width: 970px;}
+			.dashboard-month {	width:475px; }
+		}		
+		@@media (min-width:1200px) {
+			#monthsContainer, #yearContainer {width: 1170px;}
+			.dashboard-month {	width:380px;}
+		}	
+		@@media (min-width:1400px) {
+			#monthsContainer, #yearContainer { width: 1370px;} 
+			.dashboard-month {	width:332px;}
+		}			 
+		@@media(min-width:1600px) {
+			#monthsContainer, #yearContainer {width: 1570px;} 
+			.dashboard-month {	width:380px;}
+		}
+
+		#monthsContainer .well, #monthsContainer .well-small { padding:5px; margin-bottom:5px;}
+	</style>
+}
+
+<h2>Dashboard</h2>
+
+
+<div ng-controller="DashboardController">
+	<select data-ng-model="year" data-ng-change="yearChanged()">
+		<option>2015</option>
+		<option>2014</option>
+		<option>2013</option>
+	</select>
+	<div id="yearContainer" style="display:none">
+		<div class =" well well-small">
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="row-fluid">
+						<div google-chart chart="yearResumeChart" class="chart"></div>
+					</div>
+				</div>
+				<div class="span9">
+					<div class="row-fluid">
+						<div google-chart chart="yearMonthsChart" class="chart"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr />
+	<div id="monthsContainer" style="display:none">
+		<div ng-repeat="month in data.months" class="dashboard-month">
+			<dashboard-month month="month"></dashboard-month>
+		</div>
+		<div class="clear"></div>
+	</div><!-- monthsContainer -->
+</div>

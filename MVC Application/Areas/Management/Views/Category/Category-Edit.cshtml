@@ -1,0 +1,56 @@
+﻿@model Monei.Entities.Category
+@{
+    ViewBag.Title = "Categories - Edit";
+    //Layout = "~/Views/Shared/DefaultLayout.cshtml";
+}
+
+
+@if (ViewBag.ErrorMessage != null)
+{ 
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Error!</strong> @ViewBag.ErrorMessage
+    </div>  
+}
+
+
+@using (Html.BeginForm("Edit", "Category", FormMethod.Post, new { returnUrl = ViewBag.ReturnUrl } ))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+
+    <fieldset>
+        <legend>Category</legend>
+
+@*        <div class="editor-label">
+            @Html.LabelFor(model => model.ImageName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ImageName)
+            @Html.ValidationMessageFor(model => model.ImageName)
+        </div>*@
+        @Html.HiddenFor(model => Model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Description, new { @rows=3, @cols=120 })
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </p>
+    </fieldset>
+}
+

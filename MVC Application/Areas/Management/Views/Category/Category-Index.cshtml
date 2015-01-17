@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Monei.Entities.Category>
+@{
+    ViewBag.Title = "Categories";
+}
+
+@section Scripts{
+    <script>
+
+        function getId(el)
+        {
+            var id = $(el).parents("tr").attr("data-item-id");
+            return id;
+        }
+
+        function edit(el)
+        {
+            var id = getId(el);
+            var url = "/Management/Category/Edit/" + id;
+            document.location.href = url;
+        }
+
+        function deleteItem(el)
+        {
+            var id = getId(el); 
+            
+            //todo: ajax call replace content           
+            
+            var url = "/Management/Category/Delete"; // + id;
+            $form = $("<form method='POST' action='" + url + "' ><input type='text' name='id' value='" + id + "'></form>");
+            $(body).append($form);
+            //$("<input type='hidden' name='id' value='" + id + "' />").appendTo($form);
+
+            //var n = noty({text:"test", layout:"topCenter", type:"alert"});
+
+            $form.submit();
+        }
+
+    </script>
+    }
+
+<p>
+    <a href="@Url.Action("Create", "Category", new { returnUrl=HttpContext.Current.Request.RawUrl })"><img src="~/Images/add.png" /> Create new</a>
+</p>
+
+@if (ViewBag.ErrorMessage != null)
+{ 
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Error!</strong> @ViewBag.ErrorMessage
+    </div> 
+}
+
+<table class="table">
+    <thead>
+    <tr class="header-row">
+        <th style="width:2.5em"></th>
+@*        <th>
+            @Html.DisplayNameFor(model => model.ImageName)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+    <tr data-item-id="@item.Id" class="data-row">
+        <td>
+           @* <input type="image" src="~/Images/delete.png" />*@
+@* @using (Html.BeginForm("Delete", "Category", FormMethod.Post, new { area = "Management" } ))
+            {
+                @Html.Hidden("Id", @item.Id)
+                <input type="image" src="~/Images/delete.png" />
+            }*@
+            <img src="~/Images/delete.png" class="pointer img-cmd" onclick="deleteItem(this);"/>
+            <img src="~/Images/edit.png" class="pointer img-cmd" onclick="edit(this);" />
+        </td>
+@*        <td>
+            @Html.DisplayFor(modelItem => item.ImageName)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+    </tr>
+}
+    </tbody>
+
+</table>

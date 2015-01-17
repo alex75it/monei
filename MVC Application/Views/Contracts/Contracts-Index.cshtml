@@ -1,0 +1,71 @@
+﻿@using Monei.MvcApplication
+@using Monei.MvcApplication.Helpers
+
+@model Monei.MvcApplication.Models.ContractListModel
+
+
+@{
+    ViewBag.Title = "Contracts";
+    // Layout = "~/Views/Shared/DefaultLayout.cshtml";
+}
+
+<h2>Contracts</h2>
+
+<p>
+    <a href="@Url.Action("Create", "Contracts", new {returnUrl=HttpContext.Current.Request.RawUrl })"><img src="~/Images/add.png" /> Create new</a>
+</p>
+
+<table class="table table-bordered">
+    <tr>
+        <th></th>
+        <th>Supplier</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Note</th>
+        <th>Due amount</th>
+        <th>State</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Contracts) {
+    <tr>
+        <td>
+            @using (Html.BeginForm("Delete", "Contracts", FormMethod.Post ))
+            {
+                @Html.Hidden("Id", @item.Id)
+                <input type="image" src="~/Images/delete.png" />
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Supplier)
+        </td>
+        <td>
+            @ViewHelper.ShowDate(item.StartDate)
+        </td>
+        <td>
+            @ViewHelper.ShowDate(item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Note)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DueAmount)
+        </td>
+        <td>
+            @if ( !item.EndDate.HasValue || item.EndDate >= DateTime.Now) { 
+                <span class="label label-success">Ongoing</span>
+            }
+            else
+            {                
+                <span class="label label">Expired</span>
+            }
+        </td>        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

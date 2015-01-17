@@ -1,0 +1,26 @@
+﻿@model System.Collections.Generic.ICollection<AuthenticationClientData>
+
+@if (Model.Count == 0)
+{ 
+    <div class="message-info">
+        <p>There are not external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=252166"></a>
+            this article for details on setting up this ASP.Net application to support logging in via external services.
+        </p>
+    </div>
+}
+else
+{
+    using (@Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl}))
+    {
+        @Html.AntiForgeryToken()
+        <fieldset id="socialLoginList">
+            <legend>Log in using another service</legend>
+            <p>
+                @foreach (AuthenticationClientData data in Model)
+                { 
+                    <button type="submit" name="provider" value="@data.AuthenticationClient.ProviderName" title="Log in using your @data.DisplayName account">@data.DisplayName</button>
+                }
+            </p>
+        </fieldset>
+    }
+}

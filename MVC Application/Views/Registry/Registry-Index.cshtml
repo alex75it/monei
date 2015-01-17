@@ -1,0 +1,308 @@
+﻿@model Monei.MvcApplication.Models.RegistryListModel
+
+@{
+	ViewBag.Title = "Registry";
+}
+
+<style>
+	tr.specialEvent {
+		color: #999;
+	}
+
+	i.taxDeductible {
+		color: red;
+		vertical-align: middle;
+	}
+
+	i.specialEvent {
+		color: orange;
+		vertical-align: middle;
+	}
+</style>
+
+@section scripts{
+
+	<script src="~/Scripts/monei/registry.js"></script>
+
+	<!--todo: move script into a file -->
+	<script>
+
+		$(function () {
+			//alert("load data from model");
+			var selectedPeriod = '@Model.Filters.SelectedPeriod';
+			if(selectedPeriod) {
+
+				$("#selectedPeriod").val(selectedPeriod);
+				$("#periodButtonsContainer .btn[data-period='"+selectedPeriod+"']").addClass("btn-info");
+			}
+
+			$('#Category').selectpicker();
+			$('#Subcategory').selectpicker();
+			$('#Category').change(function(){
+				monei.loadSubcategories('#Subcategory', $(this).val(), null, function() {
+					$('#Subcategory').selectpicker('refresh');
+				} );
+			});
+
+			@if (Model.Filters.CategoryId.HasValue)
+			{
+				var categoryId = Model.Filters.CategoryId.Value;
+
+				@Html.Raw(@"
+					monei.loadSubcategories(""#Subcategory"", " + categoryId + @", null, function() {
+						$(""#Subcategory"").selectpicker(""refresh"");   ");
+
+						if (Model.Filters.SubcategoryIds.Count > 0)
+						{
+							string values = String.Join(",", Model.Filters.SubcategoryIds.Select(id => id.ToString()).ToArray());
+							@Html.Raw("$('#Subcategory').selectpicker('val', [" + values + "]);");
+						}
+
+				@Html.Raw( "} );");
+					}
+
+			$('#exportButton').click(function(){
+				$('#export').val('csv');
+				$('#searchForm').submit();
+				$('#export').val('');
+			});
+
+			var data = [
+				{ name: 'Income', color: '#468847', y: @Model.Resume.IncomePercent.ToString("n2"), value: '@Model.Resume.Income.ToString()'},
+				{ name: 'Outcome', color: '#b94a48', y: @Model.Resume.OutcomePercent.ToString("n2"), value: '@Model.Resume.Outcome.ToString()' }
+			];
+			//loadGraph(data);
+
+			var inOutData = [
+				{ color: '#468847', value: @Model.Resume.IncomePercent },
+				{ color: '#b94a48', value: @Model.Resume.OutcomePercent }
+			];
+
+			var options = {
+				//Boolean - Whether we should show a stroke on each segment
+				segmentShowStroke : true,
+				//String - The colour of each segment stroke
+				segmentStrokeColor : "#fff",
+				//Number - The width of each segment stroke
+				segmentStrokeWidth : 2,
+				//Boolean - Whether we should animate the chart
+				animation : false,
+				//Number - Amount of animation steps
+				animationSteps : 100,
+				//String - Animation easing effect
+				animationEasing : "easeOutQuart",	//Bounce
+				//Boolean - Whether we animate the rotation of the Pie
+				animateRotate : true,
+				//Boolean - Whether we animate scaling the Pie from the centre
+				animateScale : false,
+				//Function - Will fire on animation completion.
+				onAnimationComplete : null
+			}
+
+			var ctx = document.getElementById("chartInOut").getContext("2d");
+			var myNewChart = new Chart(ctx).Pie(inOutData,options);
+		});
+
+	</script>
+
+}
+
+
+<div ng-app="monei">
+	<div ng-controller="registryController">
+		<div ng-init="filters.dateFrom='@Model.Filters.StartDate.ToShortDateString()'"></div>
+		<div ng-init="filters.dateTo='@Model.Filters.EndDate.ToShortDateString()'"></div>
+		<input type="text" ng-model="filters.dateFrom" />
+		<input type="text" ng-model="filters.dateTo" />
+		<span class="btn btn-success" ng-click="export()" ng-hide="runExport">
+			<i class="icon-file icon-white"></i> Export to Excel
+			<span ng-show="runExport">(running)</span>
+		</span>
+
+		<div>
+			<div ng-repeat="record in records">
+				<span>{{record.date}}</span>
+				<span>{{record.category.name}}</span>
+				<span>{{record.category.amount | currency}}</span>
+			</div>
+			<form action="/api/registry/export" >
+				<input name="dateFrom" type="text" value="" />
+				<input name="dateTo" type="text" value="" />
+			</form>
+
+		</div>
+
+	</div>
+</div>
+
+<p>
+	<a href="@Url.Action("Create", "Registry", new { returnUrl = HttpContext.Current.Request.RawUrl })"><img src="/Images/add.png" /> Create new entry</a>
+</p>
+@using (Html.BeginForm("Search", "Registry", FormMethod.Post, new { Id = "searchForm" }))
+{
+	@Html.AntiForgeryToken()
+	<input type="hidden" name="selectedPeriod" id="selectedPeriod" />
+	<input type="hidden" name="export" id="export" />
+	<div class="panel control-group">
+		<p id="periodButtonsContainer">
+			Common periods:
+			<a class="btn btn-default" data-period="current month" onclick="setPeriod(this)">Current month</a>
+			<a class="btn btn-small" data-period="previous month" onclick="setPeriod(this)">Previous month</a>
+			<a class="btn btn-mini" data-period="current year" onclick="setPeriod(this)">Current year</a>
+			<a class="btn btn-mini" data-period="previous year" onclick="setPeriod(this)">Previous year</a>
+			/
+			<a class="btn btn-small" data-period="last 30 days" onclick="setPeriod(this)">Last 30 days</a>
+			<a class="btn btn-small" data-period="last 7 days" onclick="setPeriod(this)">Last 7 days</a>
+			<a class="btn btn-small" data-period="yesterday" onclick="setPeriod(this)">Yesterday</a>
+			/
+			<a class="btn btn-mini" data-period="last 6 months" onclick="setPeriod(this)">Last 6 months</a>
+			<a class="btn btn-mini" data-period="last year" onclick="setPeriod(this)">Last year</a>
+		</p>
+
+		<div class="row-fluid">
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="span6">
+						From:<br />
+						<input type="text" id="StartDate" name="StartDate" value="@Model.Filters.StartDate.ToShortDateString()" class="input-small ng-pristine ng-valid form-control datepicker" ng-model="dateFrom">
+					</div>
+					<div class="span6">
+						To:<br />
+						<input type="text" id="EndDate" name="EndDate" value="@Model.Filters.EndDate.ToShortDateString()" class="input-small ng-pristine ng-valid datepicker" ng-model="dateTo">
+					</div>
+				</div>
+				<div class="span8 offset1">
+					<div class="row-fluid">
+						<div class="span6">
+							Category:<br />
+							@Html.DropDownList("Category", Model.CategorySelectList, "(all)", new { Class = "_dropdown selectpicker .no-selectpicker", Width = "inherits" })
+						</div>
+						<div class="span6">
+							Subcategory:<br />
+							<select id="Subcategory" name="Subcategory" class="selectpicker" multiple="multiple"></select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span2">
+					Note: <br />
+					<input type="text" name="TextToSearch" value="@Model.Filters.TextToSearch" class="form-control input-medium" />
+				</div>
+				<div class="span2">
+					Amount: <br />
+					<input type="text" name="AmountToSearch" value="@(Model.Filters.Amount != 0m ? Model.Filters.Amount.ToString("n2") : "")" class="form-control input-mini" />
+				</div>
+				<div class="span3">
+					<input type="checkbox" name="IncludeTransfers" id="IncludeTransfers" @if (@Model.Filters.OperationTypes.Contains(Monei.Entities.OperationType.Transfer)) { @Html.Raw("checked='checked'")   ; } /> <label for="IncludeTransfers" class="checkbox">Include "Transfer"</label>
+				</div>
+				<div class="span3">
+					<input type="checkbox" name="ShowOnlyTaxDeductible" id="ShowOnlyTaxDeductible" @if (@Model.Filters.ShowOnlyTaxDeductible) { @Html.Raw("checked='checked'")   ; } /> <label for="ShowOnlyTaxDeductible" class="checkbox">Show only "Tax deductible"</label>
+				</div>
+				<div class="span2">
+					<input type="checkbox" name="IncludeSpecialEvent" id="IncludeSpecialEvent" @if (@Model.Filters.IncludeSpecialEvent) { @Html.Raw("checked='checked'")   ; } /> <label for="IncludeSpecialEvent" class="checkbox">Include "Special event"</label>
+				</div>
+			</div>
+		</div>
+		<div class="clear-fix"></div>
+
+		@if (Model.AccountSelectList != null)
+		{
+			<div class="clear-fix"></div>
+			<div class="filter" id="AccountFilterPanel">
+				Account: @Html.DropDownList("Account", Model.AccountSelectList, "(current user)", new { Class = "dropdown .no-selectpicker" })
+			</div>
+		}
+		<div class="clear-fix"></div>
+		<div class="right">
+			<input id="searchButton" type="submit" value="Search" class="btn btn-primary" />
+			<input id="exportButton" type="button" value="Export" class="btn btn-success" />
+		</div>
+	</div>
+}
+
+
+<div>
+	<div id="graphContainer" style="min-width: 80px; height: 80px; margin: 0 20px 0 0;" class="float-left hidden"></div>
+	<div class="float-left" style="margin-right: 2em;">
+		<canvas id="chartInOut" width="80" height="80"></canvas>
+	</div>
+	<div class="float-left">
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr class="header-row">
+					<th style="width:25%">Income</th>
+					<th style="width:25%">Outcome</th>
+					<th style="width:25%">Transfer</th>
+					<th>Balance</th>
+				</tr>
+				<tr>
+					<td class="text-success align-right"><strong>+@Model.Resume.Income.ToString("n2") @Account.Currency.Symbol</strong></td>
+					<td class="text-error align-right"><strong>-@Model.Resume.Outcome.ToString("n2") @Account.Currency.Symbol</strong></td>
+					<td class="text-info align-right"><strong>@Model.Resume.Transfer.ToString("n2") @Account.Currency.Symbol</strong></td>
+					<td class=" align-right"><strong>@Model.Resume.Balance.ToString("n2") @Account.Currency.Symbol</strong></td>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</div>
+
+<table class="table table-striped table-bordered">
+	<thead>
+		<tr class="header-row">
+			<th style="width:2.5em"></th>
+			<th>Date</th>
+			<th>Amount</th>
+			<th>Category</th>
+			<th>Subcategoty</th>
+			<th>Note</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.Records)
+		{
+
+			string amountText = item.Amount.ToString("n2") + Account.Currency.Symbol;
+			string amountStyle = "text-info";
+			switch (item.OperationType)
+			{
+				case Monei.Entities.OperationType.Income:
+					amountText = "+" + amountText;
+					amountStyle = "text-success";
+					break;
+				case Monei.Entities.OperationType.Outcome:
+					amountText = "-" + amountText;
+					amountStyle = "text-error";
+					break;
+			}
+
+			string taxDeductibleIcon = item.IsTaxDeductible ? "<i class=\"taxDeductible icon icon-edit\"></i>" : "";
+			string specialEventIcon = item.IsSpecialEvent ? "<i class=\"specialEvent icon icon-share\"></i>" : "";
+			string specialEventStyle = item.IsSpecialEvent ? "specialEvent" : "";
+
+			string subcategory = item.Subcategory != null ? item.Subcategory.Name : "";
+
+			<tr data-id="@item.Id" class="data-row @specialEventStyle">
+				<td>
+					<img src="~/Images/delete.png" class="pointer img-cmd" onclick="deleteItem(@item.Id);" />
+					<img src="/Images/edit.png" class="pointer img-cmd" onclick="editItem(@item.Id);" />
+				</td>
+				<td class="nowrap">
+					@item.Date.ToLocalTime().ToShortDateString()
+				</td>
+				<td class="nowrap align-right @amountStyle">@amountText</td>
+				<td class="nowrap">@item.Category.Name</td>
+				<td class="nowrap">@subcategory</td>
+				<td>@item.Note</td>
+				<td class="nowrap">@Html.Raw(@taxDeductibleIcon) &nbsp; @Html.Raw(@specialEventIcon)</td>
+			</tr>
+		}
+	</tbody>
+
+</table>
+
+@using (Html.BeginForm("Delete", "Registry", FormMethod.Post))
+{
+	<input type="hidden" id="deleteInput" name="Id" />
+}

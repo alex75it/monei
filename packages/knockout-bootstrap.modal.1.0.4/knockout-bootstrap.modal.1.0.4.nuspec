@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>knockout-bootstrap.modal</id>
+    <version>1.0.4</version>
+    <title>knockout-bootstrap.modal</title>
+    <authors>Alex Dresko</authors>
+    <owners>Alex Dresko</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Uses TypeScript to create a knockout binding that implements bootstrap's modal functionality..</description>
+    <summary>Uses TypeScript to create a knockout binding that implements bootstrap's modal functionality..</summary>
+    <releaseNotes>6/14/2013 4:54:32 PM by AD:   Man, I did this in the wrong order. :) 
+
+6/14/2013 4:51:34 PM by AD:   Removed AMD support
+
+6/14/2013 4:47:39 PM by AD:   Learning. :) 
+
+6/14/2013 4:44:50 PM by AD:   Yeah, 1.0.0 didn't work as expected. :) 
+
+6/14/2013 4:30:18 PM by AD:   First nuget package ever.. dunno if it's going to work.</releaseNotes>
+    <copyright />
+    <language />
+    <tags>knockout bootstrap typescript modal dialog window</tags>
+    <dependencies>
+      <dependency id="bootstrap.TypeScript.DefinitelyTyped" version="0.0.3" />
+      <dependency id="knockout.TypeScript.DefinitelyTyped" version="0.1.6" />
+    </dependencies>
+  </metadata>
+</package>

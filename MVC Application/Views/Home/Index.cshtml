@@ -1,0 +1,52 @@
+﻿@{
+    //ViewBag.Title = "Index";
+}
+
+
+<div style="margin:auto; margin-top:0; width:80%; min-width:600px;">
+	<p>
+		This is the home page of <em>monei</em>.<br />
+		This site permit to logged user to register daily personal (or family's) inbound and outbound, categoryzing them and giving other optional info. <br />
+		You have a Registry simple to check and to consult.<br />
+		Other functionality are the useful reports created on that data and specific searches.
+	</p>
+	<p>
+		Some examples of common uses can be:
+	</p>
+	<ul>
+		<li>Search a specific product</li>
+		<li>Monitor car fuel [consumes]</li>
+		<li>Search when a specific product was buyed</li>
+		<li>Calculate the costs of a specific hobby</li>
+		<li>Find healt care costs for obtain refunds</li>
+	</ul>
+
+
+	@if (User.Identity.IsAuthenticated)
+	{
+		<div style="margin-top:2em" class="panel">
+			<div>
+				<a href="@Url.Action("Index", "Dashboard")" class="btn"><img src="~/Images/dashboard_big.png" /><h2>View yout dashboard</h2></a>
+				<a href="@Url.Action("Index", "Registry")" class="btn"><img src="~/Images/registry_big_3.png" /><h2>View your registry</h2></a>
+				<a href="@Url.Action("Create", "Registry")" class="btn"><img src="~/Images/add_big_3.png" /><h2>Add new record to registry</h2></a>
+			</div>
+			<br />
+			<div class="well">
+				<a href="@Url.Action("Index", "Contracts")" class="btn btn-link">View your contracts</a>
+			</div>
+
+		</div>
+	}
+	else
+	{
+		Html.RenderPartial("LoginFormPartial");
+	}
+
+	<div class="clerafix"></div>
+	<div id="testArea" class="hidden">
+		Culture: @Html.Raw(System.Threading.Thread.CurrentThread.CurrentCulture.DisplayName)
+		<br />Header "Accepted-Language": @Html.Raw(HttpContext.Current.Request.Headers["Accept-Language"])
+	</div>
+
+
+</div>

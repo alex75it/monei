@@ -1,0 +1,39 @@
+﻿@{
+	ViewBag.Title = "Categories & Subcategories";
+}
+
+@section Scripts{
+
+	<script src="~/Scripts/monei/monei.CategoriesManagement.js"></script>   
+	
+	<style>
+		.categories, .subcategories {
+			list-style: none;
+			cursor: default;
+			margin-left: 0;
+		}
+		.category {
+			border: solid 2px #161a3d;
+			background-color: #faf8e2;
+			border-radius: 5px;
+			margin: 5px;
+			padding: 5px;
+		}
+		.category.hovered   { border-style: dashed; }
+		.subcategory {
+			border: solid 2px #212A70;
+			background-color: #f7ead1;
+			border-radius: 5px;
+			margin: 5px;
+			padding: 5px;
+			display: inline-block;
+			cursor: pointer;
+		}           
+		.subcategories .ui-draggable-dragging  { border-width:2px; box-shadow: 2px 2px .5em rgba(0, 0, 0, 0.4); cursor:move; }
+		.droppable_Active { border-style:dashed; }
+	</style>
+}
+
+<a href="Create"><img src="/Images/Add.png" class="img-cmd" /> Create new Category</a>
+
+<div id="tree"></div>

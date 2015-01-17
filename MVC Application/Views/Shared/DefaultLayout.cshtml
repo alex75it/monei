@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html ng-app="monei">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<meta name="description" content="The description of my page" />
+	<title>monei.@ViewBag.Title</title>
+	<link rel="shortcut icon" href="/images/favicon.png" type="image/png">
+
+	@Styles.Render("~/Content/bootstrap")
+	@Styles.Render("~/Content/css")
+
+	@RenderSection("css", required: false)
+
+</head>
+<body>
+	<header>
+		<div class="content-wrapper clear-fix">
+			<div class="float-left">
+				<div class="site-title"><img src="/images/logo h80.png" style="margin:5px 5px;" /></div>
+			</div>
+			<div class="float-left" style="margin:30px 10px 0;"><h2>@ViewBag.Title</h2></div>
+			<div class="float-right">
+				<section id="login">
+					@Html.Partial("LoginPartial")
+					<span class="float-right">@Html.Raw(DateTime.Today.ToShortDateString())</span>
+				</section>
+				<nav style="margin-top:45px;">
+					<ul id="menu">
+						<li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+						@if (Request.IsAuthenticated)
+						{
+							<li>@Html.ActionLink("Dashboard", "Index", "Dashboard", new { area = "" }, null)</li>
+							<li>@Html.ActionLink("Registry", "Index", "Registry", new { area = "" }, null)</li>
+							<li>@Html.ActionLink("Categories", "Management", "Category", new { area = "Management" }, null)</li>
+						}
+						@* <li>@Html.ActionLink("About", "About", "Home")</li>*@
+							@* <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+
+	<div id="body">
+		@RenderSection("featured", required: false)
+		<section class="content-wrapper main-content clear-fix">
+			@if (ViewBag.ErrorMessage != null)
+			{
+				<div class="alert alert-error">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<strong>Error!</strong> @ViewBag.ErrorMessage
+				</div>
+			}
+
+			@if (ViewBag.SuccessMessage != null)
+			{
+				<div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<strong>Success!</strong> @ViewBag.SuccessMessage
+				</div>
+			}
+
+			@RenderBody()
+		</section>
+	</div>
+
+	<footer>
+		<div class="content-wrapper">
+			<div class="float-left">
+				<em>&copy; @DateTime.Now.Year - <strong>monei</strong> - by Alessandro Piccione</em>
+			</div>
+		</div>
+	</footer>
+
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/jqueryui")
+	@Scripts.Render("~/bundles/jqueryval")
+	@Scripts.Render("~/bundles/modernizr")
+	@Scripts.Render("~/bundles/bootstrap")
+	@Scripts.Render("~/bundles/angular")
+	@Scripts.Render("~/bundles/monei")
+
+	@if (IsSectionDefined("scripts"))
+	{
+		@RenderSection("scripts", required: false)
+	}
+
+
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://www.google.com/jsapi"></script>
+
+	<script>
+		moment.lang("@Html.Raw(System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.ToLowerInvariant())");
+	</script>
+	<script>
+		// fix for JQuery.Validation that not accept comma as decimal separator
+		// and to accept number that start with a decimal separator (like ".5" instead of "0.5")
+		// note the "*" instead of "+" after the first "d"
+
+		$.validator.methods.range = function (value, element, param) {
+			var globalizedValue = value.replace(",", ".");
+			return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+		}
+
+		$.validator.methods.number = function (value, element) {
+			return this.optional(element) || /^-?(?:\d*|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+		}
+
+	</script>
+
+</body>
+</html>

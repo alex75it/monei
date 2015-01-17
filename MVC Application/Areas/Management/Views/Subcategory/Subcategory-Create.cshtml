@@ -1,0 +1,48 @@
+﻿@model Monei.MvcApplication.Areas.Management.Models.SubcategoryCreateModel
+@{
+    ViewBag.Title = "Subcategory - Create New";
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            //loadCategories();
+            var selectedCategory = '@Model.CategoryId.ToString()';
+            monei.loadCategories("#Category_Select", selectedCategory);
+        });
+    
+    </script>
+    }
+
+
+@using (Html.BeginForm("Create", "Subcategory", FormMethod.Post, new { returnUrl = ViewBag.ReturnUrl }))
+{ 
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    <fieldset>
+        <legend>Subcategory</legend>
+    
+        <ol>
+            <li>
+                @Html.Label("Category")
+                <select id="Category_Select" name="categoryId"></select>
+            </li>
+            <li>
+                @Html.LabelFor(model => model.Name)
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(m => m.Name)
+            </li>
+            <li>
+                @Html.LabelFor(model => model.Description)
+                @Html.TextAreaFor(model => model.Description, new { Cols="120", Rows="3" })
+                @Html.ValidationMessageFor(m => m.Description)
+            </li>            
+        </ol>    
+        <div class="form-actions">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            @Html.ActionLink("Return to List", "Index")
+        </div>
+    </fieldset>
+    
+}

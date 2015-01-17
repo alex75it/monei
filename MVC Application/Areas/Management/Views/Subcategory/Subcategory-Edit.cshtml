@@ -1,0 +1,49 @@
+﻿@model Monei.MvcApplication.Areas.Management.Models.SubcategoryEditModel 
+@{
+    ViewBag.Title = "Subcategory - Edit";
+    //Layout = "~/Views/Shared/DefaultLayout.cshtml";
+}
+
+@section Scripts{
+    <script>
+        function cancel_click()
+        {
+            document.location.href = "/Management/Subcategory";
+        }
+
+    </script>
+    }
+
+
+@using (Html.BeginForm("Edit", "Subcategory", FormMethod.Post, new { returnUrl = ViewBag.ReturnUrl })) { 
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Subcategory</legend>
+        @Html.HiddenFor(m => m.Id)
+        @*@Html.HiddenFor(m => m.Category.Id)*@
+
+        <div class="form-row">
+            <label>Category</label>
+            @Html.DropDownListFor(m => m.CategoryId, Model.CategoryList)
+        </div>
+
+        <div class="form-row">
+            <label>Name</label>
+            @Html.TextBoxFor(m => m.Name)
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+        <div class="form-row">
+            <label>Description</label>   
+            @Html.TextAreaFor(m => m.Description, new { @rows=3, @cols=120})
+            @Html.ValidationMessageFor(m => m.Description)
+        </div>
+
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <span onclick="cancel_click()" class="btn">Cancel</span>
+
+    </fieldset>
+}
+
+

@@ -1,0 +1,33 @@
+﻿@model Monei.MvcApplication.Models.LocalPasswordModel
+@{
+    ViewBag.Title ="Manage";
+    //Layout = null;
+}
+
+<hgroup class="title">
+    <h2>@ViewBag.Title</h2>
+</hgroup>
+
+<p class="message-success">@ViewBag.StatusMessage</p>
+
+<p>You are logged in as <strong>@User.Identity.Name</strong></p>
+
+@if (ViewBag.HasLocalPassword) {
+    @Html.Partial("ChangePasswordPartial")
+}
+else
+{
+    @Html.Partial("SetPasswordPartial")
+}
+
+<section id="externalLogins">
+    @Html.Action("RemoveExternalLogins")
+
+    <h3>Add external logins</h3>
+    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+
+</section>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    }

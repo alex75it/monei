@@ -1,0 +1,41 @@
+﻿@model Monei.MvcApplication.Models.RegisterModel
+
+@{
+    //Layout = "~/Views/Shared/DefaultLayout.cshtml";
+    ViewBag.Title = "Register";
+}
+
+<hgroup>
+    <h2>@ViewBag.Title</h2>
+    <h2></h2>
+</hgroup>
+
+@using (Html.BeginForm()) { 
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Registration form</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.username)
+                @Html.TextBoxFor(m => m.username)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Password)
+                @Html.TextBoxFor(m => m.Password)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.ConfirmPassword)
+                @Html.TextBoxFor(m => m.ConfirmPassword)
+            </li>
+            <li style="margin-top:1em">
+                <input type="submit" value="Register" class="btn btn-success" style="width:314px" />
+            </li>
+        </ol>
+    </fieldset>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

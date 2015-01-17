@@ -1,0 +1,143 @@
+﻿@*@model IEnumerable<Monei.Entities.Subcategory>*@
+
+@{
+    ViewBag.Title = "Subcategories";
+    //Layout = "~/Views/Shared/DefaultLayout.cshtml";
+}
+
+@section Scripts{
+    <script>
+
+        $(function () {
+            var selectedCategory = null;
+            //loadCategories();           
+
+            monei.loadCategories('#Category_Select', selectedCategory, loadSubcategories, loadSubcategories);
+
+        });
+
+        function loadSubcategories()
+        {
+            var $categorySelect = $("#Category_Select");
+            var $subcategoryTable = $('#subcategoriesTable');
+            var $subcategoryTable_noRecords = $('#subcategoriesTable_noRecords');
+            var categoryId = $categorySelect.val();
+            var url = '/Management/Subcategory/GetSubcategories'; 
+
+            $.ajax({
+                url: url,
+                data: { categoryId: categoryId },
+                type: 'GET',
+                success: function (data) {
+
+                    if (data.length > 0) {
+                        $subcategoryTable.show();
+                        $subcategoryTable_noRecords.hide();                        
+                    }
+                    else {
+                        $subcategoryTable.hide();
+                        $subcategoryTable_noRecords.show();
+                    }
+
+                    var $tbody = $subcategoryTable.find('tbody');
+                    $tbody.empty();
+                    for (var i in data) {                        
+                        var subcategory = data[i];
+                        var html = '<tr data-id="' + subcategory.Id + '">'
+                            + '<td><img src="/Images/delete.png" onclick="deleteItem(this);" class="pointer img-cmd" />'
+                            + '<img src="/Images/edit.png" onclick="editItem(this);" class="pointer img-cmd" /></td>'
+                            + '<td>' + subcategory.Name + '</td><td>' + subcategory.Description + '</td></tr>';
+                        $tbody.append($(html));
+                    }
+
+                }
+            });
+        }
+
+        function createNew()
+        {
+            var categoryId = $('#Category_Select').val();
+            var url = "/Management/Subcategory/Create" + "?categoryId=" + categoryId;
+            document.location.href = url;
+        }
+
+
+        function deleteItem(obj)
+        {
+            var confirmDelete = monei.utils.askConfirm("Delete the subcategory \"" + name + "\"?", function () { 
+                var $subcategoryTable = $('#subcategoriesTable');
+                var subcategoryId = $(obj).parents('tr').attr('data-id');
+            
+                var url = "/api/subcategory/" + subcategoryId
+                $.ajax({
+                    url: url,
+                    //data: { subcategoryId: subcategoryId },
+                    type: 'DELETE',
+                    success: function (data) {
+
+                        if (data != "") {
+                            noty({ text: data, layout: "topCenter", type: "warning" });
+                            return;
+                        }
+
+                        var $tbody = $subcategoryTable.find('tbody');
+                        $row = $tbody.find('tr[data-id="' + subcategoryId + '"]');
+                        //$row.slideUp('slow');
+
+                        $row.addClass("removed-item ");
+                        setTimeout(function () { $row.slideUp('slow'); }, 500);
+                        return;
+                        $row.animate({ background: 'yellow !important' }, 100).fadeOut(1000, function () {
+                            _.remove();
+                        });
+                    },
+                    error: function () {
+                        var message = "Fail to delete subcategory";
+                        noty({ text: message, layout: "topCenter", type: "error" });
+                    }
+                });
+            });
+
+        }
+
+        function getId(el) {
+            var id = $(el).parents("tr").attr("data-id");
+            return id;
+        }
+
+        function editItem(el) {
+            var id = getId(el);
+            var url = "/Management/Subcategory/Edit/" + id;
+            document.location.href = url;
+        }
+
+    </script>
+
+}
+
+
+@if (@ViewBag.ErrorMessage != null)
+{ 
+    <p class="text-error">@ViewBag.ErrorMessage</p>
+}
+
+<a href="javascript:createNew()" ><img src="~/Images/add.png" /> Create new</a>
+<div class="clearfix"></div>
+<br />
+
+Category: <select id="Category_Select"></select>
+<div class="clearfix"></div>
+
+<div id="subcategoriesTable_noRecords" class="text-warning" style="margin-top:1em;">None Subcategory in this Category</div>
+<table class="table" id="subcategoriesTable">
+    <thead>
+        <tr class="header-row">
+            <th style="width:3em"></th>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>

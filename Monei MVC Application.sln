@@ -1,0 +1,90 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC Application", "MVC Application\MVC Application.csproj", "{14B30E9E-7888-44E9-80FE-0CD102A7E5A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F789F73B-A622-47FB-AC77-5ADA868C9D0E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9D253066-E775-4503-8F8D-80EE26D4523E}"
+	ProjectSection(SolutionItems) = preProject
+		README.txt = README.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Access Layer", "Data Access Layer\Data Access Layer.csproj", "{85D1F40C-F9CC-42F7-AC99-C83E53FD8ED4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{0C1FA7DA-2E62-4272-A9C3-871E5B20D9B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB queries", "MongoDB queries", "{5E435E52-612E-41C4-883D-C79C23B03EE7}"
+	ProjectSection(SolutionItems) = preProject
+		Execute MongoDB script.cmd = Execute MongoDB script.cmd
+		Set Currency to all users.js = Set Currency to all users.js
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{95254DD8-6BFE-4DAF-BE3B-9EB56472E867}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://alex75.visualstudio.com/defaultcollection
+		SccProjectUniqueName0 = MVC\u0020Application\\MVC\u0020Application.csproj
+		SccProjectName0 = MVC\u0020Application
+		SccAuxPath0 = https://alex75.visualstudio.com/defaultcollection
+		SccLocalPath0 = MVC\u0020Application
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName1 = Tests\\Tests.csproj
+		SccProjectName1 = Tests
+		SccAuxPath1 = https://alex75.visualstudio.com/defaultcollection
+		SccLocalPath1 = Tests
+		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName2 = Data\u0020Access\u0020Layer\\Data\u0020Access\u0020Layer.csproj
+		SccProjectName2 = Data\u0020Access\u0020Layer
+		SccAuxPath2 = https://alex75.visualstudio.com/defaultcollection
+		SccLocalPath2 = Data\u0020Access\u0020Layer
+		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName3 = Entities\\Entities.csproj
+		SccProjectName3 = Entities
+		SccAuxPath3 = https://alex75.visualstudio.com/defaultcollection
+		SccLocalPath3 = Entities
+		SccProvider3 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName4 = Core\\Core.csproj
+		SccProjectName4 = Core
+		SccAuxPath4 = https://alex75.visualstudio.com/defaultcollection
+		SccLocalPath4 = Core
+		SccProvider4 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{14B30E9E-7888-44E9-80FE-0CD102A7E5A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14B30E9E-7888-44E9-80FE-0CD102A7E5A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14B30E9E-7888-44E9-80FE-0CD102A7E5A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14B30E9E-7888-44E9-80FE-0CD102A7E5A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F789F73B-A622-47FB-AC77-5ADA868C9D0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F789F73B-A622-47FB-AC77-5ADA868C9D0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F789F73B-A622-47FB-AC77-5ADA868C9D0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F789F73B-A622-47FB-AC77-5ADA868C9D0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85D1F40C-F9CC-42F7-AC99-C83E53FD8ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85D1F40C-F9CC-42F7-AC99-C83E53FD8ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85D1F40C-F9CC-42F7-AC99-C83E53FD8ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85D1F40C-F9CC-42F7-AC99-C83E53FD8ED4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C1FA7DA-2E62-4272-A9C3-871E5B20D9B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C1FA7DA-2E62-4272-A9C3-871E5B20D9B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C1FA7DA-2E62-4272-A9C3-871E5B20D9B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C1FA7DA-2E62-4272-A9C3-871E5B20D9B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95254DD8-6BFE-4DAF-BE3B-9EB56472E867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95254DD8-6BFE-4DAF-BE3B-9EB56472E867}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95254DD8-6BFE-4DAF-BE3B-9EB56472E867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95254DD8-6BFE-4DAF-BE3B-9EB56472E867}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5E435E52-612E-41C4-883D-C79C23B03EE7} = {9D253066-E775-4503-8F8D-80EE26D4523E}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using Monei.Core.DataAnalysis;
+using Monei.Core.DataAnalysis.BusinessObjects;
+
+
+namespace Monei.MvcApplication.Controllers.Api
+{
+	//[Authorize]
+	[RoutePrefix("api/Dashboard")]
+	public class DashboardController : ApiControllerBase
+	{
+	
+		[Route("")]
+		public IEnumerable<string> Get()
+		{
+			return new string[] { "value1", "value2" };
+		}
+
+		[Route("{year:int}")]
+		public YearData Get(int year)
+		{
+			Engine engine = new Engine(RegistryRepository);
+			YearData data = engine.GetYearData(CurrentAccount.Id, year);
+			return data;
+		}
+
+		//[Route("{year:int}/{month:int}")]
+		//public MonthData Get(int year, int month)
+		//{
+		//	Engine engine = new Engine(RegistryRepository);
+		//	MonthData data = engine.GetMonthData(CurrentAccount.Id, year);
+		//	return data;
+		//}
+
+	}
+}
