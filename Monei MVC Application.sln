@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC Application", "MVC Application\MVC Application.csproj", "{14B30E9E-7888-44E9-80FE-0CD102A7E5A4}"
 EndProject
@@ -24,37 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB queries", "MongoDB 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{95254DD8-6BFE-4DAF-BE3B-9EB56472E867}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{02171834-590F-42A7-AD9B-6FB3CCE2FEB4}"
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://alex75.visualstudio.com/defaultcollection
-		SccProjectUniqueName0 = MVC\u0020Application\\MVC\u0020Application.csproj
-		SccProjectName0 = MVC\u0020Application
-		SccAuxPath0 = https://alex75.visualstudio.com/defaultcollection
-		SccLocalPath0 = MVC\u0020Application
-		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName1 = Tests\\Tests.csproj
-		SccProjectName1 = Tests
-		SccAuxPath1 = https://alex75.visualstudio.com/defaultcollection
-		SccLocalPath1 = Tests
-		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName2 = Data\u0020Access\u0020Layer\\Data\u0020Access\u0020Layer.csproj
-		SccProjectName2 = Data\u0020Access\u0020Layer
-		SccAuxPath2 = https://alex75.visualstudio.com/defaultcollection
-		SccLocalPath2 = Data\u0020Access\u0020Layer
-		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName3 = Entities\\Entities.csproj
-		SccProjectName3 = Entities
-		SccAuxPath3 = https://alex75.visualstudio.com/defaultcollection
-		SccLocalPath3 = Entities
-		SccProvider3 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName4 = Core\\Core.csproj
-		SccProjectName4 = Core
-		SccAuxPath4 = https://alex75.visualstudio.com/defaultcollection
-		SccLocalPath4 = Core
-		SccProvider4 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
