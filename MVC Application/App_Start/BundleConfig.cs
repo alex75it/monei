@@ -9,34 +9,32 @@ namespace Monei.MvcApplication
 		public static void RegisterBundles(BundleCollection bundles)
 		{
 			bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-						"~/Scripts/jquery-{version}.js"
+						"~/Scripts/JQuery/jquery-{version}.js"
 						//"~/Scripts/jquery-migrate-{version}.js"
 						));
 
 			bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-						"~/Scripts/jquery-ui-{version}.js"));
+						"~/Scripts/JQuery/jquery-ui-{version}.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-						"~/Scripts/jquery.unobtrusive*",
-						"~/Scripts/jquery.validate*"));
+						"~/Scripts/JQuery/jquery.unobtrusive*",
+						"~/Scripts/JQuery/jquery.validate*"));
 
 			// Bootstrap
 			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-				"~/Scripts/bootstrap.js",				
-				//"~/Scripts/jquery.validate.js",
-				//"~/scripts/jquery.validate.unobtrusive.js",
-				"~/Scripts/jquery.validate.unobtrusive-custom-for-bootstrap.js",
-				"~/Scripts/bootstrap-select.min.js",
-				"~/Scripts/bootstrap-datepicker.js"
+				"~/Scripts/bootstrap/bootstrap.js",
+				"~/Scripts/JQuery/jquery.validate.unobtrusive-custom-for-bootstrap.js",
+				"~/Scripts/bootstrap/bootstrap-select.min.js",
+				"~/Scripts/bootstrap/bootstrap-datepicker.js"
 				));
 
 			bundles.Add(new StyleBundle("~/Content/Bootstrap").Include(
-				"~/Content/bootstrap.min.css",
-				"~/Content/bootstrap-theme_01.css",
-				"~/Content/bootstrap-responsive.min.css",
-				"~/Content/bootstrap-mvc-validation.css",
-				"~/Content/bootstrap-select.min.css",
-				"~/Content/bootstrap-datepicker.css"
+				"~/Content/bootstrap/bootstrap.min.css",
+				"~/Content/bootstrap/bootstrap-theme_01.css",
+				"~/Content/bootstrap/bootstrap-responsive.min.css",
+				"~/Content/bootstrap/bootstrap-mvc-validation.css",
+				"~/Content/bootstrap/bootstrap-select.min.css",
+				"~/Content/bootstrap/bootstrap-datepicker.css"
 				));
 
 
@@ -47,8 +45,8 @@ namespace Monei.MvcApplication
 
 			bundles.Add(new ScriptBundle("~/bundles/angular")
 				.Include(
-				"~/Scripts/angular.min.js",
-				"~/Scripts/angular-resource.min.js"
+				"~/Scripts/angular/angular.min.js",
+				"~/Scripts/angular/angular-resource.min.js"
 				//"~/Scripts/ng-infinite-scroll.js",
 				//"~/Scripts/angular-strap.js"
 				));
