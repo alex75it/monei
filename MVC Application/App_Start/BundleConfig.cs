@@ -29,12 +29,12 @@ namespace Monei.MvcApplication
 				));
 
 			bundles.Add(new StyleBundle("~/Content/Bootstrap").Include(
-				"~/Content/bootstrap/bootstrap.min.css",
-				"~/Content/bootstrap/bootstrap-theme_01.css",
-				"~/Content/bootstrap/bootstrap-responsive.min.css",
-				"~/Content/bootstrap/bootstrap-mvc-validation.css",
-				"~/Content/bootstrap/bootstrap-select.min.css",
-				"~/Content/bootstrap/bootstrap-datepicker.css"
+				"~/Content/bootstrap.min.css",
+				"~/Content/bootstrap-theme_01.css",
+				"~/Content/bootstrap-responsive.min.css",
+				"~/Content/bootstrap-mvc-validation.css",
+				"~/Content/bootstrap-select.min.css",
+				"~/Content/bootstrap-datepicker.css"
 				));
 
 
@@ -75,7 +75,8 @@ namespace Monei.MvcApplication
 				"~/Scripts/monei/monei.js",
 				"~/Scripts/monei/monei.utils.js",
 				"~/Scripts/monei/AngularApp.js",
-				"~/Scripts/monei/angular controllers/*.js"
+				"~/Scripts/monei/angular controllers/*.js",
+				"~/Scripts/monei/angular directives/*.js"
                 ));	
 
 
