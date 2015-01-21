@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Monei.MvcApplication.Controllers.Api.PostDataObjects
+namespace Monei.MvcApplication.Api.PostDataObjects
 {
 	public class MoveSubcategoryPostData
 	{

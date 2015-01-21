@@ -219,6 +219,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\CategoryController.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -236,9 +237,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\Api\ApiControllerBase.cs" />
-    <Compile Include="Controllers\Api\CategoryController.cs" />
     <Compile Include="Controllers\Api\DashboardController.cs" />
-    <Compile Include="Controllers\Api\PostDataObjects\MoveSubcategoryPostData.cs" />
+    <Compile Include="Api\PostDataObjects\MoveSubcategoryPostData.cs" />
     <Compile Include="Controllers\Api\PostDataObjects\SubcategoryPostData.cs" />
     <Compile Include="Controllers\Api\RegistryApiController.cs" />
     <Compile Include="Controllers\Api\SubcategoryController.cs" />
@@ -423,7 +423,9 @@
     <Content Include="Scripts\eflexis\jquery.eflexis.dialog.js" />
     <Content Include="Scripts\eflexis\jquery.eflexis.dialog.min.js" />
     <Content Include="Scripts\html5shiv.js" />
+    <Content Include="Scripts\monei\angular controllers\registryCreateController.js" />
     <Content Include="Scripts\monei\angular directives\dashboardMonthDirective.js" />
+    <Content Include="Scripts\monei\angular services\CategoryProvider.js" />
     <Content Include="Scripts\monei\monei.CategoriesManagement.js" />
     <Content Include="Scripts\monei\monei.utils.js" />
     <Content Include="Scripts\JQuery\jquery-migrate-1.2.1.js" />

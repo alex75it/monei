@@ -76,7 +76,8 @@ namespace Monei.MvcApplication
 				"~/Scripts/monei/monei.utils.js",
 				"~/Scripts/monei/AngularApp.js",
 				"~/Scripts/monei/angular controllers/*.js",
-				"~/Scripts/monei/angular directives/*.js"
+				"~/Scripts/monei/angular directives/*.js",
+				"~/Scripts/monei/angular services/*.js"
                 ));	
 
 

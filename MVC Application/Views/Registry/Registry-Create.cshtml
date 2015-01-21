@@ -6,8 +6,7 @@
 
 @section scripts{
 	<script>
-	   
-		// todo: loading Subcategory can be slow and the select semms empty to the user
+	   	
 
 		var regAmountChars = /[^0-9 @Html.Raw(System.Threading.Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyDecimalSeparator)+-]/;
 
@@ -71,7 +70,11 @@
 			var $particularDay = $('#particularDay');
 			var particularDay = "";
 
-			var date = moment($('#date').val());
+			var dateString = $('#date').val();
+			if (!dateString)
+				return;
+
+			var date = moment(dateString);
 			
 			if (date.format('YYYYMMDD') == moment().format('YYYYMMDD'))
 				particularDay = "today";
@@ -200,6 +203,28 @@
 	@Html.ValidationSummary();
 	@Html.Hidden("save another", false, new { Id="saveAnother" });
 
+<div ng-controller="registryCreateController">
+	
+	<div class="text-error" ng-show="error">{{error}}</div>
+
+	<ol>
+		<li>
+			<label>Date</label>
+			<div class="input-append-prepend input-append">
+				<span class="add-on pointer"><i class="icon-minus"></i></span>
+				<input type="text"  class="datepicker" ng-model="date"/>
+				<span class="add-on pointer"><i class="icon-plus"></i></span>
+			</div>
+		</li>
+		<li>
+			<label>Category</label>
+			<select class=".no-selectpicker" tabindex="1" autofocus ng-options="cat.id for cat in categories"></select>
+		</li>
+	</ol>
+
+
+</div>
+	
 <fieldset>
 	<legend>Create a new record</legend>
 	<ol>

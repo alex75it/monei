@@ -5,26 +5,25 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Monei.Entities;
+using Monei.MvcApplication.Api.PostDataObjects;
+using Monei.MvcApplication.Controllers.Api;
 using Monei.MvcApplication.Controllers.Api.PostDataObjects;
 
-namespace Monei.MvcApplication.Controllers.Api
+namespace Monei.MvcApplication.Api
 {
+	[RoutePrefix("api/category")]
 	public class CategoryController : ApiControllerBase
-    {
-		//[HttpGet, Route("Tree", Name = "Tree")]
-		//public IList<dynamic> Tree()
-		//{
-		//	//return "{ method: 'ListByType', typeId: " + typeId + "}";
-		//	//, subcategories=c.Subcategories.ToList()
-		//	IList<dynamic> list = CategoryRepository.List().Select(c =>
-		//		new { id = c.Id, name = c.Name, subcategories = c.Subcategories.Select( s => new { id=s.Id, name=s.Name }) })
-		//		.ToList<dynamic>();
-		//	return list;
-		//}
+	{
+		[HttpGet, Route("")]
+		public IEnumerable<Category> Get()
+		{
+			IEnumerable<Category> list = base.CategoryRepository.List();
+			return list;
+		}
 
 		[HttpGet /*Route("action/Category/Tree", Name = "Tree")*/]
 		public IList<dynamic> Tree()
-		{			
+		{
 			IList<dynamic> list = CategoryRepository.ListWithSubcategories().Select(c =>
 				new { id = c.Id, name = c.Name, subcategories = c.Subcategories.Select(s => new { id = s.Id, name = s.Name }).ToList() })
 				.ToList<dynamic>();
@@ -48,32 +47,5 @@ namespace Monei.MvcApplication.Controllers.Api
 				return string.Format("Fail to move Subcategory. Error ID: {0}.", errorId);
 			}
 		}
-
-		//// GET api/category
-		//public IEnumerable<string> Get()
-		//{
-		//	return new string[] { "value1", "value2" };
-		//}
-
-		//// GET api/category/5
-		//public string Get(int id)
-		//{
-		//	return "value";
-		//}
-
-        // POST api/category
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/category/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/category/5
-        public void Delete(int id)
-        {
-        }
-    }
+	}
 }
