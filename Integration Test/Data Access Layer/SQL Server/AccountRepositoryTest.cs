@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Exceptions;
-using Monei.DataAccessLayer.Interfaces;
+using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
+using Should;
 
-namespace Monei.Tests.DataAccessLayer.Repository
+namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
 	[TestClass]
-	public class AccountRepositoryTest : RepositoryBaseTest
+	public class AccountRepositoryTest : RepositoryTestBase
 	{
 
 		//private Account CreateTestAccount()
@@ -44,7 +45,7 @@ namespace Monei.Tests.DataAccessLayer.Repository
 			}
 			catch (Exception exc)
 			{
-				Assert.Inconclusive("Cannot delete Account test. " + exc.Message);
+				Assert.Inconclusive("FAIL to delete Account test. " + exc.Message);
 			}
 		}
 
@@ -59,7 +60,7 @@ namespace Monei.Tests.DataAccessLayer.Repository
 		[TestMethod]
 		public void CreateUserAndAccount()
 		{
-			string username = Constraints.TEST_USERNAME;
+			string username = Helper.TEST_USERNAME;
 			string password = "password_test";
 			Account.AccountRole role = Account.AccountRole.User;
 			Currency currency = Helper.GetEuroCurrency();
@@ -79,7 +80,7 @@ namespace Monei.Tests.DataAccessLayer.Repository
 		[TestMethod]
 		public void Create()
 		{
-			string username = "Test";
+			string username = "TEST";
 			string password = "test";
 			Account.AccountRole role = Account.AccountRole.User ;
 			Currency currency = Helper.GetEuroCurrency();
@@ -97,7 +98,13 @@ namespace Monei.Tests.DataAccessLayer.Repository
 			// username exists
 
 			Account account_2 = Account.Create(username, password, role, currency);
-			
+						
+
+			//Action action = a => AccountRepository.Create(a);
+			//Action<Account> action = a => AccountRepository.Create(a);
+			//Should.ActionAssertionExtensions
+			//action.ShouldThrow();
+
 			try
 			{
 				AccountRepository.Create(account_2);
@@ -112,6 +119,7 @@ namespace Monei.Tests.DataAccessLayer.Repository
 			// clean 
 			AccountRepository.Delete(account.Id);
 		}
+
 
 		[TestMethod]
 		public void Read()

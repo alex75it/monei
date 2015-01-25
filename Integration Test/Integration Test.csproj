@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.2.2\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\packages\Castle.Windsor.3.2.1\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -45,6 +51,7 @@
       <HintPath>..\packages\Should.1.1.20\lib\Should.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -59,8 +66,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Data Access Layer\SQL Server\AccountRepositoryTest.cs" />
     <Compile Include="Data Access Layer\SQL Server\CategoryRepositoryTest.cs" />
+    <Compile Include="Data Access Layer\SQL Server\CurrencyRepositoryTest.cs" />
+    <Compile Include="Data Access Layer\SQL Server\RegistryRepositoryTest.cs" />
+    <Compile Include="Data Access Layer\SQL Server\RepositoryTestBase.cs" />
+    <Compile Include="Data Access Layer\SQL Server\SubcategoryRepositoryTest.cs" />
+    <Compile Include="Data Access Layer\SQL Server\TestHelper.cs" />
     <Compile Include="Entities\NHibernate Mappings\NHibernateMappingsTest.cs" />
+    <Compile Include="Installers\RepositoriesInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

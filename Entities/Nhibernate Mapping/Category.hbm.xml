@@ -12,15 +12,16 @@
         <property name="CreationDate" />
         <property name="LastChangeDate" />
         <property name="DeletionDate" />
-        <!--<bag name="Subcategories" table="Subcategory" lazy="false">
-            <key column="CategoryId"></key>
+        <bag name="Subcategories" table="Subcategory" lazy="false" >
+			<!--collection-type="System.Collections.Generic.IList"-->
+			<key column="CategoryId"></key>
             <one-to-many class="Subcategory"/>
-        </bag>-->
-		<list name="Subcategories" table="Subcategory" lazy="false" fetch="join">		
+        </bag>
+		<!--<list name="Subcategories" table="Subcategory" lazy="false" fetch="join">		
 			<key column="CategoryId"></key>
 			<index column="Id"></index>
 			<one-to-many class="Subcategory"/>
-		</list>
+		</list>-->
 		
         <!--cannot cast to List<Category>, requires PersistentGenericList-->
         <!--<list name="Subcategories" table="Subcategory" >

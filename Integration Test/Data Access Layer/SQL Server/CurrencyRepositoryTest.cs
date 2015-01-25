@@ -1,11 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Monei.DataAccessLayer.Exceptions;
+using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
+using Should;
 
-namespace Monei.Tests.DataAccessLayer.Repository
+namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
 	[TestClass]
-	public class CurrencyRepositoryTest : RepositoryBaseTest
+	public class CurrencyRepositoryTest : RepositoryTestBase
 	{
 
 
@@ -16,7 +23,8 @@ namespace Monei.Tests.DataAccessLayer.Repository
 			string name = "XXX";
 			string symbol = "X";
 
-			Currency currency = new Currency() { 
+			Currency currency = new Currency()
+			{
 				Code = code,
 				Name = name,
 				Symbol = symbol,
@@ -29,7 +37,7 @@ namespace Monei.Tests.DataAccessLayer.Repository
 			Assert.AreEqual(currency.Code, code);
 			Assert.AreEqual(currency.Symbol, symbol);
 
-			
+
 			try
 			{
 				CurrencyRepository.Delete(currency.Id);
@@ -52,22 +60,23 @@ namespace Monei.Tests.DataAccessLayer.Repository
 				Symbol = symbol,
 			};
 
-			
+
 			try
 			{
 				currency = CurrencyRepository.Create(currency);
 			}
 			catch (Exception exc)
-			{ 
+			{
 				Assert.Inconclusive("Fail to create Currency: " + exc.ToString());
 				return;
 			}
-			
+
 			try
 			{
 				CurrencyRepository.Delete(currency.Id);
 			}
-			catch (Exception exc){
+			catch (Exception exc)
+			{
 				Assert.Fail(exc.ToString());
 			}
 

@@ -205,22 +205,24 @@
 
 <div ng-controller="registryCreateController">
 	
-	<div class="text-error" ng-show="error">{{error}}</div>
+	<div ng-show="error"><pre class="alert alert-danger">{{error}}</pre></div>
 
-	<ol>
-		<li>
-			<label>Date</label>
-			<div class="input-append-prepend input-append">
-				<span class="add-on pointer"><i class="icon-minus"></i></span>
-				<input type="text"  class="datepicker" ng-model="date"/>
-				<span class="add-on pointer"><i class="icon-plus"></i></span>
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-2">Date</label>
+			<div class="col-sm-10">
+				<div class="input-prepend input-append">
+					<span class="add-on pointer"><i class="icon-minus"></i></span>
+					<input type="text" class="datepicker" ng-model="date" />
+					<span class="add-on pointer"><i class="icon-plus"></i></span>
+				</div>
 			</div>
-		</li>
-		<li>
-			<label>Category</label>
-			<select class=".no-selectpicker" tabindex="1" autofocus ng-options="cat.id for cat in categories"></select>
-		</li>
-	</ol>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2"></label>
+			<select tabindex="1" autofocus ng-options="cat.id as cat.name for cat in categories" ng-model="category"></select>
+		</div>
+	</form>
 
 
 </div>

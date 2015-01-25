@@ -24,7 +24,7 @@ namespace Monei.DataAccessLayer.MongoDB
 
 		public static RegistryRepository Instance { get { return instance; } }
 
-		public IList<RegistryRecord> ListRecods(RegistryFilters filters)
+		public IList<RegistryRecord> ListRecords(RegistryFilters filters)
 		{
 			return GetCollection().Find(GenerateQuery(filters)).OrderByDescending(r => r.Date).ToList();
 			

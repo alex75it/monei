@@ -4,23 +4,23 @@ app.controller("registryCreateController", [
 	function ($scope, $element, CategoryProvider) {
 		_scope = $scope;
 		$scope.date = moment();
+		$scope.category;
 		$scope.categories = [];
 		$scope.error = null;
 
 
-		$scope.initialize = function () {
+		$scope.initialize = function () {			
 			CategoryProvider.getCategories(
 				/*success*/
-				function (data) { alert(data.length); $scope.categories = data; },
+				function (data) {  $scope.categories = data; },
 				/*error*/
 				function (data) { $scope.showError(data);}
-				// todo
 				);
 		};
 
 		$scope.showError = function(error)
 		{
-			$scope.error = error; //.message
+			$scope.error = error.exceptionMessage || error.message || error; //.message
 		};
 
 		$scope.initialize();

@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Filters;
-using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
+using Should;
 
-
-namespace Monei.Tests.DataAccessLayer.Repository
+namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
 	[TestClass]
-	public class RegistryRepositoryTest :RepositoryBaseTest
+	public class RegistryRepositoryTest : RepositoryTestBase
 	{
 
 		private const string DEFAULT_TEST_DESCRPTION = "$$$ This is a TEST - Delete me. $$$";
@@ -36,7 +37,7 @@ namespace Monei.Tests.DataAccessLayer.Repository
 
 		private void DeleteRecordsOfTestAccount()
 		{
-			IList<RegistryRecord> records = RegistryRepository.ListRecods(new RegistryFilters() { AccountId = testAccountId });
+			IList<RegistryRecord> records = RegistryRepository.ListRecords(new RegistryFilters() { AccountId = testAccountId });
 
 			foreach (var r in records)
 				RegistryRepository.DeleteRecord(r.Id);
@@ -51,35 +52,17 @@ namespace Monei.Tests.DataAccessLayer.Repository
 
 			RegistryRepository.DeleteRecord(record.Id);
 
-			RegistryFilters filters = new RegistryFilters() { 
-				StartDate = DateTime.Today, EndDate = DateTime.Today, CategoryId = record.Category.Id
+			RegistryFilters filters = new RegistryFilters()
+			{
+				StartDate = DateTime.Today,
+				EndDate = DateTime.Today,
+				CategoryId = record.Category.Id
 			};
 
-			RegistryRecord searchedRecord = RegistryRepository.ListRecods(filters).FirstOrDefault(r => r.Id == record.Id);
+			RegistryRecord searchedRecord = RegistryRepository.ListRecords(filters).FirstOrDefault(r => r.Id == record.Id);
 			Assert.IsTrue(searchedRecord == null);
 		}
 
-		private RegistryRecord CreateTestRecord()
-		{
-			DateTime date = DateTime.Now;
-			decimal amount = 123.45m;
-			string note = "DEFAULT_TEST_DESCRPTION";
-			Account account = Helper.GetTestAccount();
-			Category category = Helper.GetRandomCategory();
-			Subcategory subcategory = null;
-
-			RegistryRecord record = new RegistryRecord() { 
-				Date = date,
-				Amount = amount,
-				Note = note,
-				Category = category,
-				Subcategory = subcategory,
-				Account = account,
-			};
-
-			RegistryRecord recod = RegistryRepository.AddRecord(record);
-			return record;
-		}
 
 
 		[TestMethod]
@@ -106,8 +89,9 @@ namespace Monei.Tests.DataAccessLayer.Repository
 			RegistryRepository.AddRecord(record);
 
 			filters = new RegistryFilters() { StartDate = startDate, EndDate = endDate };
-			records = RegistryRepository.ListRecods(filters);
+			records = RegistryRepository.ListRecords(filters);
 
+			/// Verify
 			Assert.AreEqual(1, records.Count);
 
 			RegistryRecord loadedRecord = records.First();
@@ -120,9 +104,9 @@ namespace Monei.Tests.DataAccessLayer.Repository
 			Assert.AreEqual(account.Id, loadedRecord.Account.Id);
 
 			// different account must not see records 
-			Account differentAccount = Helper.GetDemoAccount();			
+			Account differentAccount = Helper.GetDemoAccount();
 			filters.AccountId = differentAccount.Id;
-			records = RegistryRepository.ListRecods(filters);
+			records = RegistryRepository.ListRecords(filters);
 
 			Assert.IsTrue(records.Count == 0);
 
@@ -137,11 +121,11 @@ namespace Monei.Tests.DataAccessLayer.Repository
 			filters.AccountId = Helper.GetTestAccount().Id;
 			filters.CategoryId = category.Id;
 
-			records = RegistryRepository.ListRecods(filters);
+			records = RegistryRepository.ListRecords(filters);
 
 			records.Single(r => r.Category.Id == category.Id);
 
-			
+
 			// todo: add other tests
 
 
@@ -170,12 +154,16 @@ namespace Monei.Tests.DataAccessLayer.Repository
 				Note = note,
 				IsTaxDeductible = isTaxDeductible,
 				IsSpecialEvent = isSpecialEvent,
+				OperationType = OperationType.Outcome,
 			};
 
 			record = RegistryRepository.AddRecord(record);
 
+			/// Verify
 			Assert.IsNotNull(record, "Null");
-			Assert.IsTrue(date.ToString() == record.Date.ToString(), "Date");
+			record.Date.ShouldEqual(date, Should.Core.DatePrecision.Date);
+			Assert.IsTrue(date.Date == record.Date.Date, "Date");
+			record.OperationType.ShouldEqual(OperationType.Outcome, "OperationType");
 			Assert.AreEqual(amount, record.Amount, "Amount");
 			Assert.AreEqual(note, record.Note, "Note");
 			Assert.AreEqual(isTaxDeductible, record.IsTaxDeductible, "IsTaxDeductible");
@@ -185,12 +173,39 @@ namespace Monei.Tests.DataAccessLayer.Repository
 			{
 				RegistryRepository.DeleteRecord(record.Id);
 			}
-			catch(Exception exc)
+			catch (Exception exc)
 			{
 				Console.WriteLine("Fail to delete test Record. " + exc.Message);
 			}
 
 		}
+
+		#region private methods
+
+		private RegistryRecord CreateTestRecord()
+		{
+			DateTime date = DateTime.Now;
+			decimal amount = 123.45m;
+			string note = "DEFAULT_TEST_DESCRPTION";
+			Account account = Helper.GetTestAccount();
+			Category category = Helper.GetRandomCategory();
+			Subcategory subcategory = null;
+
+			RegistryRecord record = new RegistryRecord()
+			{
+				Date = date,
+				Amount = amount,
+				Note = note,
+				Category = category,
+				Subcategory = subcategory,
+				Account = account,
+			};
+
+			RegistryRecord recod = RegistryRepository.AddRecord(record);
+			return record;
+		}
+
+		#endregion
 
 
 	}//class

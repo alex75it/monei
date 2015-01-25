@@ -54,7 +54,7 @@ namespace Monei.MvcApplication.Controllers
             if (IsAuthorized(Account.AccountRole.Administrator))
                 model.AccountSelectList = new SelectList(AccountRepository.ListAll(), "Id", "Username");
             
-            model.Records = RegistryRepository.ListRecods(filters).OrderByDescending(r => r.Date).ToList();
+            model.Records = RegistryRepository.ListRecords(filters).OrderByDescending(r => r.Date).ToList();
             
             return View("Registry-Index", model);
         }
@@ -123,7 +123,7 @@ namespace Monei.MvcApplication.Controllers
             // store filters in Session
             Session.Add(SESSION_FILTERS, filters);
 
-            var list = RegistryRepository.ListRecods(filters);
+            var list = RegistryRepository.ListRecords(filters);
             
             // it is a request of Export?
             string export = formCollection.GetStringValue("export");
@@ -148,7 +148,7 @@ namespace Monei.MvcApplication.Controllers
             RegistryListModel model = new RegistryListModel();
 
             var filters = new RegistryFilters() {AccountId = GetAccount().Id, CategoryId = categoryId, StartDate=fromDate, EndDate=toDate };
-            var list = RegistryRepository.ListRecods(filters).OrderByDescending(r => r.Date).ToList();
+            var list = RegistryRepository.ListRecords(filters).OrderByDescending(r => r.Date).ToList();
 
             model.Records = list;
 

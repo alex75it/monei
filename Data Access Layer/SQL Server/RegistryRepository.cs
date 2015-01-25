@@ -14,7 +14,7 @@ namespace Monei.DataAccessLayer.SqlServer
 {
 	public class RegistryRepository : AbstractRepository<int, RegistryRecord>, IRegistryRepository 
 	{
-		public IList<RegistryRecord> ListRecods(Filters.RegistryFilters filters)
+		public IList<RegistryRecord> ListRecords(Filters.RegistryFilters filters)
 		{
 			IList<RegistryRecord> records ;
 

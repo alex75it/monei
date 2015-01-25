@@ -112,18 +112,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\BaseTest.cs" />
-    <Compile Include="Data Access Layer\AccountTest.cs" />
-    <Compile Include="Data Access Layer\Constraints.cs" />
-    <Compile Include="Data Access Layer\Repository\RegistryRepositoryTest.cs" />
-    <Compile Include="Data Access Layer\Repository\CategoryRepositoryTest.cs" />
-    <Compile Include="Data Access Layer\Repository\AccountRepositoryTest.cs" />
-    <Compile Include="Data Access Layer\Repository\RepositoryBaseTest.cs" />
-    <Compile Include="Data Access Layer\Repository\SubcategoryRepositoryTest.cs" />
-    <Compile Include="Data Access Layer\SQL Server\NHibernateSessionFactory.cs" />
-    <Compile Include="Data Access Layer\Repository\CurrencyRepositoryTest.cs" />
-    <Compile Include="Data Access Layer\TestHelper.cs" />
-    <Compile Include="Installers\RepositoriesInstallers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +134,7 @@
       <Name>MVC Application</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Business Layer\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

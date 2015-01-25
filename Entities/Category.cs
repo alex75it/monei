@@ -24,7 +24,13 @@ namespace Monei.Entities
 		public DateTime? DeletionDate { get; set; }
 
 		//public List<LocalizedNameAndDescription> NameAndDescriptions { get; set; }
-		public IEnumerable<Subcategory> Subcategories { get; set; }
+		//public IEnumerable<Subcategory> Subcategories { get; set; }
+		public IList<Subcategory> Subcategories { get; set; }
+
+		public Category()
+		{
+			Subcategories = new List<Subcategory>();
+		}
 
 
 		public override int GetHashCode()

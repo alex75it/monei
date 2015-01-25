@@ -1,13 +1,18 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Monei.DataAccessLayer.Exceptions;
+using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
+using Should;
 
-namespace Monei.Tests.DataAccessLayer.Repository
+namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
 	[TestClass]
-	public class SubcategoryRepositoryTest :RepositoryBaseTest
+	public class SubcategoryRepositoryTest :RepositoryTestBase
 	{
 		[TestMethod]
 		public void List()
