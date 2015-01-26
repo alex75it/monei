@@ -62,13 +62,12 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			RegistryRecord searchedRecord = RegistryRepository.ListRecords(filters).FirstOrDefault(r => r.Id == record.Id);
 			Assert.IsTrue(searchedRecord == null);
 		}
-
-
+					
 
 		[TestMethod]
 		public void List()
 		{
-			// 1 month
+			// period of 1 month
 			DateTime startDate = new DateTime(2005, 1, 1);
 			DateTime endDate = new DateTime(2005, 1, 31);
 
@@ -125,10 +124,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
 			records.Single(r => r.Category.Id == category.Id);
 
-
 			// todo: add other tests
-
-
 		}
 
 		[TestMethod]

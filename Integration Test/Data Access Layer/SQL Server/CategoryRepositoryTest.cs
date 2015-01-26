@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Interfaces;
@@ -71,24 +72,39 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 		[TestMethod]
 		public void UpdateCategory()
 		{
+			string changedName = "Test B";
+			string changedDescription = "Description B";
+
 			Account account = Helper.GetTestAccount();
 			Category category = new Category()
 			{
-				Name = "Test-a",
+				Name = "Test A",
 				Description = "aaa bbb",
 			};
 
+			// Clean up data
+
+			var categories = CategoryRepository.List().Where(c => c.Name == category.Name || c.Name == changedName ).ToList();
+			foreach(var c in categories)
+				CategoryRepository.Delete(c.Id);
+
 			category.CreationAccount = account;
+
+
 			CategoryRepository.Create(category);
 
-			category.Name = "Test-b";
+			category.Name = changedName;
+			category.Description = changedDescription;
+			category.CreationAccount = account; //todo: set a new Account, it Creation Account MUST not change with update
 
-			category.CreationAccount = account;
-			category = CategoryRepository.Update(category);
+			// Exceute
+			CategoryRepository.Update(category);
 
-
-			Assert.AreEqual(category.Name, "Test-b");
-
+			// Verify
+			Category testCategory = CategoryRepository.Read(category.Id);
+			testCategory.Name.ShouldEqual(changedName);
+			testCategory.Description.ShouldEqual(changedDescription);
+			//testCategory.CreationAccount...
 		}
 
 	}

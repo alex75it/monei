@@ -61,7 +61,12 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			string username = DEMO_USERNAME;
 			Account account = AccountRepository.Read(username);
 			if (account == null)
-				throw new Exception("Cannot load demo account");
+			{
+				Console.WriteLine("Create DEMO account");
+				account = Account.Create(username, "aaa", Account.AccountRole.User, GetEuroCurrency());
+				AccountRepository.Create(account);
+				//throw new Exception("Cannot load demo account");
+			}
 			return account;
 		}
 

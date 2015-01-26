@@ -77,7 +77,9 @@
     <EmbeddedResource Include="Nhibernate Mapping\Currency.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Nhibernate Mapping\Category.hbm.xml" />
+    <EmbeddedResource Include="Nhibernate Mapping\Category.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Nhibernate Mapping\Subcategory.hbm.xml" />

@@ -180,17 +180,6 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			AccountRepository.Delete(account.Id);
 		}
 
-		// todo: Delete test for Account
-
-
-		[TestMethod]
-		public void LoginTest()
-		{
-
-			// todo: create test
-			Assert.Inconclusive("not implemented");
-		}
-
 
 		[TestMethod]
 		public void SetLastLoginDate()

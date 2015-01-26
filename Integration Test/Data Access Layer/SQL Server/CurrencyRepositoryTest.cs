@@ -15,39 +15,9 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 	public class CurrencyRepositoryTest : RepositoryTestBase
 	{
 
-
+		
 		[TestMethod]
-		public void Create()
-		{
-			string code = "XXX";
-			string name = "XXX";
-			string symbol = "X";
-
-			Currency currency = new Currency()
-			{
-				Code = code,
-				Name = name,
-				Symbol = symbol,
-			};
-
-			currency = CurrencyRepository.Create(currency);
-
-			Assert.IsFalse(currency.Id == Currency.EMPTY_ID);
-			Assert.AreEqual(currency.Name, name);
-			Assert.AreEqual(currency.Code, code);
-			Assert.AreEqual(currency.Symbol, symbol);
-
-
-			try
-			{
-				CurrencyRepository.Delete(currency.Id);
-			}
-			catch { }
-
-		}
-
-		[TestMethod]
-		public void TestDelete()
+		public void Delete()
 		{
 			string code = "YYY";
 			string name = "YYY";
@@ -63,7 +33,9 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
 			try
 			{
-				currency = CurrencyRepository.Create(currency);
+				//currency = CurrencyRepository.Create(currency);
+
+				throw new Exception("Create method does not exists");
 			}
 			catch (Exception exc)
 			{

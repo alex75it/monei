@@ -58,7 +58,7 @@ namespace Monei.DataAccessLayer.MongoDB
 			return item;
 		}
 
-		public Category Update(Category item)
+		public void Update(Category item)
 		{
 			Validate(item);
 
@@ -75,11 +75,7 @@ namespace Monei.DataAccessLayer.MongoDB
 
 			var result = GetCollection().Save(updateItem);
 
-			if (result.Ok)
-			{
-				return item;
-			}
-			else
+			if (!result.Ok)
 				throw new Exception("Update of Category fail.\r\n + result.LastErrorMessage");
 
 			//GetCollection().Update( Query.EQ("_id", item.Id),

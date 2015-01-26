@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Exceptions;
 using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
+using NHibernate;
 using Should;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
@@ -69,26 +70,37 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 		[TestMethod]
 		public void Read()
 		{
-			string name ="to be deleted";
+			string name = "to be deleted";
 			string description = "<fghe e e egeavb4wt h";
 			Category category = Helper.GetRandomCategory();
+			int subcategoryId = 0;
 
-			Subcategory subcategory = new Subcategory();
-			subcategory.Name = name;
-			subcategory.Description = description;
-			subcategory.Category = category;
-			//subcategory.CreationAccount
+			try
+			{
+				Subcategory subcategory = new Subcategory();
+				subcategory.Name = name;
+				subcategory.Description = description;
+				subcategory.Category = category;
+				subcategory.CreationAccount = Helper.GetTestAccount();
 
+				subcategoryId = SubcategoryRepository.Create(subcategory);
 
-			subcategory.Id = SubcategoryRepository.Create(subcategory);
+				// Execute
+				subcategory = SubcategoryRepository.Read(subcategoryId);
 
-			int id = subcategory.Id;
-			subcategory = SubcategoryRepository.Read(id);
-
-
-			Assert.AreEqual(name, subcategory.Name);
-			Assert.AreEqual(description, subcategory.Description);
-
+				// Verify
+				subcategory.Name.ShouldEqual(name);
+				subcategory.Description.ShouldEqual(description);
+				subcategory.Category.ShouldEqual(category);
+				//subcategory.CreationAccount.ShouldNotBeNull("CreationAccount is null"); not used in this entity
+				Assert.IsNotNull(subcategory.CreationDate); 
+				subcategory.LastChangeDate.ShouldBeNull();
+				subcategory.LastUpdateAccount.ShouldBeNull();				
+			}
+			finally{
+				if(subcategoryId != 0)
+					SubcategoryRepository.Delete(subcategoryId);
+			}
 		}
 
 		[TestMethod]

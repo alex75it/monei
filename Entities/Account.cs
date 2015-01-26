@@ -34,13 +34,14 @@ namespace Monei.Entities
             Account account = new Account()
             {
 				//Id = ObjectId.GenerateNewId(),
+				Guid = Guid.NewGuid(),
 				Username = username,
 				Password = password,
                 Role = AccountRole.User,
 				Currency = currency,
 				LastLogin = null,
 				CreationDate = DateTime.UtcNow,
-				LastChangeDate = null,				
+				LastChangeDate = null,					
             };
 
             return account;

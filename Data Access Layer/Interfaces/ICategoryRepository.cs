@@ -14,7 +14,7 @@ namespace Monei.DataAccessLayer.Interfaces
 
 		Category Read(int id);
 
-		Category Update(Category item);
+		void Update(Category item);
 
 		void Delete(int id);
 

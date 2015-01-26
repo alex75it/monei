@@ -10,7 +10,6 @@ namespace Monei.DataAccessLayer.Interfaces
 	public interface ICurrencyRepository
 	{
 		Currency Read(string code);
-		Currency Create(Currency currency);
 		void Delete(int id);
 
 	}
