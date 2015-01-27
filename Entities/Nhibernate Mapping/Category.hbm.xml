@@ -12,22 +12,18 @@
         <property name="CreationDate" />
         <property name="LastChangeDate" />
         <property name="DeletionDate" />
-        <bag name="Subcategories" table="Subcategory" lazy="false" >
-			<!--collection-type="System.Collections.Generic.IList"-->
+        <!--<bag name="Subcategories" table="Subcategory" lazy="false" >
+			--><!--collection-type="System.Collections.Generic.IList"--><!--
 			<key column="CategoryId"></key>
             <one-to-many class="Subcategory"/>
-        </bag>
-		<!--<list name="Subcategories" table="Subcategory" lazy="false" fetch="join">		
+        </bag>-->
+		<!-- I prefer "list" because it is unique and ...-->
+		<list name="Subcategories" table="Subcategory" lazy="false" >
+			<!--collection-type="System.Collections.Generic.IList"-->
 			<key column="CategoryId"></key>
 			<index column="Id"></index>
 			<one-to-many class="Subcategory"/>
-		</list>-->
-		
-        <!--cannot cast to List<Category>, requires PersistentGenericList-->
-        <!--<list name="Subcategories" table="Subcategory" >
-            <key column="CategoryId" />
-            <index column="Id" />            
-            <one-to-many class="Subcategory" />
-        </list>-->        
+		</list>
+       
     </class>
 </hibernate-mapping>

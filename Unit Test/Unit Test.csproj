@@ -39,6 +39,8 @@
       <HintPath>..\packages\Should.1.1.20\lib\Should.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -53,14 +55,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Entities\UnitTest1.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Data Access Layer\Filters\RegistryFiltersTest.cs" />
+    <Compile Include="Entities\AccountTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Data Access Layer\" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj">
+      <Project>{85d1f40c-f9cc-42f7-ac99-c83e53fd8ed4}</Project>
+      <Name>Data Access Layer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entities\Entities.csproj">
       <Project>{0c1fa7da-2e62-4272-a9c3-871e5b20d9b5}</Project>
       <Name>Entities</Name>
