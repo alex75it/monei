@@ -10,13 +10,14 @@ using Monei.MvcApplication.Controllers.Api;
 using Monei.MvcApplication.Controllers.Api.PostDataObjects;
 
 namespace Monei.MvcApplication.Api
-{
+{	
 	[RoutePrefix("api/category")]
 	public class CategoryController : ApiControllerBase
 	{
 		[HttpGet, Route("list")]
 		public IEnumerable<Category> Get()
 		{
+			
 			//IList<Category> list = new List<Category>() { };
 			//list.Add(new Category() { 
 			//	Name = "AAA",
@@ -27,7 +28,7 @@ namespace Monei.MvcApplication.Api
 			IEnumerable<Category> list = base.CategoryRepository.List();
 			foreach(var category in list)
 			{
-				//category.Subcategories = null;
+				category.Subcategories = null;
 			}
 
 			return list;

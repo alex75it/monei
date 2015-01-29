@@ -14,13 +14,15 @@ app.controller("registryCreateController", [
 				/*success*/
 				function (data) {  $scope.categories = data; },
 				/*error*/
-				function (data) { $scope.showError(data);}
+				function (data) { $scope.showError(data, "Fail to get Categories.");}
 				);
 		};
 
-		$scope.showError = function(error)
+		$scope.showError = function(error, context)
 		{
-			$scope.error = error.exceptionMessage || error.message || error; //.message
+
+			//$scope.error = error.exceptionMessage || error.message || error; //.message
+			$scope.error = context + " " + error.exceptionMessage || error.message || error; //.message
 		};
 
 		$scope.initialize();

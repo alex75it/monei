@@ -7,9 +7,11 @@ using Core;
 using log4net;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
+using Monei.MvcApplication.Core;
 
 namespace Monei.MvcApplication.Controllers.Api
 {
+	
 	public class ApiControllerBase :ApiController
 	{
 		// injected properties
@@ -20,7 +22,7 @@ namespace Monei.MvcApplication.Controllers.Api
 
 		public SubcategoryManager SubcategoryManager { get; set; }
 
-		public /*static*/ readonly ILog logger = LogManager.GetLogger(typeof(ApiControllerBase));
+		public /*static*/ readonly ILog logger; // = LogManager.GetLogger(typeof(ApiControllerBase));
 
 		private Account currentAccount;
 		public Account CurrentAccount

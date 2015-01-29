@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Monei.Entities
@@ -26,7 +24,6 @@ namespace Monei.Entities
 		//	};
 		//}
 
-		[BsonId]
 		public virtual TKey Id { get; set; }
 		//[BsonId]
 		//public ObjectId Id {get; set;}
