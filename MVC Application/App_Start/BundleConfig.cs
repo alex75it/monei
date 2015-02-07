@@ -9,23 +9,17 @@ namespace Monei.MvcApplication
 		public static void RegisterBundles(BundleCollection bundles)
 		{
 			bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-						"~/Scripts/JQuery/jquery-{version}.js"
-						//"~/Scripts/jquery-migrate-{version}.js"
-						));
-
-			bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-						"~/Scripts/JQuery/jquery-ui-{version}.js"));
-
-			bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-						"~/Scripts/JQuery/jquery.unobtrusive*",
-						"~/Scripts/JQuery/jquery.validate*"));
+						"~/Scripts/jquery-{version}.js",
+						"~/Scripts/jquery-ui-{version}.js",
+						"~/Scripts/jquery.unobtrusive*",
+						"~/Scripts/jquery.validate*"));
 
 			// Bootstrap
 			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-				"~/Scripts/bootstrap/bootstrap.js",
-				"~/Scripts/JQuery/jquery.validate.unobtrusive-custom-for-bootstrap.js",
-				"~/Scripts/bootstrap/bootstrap-select.min.js",
-				"~/Scripts/bootstrap/bootstrap-datepicker.js"
+				"~/Scripts/bootstrap.js",
+				"~/Scripts/jquery.validate.unobtrusive-custom-for-bootstrap.js",
+				"~/Scripts/bootstrap-select.min.js",
+				"~/Scripts/bootstrap-datepicker.js"
 				));
 
 			bundles.Add(new StyleBundle("~/Content/Bootstrap").Include(
@@ -43,10 +37,9 @@ namespace Monei.MvcApplication
 			bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
 						"~/Scripts/modernizr-*"));
 
-			bundles.Add(new ScriptBundle("~/bundles/angular")
-				.Include(
-				"~/Scripts/angular/angular.min.js",
-				"~/Scripts/angular/angular-resource.min.js"
+			bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+				"~/Scripts/angular.min.js",
+				"~/Scripts/angular-resource.min.js"
 				//"~/Scripts/ng-infinite-scroll.js",
 				//"~/Scripts/angular-strap.js"
 				));
@@ -54,7 +47,7 @@ namespace Monei.MvcApplication
             
 			bundles.Add(new ScriptBundle("~/bundles/monei").Include(
 				// moment
-				"~/Scripts/moment.min.js",
+				//"~/Scripts/moment.min.js",
 				"~/Scripts/moment_langs.min.js",
 
 				// noty
@@ -72,16 +65,20 @@ namespace Monei.MvcApplication
 				"~/Scripts/Chart.min.js", // used in Registry page
 
 				// monei
-				"~/Scripts/monei/monei.js",
-				"~/Scripts/monei/monei.utils.js",
-				"~/Scripts/monei/AngularApp.js",
-				"~/Scripts/monei/angular controllers/*.js",
-				"~/Scripts/monei/angular directives/*.js",
-				"~/Scripts/monei/angular services/*.js"
+				"~/Scripts for monei/monei.js",
+				"~/Scripts for monei/monei.utils.js",
+				"~/Scripts for monei/angular app.js",
+				"~/Scripts for monei/angular controllers/*.js",
+				"~/Scripts for monei/angular directives/*.js",
+				"~/Scripts for monei/angular services/*.js"
                 ));	
 
 
-			bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+			bundles.Add(new StyleBundle("~/Content/css")
+				.Include(
+					"~/Content/monei.css", 
+					"~/Content/monei bootstrap overload.css")
+				);
 
 			bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
 						"~/Content/themes/base/jquery.ui.core.css",

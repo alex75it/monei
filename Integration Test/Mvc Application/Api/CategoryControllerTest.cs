@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Routing;
 using FakeItEasy;
 using Microsoft.Owin.Hosting;
 using Microsoft.Owin.Hosting.Builder;
@@ -48,6 +49,50 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			list.ShouldNotBeEmpty();
 		}
 
+
+		[TestMethod]
+		public void AlexTest()
+		{
+			string baseAddress = "http://localhost:9000/";
+
+
+			// create the in memory server
+			HttpConfiguration configuration = GetConfiguration();
+			configuration.Routes.MapHttpRoute("API test", routeTemplate: "api/category/list");
+			HttpServer server = new HttpServer(configuration);
+
+			HttpClient client = new HttpClient(server);	
+
+			HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, baseAddress +  "api/category/list");
+
+
+
+			HttpResponseMessage response = client.SendAsync(request).Result;
+
+			response.IsSuccessStatusCode.ShouldBeTrue();
+
+
+			// create the client
+			//using(HttpMessageHandler handler = new)
+  			{
+				//HttpClient client = new HttpClient(handler);	
+
+
+
+			}
+			
+
+
+		}
+
+
+		private HttpConfiguration GetConfiguration() {
+			HttpConfiguration configuration = new HttpConfiguration();
+
+			return configuration;
+		}
+
+
 		[TestMethod]
 		public void Get_Should_SerializeData()
 		{
@@ -58,24 +103,35 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			
 			//HttpSelfHostConfiguration
 			HttpConfiguration configuration = new HttpConfiguration();
-			//configuration.Routes.MapHttpRoute("route name", "api/category/list");
+				
+			configuration.Routes.MapHttpRoute("test", "api/category/list");		
+			//configuration.Routes.MapHttpRoute(
+			//		name: "DefaultApi",
+			//		routeTemplate: "api/{controller}/{id}",
+			//		defaults: new { id = RouteParameter.Optional }
+			//	);
 
 			//configuration.MessageHandlers.Add();
 
 			IAppBuilder appBuilder = new AppBuilderFactory().Create();
+			
 			appBuilder.UseWebApi(configuration);
 
-			using (WebApp.Start<Startup>(url:testAddress))
+
+
+			HttpResponseMessage response;
+
+			using (WebApp.Start<Startup>( url:testAddress))
 			{
 				HttpClient client = new HttpClient();
-
-				var response = client.GetAsync(testAddress + "api/category/list").Result;
-
-				Console.WriteLine("end");
+				response = client.GetAsync(testAddress + "api/category/list").Result;		
 				Console.WriteLine(response.Content.ReadAsStringAsync().Result); 
 			}
 
-			Console.ReadLine();
+			// Assert
+			response.IsSuccessStatusCode.ShouldBeTrue();
+
+			//Console.ReadLine();
 		}
 
 		public class Startup
@@ -86,11 +142,13 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			{
 				// Configure Web API for self-host. 
 				HttpConfiguration config = new HttpConfiguration();
-				config.Routes.MapHttpRoute(
-					name: "DefaultApi",
-					routeTemplate: "api/{controller}/{id}",
-					defaults: new { id = RouteParameter.Optional }
-				);
+				//config.Routes.MapHttpRoute(
+				//	name: "DefaultApi",
+				//	routeTemplate: "api/{controller}/{id}",
+				//	defaults: new { id = RouteParameter.Optional }
+				//);
+
+				//config.
 
 				appBuilder.UseWebApi(config);
 			} 	

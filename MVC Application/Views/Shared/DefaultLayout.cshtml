@@ -22,7 +22,7 @@
 			<div class="float-left" style="margin:30px 10px 0;"><h2>@ViewBag.Title</h2></div>
 			<div class="float-right">
 				<section id="login">
-					@Html.Partial("LoginPartial")
+					@Html.Partial("UserInfoPartial")
 					<span class="float-right">@Html.Raw(DateTime.Today.ToShortDateString())</span>
 				</section>
 				<nav style="margin-top:45px;">
@@ -73,8 +73,6 @@
 
 		<script src="https://www.google.com/jsapi"></script>
 		@Scripts.Render("~/bundles/jquery")
-		@Scripts.Render("~/bundles/jqueryui")
-		@Scripts.Render("~/bundles/jqueryval")
 		@Scripts.Render("~/bundles/modernizr")
 		@Scripts.Render("~/bundles/bootstrap")
 		@Scripts.Render("~/bundles/angular")

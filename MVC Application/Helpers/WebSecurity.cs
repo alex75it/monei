@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Security;
 using log4net;
 using Monei.DataAccessLayer.Interfaces;
-//using Monei.DataAccessLayer.MongoDB;
 using Monei.DataAccessLayer.SqlServer;
 using Monei.Entities;
 
