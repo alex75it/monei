@@ -8,7 +8,7 @@ using Monei.Core.DataAnalysis;
 using Monei.Core.DataAnalysis.BusinessObjects;
 
 
-namespace Monei.MvcApplication.Controllers.Api
+namespace Monei.MvcApplication.Api
 {
 	//[Authorize]
 	[RoutePrefix("api/Dashboard")]

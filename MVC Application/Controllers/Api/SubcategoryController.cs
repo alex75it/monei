@@ -13,7 +13,7 @@ using Monei.Entities;
 using Monei.MvcApplication.Controllers.Api.PostDataObjects;
 using Newtonsoft.Json.Linq;
 
-namespace Monei.MvcApplication.Controllers.Api
+namespace Monei.MvcApplication.Api
 {
 	//[RoutePrefix("subcategory")]
 	public class SubcategoryController : ApiControllerBase

@@ -9,7 +9,7 @@ using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
 using Monei.MvcApplication.Core;
 
-namespace Monei.MvcApplication.Controllers.Api
+namespace Monei.MvcApplication.Api
 {
 	
 	public class ApiControllerBase :ApiController

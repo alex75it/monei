@@ -14,6 +14,13 @@ namespace Monei.MvcApplication.Api
 	[RoutePrefix("api/category")]
 	public class CategoryController : ApiControllerBase
 	{
+		[HttpGet, Route("ping")]
+		public void Ping()
+		{
+
+			//return "pong";
+		}
+
 		[HttpGet, Route("list")]
 		public IEnumerable<Category> Get()
 		{

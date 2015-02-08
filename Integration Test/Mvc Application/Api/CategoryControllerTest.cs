@@ -17,7 +17,7 @@ using Should;
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
 	[TestClass]
-	public class CategoryControllerTest
+	public class CategoryControllerTest :ApiControllerTestBase
 	{
 
 		private HttpClient client;
@@ -26,6 +26,19 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		public void TestInitialize()
 		{
 			client = new HttpClient();
+		}
+
+
+		[TestMethod]
+		public void Ping_Should_RespondOk()
+		{
+			var client = new HttpClient(server);
+
+			using (var request = CreateRequest("api/category/ping", HttpMethod.Get))
+			using (var response = client.SendAsync(request).Result)
+			{
+				response.IsSuccessStatusCode.ShouldBeTrue();
+			}
 		}
 
 		[TestMethod, TestCategory("Web")]
@@ -76,12 +89,9 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			//using(HttpMessageHandler handler = new)
   			{
 				//HttpClient client = new HttpClient(handler);	
+				
 
-
-
-			}
-			
-
+			}		
 
 		}
 

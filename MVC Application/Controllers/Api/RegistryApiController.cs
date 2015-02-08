@@ -10,7 +10,7 @@ using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
 using OfficeOpenXml;
 
-namespace Monei.MvcApplication.Controllers.Api
+namespace Monei.MvcApplication.Api
 {
 	
 	[RoutePrefix("api/registry")]

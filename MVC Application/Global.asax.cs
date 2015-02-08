@@ -9,6 +9,7 @@ using System.Web.Routing;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
 using log4net;
+using Monei.MvcApplication.Api;
 using Monei.MvcApplication.Code;
 using Monei.MvcApplication.Controllers;
 using Monei.MvcApplication.Controllers.Api;
