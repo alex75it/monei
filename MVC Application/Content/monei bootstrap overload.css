@@ -1,0 +1,22 @@
+﻿select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input
+, span.add-on
+{
+    padding: 1px 4px !important;
+}
+
+select { padding-right:1px !important; height:1.6em }
+
+
+.btn-primary {
+  color: #000;
+  background-color: #ffc442;
+  border-color: #E2C186;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+color: #000;
+background-color: #ffd800;
+border-color: #ffc442;
+}
+
+  /*#E2C186*/
