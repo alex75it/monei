@@ -29,6 +29,8 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		private string baseUrl = "http://www.apitest.com/";
 		private IWindsorContainer container;
 
+		// todo: CLEAN THIS CLASS
+
 		//protected void InitializeController(ApiController controller)
 		//{ 
 		
@@ -80,8 +82,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			var httpDependencyResolver = new WindsorDependencyResolver(container);
 			GlobalConfiguration.Configuration.DependencyResolver = httpDependencyResolver;
 
-
-
+			
 			//container.Register(
 			//	Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient(),
 			//	Classes.FromThisAssembly().BasedOn<MoneiControllerBase>().LifestyleTransient(),

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.MvcApplication.Api.PostDataObjects;
+using Monei.MvcApplication.Api.ResponseDataObjects;
+using Newtonsoft.Json;
 using Should;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
@@ -60,6 +62,62 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
 			request.Dispose();
 		}
+
+		[TestMethod]
+		public void Login_Should_ReturnUserNameNotFound()
+		{
+			var client = new HttpClient(base.server);
+
+			var data = new LoginPostData()
+			{
+				Username = "none",
+				Password = "pluto"
+			};
+			var request = CreateRequest<LoginPostData>("api/account/login", HttpMethod.Post, data);
+
+			using (var response = client.SendAsync(request).Result)
+			{
+				response.IsSuccessStatusCode.ShouldEqual(true);
+				response.Content.ShouldNotBeNull();
+				response.Content.ShouldNotBeType<HttpError>();
+				response.IsSuccessStatusCode.ShouldEqual(true);
+
+				LoginResult result = response.Content.ReadAsAsync<LoginResult>().Result;
+				result.IsOk.ShouldBeFalse();
+				result.ErrorCode.ShouldEqual(LoginResult.ERROR_USER_NOT_FOUND);
+			}
+
+			request.Dispose();
+		}
+
+
+				[TestMethod]
+		public void Login_Should_ReturnWrongPassword()
+		{
+			var client = new HttpClient(base.server);
+
+			var data = new LoginPostData()
+			{
+				Username = "demo",
+				Password = "wrong"
+			};
+			var request = CreateRequest<LoginPostData>("api/account/login", HttpMethod.Post, data);
+
+			using (var response = client.SendAsync(request).Result)
+			{
+				response.IsSuccessStatusCode.ShouldEqual(true);
+				response.Content.ShouldNotBeNull();
+				response.Content.ShouldNotBeType<HttpError>();
+				response.IsSuccessStatusCode.ShouldEqual(true);
+				
+				LoginResult result = response.Content.ReadAsAsync<LoginResult>().Result;
+				result.IsOk.ShouldBeFalse();
+				result.ErrorCode.ShouldEqual(LoginResult.ERROR_WRONG_PASSWORD);
+			}
+
+			request.Dispose();
+		}
+
 
 	}
 }
