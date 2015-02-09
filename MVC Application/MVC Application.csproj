@@ -233,8 +233,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\CategoryController.cs" />
+    <Compile Include="Api\CategoryApiController.cs" />
     <Compile Include="Api\PostDataObjects\LoginPostData.cs" />
+    <Compile Include="Api\ResponseDataObjects\LoginResult.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -251,7 +252,6 @@
     <Compile Include="Api\PostDataObjects\MoveSubcategoryPostData.cs" />
     <Compile Include="Controllers\Api\PostDataObjects\SubcategoryPostData.cs" />
     <Compile Include="Controllers\Api\RegistryApiController.cs" />
-    <Compile Include="Api\ResponseDataObjects\LoginResult.cs" />
     <Compile Include="Controllers\Api\SubcategoryController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Core\BaseViewPage.cs" />

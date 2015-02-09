@@ -21,8 +21,8 @@ app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (Accoun
 
 		$scope.login = function () {
 			$scope.errors = {};
-			//var data = { username: $scope.username, password: $scope.password, rememberMe: $scope.rememberMe };
-			var data = { username: $scope.username, password: $scope.password };
+			var data = { username: $scope.username, password: $scope.password, rememberMe: $scope.rememberMe };
+			
 			//$scope.data = data;			
 
 			if (!data.username) $scope.errors.usernameError = "Username needed";

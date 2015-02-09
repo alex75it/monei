@@ -15,11 +15,12 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
 	[TestClass]
 	public class CategoryControllerTest
 	{
+		//todo: this test is no more necessary, use it as template and delete after first "use"
 		[TestMethod, TestCategory("Web")]
 		public void Get()
 		{
 			// Arrange
-			CategoryController controller = new CategoryController();
+			CategoryApiController controller = new CategoryApiController();
 
 			ICategoryRepository categoryRepository = A.Fake<ICategoryRepository>();
 			IList<Category> data = new List<Category>();
@@ -33,7 +34,7 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
 			// Assert
 			list.ShouldNotBeEmpty();
 		}
-
+		
 
 	}
 }

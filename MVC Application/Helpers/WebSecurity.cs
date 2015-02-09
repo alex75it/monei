@@ -17,7 +17,9 @@ namespace Monei.MvcApplication.Helpers
 				
 		public enum LoginResult
 		{
-			Ok, UsernameNotFound, WrongPassword
+			Ok = 0, 
+			UsernameNotFound = 10, 
+			WrongPassword = 20
 		}
 
 		public WebSecurity(IAccountRepository accountRepository)

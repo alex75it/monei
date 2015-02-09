@@ -7,6 +7,7 @@ using System.Web.Http;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.MvcApplication.Api.PostDataObjects;
 using Monei.MvcApplication.Api.ResponseDataObjects;
+using Monei.MvcApplication.Helpers;
 
 namespace Monei.MvcApplication.Api
 {
@@ -26,45 +27,24 @@ namespace Monei.MvcApplication.Api
 		}
 
 		[HttpPost, Route("login")]
-		public LoginResult Login(LoginPostData data) {
+		public LoginResult Login(LoginPostData data)
+		{	
+			WebSecurity.LoginResult result = new WebSecurity(AccountRepository).Login(data.Username, data.Password, persistCookie: data.RememberMe);
 
-
-
-
-			var account = AccountRepository.Read(data.Username);
-
-			if (account == null)
+			switch (result)
 			{
-				return LoginResult.CreateUserNotFound();
-			}
+				case WebSecurity.LoginResult.Ok:
+					return LoginResult.Ok;
 
-			if (account.Password.ToUpper() != data.Password.ToUpper())
-			{
-				return LoginResult.CreateWrogPassword();
-			}
+				case WebSecurity.LoginResult.UsernameNotFound:
+					return LoginResult.UsernameNotFound;
+			
+				case WebSecurity.LoginResult.WrongPassword:
+					return LoginResult.WrongPassword;			
 
-			return new LoginResult()
-			{
-				IsOk = true,
-			};
-
-
-			//Monei.MvcApplication.Helpers.WebSecurity.LoginResult result = new WebSecurity(accountRepository).Login(model.username, model.Password, persistCookie: model.RememberMe);
-			//switch (result)
-			//{
-			//	case WebSecurity.LoginResult.Ok:
-			//		return RedirectToLocal(returnUrl);
-
-			//	case WebSecurity.LoginResult.UsernameNotFound:
-			//		ModelState.AddModelError("", "The username provided was not found");	//l10n
-			//		break;
-			//	case WebSecurity.LoginResult.WrongPassword:
-			//		ModelState.AddModelError("", "The password provided was incorrect");	//l10n
-			//		break;
-
-			//	default:
-			//		throw new Exception("Unmanaged result: " + result);
-			//}				
+				default:
+					throw new Exception("Unmanaged result: " + result);
+			}				
 
 		}
 

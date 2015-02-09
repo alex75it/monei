@@ -5,19 +5,19 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.MvcApplication.Api.PostDataObjects;
 using Monei.MvcApplication.Api.ResponseDataObjects;
 using Newtonsoft.Json;
+using NUnit.Framework;
 using Should;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
-	[TestClass]
+	[TestFixture, Category("API"), Category("Account")]
 	public class AccountApiControllerTest :ApiControllerTestBase
 	{
 
-		[TestMethod]
+		[Test]
 		public void Ping_Should_RespondOk()
 		{
 			var client = new HttpClient(server);
@@ -29,7 +29,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			}			
 		}
 
-		[TestMethod]
+		[Test]
 		public void Login_Should_ReturnResult()
 		{
 
@@ -63,8 +63,8 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			request.Dispose();
 		}
 
-		[TestMethod]
-		public void Login_Should_ReturnUserNameNotFound()
+		[Test]
+		public void Login_Should_ReturnUsernameNotFound()
 		{
 			var client = new HttpClient(base.server);
 
@@ -83,15 +83,14 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 				response.IsSuccessStatusCode.ShouldEqual(true);
 
 				LoginResult result = response.Content.ReadAsAsync<LoginResult>().Result;
-				result.IsOk.ShouldBeFalse();
-				result.ErrorCode.ShouldEqual(LoginResult.ERROR_USER_NOT_FOUND);
+				result.ShouldEqual(LoginResult.UsernameNotFound);
 			}
 
 			request.Dispose();
 		}
 
 
-				[TestMethod]
+		[Test]
 		public void Login_Should_ReturnWrongPassword()
 		{
 			var client = new HttpClient(base.server);
@@ -109,10 +108,9 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 				response.Content.ShouldNotBeNull();
 				response.Content.ShouldNotBeType<HttpError>();
 				response.IsSuccessStatusCode.ShouldEqual(true);
-				
+
 				LoginResult result = response.Content.ReadAsAsync<LoginResult>().Result;
-				result.IsOk.ShouldBeFalse();
-				result.ErrorCode.ShouldEqual(LoginResult.ERROR_WRONG_PASSWORD);
+				result.ShouldEqual(LoginResult.WrongPassword);
 			}
 
 			request.Dispose();

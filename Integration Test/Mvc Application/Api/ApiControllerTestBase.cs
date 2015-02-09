@@ -11,7 +11,6 @@ using System.Web.Mvc;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using Monei.MvcApplication;
@@ -19,10 +18,11 @@ using Monei.MvcApplication.Api;
 using Monei.MvcApplication.Code;
 using Monei.MvcApplication.Core.Installers;
 using Newtonsoft.Json.Serialization;
+using NUnit.Framework;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
-	[TestClass]
+	[TestFixture]
 	public class ApiControllerTestBase :IDisposable
 	{
 		protected HttpServer server;
@@ -31,49 +31,57 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
 		// todo: CLEAN THIS CLASS
 
-		//protected void InitializeController(ApiController controller)
-		//{ 
-		
-		//}
+		public ApiControllerTestBase()
+		{
 
-		[TestInitialize]
+		}
+
+		[TestFixtureSetUp]
 		public void Initialize()
 		{			
-
-			// WindsorCastle
-			
 			InitializeWindsorContainer();
-
 			server = new HttpServer(GetConfiguration());
-			
-			//container.Install(
-			//	new RepositoriesInstaller(),
-			//	FromAssembly.This()
-			//	);
+		}
 
-			//AccountRepository = container.Resolve<IAccountRepository>();
-			//CurrencyRepository = container.Resolve<ICurrencyRepository>();
-			//RegistryRepository = container.Resolve<IRegistryRepository>();
-			//CategoryRepository = container.Resolve<ICategoryRepository>();
-			//SubcategoryRepository = container.Resolve<ISubcategoryRepository>();
+
+		protected HttpClient GetClient()
+		{
+			// initialize a new Server
+			var server = new HttpServer(GetConfiguration());
+			return new HttpClient(server);
 		}
 
 
 		private void InitializeWindsorContainer()
 		{
-			// WindsorCastle
+
 			container = new WindsorContainer();
 
 			container.Register(
-				Component.For<IAccountRepository>().Instance( new AccountRepository())
-				);
+				Component.For(typeof(IAccountRepository)).ImplementedBy(typeof(AccountRepository)), //.LifestylePerWebRequest(),
+				Component.For(typeof(IRegistryRepository)).ImplementedBy(typeof(RegistryRepository)), //.LifestylePerWebRequest(),
+				Component.For(typeof(ICurrencyRepository)).ImplementedBy(typeof(CurrencyRepository)), //.LifestylePerWebRequest(),
+				Component.For(typeof(ICategoryRepository)).ImplementedBy(typeof(CategoryRepository)), //.LifestylePerWebRequest(),
+				Component.For(typeof(ISubcategoryRepository)).ImplementedBy(typeof(SubcategoryRepository)) //.LifestylePerWebRequest(),
 
+				//Component.For(typeof(SubcategoryManager)).ImplementedBy(typeof(SubcategoryManager)), //.LifestylePerWebRequest()
+			);
+			
+			// todo: try to use this...
+			//container.Install(new RepositoriesInstaller());
+			// give this error:
+			/*
+			An exception of type 'Castle.MicroKernel.ComponentResolutionException' occurred in Castle.Windsor.dll but was not handled in user code
+			Additional information: Looks like you forgot to register the http module Castle.MicroKernel.Lifestyle.PerWebRequestLifestyleModule
+			*/
+
+			// for check...
 			IAccountRepository accountREpository = container.Resolve<IAccountRepository>();
 
 			container.Install( new ControllerInstaller());
 
 			//container.Resolve<MoneiControllerBase>();
-			ApiController controller = container.Resolve<ApiControllerBase>();
+			//ApiController controller = container.Resolve<ApiControllerBase>();
 
 			var controllerFactory = new WindsorControllerFactory(container.Kernel);
 			ControllerBuilder.Current.SetControllerFactory(controllerFactory);
@@ -81,23 +89,9 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
 			var httpDependencyResolver = new WindsorDependencyResolver(container);
 			GlobalConfiguration.Configuration.DependencyResolver = httpDependencyResolver;
-
-			
-			//container.Register(
-			//	Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient(),
-			//	Classes.FromThisAssembly().BasedOn<MoneiControllerBase>().LifestyleTransient(),
-			//	Classes.FromThisAssembly().BasedOn<ApiControllerBase>().LifestyleTransient() // .LifestyleScoped()
-
-			//	//Component.For<IAccountRepository>().DependsOn<IAccountRepository>().in
-			//	);
-
-			//container.Install(new RepositoryInstaller());
 		}
 
-		public ApiControllerTestBase()
-		{
-			
-		}
+
 
 		protected HttpConfiguration GetConfiguration()
 		{
@@ -109,6 +103,14 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			return configuration;
 		}
 
+		/// <summary>
+		/// Create a HttpRequestMessage that can be used with HttpClient.SendAsync() method.		/// 
+		/// </summary>
+		/// <param name="url">Partial URL of the API <example>api/mycontroller/param</example></param>
+		/// <param name="method">GET, POST ...</param>
+		/// <param name="content"></param>
+		/// <param name="mediaType">HTTP "Header Accept" value, default is for JSON data</param>
+		/// <returns></returns>
 		protected HttpRequestMessage CreateRequest(string url, HttpMethod method, string mediaType = "application/json")
 		{
 			var request = new HttpRequestMessage(method, baseUrl + url);			
@@ -119,13 +121,53 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			return request;
 		}
 
+		/// <summary>
+		/// Create a HttpRequestMessage that can be used with HttpClient.SendAsync() method.		/// 
+		/// </summary>
+		/// <typeparam name="T">Type of the class passed in Content of the request</typeparam>
+		/// <param name="url">Partial URL of the API <example>api/mycontroller/param</example></param>
+		/// <param name="method">GET, POST ...</param>
+		/// <param name="content">The object data passed in the request</param>
+		/// <param name="mediaType">HTTP "Header Accept" value, default is for JSON data</param>
+		/// <returns></returns>
 		protected HttpRequestMessage CreateRequest<T>(string url, HttpMethod method,  T content, string mediaType = "application/json")
 		{
 			var request = CreateRequest(url, method, mediaType);
+			// todo: is this needed? (CamelCasePropertyNameContractResolver)
 			JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
 			formatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 			request.Content = new ObjectContent<T>(content, formatter);
 			return request;
+		}
+
+		protected T CallApi<T>(string url, HttpMethod httpMethod)
+			where T : class
+		{
+			T returnValue;
+			using (var client = GetClient())
+			using (var result = client.SendAsync(CreateRequest(url, HttpMethod.Get)).Result)
+			{
+				if (!result.IsSuccessStatusCode)
+					Assert.Fail("Server error. " + result.ToString());
+				returnValue = result.Content.ReadAsAsync<T>().Result;
+			}
+			return returnValue;
+		}
+
+
+		protected T CallApi<T, T1>(string url, HttpMethod httpMethod, T1 data)
+			where T: class 
+			where T1:class
+		{
+			T returnValue;
+			using (var client = GetClient())
+			using (var result = client.SendAsync(CreateRequest<T1>(url, HttpMethod.Get, data)).Result)
+			{
+				if (!result.IsSuccessStatusCode)
+					Assert.Fail("Server error. " + result.ToString());
+				returnValue = result.Content.ReadAsAsync<T>().Result;
+			}
+			return returnValue;
 		}
 
 

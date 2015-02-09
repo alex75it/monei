@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using Monei.Entities;
 using Monei.Test.IntegrationTest.DataAccessLayer.SqlServer;
 using Should;
+using NUnit.Framework;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-	[TestClass]
+	[TestFixture, Category("Repository"), Category("Category")]
 	public class CategoryRepositoryTest :RepositoryTestBase
 	{
-		[TestMethod]
+		[Test]
 		public void List()
 		{
 			ICategoryRepository repository = new CategoryRepository();
@@ -25,7 +26,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			
 		}
 
-		[TestMethod]
+		[Test]
 		public void AddCategory()
 		{
 			string name = "Transport and Parking";
@@ -69,7 +70,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			CategoryRepository.Delete(category.Id);
 		}
 
-		[TestMethod]
+		[Test]
 		public void UpdateCategory()
 		{
 			string changedName = "Test B";
