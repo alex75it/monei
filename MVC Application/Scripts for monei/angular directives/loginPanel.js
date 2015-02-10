@@ -9,7 +9,9 @@ app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (Accoun
 
 	directive.scope = {
 		//redirectUrl: "=redirectTo",
+		onLoggedIn: "&",
 		onLoggedin: "&",
+		onLoginFail: "&",
 	};
 
 	directive.link = function ($scope, $element, $attrs) {
@@ -21,28 +23,48 @@ app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (Accoun
 
 		$scope.login = function () {
 			$scope.errors = {};
-			var data = { username: $scope.username, password: $scope.password, rememberMe: $scope.rememberMe };
-			
-			//$scope.data = data;			
+			var data = { username: $scope.username, password: $scope.password, rememberMe: $scope.rememberMe };	
 
-			if (!data.username) $scope.errors.usernameError = "Username needed";
-			if (!data.password) $scope.errors.passwordError = "Password needed";
+			// reverse order for focus
+			if (!data.password) { $scope.errors.passwordError = "Password needed"; $element.find("#password").focus(); };
+			if (!data.username) { $scope.errors.usernameError = "Username needed"; $element.find("#username").focus(); };		
 			
 
 			if (!$scope.errors.usernameError && !$scope.errors.passwordError) {
 
-				//alert("login API");
 				AccountProvider.login(data, 
 					/*success*/
-					function (result) {
-						alert("login...result: " + result);
-						$scope.login_result = result;
+					function (result) {	
+						var loggedIn = false;
+						switch (result)
+						{
+							case AccountProvider.loginResults.Ok:
+								loggedIn = true;
+								break;
+							case AccountProvider.loginResults.UsernameNotFound:
+								$scope.loginFail && $scope.loginFail("Username not found");
+								//$scope.showError("Username not found");
+								$scope.errors.usernameError = "Username not found";
+								$element.find("#username").focus();
+								break;
+							case AccountProvider.loginResults.WrongPassword:
+								$scope.loginFail && $scope.loginFail("Wrong password");
+								//$scope.showError("Wrong password");
+								$scope.errors.passwordError = "Wrong password";
+								$element.find("#password").focus();
+								break;
 
-						$scope.onLoggedin && $scope.onLoggedin(data);
+							default:
+								$scope.showError(new Error("Unknown login result: " + result));
+								break;
+						}
 
-						if ($attrs.redirectto)
-							$window.location.href = $attrs.redirectto;
-						//alert("go to: " + $attrs.redirectto);
+						if (loggedIn) {
+							$scope.onLoggedin && $scope.onLoggedin(data);
+							//if ($attrs.redirectto) alert("go to: " + $attrs.redirectto);	
+							if ($attrs.redirectto)
+								$window.location.href = $attrs.redirectto;
+						}
 					},
 					/*error*/
 					$scope.showError

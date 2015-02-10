@@ -39,8 +39,7 @@
 		}
 		else
 		{
-			//Html.RenderPartial("LoginFormPartial");
-			<monei-login-panel redirectto="home" on-loggedin="alert(123)"></monei-login-panel>
+			<monei-login-panel redirectto="home" on-logged-in="alert(123)"></monei-login-panel>
 		}
 
 		<div class="clearfix"></div>
@@ -49,13 +48,6 @@
 			<br />Header "Accepted-Language": @Html.Raw(HttpContext.Current.Request.Headers["Accept-Language"])
 		</div>
 
-
 	</div>
 
 </div>
-
-<script>
-	@*app.controller("HomeController", ["$scope", function ($scope) {
-		$scope.redirectAfterLogin = "stocazzo";
-	}]);*@
-</script>
