@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Monei.Entities;
-using MongoDB.Bson;
 
 namespace Monei.DataAccessLayer.Interfaces
 {
@@ -14,7 +13,7 @@ namespace Monei.DataAccessLayer.Interfaces
 
 		Category Read(int id);
 
-		Category Update(Category item);
+		void Update(Category item);
 
 		void Delete(int id);
 

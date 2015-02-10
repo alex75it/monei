@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Monei.Entities.Interfaces;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace Monei.Entities
 {
@@ -26,11 +24,9 @@ namespace Monei.Entities
 
 		
 		public virtual Account Account { get; set; }
-		[BsonRequired]
-		[BsonDateTimeOptions(/*DateOnly=true,*/ Kind=DateTimeKind.Utc)]
 		[Required]
 		public virtual DateTime Date { get; set; }
-		[BsonRequired]
+
 		[Required]
 		//[DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode=true)]
 		public virtual decimal Amount { get; set; }

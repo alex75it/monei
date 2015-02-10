@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
 using Monei.MvcApplication.Models;
-using MongoDB.Bson;
+
 
 namespace Monei.MvcApplication.Controllers
 {
 	[Authorize]
     public class ContractsController : MoneiControllerBase
     {
+
+		private readonly IContractRepository contractRepository;
+
+		public ContractsController(IContractRepository contractRepository)
+		{
+			this.contractRepository = contractRepository;
+		}
 
 
         // GET: /Contracts/
@@ -20,7 +28,7 @@ namespace Monei.MvcApplication.Controllers
 			//AccountId
 
 			ContractListModel model = new ContractListModel();
-			model.Contracts = ContractRepository.Instance.ListContracts(GetAccount().Id);			
+			model.Contracts = contractRepository.ListContracts(GetAccount().Id);			
 
             return View("Contracts-Index", model);
         }
@@ -62,6 +70,8 @@ namespace Monei.MvcApplication.Controllers
 				if(endDateText != "") endDate = DateTime.Parse(endDateText);
 				decimal dueAmount = Decimal.Parse(dueAmountText);
 
+				
+
 				Contract contract = new Contract()
 				{
 					Account = GetAccount(),
@@ -72,7 +82,7 @@ namespace Monei.MvcApplication.Controllers
 
 				};
 
-				ContractRepository.Instance.CreateContract(contract);
+				contractRepository.CreateContract(GetAccount().Id, contract);
 
 
                 return RedirectToAction("Index");
@@ -126,7 +136,7 @@ namespace Monei.MvcApplication.Controllers
 
 				int contractId = int.Parse(id);
 
-				ContractRepository.Instance.Delete(contractId);
+				contractRepository.Delete(contractId);
 
                 return RedirectToAction("Index");
             }

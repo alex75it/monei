@@ -12,7 +12,7 @@ namespace Monei.MvcApplication.Controllers
 	public class MoneiControllerBase : Controller, IController
 	{
 
-		public /*static*/ /*readonly*/ ILog logger = LogManager.GetLogger(typeof(MoneiControllerBase));
+		public /*static*/ /*readonly*/ ILog logger; // = LogManager.GetLogger(typeof(MoneiControllerBase));
 
 		public const string SESSION_RETURN_URL = "returnUrl";
 		public const int UNDEFINED_ID = -1;
@@ -30,6 +30,10 @@ namespace Monei.MvcApplication.Controllers
 		}
 
 		private Account account = null;
+		/// <summary>
+		/// Account of current logged user 
+		/// </summary>
+		/// <returns></returns>
 		protected Account GetAccount() {
 			if (account != null)
 				return account;

@@ -7,9 +7,17 @@ using log4net;
 
 namespace Monei.MvcApplication.Filters
 {
+	/// <summary>
+	/// This way does not capture 
+	/// 1) Exceptions thrown from controller constructors.
+	/// 2) Exceptions thrown from message handlers.
+	/// 3) Exceptions thrown during routing.
+	/// 4) Exceptions thrown during response content serialization.
+	/// ref: http://www.asp.net/web-api/overview/error-handling/web-api-global-error-handling
+	/// </summary>
 	public class ApiControllerExceptionFilterAttribute :ExceptionFilterAttribute
 	{
-		public /*static*/ /*readonly*/ ILog logger = LogManager.GetLogger(typeof(ApiControllerExceptionFilterAttribute));
+		public readonly ILog logger = LogManager.GetLogger(typeof(ApiControllerExceptionFilterAttribute));
 
 		public override void OnException(HttpActionExecutedContext actionExecutedContext)
 		{

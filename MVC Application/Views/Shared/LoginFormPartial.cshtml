@@ -1,39 +1,33 @@
-﻿@model Monei.MvcApplication.Models.LoginModel
+﻿@*@model Monei.MvcApplication.Models.LoginModel*@
 
-<section>
+<section style="width:350px;" id="loginPanel">
 <h2>Use a local account to log in</h2>
-@using (Html.BeginForm( "Login", "Account", new {ReturnUrl = ViewBag.ReturnUrl }))
+
+
+	<div class="form-group">
+		<label for="username">Username</label>
+		<input type="text" id="username" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label for="password">Password</label>
+		<input type="text" id="password" class="form-control" />
+	</div>
+	<div class="form-group">
+		<div class="checkbox">
+			<input type="checkbox"> <label>Remember me</label>
+		</div>
+	</div>
+	<div class="form-group" style="margin-top:2em">
+		<input type="submit" value="log in" class="btn btn-primary" style="width:100%" />
+	</div>
+	
+	<p style="margin-top:2em">
+		<strong>@Html.ActionLink("Register", "Register") </strong>if you don't have an account.
+	</p>
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
 {
-    @Html.AntiForgeryToken();
-    @Html.ValidationSummary(true);
-        
-    <fieldset>
-        <legend>login form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.username)
-                @Html.TextBoxFor(m => m.username, new { autofocus="autofocus"})
-                @Html.ValidationMessageFor(m => m.username)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
-            </li>        
-            <li>
-                <div class="checkbox">                               
-                    <label>@Html.CheckBoxFor(m => m.RememberMe) Remember me</label>
-                </div>
-            </li>
-            <li style="margin-top:2em">
-                <input type="submit" value="log in" class="btn btn-primary btn-block" style="width_:262px; width:314px;"  />
-            </li>
-        </ol>
-    </fieldset>       
-    
-    <p style="margin-top:2em">
-        <strong>@Html.ActionLink("Register", "Register" ) </strong>if you don't have an account.
-    </p>
+	@Html.AntiForgeryToken();
+	@Html.ValidationSummary(true);
 
 }
 

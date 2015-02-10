@@ -7,6 +7,7 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Monei.DataAccessLayer.Interfaces;
+using Monei.MvcApplication.Api;
 using Monei.MvcApplication.Controllers;
 using Monei.MvcApplication.Controllers.Api;
 

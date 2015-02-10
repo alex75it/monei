@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
-using MongoDB.Bson;
+
 
 namespace Monei.MvcApplication.Models
 {
@@ -49,7 +49,7 @@ namespace Monei.MvcApplication.Models
 		//public IEnumerable<Category> Categories { get; set; }
 		//public SelectList CategorySelectList { get; set; }
 		//public SelectList Subcategory
-		public ObjectId SelectedCategoryId { get; set; }
+		public int SelectedCategoryId { get; set; }
 	}
 
 

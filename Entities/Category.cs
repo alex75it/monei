@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Monei.Entities
@@ -16,7 +15,7 @@ namespace Monei.Entities
 
 		public string ImageName { get; set; }
 
-		[BsonRequired]		
+	
 		[StringLength(NAME_MAX_LENGTH), Required]
 		public string Name { get; set; }	
 		[Required]
@@ -24,7 +23,13 @@ namespace Monei.Entities
 		public DateTime? DeletionDate { get; set; }
 
 		//public List<LocalizedNameAndDescription> NameAndDescriptions { get; set; }
-		public IEnumerable<Subcategory> Subcategories { get; set; }
+		//public IEnumerable<Subcategory> Subcategories { get; set; }
+		public IList<Subcategory> Subcategories { get; set; }
+
+		public Category()
+		{
+			Subcategories = new List<Subcategory>();
+		}
 
 
 		public override int GetHashCode()

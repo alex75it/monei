@@ -62,9 +62,11 @@ namespace Monei.MvcApplication
 			var settings = jsonFormatter.SerializerSettings;
 			settings.Formatting = Formatting.Indented;
 			settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
+			
 			jsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-
+			//jsonFormatter.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+						
+			//config.Formatters.Remove(config.Formatters.XmlFormatter);
 
 		}
 

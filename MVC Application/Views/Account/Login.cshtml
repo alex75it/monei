@@ -1,52 +1,10 @@
-﻿@model Monei.MvcApplication.Models.LoginModel
-
+﻿
 @{
     ViewBag.Title = "Log in"; //l10n
 }
 
+<div ng-controller="LoginController" ng-cloak>
+	<monei-login-panel redirect-to="redirectTo" on-loggedin="login(data)"></monei-login-panel>
+</div>
 
-<section id="loginForm">
-	@*<hgroup class="title">
-		<h2>@ViewBag.Title</h2>
-	</hgroup>*@
 
-<h2>Use a local account to log in</h2>
-@using (Html.BeginForm(new {ReturnUrl = ViewBag.ReturnUrl }))
-{
-    @Html.AntiForgeryToken();
-    @Html.ValidationSummary(true);        
-	
-    <fieldset>
-        <legend>login form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.username)
-                @Html.TextBoxFor(m => m.username, new { autofocus="autofocus"})
-                @Html.ValidationMessageFor(m => m.username)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.TextBoxFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
-            </li>
-            <li>
-                <label>
-                @Html.CheckBoxFor(m => m.RememberMe)
-                    Remember me
-                @*@Html.LabelFor(m => m.RememberMe)*@
-                </label>
-            </li>
-            <li style="margin-top:1em;">
-                <input type="submit" value="log in" class="btn btn-primary" style="width:262px;"  />
-            </li>
-        </ol>
-    </fieldset>    
-    
-    
-    <p style="margin-top:2em">
-        <strong>@Html.ActionLink("Register", "Register" ) </strong>if you don't have an account.
-    </p>
-
-}
-
-</section>

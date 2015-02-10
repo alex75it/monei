@@ -10,7 +10,7 @@ using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
 using OfficeOpenXml;
 
-namespace Monei.MvcApplication.Controllers.Api
+namespace Monei.MvcApplication.Api
 {
 	
 	[RoutePrefix("api/registry")]
@@ -65,7 +65,7 @@ namespace Monei.MvcApplication.Controllers.Api
 				StartDate = DateTime.ParseExact(data.StartDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
 				EndDate = DateTime.ParseExact(data.EndDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
 			};
-			IEnumerable<RegistryRecord> records = RegistryRepository.ListRecods(filters);
+			IEnumerable<RegistryRecord> records = RegistryRepository.ListRecords(filters);
 			return records;
 		}
 

@@ -26,10 +26,10 @@ namespace Monei.DataAccessLayer.Filters
 
 		public RegistryFilters()
 		{
-			StartDate = new DateTime(2000, 1, 1);
-			EndDate = new DateTime(3000, 12, 31);		
+			StartDate = System.Data.SqlTypes.SqlDateTime.MinValue.Value; // new DateTime(2000, 1, 1);
+			EndDate = System.Data.SqlTypes.SqlDateTime.MaxValue.Value;		
 			SubcategoryIds = new List<int>(0);
-			OperationTypes = new OperationType[] { OperationType.Income, OperationType.Outcome };
+			OperationTypes = new OperationType[] { OperationType.Income, OperationType.Outcome, OperationType.Transfer };
 		}
 				
 

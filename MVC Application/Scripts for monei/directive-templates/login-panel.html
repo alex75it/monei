@@ -1,0 +1,37 @@
+﻿<div class="well well-small" style="box-shadow: 4px 4px 1px #eee;">
+	<div class="container">
+		<div class="col-md-6" style="border-right: 1px solid #E2C186; box-shadow: 1px 0px 0px #eee;">
+			<form style="width:350px;" id="loginPanel">
+				<h2>Use a local account to log in</h2>
+
+				<div class="form-group" ng-class="{'error has-error':errors.usernameError}">
+					<label for="username">Username</label>
+					<input type="text" id="username" class="form-control" ng-model="username" />
+					<div ng-show="errors.usernameError" class="text text-danger">{{errors.usernameError}}</div>
+				</div>
+				<div class="form-group" ng-class="{'error has-error':errors.passwordError}">
+					<label for="password">Password</label>
+					<input type="text" id="password" class="form-control" ng-model="password" />
+					<div ng-show="errors.passwordError" class="text text-danger push-right">{{errors.passwordError}}</div>
+				</div>
+				<div class="form-group">
+					<div class="checkbox">
+						<input type="checkbox"ng-model="rememberMe" > <label>Remember me</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="log in" class="btn btn-primary" style="width:100%" ng-click="login()" />
+				</div>
+				<div ng-show="error" class="label label-danger">{{error}}</div>
+				<div ng-show="fromUrl">
+					After login you will be redirected to: {{fromUrl.name}}
+				</div>
+			</form>
+		</div>
+		<div class="col-md-6">
+			<p style="margin-top:2em">
+				<a href="/register"><strong>Register</strong></a> if you don't have an account.
+			</p>
+		</div>
+	</div>
+</div>

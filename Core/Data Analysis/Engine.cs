@@ -38,7 +38,7 @@ namespace Monei.Core.DataAnalysis
 
 			CategoriesData categoryData = new CategoriesData();
 
-			var records = registryRepository.ListRecods(filters);
+			var records = registryRepository.ListRecords(filters);
 			List<Category> usedCategories = records.Select(r => r.Category).Distinct().ToList();
 
 			YearData yearData = new YearData(year);
