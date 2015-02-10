@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="Data Access Layer\Filters\RegistryFiltersTest.cs" />
     <Compile Include="Entities\AccountTest.cs" />
+    <Compile Include="MVC Application\Api\AccountApiControllerTest.cs" />
     <Compile Include="MVC Application\Api\CategoryApiControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
