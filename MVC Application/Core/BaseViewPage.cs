@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using log4net;
 using Monei.DataAccessLayer.Interfaces;
-using Monei.DataAccessLayer.MongoDB;
 using Monei.Entities;
 
 namespace Monei.MvcApplication

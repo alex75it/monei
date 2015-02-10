@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Monei.DataAccessLayer.MongoDB;
 using Monei.Entities;
 using Monei.MvcApplication.Models;
 using MongoDB.Bson;

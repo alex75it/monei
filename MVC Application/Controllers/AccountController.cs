@@ -7,11 +7,9 @@ using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using Monei.MvcApplication.Filters;
 using Monei.MvcApplication.Models;
-//using WebMatrix.WebData;
 using System.Collections.Generic;
 using Monei.DataAccessLayer;
 using Monei.MvcApplication.Helpers;
-using Monei.DataAccessLayer.MongoDB;
 using Monei.Entities;
 using Monei.DataAccessLayer.Interfaces;
 
