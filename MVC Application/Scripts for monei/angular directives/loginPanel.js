@@ -10,8 +10,7 @@ app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (Accoun
 	directive.scope = {
 		//redirectUrl: "=redirectTo",
 		onLoggedIn: "&",
-		onLoggedin: "&",
-		onLoginFail: "&",
+		onLoginFail: "&"
 	};
 
 	directive.link = function ($scope, $element, $attrs) {
@@ -21,7 +20,16 @@ app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (Accoun
 		$scope.rememberMe = false;
 		$scope.errors = {};
 
+		$element.find("#username").focus();
+
 		$scope.login = function () {
+			
+			if (!$attrs.redirectToUrl && !onLoggedIn)
+				showError("No action after login?");
+				//console.log("redirect to not set");
+
+			//$scope.onLoginFail({ cause: "pippo" });
+
 			$scope.errors = {};
 			var data = { username: $scope.username, password: $scope.password, rememberMe: $scope.rememberMe };	
 
@@ -32,6 +40,7 @@ app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (Accoun
 
 			if (!$scope.errors.usernameError && !$scope.errors.passwordError) {
 
+				$scope.isLoading = true;
 				AccountProvider.login(data, 
 					/*success*/
 					function (result) {	
@@ -42,13 +51,13 @@ app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (Accoun
 								loggedIn = true;
 								break;
 							case AccountProvider.loginResults.UsernameNotFound:
-								$scope.loginFail && $scope.loginFail("Username not found");
+								$scope.onLoginFail && $scope.onLoginFail({ cause: "Username not found" });
 								//$scope.showError("Username not found");
 								$scope.errors.usernameError = "Username not found";
 								$element.find("#username").focus();
 								break;
 							case AccountProvider.loginResults.WrongPassword:
-								$scope.loginFail && $scope.loginFail("Wrong password");
+								$scope.onLoginFail && $scope.onLoginFail({ cause: "Wrong password" });
 								//$scope.showError("Wrong password");
 								$scope.errors.passwordError = "Wrong password";
 								$element.find("#password").focus();
@@ -60,14 +69,18 @@ app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (Accoun
 						}
 
 						if (loggedIn) {
-							$scope.onLoggedin && $scope.onLoggedin(data);
-							//if ($attrs.redirectto) alert("go to: " + $attrs.redirectto);	
-							if ($attrs.redirectto)
-								$window.location.href = $attrs.redirectto;
+							console.log("login: OK");
+							$scope.onLoggedIn && $scope.onLoggedIn();
+							//if ($attrs.redirectTo) alert("go to: " + $attrs.redirectTo);	
+							$element.hide();
+							if ($attrs.redirectToUrl)
+								$window.location.href = "/" + $attrs.redirectToUrl;
 						}
 					},
 					/*error*/
-					$scope.showError
+					$scope.showError,
+					/*finally*/
+					function () { $scope.isLoading = false; }
 					);
 
 			}

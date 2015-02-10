@@ -1408,7 +1408,6 @@
     <Content Include="Views\Registry\Registry-Create.cshtml" />
     <Content Include="Views\Contracts\Contracts-Index.cshtml" />
     <Content Include="Views\Contracts\Create.cshtml" />
-    <Content Include="Views\Shared\LoginFormPartial.cshtml" />
     <Content Include="Scripts\KoModal.ts" />
     <Content Include="Views\Registry\Registry-Edit-Partial.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />

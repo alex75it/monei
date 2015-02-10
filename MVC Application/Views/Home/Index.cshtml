@@ -2,7 +2,7 @@
     //ViewBag.Title = "Index";
 }
 
-<div tttng-controller="HomeController">
+<div ng-controller="HomeController">
 
 	<div style="margin:auto; margin-top:0; width:80%; min-width:600px;">
 		<p>
@@ -39,7 +39,7 @@
 		}
 		else
 		{
-			<monei-login-panel redirectto="home" on-logged-in="alert(123)"></monei-login-panel>
+			<monei-login-panel redirect-to-url="home" on-logged-in="loggedInEvent()" on-login-fail="loginFail(cause)" ></monei-login-panel>
 		}
 
 		<div class="clearfix"></div>
