@@ -63,7 +63,10 @@ a {
 header, footer, hgroup,
 nav, section { display: block; }
 
+.nowrap {white-space:nowrap}
 
+.align-left {text-align:left !important;}
+.align-right {text-align:right !important;}
 
 
 .float-left { float: left;}
@@ -78,10 +81,9 @@ nav, section { display: block; }
 }
 
 .display-inline {display:inline}
-
+/*
 h1, h2, h3,
 h4, h5, h6 {
-    /*color: #000;*/
     margin-bottom: 0.5em;
     padding-bottom: 0;
 }
@@ -96,6 +98,19 @@ h5, h6 { font-size: 1em;}
         padding: 0;
         text-decoration: none;
     }
+*/
+
+/*
+.glyphicon-refresh-animate {
+    -animation: spin 1.2s infinite linear;
+    -webkit-animation: spin2 1.2s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+	*/
 
 
 /* main layout
@@ -105,7 +120,7 @@ h5, h6 { font-size: 1em;}
     max-width: 1170px;
 }
  
-/*Firefox doeas not recognize "min-device-width" */
+/*Firefox does not recognize "min-device-width" */
 
 @media (min-width:1200px) {
 	.content-wrapper { min-width: 1170px;}
@@ -312,10 +327,6 @@ section.feature {
 }
 
 
-.nowrap {white-space:nowrap}
-
-.align-left {text-align:left !important;}
-.align-right {text-align:right !important;}
 
 /* login page */
 #loginForm {
@@ -452,9 +463,9 @@ input[type="image"] {
 
 .img-cmd { height:1.2em }
 
-input {margin-bottom:.5em !important;}
+input, button {margin-bottom:.5em !important;}
 
-
+.input-shortDate { width: 7em !important}
 
 /* link for add item near dropdown*/
 a.add-dropdown
@@ -829,26 +840,5 @@ tr.header-row th
         }
 }
 
-
- /* Bootstrap overrides */
-
-form {margin:0}
-body {background-color: transparent !important}
-
-.modal-backdrop {background-color:#fff ;}
-.radio, .checkbox {padding-left:0 !important}
-
-.well {
-	background-color: #fff9eb;
-	/*background-color: #f9f9f9;*/
-	border: 1px solid #E2C186;
-}
-
-/*.color_main { background-color: #fceabb;}
-.color_dark { background-color: #212A70;}
-.color_1_old { background-color: #e2e2e2;}
-.color_1_new { background-color: #E2C186;}
-.color_2_old{ background-color: #333}
-.color_2_new { background-color:#212A70}*/
 
 

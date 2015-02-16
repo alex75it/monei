@@ -8,14 +8,14 @@ using Monei.Entities;
 namespace Monei.DataAccessLayer.Filters
 {
 
-	public class RegistryFilters
+	public class RegistryFilters :BaseFilters
 	{
-		public static string PERIOD_CURRENT_MONTH = "current month";
+		public const string PERIOD_CURRENT_MONTH = "current month";
 
 		public int? AccountId { get; set; }
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
-		public int? CategoryId { get; set; }
+		public int[] Categories { get; set; }
 		public IList<int> SubcategoryIds { get; set; }
 		public string SelectedPeriod { get; set; }
 		public string TextToSearch { get; set; }
@@ -26,7 +26,7 @@ namespace Monei.DataAccessLayer.Filters
 
 		public RegistryFilters()
 		{
-			StartDate = System.Data.SqlTypes.SqlDateTime.MinValue.Value; // new DateTime(2000, 1, 1);
+			StartDate = System.Data.SqlTypes.SqlDateTime.MinValue.Value;
 			EndDate = System.Data.SqlTypes.SqlDateTime.MaxValue.Value;		
 			SubcategoryIds = new List<int>(0);
 			OperationTypes = new OperationType[] { OperationType.Income, OperationType.Outcome, OperationType.Transfer };
@@ -36,7 +36,7 @@ namespace Monei.DataAccessLayer.Filters
 		public void Normalize()
 		{
 			if (EndDate == DateTime.MinValue)
-				EndDate = DateTime.MaxValue;
+				EndDate = System.Data.SqlTypes.SqlDateTime.MaxValue.Value;
 
 			if (EndDate < StartDate)
 			{
@@ -44,6 +44,9 @@ namespace Monei.DataAccessLayer.Filters
 				StartDate = EndDate;
 				EndDate = temp;
 			}
+
+			base.NormalizeDate(StartDate);
+			base.NormalizeDate(EndDate);
 		}
 
 		public void SetOperationType(OperationType operation, bool enabled)

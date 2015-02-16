@@ -38,7 +38,11 @@
     		b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
     	}
     	return b;
-    })(window.location.search.substr(1).split('&'))
+		})(window.location.search.substr(1).split('&')),
+
+		toShortDate: function (date) {
+			return moment(date).format("L");
+		}
 
 
     };

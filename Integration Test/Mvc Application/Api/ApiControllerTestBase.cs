@@ -154,18 +154,26 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			return returnValue;
 		}
 
-
-		protected T CallApi<T, T1>(string url, HttpMethod httpMethod, T1 data)
-			where T: class 
-			where T1:class
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="T1"></typeparam>
+		/// <param name="url"></param>
+		/// <param name="httpMethod"></param>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		protected R CallApi<T, R>(string url, HttpMethod httpMethod, T data)
+			where T : class
+			where R : class
 		{
-			T returnValue;
+			R returnValue;
 			using (var client = GetClient())
-			using (var result = client.SendAsync(CreateRequest<T1>(url, HttpMethod.Get, data)).Result)
+			using (var result = client.SendAsync(CreateRequest<T>(url, httpMethod, data)).Result)
 			{
 				if (!result.IsSuccessStatusCode)
 					Assert.Fail("Server error. " + result.ToString());
-				returnValue = result.Content.ReadAsAsync<T>().Result;
+				returnValue = result.Content.ReadAsAsync<R>().Result;
 			}
 			return returnValue;
 		}
@@ -176,5 +184,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			if (server != null)
 				server.Dispose();
 		}
+
 	}
 }

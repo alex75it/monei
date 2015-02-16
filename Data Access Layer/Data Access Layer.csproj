@@ -56,6 +56,8 @@
     <Compile Include="Exceptions\CategoryTooLongNameException.cs" />
     <Compile Include="Exceptions\EntityAlreadyExistsException.cs" />
     <Compile Include="Exceptions\TooLongPropertyBaseException.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Filters\BaseFilters.cs" />
     <Compile Include="Interfaces\ICategoryRepository.cs" />
     <Compile Include="Interfaces\IContractRepository.cs" />
     <Compile Include="Filters\RegistryFilters.cs" />
@@ -82,9 +84,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

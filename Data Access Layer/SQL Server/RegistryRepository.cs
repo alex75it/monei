@@ -16,6 +16,8 @@ namespace Monei.DataAccessLayer.SqlServer
 	{
 		public IList<RegistryRecord> ListRecords(Filters.RegistryFilters filters)
 		{
+			filters.Normalize();
+
 			IList<RegistryRecord> records ;
 
 			using(ISession session = OpenSession())
@@ -24,34 +26,19 @@ namespace Monei.DataAccessLayer.SqlServer
 					(!filters.AccountId.HasValue || r.Account.Id == filters.AccountId)
 					&& r.Date >= filters.StartDate && r.Date <= filters.EndDate					
 					&& (string.IsNullOrWhiteSpace(filters.TextToSearch) || r.Note.Contains(filters.TextToSearch))
-					//&& (filters.OperationTypes.Any(op => op == r.OperationType))
 					&& (filters.OperationTypes.Contains(r.OperationType))
 					&& (!filters.ShowOnlyTaxDeductible || r.IsTaxDeductible)
 					&& (filters.IncludeSpecialEvent || !r.IsSpecialEvent)
 					&& (filters.Amount == 0 || r.Amount == filters.Amount)
 					);
-
-				//IQueryOver<RegistryRecord> query = session.QueryOver<RegistryRecord>().Where(r =>
-				//	(!filters.AccountId.HasValue || r.Account.Id == filters.AccountId)
-				//	&& r.Date >= filters.StartDate && r.Date <= filters.EndDate
-
-				//	&& (string.IsNullOrWhiteSpace(filters.TextToSearch) || r.Note.Contains(filters.TextToSearch))
-				//	&& (!filters.ShowOnlyTaxDeductible || r.IsTaxDeductible)
-				//	&& (filters.IncludeSpecialEvent || !r.IsSpecialEvent)
-				//	);
-
-				//Expression<Func<RegistryRecord, bool>> condition = new Expression<Func<RegistryRecord, bool>>();
-				//Amon Tobin
 				
 				if(filters.SubcategoryIds.Count > 0)
 				{
-					//foreach(int id filters.SubcategoryIds)
-						//query.Where(r => r.Subcategory.Id == id);
 					query = query.Where( r => filters.SubcategoryIds.Contains(r.Subcategory.Id));
 				}
-				else
+				else if(filters.Categories != null && filters.Categories.Count() > 0)
 				{
-					query = query.Where(r => !filters.CategoryId.HasValue || r.Category.Id == filters.CategoryId);
+					query = query.Where(r => filters.Categories.Contains(r.Category.Id));
 				}
 
 				records = query.ToList();
@@ -60,24 +47,6 @@ namespace Monei.DataAccessLayer.SqlServer
 			return records;
 		}
 
-		//public IEnumerable<RegistryRecord> TestList()
-		//{
-		//	RegistryRecord aliasRecord = null;
-		//	Category aliasCategory = null;
-		//	using (ISession session = OpenSession())
-		//	{
-		//		IQueryOver<RegistryRecord, RegistryRecord> query = session.QueryOver<RegistryRecord>( () => aliasRecord)
-		//			.JoinAlias<Category>( aliasRecord => aliasRecord.Category, () => aliasCategory, NHibernate.SqlCommand.JoinType.InnerJoin, Restrictions.On( () => aliasRecord.Category.Id ==  aliasCategory.Id ))
-		//		//	.Where(m=> m.)
-		//		//	.List();
-
-		//		return session.QueryOver<RegistryRecord>()
-		//			.JoinAlias(r => r.Category, () => aliasCategory)
-		//			//.Where(m=> m.)
-		//			.Select( x =>  x, x=> x.CreationAccount, x => aliasCategory.CreationDate)
-		//			.List();
-		//	}
-		//}
 
 		public RegistryRecord AddRecord(RegistryRecord record)
 		{
@@ -88,11 +57,6 @@ namespace Monei.DataAccessLayer.SqlServer
 			int recordId = Create(record);
 			record = Read(recordId);
 			
-			//using(ISession session = OpenSession())
-			//{
-			//	recordId = session.Save(record) as RegistryRecord;
-			//	session.Flush();
-			//}
 			return record;
 		}
 
@@ -104,7 +68,6 @@ namespace Monei.DataAccessLayer.SqlServer
 				session.Flush();
 			}
 		}
-
 
 		public void DeleteRecord(int recordId)
 		{

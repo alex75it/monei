@@ -70,7 +70,9 @@ namespace Monei.MvcApplication
 				"~/Scripts for monei/angular app.js",
 				"~/Scripts for monei/angular controllers/*.js",
 				"~/Scripts for monei/angular directives/*.js",
-				"~/Scripts for monei/angular services/*.js"
+				"~/Scripts for monei/angular services/*.js",
+				"~/Scripts for monei/angular providers/*.js",
+				"~/Scripts for monei/angular filters/*.js"
                 ));	
 
 

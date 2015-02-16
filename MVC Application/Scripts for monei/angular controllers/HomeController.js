@@ -11,7 +11,7 @@ function ($scope) {
 	$scope.loginFail = function (cause) {
 		console.info("loginFail for " + cause);
 		$scope.loginFailCounter += 1;
-		if ($scope.loginFailCounter == 10)
+		if ($scope.loginFailCounter === 10)
 		{
 			$scope.loginFailCounter = 0;
 		}

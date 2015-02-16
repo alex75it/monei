@@ -48,12 +48,11 @@ namespace Monei.MvcApplication
 			//config.EnableQuerySupport();
 
 			config.Filters.Add(new ApiControllerExceptionFilterAttribute());
-
+			
 			
 			//config.MessageHandlers.Add(new CultureDelegatingHandler());
 			config.Formatters.Add(new CsvFormatter());
-
-
+			
 
 			// lower JSON property name
 			//var formatters = GlobalConfiguration.Configuration.Formatters;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Http.Filters;
 using log4net;
 
@@ -21,10 +22,23 @@ namespace Monei.MvcApplication.Filters
 
 		public override void OnException(HttpActionExecutedContext actionExecutedContext)
 		{
-			logger.ErrorFormat("Not handled error. {0}", actionExecutedContext.Exception.ToString()); 
- 
+			string error;
+			if (actionExecutedContext.Exception is HttpResponseException)
+			{
+				error = ((HttpResponseException)actionExecutedContext.Exception).Response.ToString();
+
+				error += "\r\nRequest: " + actionExecutedContext.Request.Content.ToString();
+			}
+			else
+			{
+				error = actionExecutedContext.Exception.ToString();
+			}
+
+			logger.ErrorFormat("Not handled error. {0}", error);
+
 			base.OnException(actionExecutedContext);
 		}
 
 	}
+
 }

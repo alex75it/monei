@@ -16,21 +16,17 @@ namespace Monei.Entities
 		public string ImageName { get; set; }
 
 	
-		[StringLength(NAME_MAX_LENGTH), Required]
 		public string Name { get; set; }	
-		[Required]
 		public string Description { get; set; }
 		public DateTime? DeletionDate { get; set; }
 
-		//public List<LocalizedNameAndDescription> NameAndDescriptions { get; set; }
-		//public IEnumerable<Subcategory> Subcategories { get; set; }
+
 		public IList<Subcategory> Subcategories { get; set; }
 
 		public Category()
 		{
 			Subcategories = new List<Subcategory>();
 		}
-
 
 		public override int GetHashCode()
 		{
@@ -39,7 +35,7 @@ namespace Monei.Entities
 
 		public override bool Equals(object obj)
 		{
-			return ((Category)obj).Id == Id;
+			return obj is Category && ((Category)obj).Id == Id;
 		}
 
 	}

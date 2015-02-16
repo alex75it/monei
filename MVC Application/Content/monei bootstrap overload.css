@@ -1,22 +1,49 @@
 ﻿select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input
 , span.add-on
 {
-    padding: 1px 4px !important;
+    padding: 3px 4px !important;
 }
+
+.form-control { height: auto !important;}
 
 select { padding-right:1px !important; height:1.6em }
 
 
-.btn-primary {
+.btn-gold {
   color: #000;
   background-color: #ffc442;
   border-color: #E2C186;
 }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+.btn-gold:hover, .btn-gold:focus, .btn-gold.focus, .btn-gold:active, .btn-gold.active, .open>.dropdown-toggle.btn-gold {
 color: #000;
 background-color: #ffd800;
 border-color: #ffc442;
 }
 
   /*#E2C186*/
+
+
+   /* Bootstrap overrides */
+
+form {margin:0}
+body {background-color: transparent !important}
+
+/*
+.modal-backdrop {background-color:#fff ;}
+.radio, .checkbox {padding-left:0 !important}
+	*/
+
+.well {
+	background-color: #fff9eb;
+	/*background-color: #f9f9f9;*/
+	border: 1px solid #E2C186;
+}
+
+/*.color_main { background-color: #fceabb;}
+.color_dark { background-color: #212A70;}
+.color_1_old { background-color: #e2e2e2;}
+.color_1_new { background-color: #E2C186;}
+.color_2_old{ background-color: #333}
+.color_2_new { background-color:#212A70}*/
+

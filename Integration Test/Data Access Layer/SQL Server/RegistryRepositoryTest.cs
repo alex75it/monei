@@ -56,7 +56,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			{
 				StartDate = DateTime.Today,
 				EndDate = DateTime.Today,
-				CategoryId = record.Category.Id
+				Categories = new int[] { record.Category.Id}
 			};
 
 			RegistryRecord searchedRecord = RegistryRepository.ListRecords(filters).FirstOrDefault(r => r.Id == record.Id);
@@ -118,7 +118,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			RegistryRepository.AddRecord(record);
 			filters = new RegistryFilters();
 			filters.AccountId = Helper.GetTestAccount().Id;
-			filters.CategoryId = category.Id;
+			filters.Categories = new int[] { category.Id};
 
 			records = RegistryRepository.ListRecords(filters);
 
