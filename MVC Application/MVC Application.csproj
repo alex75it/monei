@@ -233,6 +233,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\SubcategoryApiController.cs" />
     <Compile Include="Api\CategoryApiController.cs" />
     <Compile Include="Api\PostDataObjects\LoginPostData.cs" />
     <Compile Include="Api\PostDataObjects\RegistrySearchPostData.cs" />
@@ -253,7 +254,6 @@
     <Compile Include="Controllers\Api\DashboardController.cs" />
     <Compile Include="Api\PostDataObjects\MoveSubcategoryPostData.cs" />
     <Compile Include="Controllers\Api\PostDataObjects\SubcategoryPostData.cs" />
-    <Compile Include="Controllers\Api\SubcategoryController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Core\BaseViewPage.cs" />
     <Compile Include="Core\BusinessObjects\JsonRegistryRecord.cs" />

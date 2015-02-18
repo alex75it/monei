@@ -148,7 +148,9 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			using (var result = client.SendAsync(CreateRequest(url, HttpMethod.Get)).Result)
 			{
 				if (!result.IsSuccessStatusCode)
-					Assert.Fail("Server error. " + result.ToString());
+				{
+					Assert.Fail("Server error. Url: " + url + ".\r\n" + result.ToString());
+				}
 				returnValue = result.Content.ReadAsAsync<T>().Result;
 			}
 			return returnValue;

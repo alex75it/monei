@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
@@ -7,6 +9,7 @@ using FakeItEasy;
 using Microsoft.Owin.Hosting;
 using Microsoft.Owin.Hosting.Builder;
 using Monei.DataAccessLayer.Interfaces;
+using Monei.DataAccessLayer.SqlServer;
 using Monei.Entities;
 using Monei.MvcApplication.Api;
 using NUnit.Framework;
@@ -33,16 +36,30 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		}
 
 		[Test]
-		public void List_Should_ReturnAList()
+		public void SearchWithUnexistentCategory_Should_ReturnAEmptyList()
 		{
-			const string url = ROUTE_PREFIX + "list";
+			const string url = ROUTE_PREFIX + "category/" + "-666";
 			var returnedList = CallApi<IEnumerable<Subcategory>>(url, HttpMethod.Get);
 							
 			// Verify
+			returnedList.ShouldNotBeNull("fail for url \"" + url +"\"");
+			returnedList.ShouldBeEmpty();
+		}
+
+		[Test]
+		public void Search_Should_ReturnAList()
+		{
+			//Arrange
+			var categoryId = new CategoryRepository().List().First().Id;
+
+			// Act
+			string url = ROUTE_PREFIX + "category/" + categoryId;
+			var returnedList = CallApi<IEnumerable<Subcategory>>(url, HttpMethod.Get);
+
+			// Assert
 			returnedList.ShouldNotBeNull();
 			returnedList.ShouldNotBeEmpty();
 		}
-
 		
 		
 	}
