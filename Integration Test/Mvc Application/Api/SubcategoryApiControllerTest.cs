@@ -38,10 +38,13 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		[Test]
 		public void SearchWithUnexistentCategory_Should_ReturnAEmptyList()
 		{
+			//Arrange
 			const string url = ROUTE_PREFIX + "category/" + "-666";
+
+			// Act
 			var returnedList = CallApi<IEnumerable<Subcategory>>(url, HttpMethod.Get);
 							
-			// Verify
+			// Assert
 			returnedList.ShouldNotBeNull("fail for url \"" + url +"\"");
 			returnedList.ShouldBeEmpty();
 		}
@@ -51,16 +54,39 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		{
 			//Arrange
 			var categoryId = new CategoryRepository().List().First().Id;
+			string url = ROUTE_PREFIX + "category/" + categoryId;
 
 			// Act
-			string url = ROUTE_PREFIX + "category/" + categoryId;
 			var returnedList = CallApi<IEnumerable<Subcategory>>(url, HttpMethod.Get);
 
 			// Assert
 			returnedList.ShouldNotBeNull();
 			returnedList.ShouldNotBeEmpty();
 		}
-		
-		
+
+		[Test]
+		public void Create_Should_ReturnOk()
+		{
+			// Arrange
+			Subcategory subcategory = new Subcategory()
+			{
+				Name = "Test " + RandomInt(),
+				Description = "Description test"
+			};
+
+			//Act
+			int newId = CallApi<Subcategory, int>(ROUTE_PREFIX, POST, subcategory);
+
+			// Assert
+			ISubcategoryRepository repository = new SubcategoryRepository();
+			Subcategory loadedSubcategory = repository.Read(newId);
+
+			Assert.IsNotNull(loadedSubcategory);
+			//loadedSubcategory.Name.Sould
+			Assert.AreEqual(subcategory.Name, loadedSubcategory.Name);
+			Assert.AreEqual(subcategory.Description, loadedSubcategory.Description);
+		}
+
+
 	}
 }

@@ -25,8 +25,13 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 	[TestFixture]
 	public class ApiControllerTestBase :IDisposable
 	{
+		protected HttpMethod GET = HttpMethod.Get;
+		protected HttpMethod POST = HttpMethod.Post;
+		protected HttpMethod DELETE = HttpMethod.Delete ;
+		protected Random random = new Random(DateTime.Now.Millisecond);
+
 		protected HttpServer server;
-		private string baseUrl = "http://www.apitest.com/";
+		private const string BASE_URL = "http://www.apitest.com/";
 		private IWindsorContainer container;
 
 		// todo: CLEAN THIS CLASS
@@ -40,14 +45,14 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		public void Initialize()
 		{			
 			InitializeWindsorContainer();
-			server = new HttpServer(GetConfiguration());
+			//server = new HttpServer(GetConfiguration());
 		}
 
 
 		protected HttpClient GetClient()
 		{
 			// initialize a new Server
-			var server = new HttpServer(GetConfiguration());
+			server = new HttpServer(GetConfiguration());
 			return new HttpClient(server);
 		}
 
@@ -113,7 +118,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		/// <returns></returns>
 		protected HttpRequestMessage CreateRequest(string url, HttpMethod method, string mediaType = "application/json")
 		{
-			var request = new HttpRequestMessage(method, baseUrl + url);			
+			var request = new HttpRequestMessage(method, BASE_URL + url);			
 
 			// I don't know what this does. Copied from one example.
 			request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
@@ -140,44 +145,77 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			return request;
 		}
 
-		protected T CallApi<T>(string url, HttpMethod httpMethod)
-			where T : class
+		protected TReturn CallApi<TReturn>(string url, HttpMethod httpMethod)
+			where TReturn : class
 		{
-			T returnValue;
 			using (var client = GetClient())
 			using (var result = client.SendAsync(CreateRequest(url, HttpMethod.Get)).Result)
-			{
-				if (!result.IsSuccessStatusCode)
-				{
-					Assert.Fail("Server error. Url: " + url + ".\r\n" + result.ToString());
-				}
-				returnValue = result.Content.ReadAsAsync<T>().Result;
-			}
-			return returnValue;
+				return LoadReturnValue<TReturn>(url, result);
 		}
+
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <typeparam name="T1"></typeparam>
+		/// <typeparam name="TPost">Type represented by HTTP form collection data</typeparam>
+		/// <typeparam name="TReturn">Returned object</typeparam>
 		/// <param name="url"></param>
 		/// <param name="httpMethod"></param>
-		/// <param name="data"></param>
+		/// <param name="data">POST form collection data</param>
 		/// <returns></returns>
-		protected R CallApi<T, R>(string url, HttpMethod httpMethod, T data)
-			where T : class
-			where R : class
+		protected TReturn CallApi<TPost, TReturn>(string url, HttpMethod httpMethod, TPost data)
+			where TPost : class
+			//where TReturn : class
 		{
-			R returnValue;
 			using (var client = GetClient())
-			using (var result = client.SendAsync(CreateRequest<T>(url, httpMethod, data)).Result)
-			{
-				if (!result.IsSuccessStatusCode)
-					Assert.Fail("Server error. " + result.ToString());
-				returnValue = result.Content.ReadAsAsync<R>().Result;
-			}
-			return returnValue;
+			using (var result = client.SendAsync(CreateRequest<TPost>(url, httpMethod, data)).Result)
+				return LoadReturnValue<TReturn>(url, result);
+		}
+
+		/// <summary>
+		/// Call API
+		/// </summary>
+		/// <typeparam name="TPost">Type represented by HTTP form collection data</typeparam>
+		/// <param name="url"></param>
+		/// <param name="httpMethod"></param>
+		/// <param name="data">POST form collection data</param>
+		protected void CallApi<TPost>(string url, HttpMethod httpMethod, TPost data)
+			where TPost : class
+		{
+			using (var client = GetClient())
+			using (var result = client.SendAsync(CreateRequest<TPost>(url, httpMethod, data)).Result)
+				CheckResult(url, result);
+		}
+
+		/// <summary>
+		/// Call API with POST passing the data
+		/// </summary>
+		/// <typeparam name="TPost">Type represented by HTTP form collection data</typeparam>
+		/// <param name="url"></param>
+		/// <param name="data">POST form collection data</param>
+		protected void CallApi<TPost>(string url, TPost data) where TPost:class
+		{
+			CallApi<TPost>(url, POST, data);
+		}
+
+
+		private static TReturn LoadReturnValue<TReturn>(string url, HttpResponseMessage result) 
+			//where TReturn : class
+		{
+			CheckResult(url, result);
+			return result.Content.ReadAsAsync<TReturn>().Result;
+		}
+
+		private static void CheckResult(string url, HttpResponseMessage result)
+		{
+			if (!result.IsSuccessStatusCode)
+				Assert.Fail("Server error. Url: " + url + ".\r\n" + result);
+		}
+
+
+		protected int RandomInt()
+		{
+			return random.Next();
 		}
 
 

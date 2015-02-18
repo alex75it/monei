@@ -29,52 +29,22 @@ namespace Monei.MvcApplication.Api
         }
 
 
-		[HttpGet, Route("ListByType/{typeId}")] //, Name = "LisyByType"
-		public string ListByType(int typeId)
-		{
-			return "{ method: 'ListByType', typeId: " + typeId + "}";
-		}
-
 		[HttpPost]
-		public dynamic Post([FromBody]string value)
+		public int Create(SubcategoryPostData data)
         {
-			logger.Debug("Post: " + value);
-
-			//NameValueCollection data =  HttpUtility.ParseQueryString(value);
-			
-			dynamic json = JValue.Parse(value);;
-
-			string categoryId = json.categoryId;
-			string name = json.name; 
-			string description = json.description;
-
-			int categoryIdValue = int.Parse(categoryId);
-
-			// todo: use a business object
 			Subcategory entity = new Subcategory() {
-				Category = new Category() { Id = categoryIdValue},
-				Name = name,
-				Description = description,
+				Category = new Category() { Id = data.CategoryId},
+				Name = data.Name,
+				Description = data.Description,
 			};
 			
 			int newId = SubcategoryRepository.Create(entity);
 
-			//dynamic result = new JObject();
-			//result.categoryId = categoryId;
-			//result.subcategoryId = newId;
-
-			dynamic result = new { 
-				categoryId = categoryId,
-				subcategoryId = newId,
-				subcategoryName = name,
-			};
-
-			return result;
+			return newId;
         }
 
 
-        // DELETE api/subcategory/5
-		[HttpDelete]
+		[HttpDelete, Route("{id}")]
         public virtual HttpResponseMessage Delete(int id)
         {
 			try
