@@ -355,6 +355,7 @@
     <Content Include="Scripts for monei\angular providers\UtilsProvider.js" />
     <Content Include="Scripts for monei\angular providers\AccountProvider.js" />
     <Content Include="Scripts for monei\angular providers\RegistryProvider.js" />
+    <Content Include="Scripts for monei\angular services\SubcategoryProvider.js" />
     <Content Include="Scripts for monei\directive-templates\CategorySelector.html" />
     <Content Include="Scripts for monei\directive-templates\login-panel.html" />
     <Content Include="Scripts for monei\directive-templates\RegistryCreatePanel.html" />
@@ -1439,7 +1440,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Management\Views\Shared\" />
-    <Folder Include="Scripts for monei\angular services\" />
     <Folder Include="Scripts\monei\" />
   </ItemGroup>
   <ItemGroup>
