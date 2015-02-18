@@ -29,7 +29,7 @@ namespace Monei.MvcApplication.Api
         }
 
 
-		[HttpPost]
+		[HttpPost, Route("")]
 		public int Create(SubcategoryPostData data)
         {
 			Subcategory entity = new Subcategory() {

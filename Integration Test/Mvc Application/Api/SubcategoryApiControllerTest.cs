@@ -15,6 +15,7 @@ using Monei.MvcApplication.Api;
 using NUnit.Framework;
 using Owin;
 using Should;
+using Monei.MvcApplication.Controllers.Api.PostDataObjects;
 
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
@@ -68,25 +69,43 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		public void Create_Should_ReturnOk()
 		{
 			// Arrange
-			Subcategory subcategory = new Subcategory()
+			int categoryId = new CategoryRepository().List().First().Id;
+			ISubcategoryRepository repository = new SubcategoryRepository();
+
+			SubcategoryPostData postData = new SubcategoryPostData()
 			{
 				Name = "Test " + RandomInt(),
-				Description = "Description test"
+				Description = "Description test",
+				CategoryId = categoryId
 			};
 
+			// todo: create post data from JSON
+
 			//Act
-			int newId = CallApi<Subcategory, int>(ROUTE_PREFIX, POST, subcategory);
+			int newId = 0;
+			try
+			{
+				newId = CallApi<SubcategoryPostData, int>(ROUTE_PREFIX, POST, postData);
 
-			// Assert
-			ISubcategoryRepository repository = new SubcategoryRepository();
-			Subcategory loadedSubcategory = repository.Read(newId);
+				// Assert
+				
+				Subcategory loadedSubcategory = repository.Read(newId);
 
-			Assert.IsNotNull(loadedSubcategory);
-			//loadedSubcategory.Name.Sould
-			Assert.AreEqual(subcategory.Name, loadedSubcategory.Name);
-			Assert.AreEqual(subcategory.Description, loadedSubcategory.Description);
+				Assert.IsNotNull(loadedSubcategory);
+				//loadedSubcategory.Name.Sould
+				Assert.AreEqual(postData.Name, loadedSubcategory.Name);
+				Assert.AreEqual(postData.Description, loadedSubcategory.Description);
+			}
+			finally
+			{
+				// clean
+				if(newId != 0)
+					repository.Delete(newId);
+			}
 		}
 
+
+		// Todo: implement test for Delete
 
 	}
 }
