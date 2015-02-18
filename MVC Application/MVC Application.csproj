@@ -355,6 +355,7 @@
     <Content Include="Scripts for monei\angular providers\UtilsProvider.js" />
     <Content Include="Scripts for monei\angular providers\AccountProvider.js" />
     <Content Include="Scripts for monei\angular providers\RegistryProvider.js" />
+    <Content Include="Scripts for monei\angular services\SubcategoryProvider_test.js" />
     <Content Include="Scripts for monei\angular services\SubcategoryProvider.js" />
     <Content Include="Scripts for monei\directive-templates\CategorySelector.html" />
     <Content Include="Scripts for monei\directive-templates\login-panel.html" />
@@ -1246,7 +1247,7 @@
     <Content Include="Scripts\Jasmine Test\lib\jasmine-2.2.0\jasmine.css" />
     <Content Include="Scripts\Jasmine Test\lib\jasmine-2.2.0\jasmine.js" />
     <Content Include="Scripts\Jasmine Test\lib\jasmine-2.2.0\jasmine_favicon.png" />
-    <Content Include="Scripts\Jasmine Test\SpecRunner.html" />
+    <Content Include="Scripts\Jasmine Test\TestRunner.html" />
     <Content Include="Scripts\Jasmine Test\spec\UtilsProviderSpec.js" />
     <Content Include="Scripts\jasmine-html.js" />
     <Content Include="Scripts\jasmine.js" />
