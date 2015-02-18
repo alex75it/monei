@@ -1,4 +1,5 @@
-﻿
+﻿"use strict";
+
 /// Jasmine tests
 describe("subcategoryProvider", function () {
 
@@ -21,17 +22,34 @@ describe("subcategoryProvider", function () {
 
 	it("when getSubcategories is called it call success callback", function () {
 		inject(function (subcategoryProvider) {
+			// Prepare
+			requestHandler.respond([{ name: "subcategory A" }]);
+			$httpBackend.expectGET("/api/subcategory/");
+
+			var service = {
+				success: function(data) {}
+			};
+			spyOn(service, "success");
+			// Act
+			subcategoryProvider.getSubcategories(service.success);
+
+			$httpBackend.flush();
+			// Verify
+			expect(service.success).toHaveBeenCalled();
+		});
+	});
+
+
+	it("when getSubcategories is called success return expected data", function () {
+		inject(function (subcategoryProvider) {
 			requestHandler.respond([{ name: "subcategory A" }]);
 			$httpBackend.expectGET("/api/subcategory/");
 
 			var result;
 			var success = function (data) { result = data; };
-			//spyOn(a, "success");  // call to success
 			subcategoryProvider.getSubcategories(success);
-
 			$httpBackend.flush();
 
-			//expect(success).toHaveBeenCalled();
 			expect(result).not.toBeUndefined();
 			expect(result).not.toBeNull();
 			expect(result.length).toBe(1);
