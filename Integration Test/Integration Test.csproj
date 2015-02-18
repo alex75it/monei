@@ -162,6 +162,7 @@
     <Compile Include="Installers\RepositoriesInstaller.cs" />
     <Compile Include="Mvc Application\Api\AccountApiControllerTest.cs" />
     <Compile Include="Mvc Application\Api\ApiControllerTestBase.cs" />
+    <Compile Include="Mvc Application\Api\SubcategoryApiControllerTest.cs" />
     <Compile Include="Mvc Application\Api\CategoryApiControllerTest.cs" />
     <Compile Include="Mvc Application\Api\RegistryApiControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
