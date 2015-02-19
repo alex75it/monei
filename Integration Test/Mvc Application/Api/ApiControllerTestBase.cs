@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -30,7 +31,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		protected HttpMethod DELETE = HttpMethod.Delete ;
 		protected Random random = new Random(DateTime.Now.Millisecond);
 
-		protected HttpServer server;
+		private HttpServer server;
 		private const string BASE_URL = "http://www.apitest.com/";
 		private IWindsorContainer container;
 
@@ -40,6 +41,20 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		{
 
 		}
+
+		/// <summary>
+		/// Return a new HttpServer. A new one is created every time because it can be "dirty" from prevous use.
+		/// </summary>
+		/// <returns></returns>
+		public HttpServer InitializeServer()
+		{
+			//todo: is this needed?
+			if (server != null)
+				server.Dispose();
+			server = new HttpServer(GetConfiguration());
+			return server;
+		}
+
 
 		[TestFixtureSetUp]
 		public void Initialize()
@@ -51,9 +66,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
 		protected HttpClient GetClient()
 		{
-			// initialize a new Server
-			server = new HttpServer(GetConfiguration());
-			return new HttpClient(server);
+			return new HttpClient(InitializeServer());
 		}
 
 

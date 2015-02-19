@@ -20,13 +20,12 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		[Test]
 		public void Ping_Should_RespondOk()
 		{
-			var client = new HttpClient(server);
-
-			using(var request = CreateRequest("api/account/ping", HttpMethod.Get))
+			using (var client = new HttpClient(InitializeServer()))
+			using (var request = CreateRequest("api/account/ping", HttpMethod.Get))
 			using (var response = client.SendAsync(request).Result)
 			{
 				response.IsSuccessStatusCode.ShouldBeTrue();
-			}			
+			}
 		}
 
 		[Test]
@@ -43,7 +42,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			//– receiving the response
 						
 
-			var client = new HttpClient(base.server);
+			var client = new HttpClient(InitializeServer());
 
 			var data = new LoginPostData() { 
 				Username = "pippo",
@@ -56,8 +55,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 				response.IsSuccessStatusCode.ShouldEqual(true);
 				response.Content.ShouldNotBeNull();
 				response.Content.ShouldNotBeType<HttpError>();
-				//response.Co
-				response.IsSuccessStatusCode.ShouldEqual(true);
 			}
 
 			request.Dispose();
@@ -66,7 +63,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		[Test]
 		public void Login_Should_ReturnUsernameNotFound()
 		{
-			var client = new HttpClient(base.server);
+			var client = new HttpClient(base.InitializeServer());
 
 			var data = new LoginPostData()
 			{
@@ -80,7 +77,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 				response.IsSuccessStatusCode.ShouldEqual(true);
 				response.Content.ShouldNotBeNull();
 				response.Content.ShouldNotBeType<HttpError>();
-				response.IsSuccessStatusCode.ShouldEqual(true);
 
 				LoginResult result = response.Content.ReadAsAsync<LoginResult>().Result;
 				result.ShouldEqual(LoginResult.UsernameNotFound);
@@ -93,7 +89,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		[Test]
 		public void Login_Should_ReturnWrongPassword()
 		{
-			var client = new HttpClient(base.server);
+			var client = new HttpClient(base.InitializeServer());
 
 			var data = new LoginPostData()
 			{
@@ -107,7 +103,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 				response.IsSuccessStatusCode.ShouldEqual(true);
 				response.Content.ShouldNotBeNull();
 				response.Content.ShouldNotBeType<HttpError>();
-				response.IsSuccessStatusCode.ShouldEqual(true);
 
 				LoginResult result = response.Content.ReadAsAsync<LoginResult>().Result;
 				result.ShouldEqual(LoginResult.WrongPassword);

@@ -260,10 +260,12 @@
     <Compile Include="Core\ColumnNameForExportAttribute.cs" />
     <Compile Include="Core\CsvFormatter.cs" />
     <Compile Include="Core\ExceptionLogger.cs" />
-    <Compile Include="Core\Installers\ControllerInstaller.cs" />
-    <Compile Include="Core\Installers\RepositoriesInstaller.cs" />
-    <Compile Include="Core\Installers\WindsorDependencyResolver.cs" />
-    <Compile Include="Core\Installers\WindsorDependencyScope.cs" />
+    <Compile Include="Core\WinsorInstallers\ControllerInstaller.cs" />
+    <Compile Include="Core\WinsorInstallers\RepositoriesInstaller.cs" />
+    <Compile Include="Core\WinsorInstallers\WindsorDependencyResolver.cs" />
+    <Compile Include="Core\WinsorInstallers\WindsorDependencyScope.cs" />
+    <Compile Include="Core\IWebAuthenticationWorker.cs" />
+    <Compile Include="Core\WebAuthenticationWorker.cs" />
     <Compile Include="Core\WindsorControllerFactory.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ContractsController.cs" />

@@ -12,6 +12,7 @@ using Monei.DataAccessLayer;
 using Monei.MvcApplication.Helpers;
 using Monei.Entities;
 using Monei.DataAccessLayer.Interfaces;
+using Monei.MvcApplication.Core;
 
 namespace Monei.MvcApplication.Controllers
 {
@@ -21,10 +22,12 @@ namespace Monei.MvcApplication.Controllers
     {
 
 		private IAccountRepository accountRepository;
+		private IWebAuthenticationWorker webAuthenticationWorker;
 
-		public AccountController(IAccountRepository accountRepository)
+		public AccountController(IAccountRepository accountRepository, IWebAuthenticationWorker webAuthenticationWorker)
 		{
 			this.accountRepository = accountRepository;
+			this.webAuthenticationWorker = webAuthenticationWorker;
 		}
 
         //
@@ -47,7 +50,7 @@ namespace Monei.MvcApplication.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				Monei.MvcApplication.Helpers.WebSecurity.LoginResult result = new WebSecurity(accountRepository).Login(model.username, model.Password, persistCookie:model.RememberMe);
+				Monei.MvcApplication.Helpers.WebSecurity.LoginResult result = new WebSecurity(accountRepository, webAuthenticationWorker).Login(model.username, model.Password, persistCookie: model.RememberMe);
 				switch (result)
 				{ 
 					case WebSecurity.LoginResult.Ok:
@@ -103,7 +106,7 @@ namespace Monei.MvcApplication.Controllers
 				// attempt to register the user
 				try
 				{
-					WebSecurity ws = new WebSecurity(accountRepository);
+					WebSecurity ws = new WebSecurity(accountRepository, webAuthenticationWorker);
 					ws.CreateUserAndAccount(model.username, model.Password);
 					ws.Login(model.username, model.Password);
 
@@ -194,7 +197,7 @@ namespace Monei.MvcApplication.Controllers
 					bool changePasswordSuccedeed;
 					try
 					{
-						changePasswordSuccedeed = new WebSecurity(accountRepository).ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
+						changePasswordSuccedeed = new WebSecurity(accountRepository, webAuthenticationWorker).ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
 					}
 					catch (Exception)
 					{
@@ -223,7 +226,7 @@ namespace Monei.MvcApplication.Controllers
 				{
 					try
 					{
-						new WebSecurity(accountRepository).CreateAccount(User.Identity.Name, model.NewPassword);
+						new WebSecurity(accountRepository, webAuthenticationWorker).CreateAccount(User.Identity.Name, model.NewPassword);
 						return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
 					}
 					catch (Exception)

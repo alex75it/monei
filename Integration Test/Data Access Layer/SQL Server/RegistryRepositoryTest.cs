@@ -48,6 +48,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 		[TestMethod]
 		public void DeleteRecord()
 		{
+			// todo: 14s for run this test?
 			RegistryRecord record = CreateTestRecord();
 
 			RegistryRepository.DeleteRecord(record.Id);
@@ -67,6 +68,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 		[TestMethod]
 		public void List()
 		{
+			//todo: 11s for run this test?
 			// period of 1 month
 			DateTime startDate = new DateTime(2005, 1, 1);
 			DateTime endDate = new DateTime(2005, 1, 31);

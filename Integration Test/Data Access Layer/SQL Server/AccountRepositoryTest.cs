@@ -60,6 +60,9 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 		[TestMethod]
 		public void CreateUserAndAccount()
 		{
+			//todo: 6s for run this test?
+			//todo: this test fail (the creation date day is wrong) when executed between 24:00 and 01:00
+
 			string username = Helper.TEST_USERNAME;
 			string password = "password_test";
 			Account.AccountRole role = Account.AccountRole.User;

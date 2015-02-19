@@ -7,6 +7,7 @@ using log4net;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using Monei.Entities;
+using Monei.MvcApplication.Core;
 
 namespace Monei.MvcApplication.Helpers
 {
@@ -14,6 +15,7 @@ namespace Monei.MvcApplication.Helpers
 	{
 		public static readonly ILog logger = LogManager.GetLogger(typeof(WebSecurity));
 		private readonly IAccountRepository accountRepository;
+		private readonly IWebAuthenticationWorker webAuthenticationWorker;
 				
 		public enum LoginResult
 		{
@@ -22,9 +24,10 @@ namespace Monei.MvcApplication.Helpers
 			WrongPassword = 20
 		}
 
-		public WebSecurity(IAccountRepository accountRepository)
+		public WebSecurity(IAccountRepository accountRepository, IWebAuthenticationWorker webAuthenticationWorker)
 		{
 			this.accountRepository = accountRepository;
+			this.webAuthenticationWorker = webAuthenticationWorker;
 		}		
 
 		public LoginResult Login(string username, string password, bool persistCookie = false)
@@ -50,7 +53,8 @@ namespace Monei.MvcApplication.Helpers
 			logger.InfoFormat("Login success. username: \"{0}\".", username);
 
 			// store authentication cookie
-			FormsAuthentication.SetAuthCookie(username, persistCookie);
+			webAuthenticationWorker.SetAuthenticationCookie(username, persistCookie);
+			
 			return LoginResult.Ok;
 		}
 

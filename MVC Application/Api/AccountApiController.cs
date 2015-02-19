@@ -7,6 +7,7 @@ using System.Web.Http;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.MvcApplication.Api.PostDataObjects;
 using Monei.MvcApplication.Api.ResponseDataObjects;
+using Monei.MvcApplication.Core;
 using Monei.MvcApplication.Helpers;
 
 namespace Monei.MvcApplication.Api
@@ -15,9 +16,12 @@ namespace Monei.MvcApplication.Api
 	public class AccountApiController :ApiControllerBase
 	{
 
-		public AccountApiController(IAccountRepository accountRepository)
+		private readonly IWebAuthenticationWorker webAuthenticationWorker;
+
+		public AccountApiController(IAccountRepository accountRepository, IWebAuthenticationWorker webAuthenticationWorker)
 		{
 			AccountRepository = accountRepository;
+			this.webAuthenticationWorker = webAuthenticationWorker;
 		}
 
 		[HttpGet, Route("ping")]
@@ -29,7 +33,7 @@ namespace Monei.MvcApplication.Api
 		[HttpPost, Route("login")]
 		public LoginResult Login(LoginPostData data)
 		{	
-			WebSecurity.LoginResult result = new WebSecurity(AccountRepository).Login(data.Username, data.Password, persistCookie: data.RememberMe);
+			WebSecurity.LoginResult result = new WebSecurity(AccountRepository, webAuthenticationWorker).Login(data.Username, data.Password, persistCookie: data.RememberMe);
 
 			switch (result)
 			{

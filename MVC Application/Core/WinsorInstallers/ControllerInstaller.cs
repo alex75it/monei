@@ -20,9 +20,11 @@ namespace Monei.MvcApplication.Core.Installers
 			container.Register(
 				Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient(),
 				Classes.FromThisAssembly().BasedOn<MoneiControllerBase>().LifestyleTransient(),
-				Classes.FromThisAssembly().BasedOn<ApiControllerBase>().LifestyleTransient() // .LifestyleScoped()
+				Classes.FromThisAssembly().BasedOn<ApiControllerBase>().LifestyleTransient(), // .LifestyleScoped()
 				
 				//Component.For<IAccountRepository>().DependsOn<IAccountRepository>().in
+				Component.For<IWebAuthenticationWorker>().ImplementedBy<WebAuthenticationWorker>()
+
 				);
 		}
 

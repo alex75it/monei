@@ -9,6 +9,7 @@ using Monei.Entities;
 using Monei.MvcApplication.Api;
 using Monei.MvcApplication.Api.PostDataObjects;
 using Monei.MvcApplication.Api.ResponseDataObjects;
+using Monei.MvcApplication.Core;
 using NUnit.Framework;
 using Should;
 
@@ -22,12 +23,14 @@ namespace Monei.Test.UnitTest.MVC_Application.Api
 		public void Login_Should_ReturnOkResult()
 		{
 			IAccountRepository accountRepository = A.Fake<IAccountRepository>();
+			IWebAuthenticationWorker webAuthenticationWorker = A.Fake<IWebAuthenticationWorker>();
+
 			var account = A.Dummy<Account>();
 			account.Username = "aaa";
 			account.Password = "bbb";
 			A.CallTo(() => accountRepository.Read(account.Username)).Returns(account);
 
-			AccountApiController controller = new AccountApiController(accountRepository);
+			AccountApiController controller = new AccountApiController(accountRepository, webAuthenticationWorker);
 			var data = A.Fake<LoginPostData>();
 			data.Username = account.Username;
 			data.Password = account.Password;
