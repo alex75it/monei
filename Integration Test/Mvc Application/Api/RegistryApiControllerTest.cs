@@ -21,7 +21,7 @@ namespace Monei.Test.IntegrationTest.Mvc_Application.Api
 		[Test]
 		public void Search_Should_ReturnAList()
 		{
-			RegistrySearchPostData data = new RegistrySearchPostData() {};
+			RegistrySearchPostData data = new RegistrySearchPostData() { };
 
 			var result = base.CallApi<RegistrySearchPostData, IEnumerable<RegistryRecord>>(baseUri + "search", HttpMethod.Post, data);
 			result.ShouldNotBeEmpty();

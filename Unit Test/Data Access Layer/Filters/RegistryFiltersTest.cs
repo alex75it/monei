@@ -8,75 +8,110 @@ using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
 using Should;
 
+using Monei.Test.UnitTest;
+
 namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 {
 
 	[TestClass]
-	public class RegistryFiltersTest
+	public class RegistryFiltersTest :TestBase
 	{
-		private DateTime minSqlDate = System.Data.SqlTypes.SqlDateTime.MinValue.Value;
-		private DateTime maxSqlDate = System.Data.SqlTypes.SqlDateTime.MaxValue.Value;
 
-		[TestMethod]
-		public void Normalize()
-		{
-			RegistryFilters filters = new RegistryFilters();
-			filters.Normalize();
+	[TestMethod]
+	public void Normalize()
+	{
+		RegistryFilters filters = new RegistryFilters();
+		filters.Normalize();
 
-			// Verify
-			filters.StartDate.ShouldBeInRange(minSqlDate, maxSqlDate);
-			filters.EndDate.ShouldBeInRange(minSqlDate, maxSqlDate);
-			filters.SelectedPeriod.ShouldBeNull();
-		}
+		// Verify
+		VerifyDates(filters);
+		filters.SelectedPeriod.ShouldBeNull();
+	}
+
+	[TestMethod]
+	public void Normalize_Should_SetAValidSqlDate_ForStartDate()
+	{
+		// Arrange
+		RegistryFilters filters = new RegistryFilters();
+		filters.StartDate = DateTime.MinValue;
+
+		// Act
+		filters.Normalize();
+
+		// Assert
+		VerifyDates(filters);
+	}
+
+	[TestMethod]
+	public void Normalize_Should_SetAValidSqlDate_ForEndDate()
+	{
+		// Arrange
+		RegistryFilters filters = new RegistryFilters();
+		filters.EndDate = DateTime.MinValue;
+
+		// Act
+		filters.Normalize();
+
+		// Assert
+		VerifyDates(filters);
+	}
 
 
-		[TestMethod]
-		public void Normalize_SetMinDate_WhenItIsTooLow()
-		{
-			RegistryFilters filters = new RegistryFilters();
-			filters.StartDate = new DateTime(500, 01, 01);
-			filters.Normalize();
+	[TestMethod]
+	public void Normalize_SetMinDate_WhenItIsTooLow()
+	{
+		RegistryFilters filters = new RegistryFilters();
+		filters.StartDate = new DateTime(500, 01, 01);
+		filters.Normalize();
 
-			// Verify
-			filters.StartDate.ShouldBeInRange(minSqlDate, maxSqlDate);
-		}
+		// Verify
+		VerifyDates(filters);
+	}
 
-		[TestMethod]
-		public void Normalize_SetMaxDate_WhenItIsTooBig()
-		{
-			RegistryFilters filters = new RegistryFilters();
-			filters.EndDate = new DateTime(9000, 01, 01);
-			filters.Normalize();
+	[TestMethod]
+	public void Normalize_SetMaxDate_WhenItIsTooBig()
+	{
+		RegistryFilters filters = new RegistryFilters();
+		filters.EndDate = new DateTime(9000, 01, 01);
+		filters.Normalize();
 
-			// Verify
-			filters.EndDate.ShouldBeInRange(minSqlDate, maxSqlDate);
-		}
+		// Verify
+		VerifyDates(filters);
+	}
 
-		[TestMethod]
-		public void Normalize_SwitchDates_WhenThereAreInverted()
-		{
-			RegistryFilters filters = new RegistryFilters();
-			filters.StartDate = new DateTime(9000, 01, 01);
-			filters.EndDate = new DateTime(500, 01, 01);
-			filters.Normalize();
+	[TestMethod]
+	public void Normalize_SwitchDates_WhenThereAreInverted()
+	{
+		RegistryFilters filters = new RegistryFilters();
+		filters.StartDate = new DateTime(9000, 01, 01);
+		filters.EndDate = new DateTime(500, 01, 01);
+		filters.Normalize();
 
-			// Verify
-			filters.StartDate.ShouldBeInRange(minSqlDate, maxSqlDate);
-			filters.EndDate.ShouldBeInRange(minSqlDate, maxSqlDate);
-			filters.StartDate.ShouldBeLessThan(filters.EndDate);
-		}
+		// Verify
+		VerifyDates(filters);
+	}
 
-		[TestMethod]
-		public void SetOperationType()
-		{
-			RegistryFilters filters = new RegistryFilters();
-			filters.SetOperationType(OperationType.Transfer, true);
-			filters.SetOperationType(OperationType.Outcome, false);
+	[TestMethod]
+	public void SetOperationType()
+	{
+		RegistryFilters filters = new RegistryFilters();
+		filters.SetOperationType(OperationType.Transfer, true);
+		filters.SetOperationType(OperationType.Outcome, false);
 
-			// Verify
-			filters.OperationTypes.ShouldContain(OperationType.Transfer);
-			filters.OperationTypes.ShouldNotContain(OperationType.Outcome);
-		}
+		// Verify
+		filters.OperationTypes.ShouldContain(OperationType.Transfer);
+		filters.OperationTypes.ShouldNotContain(OperationType.Outcome);
+	}
+
+	#region private
+	private static void VerifyDates(RegistryFilters filters)
+	{
+		filters.StartDate.ShouldBeValidSqlDate();
+		filters.EndDate.ShouldBeValidSqlDate();
+		filters.StartDate.ShouldBeLessThanOrEqualTo(filters.EndDate);
+	}
+
+	#endregion
 
 	}
 }
