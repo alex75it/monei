@@ -94,6 +94,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Data Access Layer\DateTimeExtensionsTest.cs" />
+    <Compile Include="Data Access Layer\Filters\BaseFiltersTest.cs" />
     <Compile Include="Data Access Layer\Filters\RegistryFiltersTest.cs" />
     <Compile Include="Entities\AccountTest.cs" />
     <Compile Include="Extensions\ShouldExtensions.cs" />

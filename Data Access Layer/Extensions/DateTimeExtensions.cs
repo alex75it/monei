@@ -8,14 +8,14 @@ namespace Monei.DataAccessLayer.Extensions
 {
 	public static class DateTimeExtensions
 	{
-
-		public static void NormalizeForSql(this DateTime date)
+		public static DateTime NormalizeForSql(this DateTime date)
 		{
 			if (date < System.Data.SqlTypes.SqlDateTime.MinValue.Value)
 				date = System.Data.SqlTypes.SqlDateTime.MinValue.Value;
 			else if (date > System.Data.SqlTypes.SqlDateTime.MaxValue.Value)
 				date = System.Data.SqlTypes.SqlDateTime.MaxValue.Value;
-		}
 
+			return date;
+		}
 	}
 }

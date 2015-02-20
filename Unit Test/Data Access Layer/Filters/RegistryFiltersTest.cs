@@ -18,7 +18,7 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 	{
 
 	[TestMethod]
-	public void Normalize()
+	public void Normalize_WhenDAtesAreNotSet()
 	{
 		RegistryFilters filters = new RegistryFilters();
 		filters.Normalize();
@@ -29,7 +29,7 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 	}
 
 	[TestMethod]
-	public void Normalize_Should_SetAValidSqlDate_ForStartDate()
+	public void Normalize_WhenStartDateIsMinDate()
 	{
 		// Arrange
 		RegistryFilters filters = new RegistryFilters();
@@ -41,9 +41,21 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 		// Assert
 		VerifyDates(filters);
 	}
+		
 
 	[TestMethod]
-	public void Normalize_Should_SetAValidSqlDate_ForEndDate()
+	public void Normalize_WhenStartDateIsTooLow()
+	{
+		RegistryFilters filters = new RegistryFilters();
+		filters.StartDate = new DateTime(500, 01, 01);
+		filters.Normalize();
+
+		// Verify
+		VerifyDates(filters);
+	}
+
+	[TestMethod]
+	public void Normalize_WhenEndDateIsToLow()
 	{
 		// Arrange
 		RegistryFilters filters = new RegistryFilters();
@@ -56,20 +68,8 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 		VerifyDates(filters);
 	}
 
-
 	[TestMethod]
-	public void Normalize_SetMinDate_WhenItIsTooLow()
-	{
-		RegistryFilters filters = new RegistryFilters();
-		filters.StartDate = new DateTime(500, 01, 01);
-		filters.Normalize();
-
-		// Verify
-		VerifyDates(filters);
-	}
-
-	[TestMethod]
-	public void Normalize_SetMaxDate_WhenItIsTooBig()
+	public void Normalize_WhenEndDateIsTooBig()
 	{
 		RegistryFilters filters = new RegistryFilters();
 		filters.EndDate = new DateTime(9000, 01, 01);
@@ -88,6 +88,7 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 		filters.Normalize();
 
 		// Verify
+		filters.StartDate.ShouldBeLessThanOrEqualTo(filters.EndDate);
 		VerifyDates(filters);
 	}
 

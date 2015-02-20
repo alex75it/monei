@@ -16,7 +16,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 	[TestClass]
 	public class RepositoryTestBase
 	{		
-		public TestHelper Helper { get; set; }
+		protected TestHelper Helper { get; set; }
 
 		public IAccountRepository AccountRepository { get; set; }
 		public ICurrencyRepository CurrencyRepository { get; set; }

@@ -12,13 +12,15 @@ namespace Monei.DataAccessLayer.Filters
 
 		public void NormalizeDate(DateTime date)
 		{
-			date.NormalizeForSql();
+			date = date.NormalizeForSql();
 		}
 
-		public void NormalizeDates(IEnumerable<DateTime> dates)
+		public void NormalizeDates(ICollection<DateTime> dates)
 		{
+			ICollection<DateTime> datesNew = new List<DateTime>(dates.Count);
 			foreach(var date in dates)
-				date.NormalizeForSql();
+				datesNew.Add(date.NormalizeForSql());
+			dates = datesNew;
 		}
 
 	}
