@@ -10,9 +10,9 @@ namespace Monei.DataAccessLayer.Filters
 	public class BaseFilters
 	{
 
-		public void NormalizeDate(DateTime date)
+		public DateTime NormalizeDate(DateTime date)
 		{
-			date = date.NormalizeForSql();
+			return date.NormalizeForSql();
 		}
 
 		public void NormalizeDates(ICollection<DateTime> dates)

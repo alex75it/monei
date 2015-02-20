@@ -13,23 +13,23 @@ namespace Monei.Test.UnitTest.Data_Access_Layer.Filters
 	public class BaseFiltersTest :TestBase
 	{
 		[Test]
-		public void Normalize_WhenDateIsMinDate()
+		public void NormalizeDate_WhenDateIsMinDate()
 		{
 			BaseFilters filters = new BaseFilters();
 			DateTime date = DateTime.MinValue;
 
-			filters.NormalizeDate(date);
+			date = filters.NormalizeDate(date);
 
 			date.ShouldBeValidSqlDate();
 		}
 
 		[Test]
-		public void Normalize_WhenDateIsMaxDate()
+		public void NormalizeDate_WhenDateIsMaxDate()
 		{
 			BaseFilters filters = new BaseFilters();
 			DateTime date = DateTime.MaxValue;
 
-			filters.NormalizeDate(date);
+			date = filters.NormalizeDate(date);
 
 			date.ShouldBeValidSqlDate();
 		}

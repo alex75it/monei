@@ -45,8 +45,8 @@ namespace Monei.DataAccessLayer.Filters
 				EndDate = temp;
 			}
 
-			base.NormalizeDate(StartDate);
-			base.NormalizeDate(EndDate);
+			StartDate = base.NormalizeDate(StartDate);
+			EndDate = base.NormalizeDate(EndDate);
 		}
 
 		public void SetOperationType(OperationType operation, bool enabled)
