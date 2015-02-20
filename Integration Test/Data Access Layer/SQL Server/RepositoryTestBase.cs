@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using Monei.Test.IntegrationTest.Installers;
+using NUnit.Framework;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-	[TestClass]
+	[TestFixture]
 	public class RepositoryTestBase
 	{		
 		protected TestHelper Helper { get; set; }
@@ -25,9 +26,11 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 		public ISubcategoryRepository SubcategoryRepository { get; set; }
 
 
-		[TestInitialize()]
+		[TestFixtureSetUp]
 		public void Initialize()
 		{
+			Console.WriteLine("Initialize");
+
 			try
 			{
 				IWindsorContainer container = new WindsorContainer();

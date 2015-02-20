@@ -8,14 +8,16 @@ using Monei.DataAccessLayer.Exceptions;
 using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
 using NHibernate;
+using NUnit.Framework;
 using Should;
+using Assert = NUnit.Framework.Assert;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-	[TestClass]
+	[TestFixture, Category("Subcategory")]
 	public class SubcategoryRepositoryTest :RepositoryTestBase
 	{
-		[TestMethod]
+		[Test]
 		public void List()
 		{
 
@@ -37,7 +39,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 		}
 
 
-		[TestMethod]
+		[Test]
 		public void Create()
 		{
 			Account account = Helper.GetTestAccount();
@@ -67,7 +69,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			SubcategoryRepository.Delete(subcategory.Id);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Read()
 		{
 			string name = "to be deleted";
@@ -103,7 +105,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			}
 		}
 
-		[TestMethod]
+		[Test]
 		public void Update()
 		{
 			string name = "Initial name";
@@ -143,7 +145,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			SubcategoryRepository.Delete(subcategory.Id);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Delete()
 		{
 			Subcategory subcategory = Helper.CreateRandomSubcategory();

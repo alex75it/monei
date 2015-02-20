@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
+using NUnit.Framework;
 using Should;
+using Assert = NUnit.Framework.Assert;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-	[TestClass]
+	[TestFixture]
 	public class RegistryRepositoryTest : RepositoryTestBase
 	{
 
@@ -18,7 +19,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
 		private static int testAccountId;
 
-		[TestInitialize]
+		[TestFixtureSetUp]
 		public void TestInitialize()
 		{
 			//IList<RegistryRecord> records = RegistryRepository.ListRecods(new RegistryFilters() { EndDate = new DateTime(2005, 1, 1) });
@@ -28,24 +29,15 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			DeleteRecordsOfTestAccount();
 		}
 
-		[TestCleanup()]
+		[TearDown]
 		public void TestClenup()
 		{
 
 			DeleteRecordsOfTestAccount();
 		}
 
-		private void DeleteRecordsOfTestAccount()
-		{
-			IList<RegistryRecord> records = RegistryRepository.ListRecords(new RegistryFilters() { AccountId = testAccountId });
 
-			foreach (var r in records)
-				RegistryRepository.DeleteRecord(r.Id);
-
-		}
-
-
-		[TestMethod]
+		[Test]
 		public void DeleteRecord()
 		{
 			// todo: 14s for run this test?
@@ -65,7 +57,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 		}
 					
 
-		[TestMethod]
+		[Test]
 		public void List()
 		{
 			//todo: 11s for run this test?
@@ -97,7 +89,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
 			RegistryRecord loadedRecord = records.First();
 
-			Assert.AreEqual(date.ToString(), loadedRecord.Date.ToString());
+			Assert.AreEqual(date.Date.ToString(), loadedRecord.Date.ToString()); // database write/load can change missiseconds
 			Assert.AreEqual(amount, loadedRecord.Amount);
 			Assert.AreEqual(note, loadedRecord.Note);
 			Assert.AreEqual(isTaxDeductible, loadedRecord.IsTaxDeductible);
@@ -129,7 +121,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			// todo: add other tests
 		}
 
-		[TestMethod]
+		[Test]
 		public void AddRecord()
 		{
 
@@ -179,6 +171,15 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 		}
 
 		#region private methods
+
+		private void DeleteRecordsOfTestAccount()
+		{
+			IList<RegistryRecord> records = RegistryRepository.ListRecords(new RegistryFilters() { AccountId = testAccountId });
+
+			foreach (var r in records)
+				RegistryRepository.DeleteRecord(r.Id);
+
+		}
 
 		private RegistryRecord CreateTestRecord()
 		{
