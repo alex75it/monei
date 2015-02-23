@@ -327,76 +327,10 @@ section.feature {
 }
 
 
-
-/* login page */
-#loginForm {
-    border-right: solid 2px #c8c8c8;
-    /*float: left;*/
-    width: 55%;
-	min-width:500px;
-	margin: auto;
-	margin-top:0;
-	border:0;
-}
-
-    #loginForm .validation-error {
-        display: block;
-        margin-left: 15px;
-    }
-
-    #loginForm .validation-summary-errors ul {
-        margin: 0;
-        padding: 0;
-    }
-
-    #loginForm .validation-summary-errors li {
-        display: inline;
-        list-style: none;
-        margin: 0;
-    }
-
-    #loginForm input {
-        width: 250px;
-    }
-
-    #loginForm input[type="checkbox"],
-    #loginForm input[type="submit"],
-    #loginForm input[type="button"],
-    #loginForm button {
-        width: auto;
-    }
-
-#socialLoginForm {
-    margin-left: 40px;
-    float: left;
-    width: 40%;
-}
-
-    #socialLoginForm h2 {
-        margin-bottom:  5px;
-    }
-
 #socialLoginList button {
     margin-bottom: 12px;
 }
 
-#logoutForm {
-    display: inline;
-}
-
-/* contact */
-.contact h3 {
-    font-size: 1.2em;
-}
-
-.contact p {
-    margin: 5px 0 0 10px;
-}
-
-.contact iframe {
-    border: 1px solid #212A70;
-    margin: 5px 0 0 10px;
-}
 
 /* forms */
 fieldset {
@@ -414,15 +348,8 @@ fieldset {
         list-style: none;
     }
 
-        /*fieldset ol li {
-            padding-bottom: 10px;
-        }*/
 
-/*label {
-    display: block;
-    font-size: 1.05em;
-    font-weight: 700;
-}*/
+form.labels-on-top label {display:block}
 
 label.checkbox {
     display: inline;
@@ -438,7 +365,7 @@ input, textarea, select {
     width: 300px;
 }
 
-input[type="date"] {  }
+/*input, button {margin-bottom:.5em !important;}*/
 
 
 textarea {
@@ -451,8 +378,6 @@ input:focus, textarea:focus, select:focus {
 }
 
 
-
-
 input[type="image"] {
     border:none;
     background:inherit;
@@ -463,9 +388,8 @@ input[type="image"] {
 
 .img-cmd { height:1.2em }
 
-input, button {margin-bottom:.5em !important;}
 
-.input-shortDate { width: 7em !important}
+.input-shortDate, input[type="date"] { width: 7em !important}
 
 /* link for add item near dropdown*/
 a.add-dropdown

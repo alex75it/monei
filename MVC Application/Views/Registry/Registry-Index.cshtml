@@ -8,26 +8,20 @@
 
 	<span class="btn btn-link" ng-click="openCreatePanel()">Create record</span>
 
-	<form class="form-inline">
-		<div class="form-group">
-			<label>
-				From
-				<input type="text" class="datepicker datepicker-days form-control input-shortDate" ng-model="filters.from" />
-			</label>
+	<form class="form-inline labels-on-top">
+		<div class="form-group ">
+			<label>From</label>
+			<input type="text" class="datepicker datepicker-days form-control input-shortDate" ng-model="filters.from" />
 		</div>
 		<div class="form-group">
-			<label>
-				To
-				<input type="text" class="datepicker datepicker-days form-control input-shortDate" ng-model="filters.to" />
-			</label>
+			<label>To</label>
+			<input type="text" class="datepicker datepicker-days form-control input-shortDate" ng-model="filters.to" />
 		</div>
 		<div class="form-group">
-			<label>
-				Category
-				<monei-category-selector ng-model="filters.categories" multiple="1" />
-			</label>
+			<label>Category</label>
+			<monei-category-selector ng-model="filters.categories" multiple="false" />
 		</div>
-		<div class="form-group">
+		<div class="form-group" ng-show="filters.categories">
 			<label>
 				Subcategory
 				<monei-subcategory-selector ng-model="filters.subcategories" category-id="filters.categories" multiple="false" />
