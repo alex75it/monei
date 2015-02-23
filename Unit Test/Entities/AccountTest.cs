@@ -1,14 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.Entities;
+using NUnit.Framework;
 using Should;
 
 namespace Monei.Test.UnitTest.Entities
 {
-	[TestClass]
+	[TestFixture]
 	public class AccountTest
 	{
-		[TestMethod]
+		[Test]
 		public void Create()
 		{
 			string username = "test";

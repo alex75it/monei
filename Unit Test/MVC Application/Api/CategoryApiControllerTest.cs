@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FakeItEasy;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
 using Monei.MvcApplication.Api;
+using NUnit.Framework;
 using Should;
 
 namespace Monei.Test.UnitTest.MvcApplication.Api
 {
-	[TestClass]
+	[TestFixture, Category("Web")]
 	public class CategoryControllerTest
 	{
 		//todo: this test is no more necessary, use it as template and delete after first "use"
-		[TestMethod, TestCategory("Web")]
+		[Test]
 		public void Get()
 		{
 			// Arrange

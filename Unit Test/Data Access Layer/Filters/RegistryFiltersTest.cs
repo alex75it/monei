@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
 using Should;
 
 using Monei.Test.UnitTest;
+using NUnit.Framework;
 
 namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 {
 
-	[TestClass]
+	[TestFixture]
 	public class RegistryFiltersTest :TestBase
 	{
 
-	[TestMethod]
+	[Test]
 	public void Normalize_WhenDAtesAreNotSet()
 	{
 		RegistryFilters filters = new RegistryFilters();
@@ -28,7 +28,7 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 		filters.SelectedPeriod.ShouldBeNull();
 	}
 
-	[TestMethod]
+	[Test]
 	public void Normalize_WhenStartDateIsMinDate()
 	{
 		// Arrange
@@ -43,7 +43,7 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 	}
 		
 
-	[TestMethod]
+	[Test]
 	public void Normalize_WhenStartDateIsTooLow()
 	{
 		RegistryFilters filters = new RegistryFilters();
@@ -54,7 +54,7 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 		VerifyDates(filters);
 	}
 
-	[TestMethod]
+	[Test]
 	public void Normalize_WhenEndDateIsToLow()
 	{
 		// Arrange
@@ -68,7 +68,7 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 		VerifyDates(filters);
 	}
 
-	[TestMethod]
+	[Test]
 	public void Normalize_WhenEndDateIsTooBig()
 	{
 		RegistryFilters filters = new RegistryFilters();
@@ -79,7 +79,7 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 		VerifyDates(filters);
 	}
 
-	[TestMethod]
+	[Test]
 	public void Normalize_SwitchDates_WhenThereAreInverted()
 	{
 		RegistryFilters filters = new RegistryFilters();
@@ -92,7 +92,7 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 		VerifyDates(filters);
 	}
 
-	[TestMethod]
+	[Test]
 	public void SetOperationType()
 	{
 		RegistryFilters filters = new RegistryFilters();
