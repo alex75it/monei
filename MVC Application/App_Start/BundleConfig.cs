@@ -44,19 +44,19 @@ namespace Monei.MvcApplication
 				//"~/Scripts/angular-strap.js"
 				));
 
-            
+
 			bundles.Add(new ScriptBundle("~/bundles/monei").Include(
 				// moment
 				//"~/Scripts/moment.min.js",
 				"~/Scripts/moment_langs.min.js",
 
 				// noty
-                "~/Scripts/noty/jquery.noty.js",
-                "~/Scripts/noty/layouts/topCenter.js",
-                "~/Scripts/noty/layouts/bottomRight.js",
-                "~/Scripts/noty/layouts/top.js",
-                // add other layouts...
-                "~/Scripts/noty/themes/default.js",
+				"~/Scripts/noty/jquery.noty.js",
+				"~/Scripts/noty/layouts/topCenter.js",
+				"~/Scripts/noty/layouts/bottomRight.js",
+				"~/Scripts/noty/layouts/top.js",
+				// add other layouts...
+				"~/Scripts/noty/themes/default.js",
 
 				// Google charts
 				"~/Scripts/ng-google-chart.js",
@@ -73,8 +73,12 @@ namespace Monei.MvcApplication
 				"~/Scripts for monei/angular services/*.js",
 				"~/Scripts for monei/angular providers/*.js",
 				"~/Scripts for monei/angular filters/*.js"
-                ));	
+				)
+				);
 
+
+			// exclude Jasmine tests
+			bundles.IgnoreList.Ignore("*_test.js", OptimizationMode.Always);
 
 			bundles.Add(new StyleBundle("~/Content/css")
 				.Include(
