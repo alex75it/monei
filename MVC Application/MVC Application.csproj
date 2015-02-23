@@ -338,7 +338,6 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="CSS_\jasmine.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Images\add_big_3.png" />
@@ -357,6 +356,7 @@
     <Content Include="Scripts for monei\angular providers\UtilsProvider.js" />
     <Content Include="Scripts for monei\angular providers\AccountProvider.js" />
     <Content Include="Scripts for monei\angular providers\RegistryProvider.js" />
+    <Content Include="Scripts for monei\angular providers\UtilsProvider_test.js" />
     <Content Include="Scripts for monei\angular services\SubcategoryProvider_test.js" />
     <Content Include="Scripts for monei\angular services\SubcategoryProvider.js" />
     <Content Include="Scripts for monei\directive-templates\CategorySelector.html" />

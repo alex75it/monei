@@ -14,6 +14,12 @@ function (utils, categoryProvider) {
 
 	directive.link = function(scope, element, attrs) {
 		scope.loading = true;
+		var multipleAtr = attrs["multiple"];
+
+		if (multipleAtr && (multipleAtr == "true" || multipleAtr == "1"))
+			element.attr("multiple", "muyltiple");
+		else
+			element.removeAttr("multiple");
 
 		categoryProvider.getCategories(function (data) { scope.categories = data; },
 			function(error) { throw Error("Fail to load categories. " + error); },
