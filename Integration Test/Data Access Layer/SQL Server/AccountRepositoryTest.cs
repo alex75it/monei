@@ -3,40 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Exceptions;
 using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
+using NUnit.Framework;
 using Should;
+
+
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-	[TestClass]
+	[TestFixture]
 	public class AccountRepositoryTest : RepositoryTestBase
 	{
 
-		//private Account CreateTestAccount()
-		//{
-		//	string username = "Test";
-		//	string password = "test";
-		//	Account.AccountRole role = Account.AccountRole.User;
-		//	Currency currency = TestHelper.GetEuroCurrency();
 
-		//	return new Account() { 
-		//		Username = username,
-		//		Password = password,
-		//		Role = role,
-		//		Currency = currency,
-		//	};
-		//}
-
-		[ClassInitialize()]
-		public static void ClassInitialize(TestContext context)
+		[TestFixtureSetUp]
+		public void ClassInitialize()
 		{
 			//Helper.RemoveTestAccount();
 		}
 
-		[TestInitialize()]
+		[SetUp]
 		public void TestInizialize()
 		{
 			try
@@ -49,7 +37,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			}
 		}
 
-		[TestCleanup()]
+		[TearDown]
 		public void TestCleanup()
 		{
 			Helper.RemoveTestAccount();
@@ -57,7 +45,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
 
 
-		[TestMethod]
+		[Test]
 		public void CreateUserAndAccount()
 		{
 			//todo: 6s for run this test?
@@ -80,7 +68,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 		}
 
 
-		[TestMethod]
+		[Test]
 		public void Create()
 		{
 			string username = "TEST";
@@ -124,7 +112,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 		}
 
 
-		[TestMethod]
+		[Test]
 		public void Read()
 		{
 			string username = "Test";
@@ -148,7 +136,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			AccountRepository.Delete(account.Id);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Update()
 		{
 
@@ -184,7 +172,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 		}
 
 
-		[TestMethod]
+		[Test]
 		public void SetLastLoginDate()
 		{
 			Account account = Helper.GetTestAccount();
@@ -195,13 +183,13 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
 		}
 
-		[TestMethod]
+		[Test]
 		public void GelAllAccounts()
 		{
 			IList<Account> accounts = AccountRepository.ListAll();
 
 			Assert.IsTrue(accounts.Count > 0);
-			Assert.IsTrue( accounts.Where(a => a.Username.ToUpper() == "ALEX").Single() != null );
+			Assert.IsTrue(accounts.Where(a => a.Username.ToUpper() == "ALEX").Single() != null );
 		}
 
 	}

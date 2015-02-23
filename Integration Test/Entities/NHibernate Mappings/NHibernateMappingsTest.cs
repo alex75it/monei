@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
+using NUnit.Framework;
 
 namespace Monei.Test.IntegrationTest.Entities.NHibernateMappings
 {
-	[TestClass]
+	[TestFixture, Category("NHibernate")]
 	public class NHibernateMappingsTest
 	{
-		[TestMethod, TestCategory("NHibernate")]
+		[Test]
 		public void AccountMappingTest()
 		{
 

@@ -84,7 +84,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			filters = new RegistryFilters() { StartDate = startDate, EndDate = endDate };
 			records = RegistryRepository.ListRecords(filters);
 
-			/// Verify
+			// Verify
 			Assert.AreEqual(1, records.Count);
 
 			RegistryRecord loadedRecord = records.First();

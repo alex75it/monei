@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Exceptions;
 using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
+using NUnit.Framework;
 using Should;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-	[TestClass]
+	[TestFixture]
 	public class CurrencyRepositoryTest : RepositoryTestBase
 	{
 
-		
-		[TestMethod]
+		[Test]
 		public void Delete()
 		{
 			string code = "YYY";

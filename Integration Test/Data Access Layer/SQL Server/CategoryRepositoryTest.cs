@@ -92,7 +92,10 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 			category.CreationAccount = account;
 
 
-			CategoryRepository.Create(category);
+			int categoryId = CategoryRepository.Create(category).Id;
+
+
+			category = CategoryRepository.Read(categoryId);
 
 			category.Name = changedName;
 			category.Description = changedDescription;
