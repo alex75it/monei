@@ -351,6 +351,8 @@ fieldset {
 
 form.labels-on-top label {display:block}
 
+form.labels-on-top .form-group  { margin-right: 1em}
+
 label.checkbox {
     display: inline;
 }
