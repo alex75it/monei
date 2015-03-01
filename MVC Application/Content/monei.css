@@ -593,9 +593,13 @@ tr.header-row th
 	padding: 10px 10px;
 }
 
-/* correction for noty.js */
+/* overloads for noty.js */
 .noty_message { font-size: 1.1em !important; font-weight:600; }
 
+
+/* overloads for bootstrap.multiselect */
+.multiselect-container input { width: auto !important;}
+.multiselect-container li label { width: 100%;}
 
 
 /********************

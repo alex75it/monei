@@ -19,7 +19,8 @@ namespace Monei.MvcApplication
 				"~/Scripts/bootstrap.js",
 				"~/Scripts/jquery.validate.unobtrusive-custom-for-bootstrap.js",
 				"~/Scripts/bootstrap-select.min.js",
-				"~/Scripts/bootstrap-datepicker.js"
+				"~/Scripts/bootstrap-datepicker.js",
+				"~/Scripts/bootstrap-multiselect.js"
 				));
 
 			bundles.Add(new StyleBundle("~/Content/Bootstrap").Include(
@@ -28,7 +29,8 @@ namespace Monei.MvcApplication
 				"~/Content/bootstrap-responsive.min.css",
 				"~/Content/bootstrap-mvc-validation.css",
 				"~/Content/bootstrap-select.min.css",
-				"~/Content/bootstrap-datepicker.css"
+				"~/Content/bootstrap-datepicker.css",
+				"~/Content/bootstrap-multiselect.css"
 				));
 
 
