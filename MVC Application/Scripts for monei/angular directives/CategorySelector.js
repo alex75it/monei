@@ -1,37 +1,11 @@
 ﻿app.directive("moneiCategorySelector",
-["utils", "category",
+["utils", "categoryDataProvider",
 function (utils, categoryProvider) {
 
 	var directive = {};
 	directive.restrict = "E";
 	directive.replace = true;
 	directive.templateUrl = "/Scripts for monei/directive-templates/CategorySelector.html";
-	/*
-	directive.scope = {
-
-	};*/
-	/*
-	directive.controller = function($scope, $element) {
-		//$scope.clicked = 0;
-		//$scope.click = function() {
-		//	$scope.clicked++;
-		//}
-
-		$scope.reload = function () {
-			categoryProvider.getCategories(
-				function (data) {
-					$scope.categories = data;
-
-					//setTimeout(function() {
-					$element.multiselect('rebuild');
-					//}, 0.3*1000); // little delay
-				},
-				function (error) { throw Error("Fail to load categories. " + error); },
-				function () { $scope.loading = false; }
-			);
-
-		};
-	};*/
 
 	directive.link = function(scope, element, attrs) {
 		scope.loading = true;
@@ -58,18 +32,6 @@ function (utils, categoryProvider) {
 				}
 			}
 		});
-
-
-		//scope.$watch(
-		//	function () { return element.find("select option").length; },
-		//	function () {
-		//		console.log("options: " + element.find("select option").length);
-		//		//element.find("select").multiselect('rebuild');
-		//		//setTimeout(function() {
-		//		//	 element.find("select").multiselect('rebuild');
-		//		//}, 0.3*1000); // little delay
-		//	}
-		//);
 
 		categoryProvider.getCategories(
 			function(data) {

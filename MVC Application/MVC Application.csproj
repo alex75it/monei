@@ -353,7 +353,9 @@
     <Content Include="Scripts for monei\angular directives\CategorySelector.js" />
     <Content Include="Scripts for monei\angular directives\LoginPanel.js" />
     <Content Include="Scripts for monei\angular directives\RegistryCreatePanel.js" />
+    <Content Include="Scripts for monei\angular directives\SubcategorySelector.js" />
     <Content Include="Scripts for monei\angular filters\momentFilter.js" />
+    <Content Include="Scripts for monei\angular providers\SubcategoryDataProvider.js" />
     <Content Include="Scripts for monei\angular providers\UtilsProvider.js" />
     <Content Include="Scripts for monei\angular providers\AccountProvider.js" />
     <Content Include="Scripts for monei\angular providers\RegistryProvider.js" />
@@ -363,6 +365,7 @@
     <Content Include="Scripts for monei\directive-templates\CategorySelector.html" />
     <Content Include="Scripts for monei\directive-templates\login-panel.html" />
     <Content Include="Scripts for monei\directive-templates\RegistryCreatePanel.html" />
+    <Content Include="Scripts for monei\directive-templates\SubcategorySelector.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -1335,7 +1338,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts for monei\angular controllers\RegistryCreateController.js" />
     <Content Include="Scripts for monei\angular directives\DashboardMonthDirective.js" />
-    <Content Include="Scripts for monei\angular providers\CategoryProvider.js" />
+    <Content Include="Scripts for monei\angular providers\CategoryDataProvider.js" />
     <Content Include="Scripts for monei\monei.CategoriesManagement.js" />
     <Content Include="Scripts for monei\monei.utils.js" />
     <Content Include="Scripts for monei\monei.js" />

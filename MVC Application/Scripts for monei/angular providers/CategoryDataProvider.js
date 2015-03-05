@@ -1,6 +1,6 @@
-﻿app.factory("category",
+﻿app.factory("categoryDataProvider",
 ["$http",
-function categoryFactory($http) {
+function categoryDataProvider($http) {
 	var provider = {};
 
 	provider.getCategories = function(callback, errorCallback, finallyCallback) {
