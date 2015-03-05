@@ -14,7 +14,7 @@ app.config( function(utilsProvider){
 
 
 app.factory("utils", function utilsFactory () {
-	console.log("set utils provider");
+	
 	var provider = {};
 
 	provider.toShortDate = function(date) {
@@ -26,21 +26,6 @@ app.factory("utils", function utilsFactory () {
 		if (!date) return null;
 		return moment(date, "L").toDate();
 	};
-
-	//provider.$get: function() {
-	//			culture: _culture,
-	//			toShortDate: function(date) {
-	//				if (!date) return "";
-	//				return moment(date).format('L');
-	//			},
-	//			getDate: function(date) {
-	//				if (!date) return null;
-	//				return moment(date, "L").toDate();
-	//			}
-	//		};
-	//	}
-
-	//};
 
 	return provider;
 

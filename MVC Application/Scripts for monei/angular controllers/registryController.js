@@ -62,11 +62,9 @@ function ($scope, $http, RegistryProvider, utils) {
 			from: monei.utils.toShortDate(startDate),
 			to: null
 		};
-		console.log($scope.filters.from);
 	}
 
 	$scope.init();
-
 
 
 	$scope.export = function () {
@@ -84,7 +82,6 @@ function ($scope, $http, RegistryProvider, utils) {
 
 		$scope.runExport = true;
 		try {
-
 			dateFrom = '2014-11-01';
 			dateTo = '2014-11-30';
 			var $downloadForm = $("<form method='POST'>")
