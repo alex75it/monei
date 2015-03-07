@@ -348,6 +348,7 @@
     <Content Include="Images\pinstripe_dark.png" />
     <Content Include="Images\registry_big_3.png" />
     <Content Include="Images\dashboard_big.png" />
+    <Content Include="JasmineTests.html" />
     <Content Include="Scripts for monei\angular controllers\HomeController.js" />
     <Content Include="Scripts for monei\angular controllers\LoginController.js" />
     <Content Include="Scripts for monei\angular directives\CategorySelector.js" />
@@ -355,14 +356,14 @@
     <Content Include="Scripts for monei\angular directives\RegistryCreatePanel.js" />
     <Content Include="Scripts for monei\angular directives\SubcategorySelector.js" />
     <Content Include="Scripts for monei\angular filters\momentFilter.js" />
+    <Content Include="Scripts for monei\angular providers\CategoryDataProvider_test.js" />
+    <Content Include="Scripts for monei\angular providers\RegistryDataProvider_test.js" />
     <Content Include="Scripts for monei\angular providers\SubcategoryDataProvider_test.js" />
     <Content Include="Scripts for monei\angular providers\SubcategoryDataProvider.js" />
     <Content Include="Scripts for monei\angular providers\UtilsProvider.js" />
     <Content Include="Scripts for monei\angular providers\AccountProvider.js" />
-    <Content Include="Scripts for monei\angular providers\RegistryProvider.js" />
+    <Content Include="Scripts for monei\angular providers\RegistryDataProvider.js" />
     <Content Include="Scripts for monei\angular providers\UtilsProvider_test.js" />
-    <Content Include="Scripts for monei\angular services\SubcategoryProvider_test.js" />
-    <Content Include="Scripts for monei\angular services\SubcategoryProvider.js" />
     <Content Include="Scripts for monei\directive-templates\CategorySelector.html" />
     <Content Include="Scripts for monei\directive-templates\login-panel.html" />
     <Content Include="Scripts for monei\directive-templates\RegistryCreatePanel.html" />
