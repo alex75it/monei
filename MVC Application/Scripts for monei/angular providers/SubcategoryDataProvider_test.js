@@ -21,7 +21,7 @@ describe("subcategoryDataProvider", function () {
 
 	it("when getSubcategories is called it call success callback", function () {
 		inject(function (subcategoryDataProvider) {
-			// Prepare
+			// Arrange
 			requestHandler.respond([{ name: "subcategory A" }]);
 			$httpBackend.expectGET("/api/subcategory/");
 
@@ -33,7 +33,7 @@ describe("subcategoryDataProvider", function () {
 			subcategoryDataProvider.getSubcategories(service.success);
 
 			$httpBackend.flush();
-			// Verify
+			// Assert
 			expect(service.success).toHaveBeenCalled();
 		});
 	});
