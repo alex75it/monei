@@ -1,7 +1,6 @@
 ﻿"use strict";
-
 /// Jasmine tests
-describe("subcategoryProvider", function () {
+describe("subcategoryDataProvider", function () {
 
 	//var subcategoryProvider;
 	var appName = app.name; // this "initialize" module, all other way give an error
@@ -15,23 +14,23 @@ describe("subcategoryProvider", function () {
 	}));
 
 	it("contains getSubcategories function", function () {
-		inject(function (subcategoryProvider) {
-			expect(subcategoryProvider.getSubcategories).toBeDefined();
+		inject(function (subcategoryDataProvider) {
+			expect(subcategoryDataProvider.getSubcategories).toBeDefined();
 		});
 	});
 
 	it("when getSubcategories is called it call success callback", function () {
-		inject(function (subcategoryProvider) {
+		inject(function (subcategoryDataProvider) {
 			// Prepare
 			requestHandler.respond([{ name: "subcategory A" }]);
 			$httpBackend.expectGET("/api/subcategory/");
 
 			var service = {
-				success: function(data) {}
+				success: function (data) { }
 			};
 			spyOn(service, "success");
 			// Act
-			subcategoryProvider.getSubcategories(service.success);
+			subcategoryDataProvider.getSubcategories(service.success);
 
 			$httpBackend.flush();
 			// Verify
@@ -41,13 +40,13 @@ describe("subcategoryProvider", function () {
 
 
 	it("when getSubcategories is called success return expected data", function () {
-		inject(function (subcategoryProvider) {
+		inject(function (subcategoryDataProvider) {
 			requestHandler.respond([{ name: "subcategory A" }]);
 			$httpBackend.expectGET("/api/subcategory/");
 
 			var result;
 			var success = function (data) { result = data; };
-			subcategoryProvider.getSubcategories(success);
+			subcategoryDataProvider.getSubcategories(success);
 			$httpBackend.flush();
 
 			expect(result).not.toBeUndefined();

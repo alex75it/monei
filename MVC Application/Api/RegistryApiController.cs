@@ -26,44 +26,7 @@ namespace Monei.MvcApplication.Api
 			return list;
 		}
 		
-
-		//[HttpPost, Route("list")]
-		//public IEnumerable<RegistryRecord> Search(SearchPostData data)
-		//{
-		//	IEnumerable<RegistryRecord> records = GetRecords(data);
-		//	foreach (var r in records)
-		//	{
-		//		r.Category.Subcategories = null;  // error on serialization to JSON
-		//		r.Subcategory = null;
-
-		//	}
-		//	return records;
-		//}	
-
-
-
-
-		// GET api/<controller>/5
-		public string Get(int id)
-		{
-			return "value";
-		}
-
-		// POST api/<controller>
-		public void Post([FromBody]string value)
-		{
-		}
-
-		// PUT api/<controller>/5
-		public void Put(int id, [FromBody]string value)
-		{
-		}
-
-		// DELETE api/<controller>/5
-		public void Delete(int id)
-		{
-		}
-
+		
 
 		#region private
 		private ExcelPackage CreateExcel(IEnumerable<RegistryRecord> records)
