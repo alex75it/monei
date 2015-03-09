@@ -349,6 +349,7 @@
     <Content Include="Images\registry_big_3.png" />
     <Content Include="Images\dashboard_big.png" />
     <Content Include="JasmineTests.html" />
+    <Content Include="Scripts for monei\angular controllers\Controller test example.js" />
     <Content Include="Scripts for monei\angular controllers\HomeController.js" />
     <Content Include="Scripts for monei\angular controllers\LoginController.js" />
     <Content Include="Scripts for monei\angular controllers\HomeController_test.js" />
@@ -1453,7 +1454,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Management\Views\Shared\" />
-    <Folder Include="Scripts\monei\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
