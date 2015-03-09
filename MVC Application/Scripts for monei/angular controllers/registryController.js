@@ -1,4 +1,5 @@
-﻿
+﻿"use strict";
+
 app.controller("RegistryController", [
 "$scope", "$http", "registryDataProvider", "utils",
 function ($scope, $http, registryDataProvider, utils) {
