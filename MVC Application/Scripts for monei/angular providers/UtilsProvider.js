@@ -13,7 +13,7 @@ app.config( function(utilsProvider){
  */
 
 
-app.factory("utils", function utilsFactory () {
+app.factory("utils", function () {
 	
 	var provider = {};
 
