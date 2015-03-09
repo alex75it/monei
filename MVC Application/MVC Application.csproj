@@ -349,11 +349,11 @@
     <Content Include="Images\registry_big_3.png" />
     <Content Include="Images\dashboard_big.png" />
     <Content Include="JasmineTests.html" />
-    <Content Include="Scripts for monei\angular controllers\Controller test example.js" />
+    <Content Include="Scripts for monei\angular controllers\Example of Controller_test.js" />
     <Content Include="Scripts for monei\angular controllers\HomeController.js" />
     <Content Include="Scripts for monei\angular controllers\LoginController.js" />
     <Content Include="Scripts for monei\angular controllers\HomeController_test.js" />
-    <Content Include="Scripts for monei\angular controllers\RegistryController test.js" />
+    <Content Include="Scripts for monei\angular controllers\RegistryController_test.js" />
     <Content Include="Scripts for monei\angular directives\CategorySelector.js" />
     <Content Include="Scripts for monei\angular directives\LoginPanel.js" />
     <Content Include="Scripts for monei\angular directives\RegistryCreatePanel.js" />
