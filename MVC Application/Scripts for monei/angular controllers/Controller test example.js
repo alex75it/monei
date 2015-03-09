@@ -14,13 +14,13 @@ describe('NavCtrl', function () {
 
 	beforeEach(module(app.name)); // it not works without "beforeEach", simply call "module(app.name);" does not works.
 
-	beforeEach(inject(function ($rootScope, $controller) {
-		$location = _$location_;
+	beforeEach(inject(function ($rootScope, $controller, utils) {
 		scope = $rootScope.$new();
 		
 		createController = function () {
 			return $controller('NavCtrl', {
-				'$scope': scope
+				$scope: scope,
+				utils: utils
 			});
 		};
 	}));

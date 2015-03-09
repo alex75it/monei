@@ -1,6 +1,6 @@
 ﻿
 app.controller("RegistryController", [
-"$scope", "$http", "RegistryProvider", "utils",
+"$scope", "$http", "registryDataProvider", "utils",
 function ($scope, $http, registryDataProvider, utils) {
 	_scope = $scope;
 	$scope.filters = {};
