@@ -20,7 +20,7 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
 		public void Get()
 		{
 			// Arrange
-			CategoryApiController controller = new CategoryApiController();
+			var controller = new CategoryApiController();
 
 			ICategoryRepository categoryRepository = A.Fake<ICategoryRepository>();
 			IList<Category> data = new List<Category>();

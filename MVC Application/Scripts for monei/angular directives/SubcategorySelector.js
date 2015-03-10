@@ -1,12 +1,13 @@
-﻿app.directive("moneiSubcategorySelector",
+﻿"use strict";
+
+app.directive("moneiSubcategorySelector",
 ["subcategoryDataProvider",
 function (subcategoryDataProvider) {
 
 	var directive = {
 		restrict: "E",
 		templateUrl: "/Scripts for monei/directive-templates/SubcategorySelector.html",
-		replace: true,
-
+		replace: true
 	};
 
 	directive.scope = {
@@ -14,7 +15,6 @@ function (subcategoryDataProvider) {
 	};
 
 	directive.link = function(scope, element, attrs) {
-
 
 		element.find("select").multiselect({
 			templates: {

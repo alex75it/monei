@@ -28,16 +28,18 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		[Test]
 		public void Ping_Should_RespondOk()
 		{
-			using (var client = GetClient())
-			using (var request = CreateRequest(ROUTE_PREFIX + "ping", HttpMethod.Get))
-			using (var response = client.SendAsync(request).Result)
-			{
-				response.IsSuccessStatusCode.ShouldBeTrue();
-			}
+			//using (var client = GetClient())
+			//using (var request = CreateRequest(ROUTE_PREFIX + "ping", HttpMethod.Get))
+			//using (var response = client.SendAsync(request).Result)
+			//{
+			//	response.IsSuccessStatusCode.ShouldBeTrue();
+			//}
+
+			base.CallApi(ROUTE_PREFIX + "ping", HttpMethod.Get);
 		}
 
 		[Test]
-		public void SearchWithUnexistentCategory_Should_ReturnAEmptyList()
+		public void SearchWithUnexistentCategory_Should_ReturnAnEmptyList()
 		{
 			//Arrange
 			const string url = ROUTE_PREFIX + "category/" + "-666";
