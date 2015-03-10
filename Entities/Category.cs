@@ -39,7 +39,7 @@ namespace Monei.Entities
 
 		public override bool Equals(object obj)
 		{
-			return ((Category)obj).Id == Id;
+			return obj != null && obj.GetHashCode() == GetHashCode();
 		}
 
 	}

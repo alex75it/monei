@@ -51,7 +51,7 @@ namespace Monei.Test.UnitTest.Core.DataAnalysis.BusinessObjects
 			var data = new CategoriesData();
 			data.SetAllCategories(categories);
 
-			data.List.Count.ShouldEqual(categories.Count);
+			data.List.Count.ShouldEqual(categories.Count());
 		}
 	}
 }
