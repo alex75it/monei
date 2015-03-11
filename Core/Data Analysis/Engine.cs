@@ -39,6 +39,10 @@ namespace Monei.Core.DataAnalysis
 			CategoriesData categoryData = new CategoriesData();
 
 			var records = registryRepository.ListRecords(filters);
+
+
+			//todo: refactoring to make it testable and to divide responsabilities
+
 			List<Category> usedCategories = records.Select(r => r.Category).Distinct().ToList();
 
 			YearData yearData = new YearData(year);

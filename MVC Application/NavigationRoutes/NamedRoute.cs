@@ -4,6 +4,7 @@ using System.Web.Routing;
 
 namespace NavigationRoutes
 {
+	/*
     public class NamedRoute : Route
     {
          string _name;
@@ -58,4 +59,6 @@ namespace NavigationRoutes
         public List<NamedRoute> Children { get { return _childRoutes; } }
         public bool IsChild { get; set; }
     }
+	 * 
+	 * */
 }
