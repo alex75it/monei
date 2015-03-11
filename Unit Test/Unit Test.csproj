@@ -102,7 +102,6 @@
     <Compile Include="Core\DataAnalysis\EngineTest.cs" />    
     <Compile Include="Extensions\ShouldExtensions.cs" /> 
     <Compile Include="Entities\AccountTest.cs" />
-    <Compile Include="Extensions\ShouldExtensions.cs" />
     <Compile Include="Entities\CategoryTest.cs" />
     <Compile Include="Entities\CurrencyTest.cs" />
     <Compile Include="Entities\RegistryRecordTest.cs" />
