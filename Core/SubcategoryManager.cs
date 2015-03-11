@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using Monei.DataAccessLayer.Filters;
 using Monei.DataAccessLayer.Interfaces;
 
-namespace Core
+namespace Monei.Core
 {
+
+
     public class SubcategoryManager
     {
-		public IRegistryRepository RegistryRepository { get; set; }
-		//public ICategoryRepository CategoryRepository { get; set; }
-		public ISubcategoryRepository SubcategoryRepository { get; set; }
+		public IRegistryRepository RegistryRepository { get; set; } // todo: set as construtor parameter
+		public ISubcategoryRepository SubcategoryRepository { get; set; }  // todo: set as construtor parameter
 
 		/// <summary>
 		/// Check if Subcategory is used in Registry.

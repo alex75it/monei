@@ -11,5 +11,6 @@ namespace Monei.MvcApplication.Api.PostDataObjects
 		public DateTime ToDate { get; set; }
 
 		public int[] Categories { get; set; }
+		//public int[] Su
 	}
 }

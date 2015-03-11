@@ -22,9 +22,9 @@
 				<label>Category</label>
 				<monei-category-selector ng-model="filters.categories" />
 			</div>
-			<div class="form-group" ng-show="filters.categories">
+			<div class="form-group" ng-show="filters.categories && filters.categories.length == 1">
 				<label>Subcategory</label>
-				<monei-subcategory-selector aa__ng-model="filters.subcategories" category-id="filters.categories" />
+				<monei-subcategory-selector ng-model="filters.subcategories" categories="filters.categories" />
 			</div>
 			<div class="form-group">
 				<label>Note</label>

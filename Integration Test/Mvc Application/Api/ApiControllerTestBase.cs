@@ -158,14 +158,22 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			return request;
 		}
 
+
+		protected void CallApi(string url, HttpMethod httpMethod)
+			//where TReturn : class
+		{
+			using (var client = GetClient())
+			using (var result = client.SendAsync(CreateRequest(url, httpMethod)).Result)
+				CheckResult(url, result);
+		}
+
 		protected TReturn CallApi<TReturn>(string url, HttpMethod httpMethod)
 			where TReturn : class
 		{
 			using (var client = GetClient())
-			using (var result = client.SendAsync(CreateRequest(url, HttpMethod.Get)).Result)
+			using (var result = client.SendAsync(CreateRequest(url, httpMethod)).Result)
 				return LoadReturnValue<TReturn>(url, result);
 		}
-
 
 		/// <summary>
 		/// 

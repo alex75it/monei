@@ -1,7 +1,8 @@
-﻿
+﻿"use strict";
+
 app.controller("RegistryController", [
-"$scope", "$http", "RegistryProvider", "utils",
-function ($scope, $http, RegistryProvider, utils) {
+"$scope", "$http", "registryDataProvider", "utils",
+function ($scope, $http, registryDataProvider, utils) {
 	_scope = $scope;
 	$scope.filters = {};
 	$scope.records = [];
@@ -37,7 +38,7 @@ function ($scope, $http, RegistryProvider, utils) {
 
 		$scope.error = null;
 
-		RegistryProvider.search(
+		registryDataProvider.search(
 			filters,
 			/*success*/
 			function (data) { $scope.records = data; },
@@ -59,7 +60,7 @@ function ($scope, $http, RegistryProvider, utils) {
 		var startDate = moment().startOf('month');
 
 		$scope.filters = {
-			from: monei.utils.toShortDate(startDate),
+			from: utils.toShortDate(startDate),
 			to: null
 		};
 	}
@@ -68,7 +69,6 @@ function ($scope, $http, RegistryProvider, utils) {
 
 
 	$scope.export = function () {
-
 
 		var dateFrom = moment($scope.filters.dateFrom, 'MM/DD/YYYY').format('YYYY-MM-DD');
 		var dateTo = moment($scope.filters.dateTo, 'MM/DD/YYYY').format('YYYY-MM-DD');
@@ -142,6 +142,5 @@ $(function () {
 
 	$('i.taxDeductible').tooltip({ title: 'Tax deductible' });
 	$('i.specialEvent').tooltip({ title: 'Special event' });
-
 
 });

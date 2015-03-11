@@ -12,7 +12,6 @@ namespace Monei.Entities
 		public const int NAME_MAX_LENGTH = 25;
 		public const int DESCRIPTION_MAX_LENGTH = 1000;
 		
-		public Category Category { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 
