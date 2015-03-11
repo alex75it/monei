@@ -104,6 +104,18 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 		filters.OperationTypes.ShouldNotContain(OperationType.Outcome);
 	}
 
+	public void SetOperationType_DisableANotPresentOperationType()
+	{
+		RegistryFilters filters = new RegistryFilters();
+		filters.OperationTypes = new OperationType[]{}; // empty the list
+
+		filters.SetOperationType(OperationType.Income, true);
+
+		// Verify
+		filters.OperationTypes.ShouldContain(OperationType.Income);
+	}
+
+
 	#region private
 	private static void VerifyDates(RegistryFilters filters)
 	{

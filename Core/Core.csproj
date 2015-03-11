@@ -52,6 +52,7 @@
     <Compile Include="Data Analysis\Business Objects\MonthData.cs" />
     <Compile Include="Data Analysis\Business Objects\YearData.cs" />
     <Compile Include="Data Analysis\Engine.cs" />
+    <Compile Include="Managers\CategoryManager.cs" />
     <Compile Include="RegistryManager.cs" />
     <Compile Include="SubcategoryManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

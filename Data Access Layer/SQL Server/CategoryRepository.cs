@@ -28,11 +28,11 @@ namespace Monei.DataAccessLayer.SqlServer
 			return Read(id);
 		}
 
-		public new Category Update(Category item)
-		{
-			base.Update(item);
-			return Read(item.Id);
-		}
+		//public new Category Update(Category item)
+		//{
+		//	base.Update(item);
+		//	return Read(item.Id);
+		//}
 
 
 		public IEnumerable<Category> ListWithSubcategories()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Monei.Core.Managers;
 using Monei.DataAccessLayer.Exceptions;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
@@ -144,7 +145,8 @@ namespace Monei.MvcApplication.Areas.Management.Controllers
 				category.Id = int.Parse(collection["id"]);
 				Account currentAccount = GetAccount();
 				category.CreationAccount = currentAccount;
-				CategoryRepository.Update( category);
+				CategoryManager categoryManager = new CategoryManager(CategoryRepository);
+				categoryManager.Update(category);
 
 				return RedirectToAction("Index");
 			}
@@ -158,10 +160,6 @@ namespace Monei.MvcApplication.Areas.Management.Controllers
 				Guid errorId = Guid.NewGuid();
 				logger.ErrorFormat("Fail to update Category with id: {0}. Error ID: {1}. Error:\r\n{2}", category.Id, errorId, exc);
 				SetErrorMessage(string.Format("Fail to edit Category. (Error ID: {0})", errorId));
-				// todo: show error message to user
-
-				//return RedirectToAction("Index");
-				//return View("Category-Index");			
 			}
 
 			return View("Category-Edit", category);
