@@ -23,5 +23,10 @@ namespace Monei.Entities
 			//return base.GetHashCode();
 			return Id;
 		}
+
+		public override bool Equals(object obj)
+		{
+			return obj != null && (obj.GetHashCode() == GetHashCode());
+		}
 	}
 }

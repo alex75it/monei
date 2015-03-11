@@ -23,7 +23,8 @@ namespace Monei.Entities
 
 		public override bool Equals(object obj)
 		{
-			return obj is Subcategory && ((Subcategory) obj).Id == Id;
+			//return obj is Subcategory && ((Subcategory) obj).Id == Id;
+			return obj != null && obj.GetHashCode() == GetHashCode();
 		}
 
 	}//class

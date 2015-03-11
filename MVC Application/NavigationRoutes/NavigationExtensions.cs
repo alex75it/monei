@@ -10,6 +10,7 @@ using System.Web.Routing;
 
 namespace NavigationRoutes
 {
+	/*
     public class CompositeMvcHtmlString : IHtmlString
     {
         readonly IEnumerable<IHtmlString> _strings;
@@ -104,6 +105,6 @@ namespace NavigationRoutes
             return false;
         }
     }
-
+	*/
    
 }

@@ -10,6 +10,8 @@ using System.Web.Routing;
 
 namespace NavigationRoutes
 {
+	/*
+
     public static class NavigationRouteConfigurationExtensions
     {
 
@@ -161,4 +163,6 @@ namespace NavigationRoutes
 
         public NamedRoute _parent { get; set; }
     }
+	 * 
+	 * */
 }

@@ -35,7 +35,8 @@ namespace Monei.Entities
 
 		public override bool Equals(object obj)
 		{
-			return obj is Category && ((Category)obj).Id == Id;
+			//return obj is Category && ((Category)obj).Id == Id;
+			return obj != null && obj.GetHashCode() == GetHashCode();
 		}
 
 	}

@@ -93,8 +93,18 @@
     <Compile Include="Data Access Layer\DateTimeExtensionsTest.cs" />
     <Compile Include="Data Access Layer\Filters\BaseFiltersTest.cs" />
     <Compile Include="Data Access Layer\Filters\RegistryFiltersTest.cs" />
+
+    <Compile Include="Core\DataAnalysis\BusinessObjects\CategoriesDataTest.cs" />
+    <Compile Include="Core\DataAnalysis\BusinessObjects\CategoryDataTest.cs" />
+    <Compile Include="Core\DataAnalysis\BusinessObjects\MonthDataTest.cs" />
+    <Compile Include="Core\DataAnalysis\BusinessObjects\YearDataTest.cs" />
+    <Compile Include="Core\DataAnalysis\EngineTest.cs" />    
     <Compile Include="Entities\AccountTest.cs" />
     <Compile Include="Extensions\ShouldExtensions.cs" />
+    <Compile Include="Entities\CategoryTest.cs" />
+    <Compile Include="Entities\CurrencyTest.cs" />
+    <Compile Include="Entities\RegistryRecordTest.cs" />
+    <Compile Include="Entities\SubcategoryTest.cs" />
     <Compile Include="MVC Application\Api\AccountApiControllerTest.cs" />
     <Compile Include="MVC Application\Api\CategoryApiControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,6 +112,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{95254dd8-6bfe-4daf-be3b-9eb56472e867}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj">
       <Project>{85d1f40c-f9cc-42f7-ac99-c83e53fd8ed4}</Project>
       <Name>Data Access Layer</Name>
