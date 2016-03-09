@@ -12,7 +12,8 @@ namespace Monei.MvcApplication
 						"~/Scripts/jquery-{version}.js",
 						"~/Scripts/jquery-ui-{version}.js",
 						"~/Scripts/jquery.unobtrusive*",
-						"~/Scripts/jquery.validate*"));
+						"~/Scripts/jquery.validate*"
+						));
 
 			// Bootstrap
 			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
