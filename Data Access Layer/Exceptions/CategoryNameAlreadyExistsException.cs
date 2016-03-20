@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Monei.DataAccessLayer.Exceptions
 {
-	class CategoryNameAlreadyExistsException :Exception
-	{
-	}
+    [Serializable]
+    public class CategoryNameAlreadyExistsException :Exception
+    {
+    }
 }

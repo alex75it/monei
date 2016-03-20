@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Monei.DataAccessLayer.Exceptions
 {
-	public class CategoryEmptyNameNameException : Exception
-	{
-	}
+    [Serializable]
+    public class CategoryEmptyNameNameException : Exception
+    {
+    }
 }
