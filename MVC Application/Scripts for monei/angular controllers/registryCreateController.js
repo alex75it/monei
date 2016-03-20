@@ -1,7 +1,7 @@
 ﻿var _scope;
-app.controller("registryCreateController", [
-	"$scope", "$element", "CategoryProvider",
-	function ($scope, $element, CategoryProvider) {
+app.controller("RegistryCreateController", [
+	"$scope", "$element", "CategoryDataProvider",
+	function ($scope, $element, CategoryDataProvider) {
 		_scope = $scope;
 		$scope.date = moment();
 		$scope.category;
@@ -10,7 +10,7 @@ app.controller("registryCreateController", [
 
 
 		$scope.initialize = function () {			
-			CategoryProvider.getCategories(
+		    CategoryDataProvider.getCategories(
 				/*success*/
 				function (data) {  $scope.categories = data; },
 				/*error*/

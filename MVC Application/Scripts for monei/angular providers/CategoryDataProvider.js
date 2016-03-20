@@ -1,4 +1,4 @@
-﻿app.factory("categoryDataProvider",
+﻿app.factory("CategoryDataProvider",
 ["$http",
 function categoryDataProvider($http) {
 	var baseUrl = "/api/category/";

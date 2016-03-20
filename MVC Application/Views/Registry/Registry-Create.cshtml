@@ -1,290 +1,290 @@
 ﻿@model  Monei.MvcApplication.Models.RegistryCreateRecordModel
 
 @{
-	ViewBag.Title = "Registry - Add record";    
+    ViewBag.Title = "Registry - Add record";    
 }
 
 @section scripts{
-	<script>
-	   	
+    <script>
+        
 
-		var regAmountChars = /[^0-9 @Html.Raw(System.Threading.Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyDecimalSeparator)+-]/;
+        var regAmountChars = /[^0-9 @Html.Raw(System.Threading.Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyDecimalSeparator)+-]/;
 
-		//http://weblogs.asp.net/raduenuca/archive/2011/04/03/asp-net-mvc-cascading-dropdown-lists-tutorial-part-5-1-cascading-using-jquery-ajax-ajax-and-dom-objects.aspx
-		//http://www.itorian.com/2013/02/cascading-dropdownlist-in-aspnet-mvc.html
-		//http://www.c-sharpcorner.com/UploadFile/abhikumarvatsa/cascading-dropdownlist-in-Asp-Net-mvc/
-		$(function () {
+        //http://weblogs.asp.net/raduenuca/archive/2011/04/03/asp-net-mvc-cascading-dropdown-lists-tutorial-part-5-1-cascading-using-jquery-ajax-ajax-and-dom-objects.aspx
+        //http://www.itorian.com/2013/02/cascading-dropdownlist-in-aspnet-mvc.html
+        //http://www.c-sharpcorner.com/UploadFile/abhikumarvatsa/cascading-dropdownlist-in-Asp-Net-mvc/
+        $(function () {
 
-			var serverMessage = "@ViewBag.Message";
-			if(serverMessage != "")
-				var n = noty({ text: serverMessage, layout: "topCenter", type: "success", timeout:1*1000, modal:false });
-			
-			$('.amount').keypress(function (e) { /* keypress is intended for "real" (printable) characters */
-				//$(this).val($(this).val().replace(/[^0-9]/g, ''))
-				var character = String.fromCharCode(e.which);
+            var serverMessage = "@ViewBag.Message";
+            if(serverMessage != "")
+                var n = noty({ text: serverMessage, layout: "topCenter", type: "success", timeout:1*1000, modal:false });
+            
+            $('.amount').keypress(function (e) { /* keypress is intended for "real" (printable) characters */
+                //$(this).val($(this).val().replace(/[^0-9]/g, ''))
+                var character = String.fromCharCode(e.which);
 
-				var matches = character.match(regAmountChars);
+                var matches = character.match(regAmountChars);
 
-				if (matches !== null)
-					return false;
+                if (matches !== null)
+                    return false;
 
-				//return regAmountChars.test(character);
+                //return regAmountChars.test(character);
 
-				//$(this).val($(this).val().replace(/[^0-9 @Html.Raw(System.Threading.Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyDecimalSeparator)]/g, ''));
-			});
+                //$(this).val($(this).val().replace(/[^0-9 @Html.Raw(System.Threading.Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyDecimalSeparator)]/g, ''));
+            });
 
 
-			$('#date_plusOne').click(function () {
-				var date = moment($('#date').val()).add('d', 1);               
-				$('#date').val(date.format('L'));
-				checkParticularDate();
-			});
+            $('#date_plusOne').click(function () {
+                var date = moment($('#date').val()).add('d', 1);               
+                $('#date').val(date.format('L'));
+                checkParticularDate();
+            });
 
-			$('#date_minusOne').click(function () {
-				var date = moment($('#date').val()).add('d', -1);
-				$('#date').val(date.format('L'));
-				checkParticularDate();
-			});
+            $('#date_minusOne').click(function () {
+                var date = moment($('#date').val()).add('d', -1);
+                $('#date').val(date.format('L'));
+                checkParticularDate();
+            });
 
-			//$('#date').val(date.format('L')); // todo: check if it is different from server side format
+            //$('#date').val(date.format('L')); // todo: check if it is different from server side format
 
-			checkParticularDate();
+            checkParticularDate();
 
-			$categorySelect = $('#CategorySelect');
-			$categorySelect.change(function () {              
-				var categoryId = $(this).val();
-				monei.loadSubcategories('#SubcategorySelect', categoryId, null);
-			});
-			
-			monei.loadCategories($categorySelect, null, function () { $categorySelect.change(); });
-		   
-			// set default
-			setOperationType('-1');
+            $categorySelect = $('#CategorySelect');
+            $categorySelect.change(function () {              
+                var categoryId = $(this).val();
+                monei.loadSubcategories('#SubcategorySelect', categoryId, null);
+            });
+            
+            monei.loadCategories($categorySelect, null, function () { $categorySelect.change(); });
+           
+            // set default
+            setOperationType('-1');
 
-			if ("@ViewBag.Clear" == "True")
-				clearForm();
-		});
+            if ("@ViewBag.Clear" == "True")
+                clearForm();
+        });
 
-		function checkParticularDate()
-		{
-			var $particularDay = $('#particularDay');
-			var particularDay = "";
+        function checkParticularDate()
+        {
+            var $particularDay = $('#particularDay');
+            var particularDay = "";
 
-			var dateString = $('#date').val();
-			if (!dateString)
-				return;
+            var dateString = $('#date').val();
+            if (!dateString)
+                return;
 
-			var date = moment(dateString);
-			
-			if (date.format('YYYYMMDD') == moment().format('YYYYMMDD'))
-				particularDay = "today";
-			else if(date.format('YYYYMMDD') == moment().add('d', -1).format('YYYYMMDD'))
-				particularDay = "yesterday";
-			else if (date.format('YYYYMMDD') > moment().format('YYYYMMDD'))
-				particularDay = "in the future";
+            var date = moment(dateString);
+            
+            if (date.format('YYYYMMDD') == moment().format('YYYYMMDD'))
+                particularDay = "today";
+            else if(date.format('YYYYMMDD') == moment().add('d', -1).format('YYYYMMDD'))
+                particularDay = "yesterday";
+            else if (date.format('YYYYMMDD') > moment().format('YYYYMMDD'))
+                particularDay = "in the future";
 
-			$particularDay.html(particularDay);
-		}
+            $particularDay.html(particularDay);
+        }
+        /*
+        jQuery.validator.addClassRules("amount", {
+            //required: true
+            //minlength: 1,
+            //number: true 
+        });
+        */
+             
+        function setOperationType(operationType)
+        {
+            $('#operationType').val(operationType);
+            $('#btnOperationType_Outcome').empty().text('Outcome').removeClass('active');
+            $('#btnOperationType_Income').empty().text("Income").removeClass('active');
+            $('#btnOperationType_Transfer').empty().text("Transfer").removeClass('active');
+            var selectedControl;
+            switch (operationType)
+            {
+                case "-1": selectedControl = $('#btnOperationType_Outcome'); break;
+                case "+1": selectedControl = $('#btnOperationType_Income'); break;
+                case "0": selectedControl = $('#btnOperationType_Transfer'); break;
+            }
+            selectedControl.addClass('active');
+            selectedControl.prepend(' ').prepend($('<i class="icon-ok icon-big icon-white"></i>')); //<span class="glyphicon glyphicon-search"></span>
+        }
 
-		jQuery.validator.addClassRules("amount", {
-			//required: true
-			//minlength: 1,
-			//number: true 
-		});
-		
-			 
-		function setOperationType(operationType)
-		{
-			$('#operationType').val(operationType);
-			$('#btnOperationType_Outcome').empty().text('Outcome').removeClass('active');
-			$('#btnOperationType_Income').empty().text("Income").removeClass('active');
-			$('#btnOperationType_Transfer').empty().text("Transfer").removeClass('active');
-			var selectedControl;
-			switch (operationType)
-			{
-				case "-1": selectedControl = $('#btnOperationType_Outcome'); break;
-				case "+1": selectedControl = $('#btnOperationType_Income'); break;
-				case "0": selectedControl = $('#btnOperationType_Transfer'); break;
-			}
-			selectedControl.addClass('active');
-			selectedControl.prepend(' ').prepend($('<i class="icon-ok icon-big icon-white"></i>')); //<span class="glyphicon glyphicon-search"></span>
-		}
+        function saveAndAddAnother()
+        {
+            $('#saveAnother').val("True");
+            //alert($('#saveAnother').parents('form').length); return;
+            $('#saveAnother').parents('form').submit();
+        }
 
-		function saveAndAddAnother()
-		{
-			$('#saveAnother').val("True");
-			//alert($('#saveAnother').parents('form').length); return;
-			$('#saveAnother').parents('form').submit();
-		}
+        function clearForm()
+        {
+            $("#CategorySelect").find('option:first-child').select();
+            $('#Record_Amount').val('0');
+            $('#Record_Note').val('');
+            $('#Record_IsSpecialEvent').prop("checked", false);
+        }
 
-		function clearForm()
-		{
-			$("#CategorySelect").find('option:first-child').select();
-			$('#Record_Amount').val('0');
-			$('#Record_Note').val('');
-			$('#Record_IsSpecialEvent').prop("checked", false);
-		}
+        function showCreateSubcategory()
+        {
+            $("#modalSubcategory_Name").val('');
+            $("#modalSubcategory_Description").val('');            
 
-		function showCreateSubcategory()
-		{
-			$("#modalSubcategory_Name").val('');
-			$("#modalSubcategory_Description").val('');            
+            var selectedCategory = $("#CategorySelect").val();            
+            monei.loadCategories('#modalSubcategory_Category', selectedCategory);
 
-			var selectedCategory = $("#CategorySelect").val();            
-			monei.loadCategories('#modalSubcategory_Category', selectedCategory);
+            $('#subcategoryModal').modal({
+                backdrop: true
+            }).on('shown', function () {
+                $("#modalSubcategory_Name").focus();
+            });
+        }
 
-			$('#subcategoryModal').modal({
-				backdrop: true
-			}).on('shown', function () {
-				$("#modalSubcategory_Name").focus();
-			});
-		}
+        function createSubcategory() {
 
-		function createSubcategory() {
+            var categoryId = $('#modalSubcategory_Category').val();
+            var name = $("#modalSubcategory_Name").val();
+            var description = $("#modalSubcategory_Description").val();
 
-			var categoryId = $('#modalSubcategory_Category').val();
-			var name = $("#modalSubcategory_Name").val();
-			var description = $("#modalSubcategory_Description").val();
+            var data = { categoryId: categoryId, name: name, description: description };
+            data = JSON.stringify(data);
 
-			var data = { categoryId: categoryId, name: name, description: description };
-			data = JSON.stringify(data);
+            $.ajax({
+                url: "/api/subcategory",
+                method: "POST",
+                data: { "": data },  // Web API è una merda e accetta la richiesta solo se nel body c'è "=value"
+                dataType: "json",
+                success: function (result) {
+                    //data = $.JSON(data);
+                    var categoryId = result.categoryId
+                    var subcategoryId = result.subcategoryId;
+                    var subcategoryName = result.subcategoryName;
 
-			$.ajax({
-				url: "/api/subcategory",
-				method: "POST",
-				data: { "": data },  // Web API è una merda e accetta la richiesta solo se nel body c'è "=value"
-				dataType: "json",
-				success: function (result) {
-					//data = $.JSON(data);
-					var categoryId = result.categoryId
-					var subcategoryId = result.subcategoryId;
-					var subcategoryName = result.subcategoryName;
+                    $("#CategorySelect").val(categoryId);
+                    monei.loadSubcategories('#SubcategorySelect', categoryId, subcategoryId);
 
-					$("#CategorySelect").val(categoryId);
-					monei.loadSubcategories('#SubcategorySelect', categoryId, subcategoryId);
+                    noty({text:"Subcategory \"" + subcategoryName + "\" created", type:"success", layout:"topCenter", timeout: 2*1000});
+                    $('#subcategoryModal').modal("hide");
+                },
+                error: function () {
+                    noty({ text: "Fail to create subcategory", layout: "topCenter", type: "error", /*timeout: 2 * 1000,*/ modal: true });
+                    $('#subcategoryModal').modal("hide");
+                }
+            });
+        }
 
-					noty({text:"Subcategory \"" + subcategoryName + "\" created", type:"success", layout:"topCenter", timeout: 2*1000});
-					$('#subcategoryModal').modal("hide");
-				},
-				error: function () {
-					noty({ text: "Fail to create subcategory", layout: "topCenter", type: "error", /*timeout: 2 * 1000,*/ modal: true });
-					$('#subcategoryModal').modal("hide");
-				}
-			});
-		}
+        function closeSubcategoryCreation()
+        {
+            $('#subcategoryModal').modal("hide");
+        }
 
-		function closeSubcategoryCreation()
-		{
-			$('#subcategoryModal').modal("hide");
-		}
+        $(function () {
+            var maxSelectableDate = "@Html.Raw(DateTime.Today.ToShortDateString())";
+            $('.datepicker').datepicker({ 'todayHighlight': true, 'endDate': maxSelectableDate, 'autoclose': true })
+                .on('changeDate', function (e) {
+                    $(this).val(moment(e.date).format('l'));
+                })
+                .on('hide', function (e) {
+                    $(this).val(moment(e.date).format('l'));
+                })
+            ;
 
-		$(function () {
-			var maxSelectableDate = "@Html.Raw(DateTime.Today.ToShortDateString())";
-			$('.datepicker').datepicker({ 'todayHighlight': true, 'endDate': maxSelectableDate, 'autoclose': true })
-				.on('changeDate', function (e) {
-					$(this).val(moment(e.date).format('l'));
-				})
-				.on('hide', function (e) {
-					$(this).val(moment(e.date).format('l'));
-				})
-			;
+            $('#btnCalculateAmount').click(function () {
+                monei.setFieldCalculationResult('#Record_Amount');
+            });
+        });
 
-			$('#btnCalculateAmount').click(function () {
-				monei.setFieldCalculationResult('#Record_Amount');
-			});
-		});
-
-	</script>
-	}
+    </script>
+    }
 
 @using (Html.BeginForm(new {ReturnUrl = ViewBag.ReturnUrl}))  
 {
-	@Html.AntiForgeryToken();
-	@Html.ValidationSummary();
-	@Html.Hidden("save another", false, new { Id="saveAnother" });
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary();
+    @Html.Hidden("save another", false, new { Id="saveAnother" });
 
-<div ng-controller="registryCreateController">
-	
-	<div ng-show="error"><pre class="alert alert-danger">{{error}}</pre></div>
+<div ng-controller="RegistryCreateController">
+    
+    <div ng-show="error"><pre class="alert alert-danger">{{error}}</pre></div>
 
-	<form class="form-horizontal">
-		<div class="form-group">
-			<label class="col-sm-2">Date</label>
-			<div class="col-sm-10">
-				<div class="input-prepend input-append">
-					<span class="add-on pointer"><i class="icon-minus"></i></span>
-					<input type="text" class="datepicker" ng-model="date" />
-					<span class="add-on pointer"><i class="icon-plus"></i></span>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2"></label>
-			<select tabindex="1" autofocus ng-options="cat.id as cat.name for cat in categories" ng-model="category"></select>
-		</div>
-	</form>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2">Date</label>
+            <div class="col-sm-10">
+                <div class="input-prepend input-append">
+                    <span class="add-on pointer"><i class="icon-minus"></i></span>
+                    <input type="text" class="datepicker" ng-model="date" />
+                    <span class="add-on pointer"><i class="icon-plus"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2"></label>
+            <select tabindex="1" autofocus ng-options="cat.id as cat.name for cat in categories" ng-model="category"></select>
+        </div>
+    </form>
 
 
 </div>
-	
+    
 <fieldset>
-	<legend>Create a new record</legend>
-	<ol>
-		<li>
-			@Html.LabelFor(m => m.Record.Date)
-			<div class="input-prepend input-append">
-				<span class="add-on pointer" id="date_minusOne"><i class="icon-minus"></i></span>
-				<a>Date: @Model.Record.Date</a>
-				@Html.TextBoxFor(m => m.Record.Date, String.Format( Monei.MvcApplication.Helpers.ViewHelper.GetDateFormat(), Model.Record.Date), new { id="date", ng_model= "dateFrom", placeHolder=Monei.MvcApplication.Helpers.ViewHelper.GetDatePlaceHolder(), required="", Style="width:6em;", Class="datepicker" })                
-				<span class="add-on pointer" id="date_plusOne"><i class="icon-plus"></i></span>   				
-			</div>        
-			<span id="particularDay" style="line-height:20px; vertical-align:middle; margin-bottom:10px; display:inline-block;"></span>
-		</li>        
-		<li>
-		   <label>Category</label>
-			<select id="CategorySelect" name="Category.Id" class=".no-selectpicker" tabindex="1" autofocus></select>
-			<a href="@Url.Action("Create", "Category", new {area="Management", returnUrl=HttpContext.Current.Request.RawUrl})" class="add-dropdown" tabindex="-1">Create new</a>
-		</li>
-		<li>
-			<label for="Record_Subcategory">Subcategory</label>
-			<select id="SubcategorySelect" name="Subcategory.Id" class="dropdown" tabindex="2"></select>
-			<span class="btn btn-link" onclick="showCreateSubcategory()">Create new</span>
-		</li>
-		<li>
-			@Html.LabelFor(m => m.Record.Amount)
-			@Html.TextBoxFor(m => m.Record.Amount, new {MaxLength="10", Class="amount form-control", Tabindex="3"})
-			<span id="btnCalculateAmount" class="pointer" style="margin-right:2em"><i class="icon-refresh"></i> calculate</span>
-			<div class="btn-group">
-				<a class="btn btn-mini btn-danger white" id="btnOperationType_Outcome" href="javascript: setOperationType('-1');">Outcome</a>
-				<a class="btn btn-mini btn-success white" id="btnOperationType_Income" href="javascript: setOperationType('+1');">Income</a>
-				<a class="btn btn-mini btn-info white" id="btnOperationType_Transfer" href="javascript: setOperationType('0');"><span class="info">Transfer</span></a>
-			</div>
-			<input type="hidden" name="operationType" id="operationType" />
-		</li>
-		<li>
-			@Html.LabelFor(m => m.Record.Note)
-			@Html.TextAreaFor(m => m.Record.Note, new { Rows=5, Cols=120, Tabindex="4" })
-		</li>
-		<li>
-			<div class="row">
-				<div class="span4">
-					@Html.EditorFor(m => m.Record.IsTaxDeductible)
-					<label for="Record_IsTaxDeductible" class="display-inline">Tax deductible</label>
-				</div>
-				<div class="span4">
-					@Html.EditorFor(m => m.Record.IsSpecialEvent)
-					<label for="Record_IsSpecialEvent" class="display-inline">Special event</label>
-				</div>
-			</div>
-		</li>
+    <legend>Create a new record</legend>
+    <ol>
+        <li>
+            @Html.LabelFor(m => m.Record.Date)
+            <div class="input-prepend input-append">
+                <span class="add-on pointer" id="date_minusOne"><i class="icon-minus"></i></span>
+                <a>Date: @Model.Record.Date</a>
+                @Html.TextBoxFor(m => m.Record.Date, String.Format( Monei.MvcApplication.Helpers.ViewHelper.GetDateFormat(), Model.Record.Date), new { id="date", ng_model= "dateFrom", placeHolder=Monei.MvcApplication.Helpers.ViewHelper.GetDatePlaceHolder(), required="", Style="width:6em;", Class="datepicker" })                
+                <span class="add-on pointer" id="date_plusOne"><i class="icon-plus"></i></span>   				
+            </div>        
+            <span id="particularDay" style="line-height:20px; vertical-align:middle; margin-bottom:10px; display:inline-block;"></span>
+        </li>        
+        <li>
+           <label>Category</label>
+            <select id="CategorySelect" name="Category.Id" class=".no-selectpicker" tabindex="1" autofocus></select>
+            <a href="@Url.Action("Create", "Category", new {area="Management", returnUrl=HttpContext.Current.Request.RawUrl})" class="add-dropdown" tabindex="-1">Create new</a>
+        </li>
+        <li>
+            <label for="Record_Subcategory">Subcategory</label>
+            <select id="SubcategorySelect" name="Subcategory.Id" class="dropdown" tabindex="2"></select>
+            <span class="btn btn-link" onclick="showCreateSubcategory()">Create new</span>
+        </li>
+        <li>
+            @Html.LabelFor(m => m.Record.Amount)
+            @Html.TextBoxFor(m => m.Record.Amount, new {MaxLength="10", Class="amount form-control", Tabindex="3"})
+            <span id="btnCalculateAmount" class="pointer" style="margin-right:2em"><i class="icon-refresh"></i> calculate</span>
+            <div class="btn-group">
+                <a class="btn btn-mini btn-danger white" id="btnOperationType_Outcome" href="javascript: setOperationType('-1');">Outcome</a>
+                <a class="btn btn-mini btn-success white" id="btnOperationType_Income" href="javascript: setOperationType('+1');">Income</a>
+                <a class="btn btn-mini btn-info white" id="btnOperationType_Transfer" href="javascript: setOperationType('0');"><span class="info">Transfer</span></a>
+            </div>
+            <input type="hidden" name="operationType" id="operationType" />
+        </li>
+        <li>
+            @Html.LabelFor(m => m.Record.Note)
+            @Html.TextAreaFor(m => m.Record.Note, new { Rows=5, Cols=120, Tabindex="4" })
+        </li>
+        <li>
+            <div class="row">
+                <div class="span4">
+                    @Html.EditorFor(m => m.Record.IsTaxDeductible)
+                    <label for="Record_IsTaxDeductible" class="display-inline">Tax deductible</label>
+                </div>
+                <div class="span4">
+                    @Html.EditorFor(m => m.Record.IsSpecialEvent)
+                    <label for="Record_IsSpecialEvent" class="display-inline">Special event</label>
+                </div>
+            </div>
+        </li>
 
-	</ol>
-	<div class="form-actions">
-		<input type="submit" value="Save" class="btn btn-primary" tabindex="5" />
-		<input type="button" onclick="saveAndAddAnother();" value="Save and add another" class="btn btn-primary" tabindex="6" />
-		<input type="button" onclick="clearForm();" value="Clear" class="btn btn-warning" />
-		 @Html.ActionLink("Return to Registry", "").
-	</div>
+    </ol>
+    <div class="form-actions">
+        <input type="submit" value="Save" class="btn btn-primary" tabindex="5" />
+        <input type="button" onclick="saveAndAddAnother();" value="Save and add another" class="btn btn-primary" tabindex="6" />
+        <input type="button" onclick="clearForm();" value="Clear" class="btn btn-warning" />
+         @Html.ActionLink("Return to Registry", "").
+    </div>
 </fieldset>
 }
 
@@ -293,37 +293,37 @@
 <div id="subcategoryModal" class="modal hide fade">
 @using (Html.BeginForm("PartialCreate", "Subcategory", new { area="Management"}, FormMethod.Post ))
 { 
-	@Html.AntiForgeryToken()
-	@Html.ValidationSummary(true)
-	
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h3>Create new Subcategory</h3>
-	</div>   
-	<div class="modal-body"  style="padding-right:3em"> 
-		<fieldset><legend></legend>
-		<ol>
-			<li>
-				@Html.Label("Category")
-				<select id="modalSubcategory_Category" name="categoryId"></select>
-			</li>
-			<li>
-				@Html.Label("Name")
-				<input type="text" id="modalSubcategory_Name" />
-			</li>
-			<li>
-				@Html.Label("Description")
-				<textarea id="modalSubcategory_Description" cols="120" rows="3"></textarea>
-			</li>         
-		</ol>    
-		</fieldset>
-	</div>
-	<div class="modal-footer">
-		<input type="button" onclick="createSubcategory();" value="Create" class="btn btn-primary" />
-		<input type="button" onclick="closeSubcategoryCreation();" value="Close" class="btn btn-danger" />
-	</div>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Create new Subcategory</h3>
+    </div>   
+    <div class="modal-body"  style="padding-right:3em"> 
+        <fieldset><legend></legend>
+        <ol>
+            <li>
+                @Html.Label("Category")
+                <select id="modalSubcategory_Category" name="categoryId"></select>
+            </li>
+            <li>
+                @Html.Label("Name")
+                <input type="text" id="modalSubcategory_Name" />
+            </li>
+            <li>
+                @Html.Label("Description")
+                <textarea id="modalSubcategory_Description" cols="120" rows="3"></textarea>
+            </li>         
+        </ol>    
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <input type="button" onclick="createSubcategory();" value="Create" class="btn btn-primary" />
+        <input type="button" onclick="closeSubcategoryCreation();" value="Close" class="btn btn-danger" />
+    </div>
 }
 </div>
-		
+        
 @*// Partial View cannot be used because it cvannot use @section
-		@{ Html.RenderAction("PartialCreate", "Subcategory", new {area="Management"}); }*@
+        @{ Html.RenderAction("PartialCreate", "Subcategory", new {area="Management"}); }*@
