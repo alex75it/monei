@@ -120,6 +120,8 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             Account.AccountRole role = Account.AccountRole.User;
             Currency currency = Helper.GetEuroCurrency();
 
+            Helper.DeleteAccount(username);
+
             Account account = Account.Create(username, password, role, currency);
 
             account = AccountRepository.Create(account);
