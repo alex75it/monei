@@ -139,12 +139,13 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         [Test]
         public void Update()
         {
-
             string username = "Test";
             string password = "test";
             Account.AccountRole role = Account.AccountRole.User;
             Currency currency = Helper.GetEuroCurrency();
 
+            Helper.DeleteAccount(username);
+                   
             Account account = Account.Create(username, password, role, currency);
 
             // create
