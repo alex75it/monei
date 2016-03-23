@@ -371,3 +371,4 @@ UpgradeLog*.htm
 FakesAssemblies/
 
 */log/*.txt
+*.orig
