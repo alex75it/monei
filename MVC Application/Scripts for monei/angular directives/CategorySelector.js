@@ -1,6 +1,6 @@
 ﻿app.directive("moneiCategorySelector",
-["utils", "categoryDataProvider",
-function (utils, categoryProvider) {
+["utils", "CategoryDataProvider",
+function (utils, CategoryDataProvider) {
 
 	var directive = {};
 	directive.restrict = "E";
@@ -33,7 +33,7 @@ function (utils, categoryProvider) {
 			}
 		});
 
-		categoryProvider.getCategories(
+		CategoryDataProvider.getCategories(
 			function(data) {
 				scope.categories = data;
 				//console.log("success");
