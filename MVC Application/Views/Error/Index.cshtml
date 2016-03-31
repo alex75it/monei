@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/Error.cshtml";
+}
+
+<p>
+@if (ViewBag.Message != null)
+{
+
+    <h3>Error Details:</h3>
+    @Html.Encode(ViewBag.Message)
+
+}
+else
+{
+    <div>None details.</div>
+}
+</p>
+    
+

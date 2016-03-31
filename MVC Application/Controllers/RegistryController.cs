@@ -27,37 +27,37 @@ namespace Monei.MvcApplication.Controllers
  
         public ActionResult Index()
         {		
-			//RegistryFilters filters = null;
+            //RegistryFilters filters = null;
 
-			//// reload filters if it is a return from here 
-			//if(Request.QueryString["from"] == "Registry")
-			//	filters = Session[SESSION_FILTERS] as RegistryFilters;
+            //// reload filters if it is a return from here 
+            //if(Request.QueryString["from"] == "Registry")
+            //	filters = Session[SESSION_FILTERS] as RegistryFilters;
             
-			//RegistryListModel model = new RegistryListModel();
+            //RegistryListModel model = new RegistryListModel();
 
-			//if(filters == null) {
-			//	// create default filters
-			//	filters = new RegistryFilters()
-			//	{
-			//		AccountId = GetAccount().Id,
-			//		StartDate = Utils.GetFirstDayOfMonth(),
-			//		EndDate = Utils.GetLastDayOfMonth(),
-			//		SelectedPeriod = RegistryFilters.PERIOD_CURRENT_MONTH,
-			//		Categories = null,
-			//	};
-			//}
+            //if(filters == null) {
+            //	// create default filters
+            //	filters = new RegistryFilters()
+            //	{
+            //		AccountId = GetAccount().Id,
+            //		StartDate = Utils.GetFirstDayOfMonth(),
+            //		EndDate = Utils.GetLastDayOfMonth(),
+            //		SelectedPeriod = RegistryFilters.PERIOD_CURRENT_MONTH,
+            //		Categories = null,
+            //	};
+            //}
 
-			//model.Filters = filters;	
+            //model.Filters = filters;	
 
-			//model.CategorySelectList = new SelectList(CategoryRepository.List(), "Id", "Name",  filters.Categories);
-			//if (IsAuthorized(Account.AccountRole.Administrator))
-			//	model.AccountSelectList = new SelectList(AccountRepository.ListAll(), "Id", "Username");
+            //model.CategorySelectList = new SelectList(CategoryRepository.List(), "Id", "Name",  filters.Categories);
+            //if (IsAuthorized(Account.AccountRole.Administrator))
+            //	model.AccountSelectList = new SelectList(AccountRepository.ListAll(), "Id", "Username");
             
-			//model.Records = RegistryRepository.ListRecords(filters).OrderByDescending(r => r.Date).ToList();
+            //model.Records = RegistryRepository.ListRecords(filters).OrderByDescending(r => r.Date).ToList();
             
-			//return View("Registry-Index", model);
+            //return View("Registry-Index", model);
 
-			return View("Registry-Index");
+            return View("Registry-Index");
         }
 
 
@@ -67,94 +67,94 @@ namespace Monei.MvcApplication.Controllers
             return RedirectToAction("Index");
         }
 
-		//// POST: /Registry/Search
-		//public ActionResult Search(FormCollection formCollection)
-		//{
-		//	//logger.Debug("Search()");
+        //// POST: /Registry/Search
+        //public ActionResult Search(FormCollection formCollection)
+        //{
+        //	//logger.Debug("Search()");
 
-		//	RegistryFilters filters = new RegistryFilters();
+        //	RegistryFilters filters = new RegistryFilters();
 
-		//	filters.AccountId = GetAccount().Id;
+        //	filters.AccountId = GetAccount().Id;
 
-		//	DateTime startDate;
-		//	if (!DateTime.TryParse(formCollection.GetStringValue("StartDate"), out startDate))
-		//		throw new Exception("Insert a correct date");
+        //	DateTime startDate;
+        //	if (!DateTime.TryParse(formCollection.GetStringValue("StartDate"), out startDate))
+        //		throw new Exception("Insert a correct date");
 
-		//	filters.StartDate = startDate;
+        //	filters.StartDate = startDate;
             
-		//	string endDateValue = formCollection.GetStringValue("EndDate");
-		//	if (!string.IsNullOrWhiteSpace(endDateValue))
-		//	{
-		//		DateTime endDate;
-		//		if (!DateTime.TryParse(endDateValue, out endDate))
-		//			throw new Exception(string.Format("Parsing of EndDate field value fail, value: \"{0}\".", endDateValue));
-		//		filters.EndDate = endDate;
-		//	}
+        //	string endDateValue = formCollection.GetStringValue("EndDate");
+        //	if (!string.IsNullOrWhiteSpace(endDateValue))
+        //	{
+        //		DateTime endDate;
+        //		if (!DateTime.TryParse(endDateValue, out endDate))
+        //			throw new Exception(string.Format("Parsing of EndDate field value fail, value: \"{0}\".", endDateValue));
+        //		filters.EndDate = endDate;
+        //	}
 
-		//	// set the selected perdio (if exists)
-		//	filters.SelectedPeriod = formCollection.GetStringValue("selectedPeriod");
+        //	// set the selected perdio (if exists)
+        //	filters.SelectedPeriod = formCollection.GetStringValue("selectedPeriod");
 
-		//	filters.CategoryId = formCollection.GetIntValue("Category", null);
-		//	filters.SubcategoryIds = formCollection.GetIntValues("Subcategory");
+        //	filters.CategoryId = formCollection.GetIntValue("Category", null);
+        //	filters.SubcategoryIds = formCollection.GetIntValues("Subcategory");
 
-		//	filters.TextToSearch = formCollection.GetStringValue("TextToSearch", null);
+        //	filters.TextToSearch = formCollection.GetStringValue("TextToSearch", null);
 
-			
-		//	filters.Amount = (decimal)formCollection.GetDecimalValueIfPassed("AmountToSearch", 0m);
-			
-		//	filters.SetOperationType(OperationType.Transfer, formCollection.ContainsKey("IncludeTransfers"));
+            
+        //	filters.Amount = (decimal)formCollection.GetDecimalValueIfPassed("AmountToSearch", 0m);
+            
+        //	filters.SetOperationType(OperationType.Transfer, formCollection.ContainsKey("IncludeTransfers"));
 
-		//	filters.ShowOnlyTaxDeductible = formCollection.ContainsKey("ShowOnlyTaxDeductible");
-		//	filters.IncludeSpecialEvent = formCollection.ContainsKey("IncludeSpecialEvent");
+        //	filters.ShowOnlyTaxDeductible = formCollection.ContainsKey("ShowOnlyTaxDeductible");
+        //	filters.IncludeSpecialEvent = formCollection.ContainsKey("IncludeSpecialEvent");
 
-		//	if (formCollection.ContainsKey("Account"))
-		//		filters.AccountId = formCollection.GetIntValue("Account", null);
+        //	if (formCollection.ContainsKey("Account"))
+        //		filters.AccountId = formCollection.GetIntValue("Account", null);
                 
-		//	filters.Normalize();
+        //	filters.Normalize();
 
-		//	RegistryListModel model = new RegistryListModel();
-		//	model.Filters = filters;
+        //	RegistryListModel model = new RegistryListModel();
+        //	model.Filters = filters;
 
-		//	model.CategorySelectList = new SelectList(CategoryRepository.List(), "Id", "Name", model.Filters.CategoryId);
+        //	model.CategorySelectList = new SelectList(CategoryRepository.List(), "Id", "Name", model.Filters.CategoryId);
             
 
-		//	if (IsAuthorized(Account.AccountRole.Administrator))
-		//		model.AccountSelectList = new SelectList(AccountRepository.ListAll(), "Id", "Username", model.Filters.AccountId);
+        //	if (IsAuthorized(Account.AccountRole.Administrator))
+        //		model.AccountSelectList = new SelectList(AccountRepository.ListAll(), "Id", "Username", model.Filters.AccountId);
             
-		//	// store filters in Session
-		//	Session.Add(SESSION_FILTERS, filters);
+        //	// store filters in Session
+        //	Session.Add(SESSION_FILTERS, filters);
 
-		//	var list = RegistryRepository.ListRecords(filters);
+        //	var list = RegistryRepository.ListRecords(filters);
             
-		//	// it is a request of Export?
-		//	string export = formCollection.GetStringValue("export");
-		//	if (export == "csv")
-		//	{
-		//		var csvList = (ICollection<ICsvFormattable>)list.OrderBy(r => r.Date).Cast<ICsvFormattable>().ToList();
-		//		string fileName = string.Format("Registry {0} {1}.csv", 
-		//			filters.StartDate.ToString("yyyy-MM-dd"), 
-		//			filters.EndDate.ToString("yyyy-MM-dd"));
-		//		return new ExportResponseCreator().CreateResult(Response, csvList, fileName);
-		//	}
+        //	// it is a request of Export?
+        //	string export = formCollection.GetStringValue("export");
+        //	if (export == "csv")
+        //	{
+        //		var csvList = (ICollection<ICsvFormattable>)list.OrderBy(r => r.Date).Cast<ICsvFormattable>().ToList();
+        //		string fileName = string.Format("Registry {0} {1}.csv", 
+        //			filters.StartDate.ToString("yyyy-MM-dd"), 
+        //			filters.EndDate.ToString("yyyy-MM-dd"));
+        //		return new ExportResponseCreator().CreateResult(Response, csvList, fileName);
+        //	}
 
-		//	model.Records = list.OrderByDescending(r => r.Date).ToList();
-		//	return View("Registry-Index", model);
-		//}
+        //	model.Records = list.OrderByDescending(r => r.Date).ToList();
+        //	return View("Registry-Index", model);
+        //}
 
-		//// POST: /Registry/List
-		//public ActionResult List(DateTime fromDate, DateTime toDate, int categoryId)
-		//{
-		//	logger.InfoFormat("List(from, to, category)");
+        //// POST: /Registry/List
+        //public ActionResult List(DateTime fromDate, DateTime toDate, int categoryId)
+        //{
+        //	logger.InfoFormat("List(from, to, category)");
 
-		//	RegistryListModel model = new RegistryListModel();
+        //	RegistryListModel model = new RegistryListModel();
 
-		//	var filters = new RegistryFilters() {AccountId = GetAccount().Id, Categories = categoryId, StartDate=fromDate, EndDate=toDate };
-		//	var list = RegistryRepository.ListRecords(filters).OrderByDescending(r => r.Date).ToList();
+        //	var filters = new RegistryFilters() {AccountId = GetAccount().Id, Categories = categoryId, StartDate=fromDate, EndDate=toDate };
+        //	var list = RegistryRepository.ListRecords(filters).OrderByDescending(r => r.Date).ToList();
 
-		//	model.Records = list;
+        //	model.Records = list;
 
-		//	return View(model);
-		//}
+        //	return View(model);
+        //}
 
 
         // GET: /Registry/Details/5

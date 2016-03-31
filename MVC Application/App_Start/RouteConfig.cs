@@ -7,25 +7,38 @@ using System.Web.Routing;
 
 namespace Monei.MvcApplication
 {
-	public class RouteConfig
-	{
-		public static void RegisterRoutes(RouteCollection routes)
-		{
-			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+    public class RouteConfig
+    {
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-			routes.MapRoute(
-				name: "Default",
-				url: "{controller}/{action}/{id}",
-				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-				);
+#if DEBUG
+            foreach (var route in new string[] { "jasmine", "UItests", "tests" })
+            {
+                routes.MapRoute("Jasmine tests: " + route, "Scripts/Jasmine Test/TestRunner.html");
+            }
+#endif
 
-			//routes.MapRoute(
-			//	name: "Management",
-			//	url: "Management/{controller}/{action}/{id}",
-			//	defaults: new { controller="Category", action="List", id=UrlParameter.Optional}
-			//	);
+            routes.MapRoute(
+                name: "Error",
+                url: "Error/{statusCode}",
+                defaults: new { controller = "Error", action = "Index", statusCode = UrlParameter.Optional }
+            );
 
-		}
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                );
 
-	}//class
+            //routes.MapRoute(
+            //	name: "Management",
+            //	url: "Management/{controller}/{action}/{id}",
+            //	defaults: new { controller="Category", action="List", id=UrlParameter.Optional}
+            //	);
+
+        }
+
+    }//class
 }
