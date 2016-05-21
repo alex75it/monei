@@ -17,16 +17,18 @@ using Monei.MvcApplication.Core;
 namespace Monei.MvcApplication.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
+    //[InitializeSimpleMembership]
     public class AccountController : MoneiControllerBase
     {
 
         private IAccountRepository accountRepository;
+        private ICurrencyRepository currencyRepository;
         private IWebAuthenticationWorker webAuthenticationWorker;
 
-        public AccountController(IAccountRepository accountRepository, IWebAuthenticationWorker webAuthenticationWorker)
+        public AccountController(IAccountRepository accountRepository, ICurrencyRepository currencyRepository IWebAuthenticationWorker webAuthenticationWorker)
         {
             this.accountRepository = accountRepository;
+            this.currencyRepository = currencyRepository;
             this.webAuthenticationWorker = webAuthenticationWorker;
         }
 
@@ -295,27 +297,30 @@ namespace Monei.MvcApplication.Controllers
             }
 
             if (ModelState.IsValid)
-            { 
-                // Insert a new user into the database
-                using (UsersContext context = new UsersContext())
+            {
+                var account = accountRepository.Read(model.username.ToLowerInvariant());
+           
+                if (account == null)
                 {
-                    UserProfile user = context.UserProfiles.FirstOrDefault(u => u.username.ToLowerInvariant() == model.username.ToLowerInvariant());
-                    // Check if user already exists
-                    if (user == null)
-                    {
-                        // Insert name into the profile table
-                        context.UserProfiles.Add(new UserProfile { username = model.username });
-                        context.SaveChanges();
+                    // todo: move to Coe.AccountManager class
+                    account = new Account() {
+                        CreationAccount = null,
+                        Currency = currencyRepository.Read(Currency.EUR_CODE),
+                        Username = model.username,                        
+                    };
 
-                        OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.username);
-                        OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
+                    accountRepository.Create(account);
+                    //context.UserProfiles.Add(new UserProfile { username = model.username });
+                    //context.SaveChanges();
 
-                        return RedirectToAction(returnUrl);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("username", "User name already exists, please enter a different user name.");
-                    }
+                    OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.username);
+                    OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
+
+                    return RedirectToAction(returnUrl);
+                }
+                else
+                {
+                    ModelState.AddModelError("username", "User name already exists, please enter a different user name.");
                 }
             }
 

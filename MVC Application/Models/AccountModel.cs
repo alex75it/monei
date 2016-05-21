@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
 namespace Monei.MvcApplication.Models
 {
-	public class UsersContext :DbContext {
+	//public class UsersContext :DbContext {
 
-		public UsersContext()
-			: base("DefaultConnection")
-		{ }
+	//	public UsersContext()
+	//		: base("DefaultConnection")
+	//	{ }
 
-		public DbSet<UserProfile> UserProfiles { get; set; }
-	}
+	//	public DbSet<UserProfile> UserProfiles { get; set; }
+	//}
 
 	[Table("UserProfile")]
 	public class UserProfile
