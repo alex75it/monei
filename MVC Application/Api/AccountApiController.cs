@@ -12,45 +12,46 @@ using Monei.MvcApplication.Helpers;
 
 namespace Monei.MvcApplication.Api
 {
-	[RoutePrefix("api/account")]
-	public class AccountApiController :ApiControllerBase
-	{
+    [RoutePrefix("api/account")]
+    public class AccountApiController :ApiControllerBase
+    {
 
-		private readonly IWebAuthenticationWorker webAuthenticationWorker;
+        private readonly IWebAuthenticationWorker webAuthenticationWorker;
 
-		public AccountApiController(IAccountRepository accountRepository, IWebAuthenticationWorker webAuthenticationWorker)
-		{
-			AccountRepository = accountRepository;
-			this.webAuthenticationWorker = webAuthenticationWorker;
-		}
+        public AccountApiController(IAccountRepository accountRepository, IWebAuthenticationWorker webAuthenticationWorker)
+        {
+            AccountRepository = accountRepository;
+            this.webAuthenticationWorker = webAuthenticationWorker;
+        }
 
-		[HttpGet, Route("ping")]
-		public void Ping() {
+        [HttpGet, Route("ping")]
+        public void Ping() {
 
-			//return "pong";
-		}
+            //return "pong";
+        }
 
-		[HttpPost, Route("login")]
-		public LoginResult Login(LoginPostData data)
-		{	
-			WebSecurity.LoginResult result = new WebSecurity(AccountRepository, webAuthenticationWorker).Login(data.Username, data.Password, persistCookie: data.RememberMe);
+        [HttpPost, Route("login")]
+        public LoginResult Login(LoginPostData data)
+        {	
+            
+            WebSecurity.LoginResult result = new WebSecurity(AccountRepository, webAuthenticationWorker).Login(data.Username, data.Password, persistCookie: data.RememberMe);
 
-			switch (result)
-			{
-				case WebSecurity.LoginResult.Ok:
-					return LoginResult.Ok;
+            switch (result)
+            {
+                case WebSecurity.LoginResult.Ok:
+                    return LoginResult.Ok;
 
-				case WebSecurity.LoginResult.UsernameNotFound:
-					return LoginResult.UsernameNotFound;
-			
-				case WebSecurity.LoginResult.WrongPassword:
-					return LoginResult.WrongPassword;			
+                case WebSecurity.LoginResult.UsernameNotFound:
+                    return LoginResult.UsernameNotFound;
+            
+                case WebSecurity.LoginResult.WrongPassword:
+                    return LoginResult.WrongPassword;			
 
-				default:
-					throw new Exception("Unmanaged result: " + result);
-			}				
+                default:
+                    throw new Exception("Unmanaged result: " + result);
+            }				
 
-		}
+        }
 
-	}
+    }
 }
