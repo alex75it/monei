@@ -19,9 +19,9 @@ namespace Monei.Test.IntegrationTest.Entities.NHibernateMappings
 
             NHibernate.Cfg.Configuration configuration = new NHibernate.Cfg.Configuration();
             //configuration.AddAssembly("Monei.Entities");
-            //configuration.Configure();
+            configuration.Configure();
 
-            Assert.IsNotEmpty(configuration.ClassMappings, "None class mapping loaded");
+            Assert.IsNotEmpty(configuration.ClassMappings, "None class mapping loaded.");
 
             foreach(var mapping in configuration.ClassMappings)
             {

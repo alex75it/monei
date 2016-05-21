@@ -27,25 +27,19 @@ namespace Monei.DataAccessLayer.SqlServer
                     }
                     catch (Exception exc)
                     {
-                        throw new Exception("Fail to load connection string", exc);
+                        throw new Exception("Fail to load connection string.", exc);
                     }
                 }
                 return ConnectionString;
             }
          }
                 
-        //Nhibernate session factory
-        //Component.For<ISessionFactory>().UsingFactoryMethod(CreateNhSessionFactory).LifeStyle.Singleton,
-
         protected ISessionFactory GetSessionFactory()
         { 
             var configuration = new NHibernate.Cfg.Configuration();
-            //configuration.AddAssembly("Monei.Entities");
-            //configuration.Configure(); // it fail ONLY in debug mode !
-            //Console.WriteLine("Configuration is OK");
+            configuration.Configure(); // it fail ONLY in debug mode, just go on !
 
             ISessionFactory sessionFactory = configuration.BuildSessionFactory();
-            //NHibernate.Dialect.MsSql2012Dialect
     
             return sessionFactory;
         }
@@ -53,7 +47,6 @@ namespace Monei.DataAccessLayer.SqlServer
         protected ISession OpenSession()
         {
             return GetSessionFactory().OpenSession();
-            //return GetSessionFactory().GetCurrentSession;
         }
 
         protected IStatelessSession OpenStatelessSession()
