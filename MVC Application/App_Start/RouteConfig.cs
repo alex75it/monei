@@ -13,13 +13,6 @@ namespace Monei.MvcApplication
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-#if DEBUG
-            foreach (var route in new string[] { "jasmine", "UItests", "tests" })
-            {
-                routes.MapRoute("Jasmine tests: " + route, "Scripts/Jasmine Test/TestRunner.html");
-            }
-#endif
-
             routes.MapRoute(
                 name: "Error",
                 url: "Error/{statusCode}",
