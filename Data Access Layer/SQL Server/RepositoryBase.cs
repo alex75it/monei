@@ -16,6 +16,7 @@ namespace Monei.DataAccessLayer.SqlServer
     public class RepositoryBase<TKey, TEntity>: IRepository<TKey, TEntity> //where TEntity: BaseEntity
     {
         private string connectionString;
+         
         protected string ConnectionString { get
             {
                 if (connectionString == null)
@@ -40,8 +41,9 @@ namespace Monei.DataAccessLayer.SqlServer
         { 
             var configuration = new NHibernate.Cfg.Configuration();
             //configuration.AddAssembly("Monei.Entities");
-            configuration.Configure();
-            
+            //configuration.Configure(); // it fail ONLY in debug mode !
+            //Console.WriteLine("Configuration is OK");
+
             ISessionFactory sessionFactory = configuration.BuildSessionFactory();
             //NHibernate.Dialect.MsSql2012Dialect
     

@@ -25,7 +25,7 @@ namespace Monei.MvcApplication.Controllers
         private ICurrencyRepository currencyRepository;
         private IWebAuthenticationWorker webAuthenticationWorker;
 
-        public AccountController(IAccountRepository accountRepository, ICurrencyRepository currencyRepository IWebAuthenticationWorker webAuthenticationWorker)
+        public AccountController(IAccountRepository accountRepository, ICurrencyRepository currencyRepository, IWebAuthenticationWorker webAuthenticationWorker)
         {
             this.accountRepository = accountRepository;
             this.currencyRepository = currencyRepository;

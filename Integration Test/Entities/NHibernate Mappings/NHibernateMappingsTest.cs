@@ -15,7 +15,7 @@ namespace Monei.Test.IntegrationTest.Entities.NHibernateMappings
 
 			Assembly assembly = Assembly.GetAssembly(typeof(Monei.Entities.Account));
 
-			string a = NHibernate.Cfg.Configuration.DefaultHibernateCfgFileName ;
+			//string a = NHibernate.Cfg.Configuration.DefaultHibernateCfgFileName ;
 
 			NHibernate.Cfg.Configuration configuration = new NHibernate.Cfg.Configuration();
 			configuration.Configure();
