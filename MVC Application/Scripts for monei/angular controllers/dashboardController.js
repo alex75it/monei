@@ -4,8 +4,10 @@ app.controller("DashboardController", ["$scope", "$http", function ($scope, $htt
 
 	_scope = $scope;
 
+	$scope.accountGuid = "9CED8C90-4EE8-420D-8D6E-9D020889B06B";
 	$scope.userCurrency = "€";
-	$scope.year = 2015;
+	$scope.years = [];
+	$scope.year = 2016;
 	$scope.data = null;
 
 	var in_out_colors = ["#088A08", "#DF0101"];
@@ -18,7 +20,7 @@ app.controller("DashboardController", ["$scope", "$http", function ($scope, $htt
 
 		var year = $scope.year;
 		// todo: Account Guid
-		$http.get("/api/dashboard/" + year, { headers: { "account-guid": "9CED8C90-4EE8-420D-8D6E-9D020889B06B" } })
+		$http.get("/api/dashboard/" + year, { headers: { "account-guid":$scope.accountGuid } })
 			.success(function (data) {
 				$scope.data = data;
 				$("#monthsContainer").fadeIn();
