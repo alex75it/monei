@@ -447,10 +447,6 @@
     <Content Include="Scripts\bootstrap\locales\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Scripts\bootstrap\locales\bootstrap-datepicker.zh-TW.js" />
     <Content Include="Scripts\Chart.min.js" />
-    <Content Include="Scripts\eflexis\eflexis.dialog.js" />
-    <Content Include="Scripts\eflexis\eflexis.dialog.min.js" />
-    <Content Include="Scripts\eflexis\jquery.eflexis.dialog.js" />
-    <Content Include="Scripts\eflexis\jquery.eflexis.dialog.min.js" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
