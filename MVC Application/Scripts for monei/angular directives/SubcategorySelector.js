@@ -22,7 +22,7 @@ function (subcategoryDataProvider) {
 			},
 			buttonClass: 'btn btn-default',
 			buttonWidth: 'auto',
-			buttonContainer: '<div class="btn-group bootstrap-select" />',
+			buttonContainer: '<div class="btn-group" />',
 			maxHeight: false,
 			buttonText: function (options) {
 				if (options.length == 0) {
