@@ -5,8 +5,7 @@
 }
 
 @section scripts{
-    <script>
-        
+    <script>        
 
         var regAmountChars = /[^0-9 @Html.Raw(System.Threading.Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyDecimalSeparator)+-]/;
 
@@ -19,20 +18,12 @@
             if(serverMessage != "")
                 var n = noty({ text: serverMessage, layout: "topCenter", type: "success", timeout:1*1000, modal:false });
             
-            $('.amount').keypress(function (e) { /* keypress is intended for "real" (printable) characters */
-                //$(this).val($(this).val().replace(/[^0-9]/g, ''))
+            $('.amount').keypress(function (e) { 
                 var character = String.fromCharCode(e.which);
-
                 var matches = character.match(regAmountChars);
-
                 if (matches !== null)
                     return false;
-
-                //return regAmountChars.test(character);
-
-                //$(this).val($(this).val().replace(/[^0-9 @Html.Raw(System.Threading.Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyDecimalSeparator)]/g, ''));
             });
-
 
             $('#date_plusOne').click(function () {
                 var date = moment($('#date').val()).add('d', 1);               
@@ -45,9 +36,7 @@
                 $('#date').val(date.format('L'));
                 checkParticularDate();
             });
-
-            //$('#date').val(date.format('L')); // todo: check if it is different from server side format
-
+            
             checkParticularDate();
 
             $categorySelect = $('#CategorySelect');
@@ -113,7 +102,6 @@
         function saveAndAddAnother()
         {
             $('#saveAnother').val("True");
-            //alert($('#saveAnother').parents('form').length); return;
             $('#saveAnother').parents('form').submit();
         }
 
@@ -152,10 +140,9 @@
             $.ajax({
                 url: "/api/subcategory",
                 method: "POST",
-                data: { "": data },  // Web API è una merda e accetta la richiesta solo se nel body c'è "=value"
+                data: { "": data }, 
                 dataType: "json",
                 success: function (result) {
-                    //data = $.JSON(data);
                     var categoryId = result.categoryId
                     var subcategoryId = result.subcategoryId;
                     var subcategoryName = result.subcategoryName;
