@@ -12,15 +12,15 @@ function (utils, CategoryDataProvider) {
 
 		element.find("select").multiselect({
 			templates: {
-				button: '<button type="button" class="multiselect dropdown-toggle form-control" data-toggle="dropdown"></button>'
+			    button: '<button type="button" class="multiselect dropdown-toggle form-control" data-toggle="dropdown"></button>'
 			},
 			buttonClass: 'btn btn-default',
 			buttonWidth: 'auto',
-			buttonContainer: '<div class="btn-group bootstrap-select" />',
+			buttonContainer: '<div class="btn-group" />',
 			maxHeight: false,
 			buttonText: function(options) {
 				if (options.length == 0) {
-					return '<span class="pull-left">(all)</span> <span class="caret"></span>';
+				    return '<span class="pull-left">(all)</span> <span class="caret"></span>';
 				} else if (options.length > 1) {
 					return '<span class="pull-left">' + options.length + ' selected</span> <span class="caret"></span>';
 				} else {
@@ -28,7 +28,7 @@ function (utils, CategoryDataProvider) {
 					options.each(function() {
 						selected += $(this).text() + ', ';
 					});
-					return '<span class="pull-left">' + selected.substr(0, selected.length - 2) + '</span> <span class="caret"></span>';
+					return '<span class="pull-left_">' + selected.substr(0, selected.length - 2) + '</span> <span class="caret"></span>';
 				}
 			}
 		});

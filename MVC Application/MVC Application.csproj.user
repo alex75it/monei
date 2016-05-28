@@ -10,7 +10,7 @@
     <WebStackScaffolding_ControllerDialogWidth>600</WebStackScaffolding_ControllerDialogWidth>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <NameOfLastUsedPublishProfile>Publish Online</NameOfLastUsedPublishProfile>
-    <ToolsVersionPromptShown>1.7</ToolsVersionPromptShown>
+    <ToolsVersionPromptShown>1.8</ToolsVersionPromptShown>
     <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <ProjectExtensions>
