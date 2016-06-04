@@ -28,7 +28,7 @@ function (utils, CategoryDataProvider) {
 					options.each(function() {
 						selected += $(this).text() + ', ';
 					});
-					return '<span class="pull-left_">' + selected.substr(0, selected.length - 2) + '</span> <span class="caret"></span>';
+					return '<span class="pull-left">' + selected.substr(0, selected.length - 2) + '</span> <span class="caret"></span>';
 				}
 			}
 		});
