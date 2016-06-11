@@ -9,7 +9,6 @@
 	directive.link = function ($scope, $element, $attrs) {
 		$scope.date = moment().toDate();
 		$scope.amount = 0;
-
 	};
 
 	return directive;

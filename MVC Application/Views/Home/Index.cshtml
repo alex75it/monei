@@ -47,6 +47,9 @@
             <br />Header "Accepted-Language": @Html.Raw(HttpContext.Current.Request.Headers["Accept-Language"])
         </div>
 
+        <span onclick="$('#moneiCreatePanel').modal('show')">create registry</span>
+        <monei-registry-create-panel id="moneiCreatePanel"></monei-registry-create-panel>
+
     </div>
 
 </div>
