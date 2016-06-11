@@ -17,6 +17,10 @@ function ($scope) {
 		}
 
 	};
+
+	$scope.onRecordCreated = function () {
+	    alert(11);
+	};
 }
 
 ]);

@@ -28,7 +28,8 @@
                 <div>
                     <a href="@Url.Action("Index", "Dashboard")" class="btn"><img src="~/Images/dashboard_big.png" /><h3>Dashboard</h3></a>
                     <a href="@Url.Action("Index", "Registry")" class="btn"><img src="~/Images/registry_big_3.png" /><h3>Registry</h3></a>
-                    <a href="@Url.Action("Create", "Registry")" class="btn"><img src="~/Images/add_big_3.png" /><h3>New registry record</h3></a>
+                    @*<a href="@Url.Action("Create", "Registry")" class="btn"><img src="~/Images/add_big_3.png" /><h3>New registry record</h3></a>*@
+                    <a href="javascript:$('#moneiCreatePanel').modal('show');" class="btn"><img src="~/Images/add_big_3.png" /><h3>New registry record</h3></a>
                 </div>
                 <br />
                 <div class="well" style="display:none">
@@ -47,8 +48,7 @@
             <br />Header "Accepted-Language": @Html.Raw(HttpContext.Current.Request.Headers["Accept-Language"])
         </div>
 
-        <span onclick="$('#moneiCreatePanel').modal('show')">create registry</span>
-        <monei-registry-create-panel id="moneiCreatePanel"></monei-registry-create-panel>
+        <monei-registry-create-panel id="moneiCreatePanel" on-record-created="onRecordCreated()"></monei-registry-create-panel>
 
     </div>
 
