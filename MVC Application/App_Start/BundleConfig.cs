@@ -8,6 +8,12 @@ namespace Monei.MvcApplication
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/moment").Include(
+                // moment
+                //"~/Scripts/moment.min.js",
+                "~/Scripts/moment-with-locales.min.js"
+            ));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-ui-{version}.js",
@@ -20,7 +26,7 @@ namespace Monei.MvcApplication
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/jquery.validate.unobtrusive-custom-for-bootstrap.js",
                 "~/Scripts/bootstrap-select.min.js",
-                "~/Scripts/bootstrap/bootstrap-datepicker.js",
+                "~/Scripts/bootstrap-datetimepicker.js",
                 "~/Scripts/bootstrap/bootstrap-multiselect.js"
                 ));
 
@@ -30,9 +36,10 @@ namespace Monei.MvcApplication
                 "~/Content/bootstrap-responsive.min.css",
                 "~/Content/bootstrap-mvc-validation.css",
                 "~/Content/bootstrap-select.min.css",
-                "~/Content/bootstrap-datepicker.css",
                 "~/Content/bootstrap-multiselect.css"
                 ));
+
+            //bundles.Add(new LessBundle );
 
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -49,10 +56,6 @@ namespace Monei.MvcApplication
 
 
             bundles.Add(new ScriptBundle("~/bundles/monei").Include(
-                // moment
-                //"~/Scripts/moment.min.js",
-                "~/Scripts/moment_langs.min.js",
-
                 // noty
                 "~/Scripts/noty/jquery.noty.js",
                 "~/Scripts/noty/layouts/topCenter.js",
