@@ -18,8 +18,12 @@ function ($scope) {
 
 	};
 
+	$scope.openCreatePanel = function () {
+	    $('#moneiCreatePanel').modal('show');
+	}
+
 	$scope.onRecordCreated = function () {
-	    alert(11);
+	    // todo: show an alert
 	};
 }
 

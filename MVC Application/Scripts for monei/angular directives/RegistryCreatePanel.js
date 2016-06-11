@@ -1,5 +1,5 @@
 ﻿app.directive("moneiRegistryCreatePanel",
-["CategoryDataProvider", function (CategoryDataProvider) {
+["$timeout", "CategoryDataProvider", function ($timeout, CategoryDataProvider) {
 
     var directive = {
         scope: {
@@ -15,9 +15,26 @@
         scope.amount = 0;
 
         scope.save = function () {
-            scope.error = null; 
+            scope.error = null;
+            try {
+                throw "Not yet implemented";
+            }
+            catch(error)
+            {
+                scope.showError(error);
+                return;
+            }
             scope.onRecordCreated();
-            scope.error = "not implemented yet";
+            scope.close();            
+        };
+
+        scope.showError = function(error){
+            scope.error = error;
+            $timeout(function () { scope.error = null; }, 3 * 1000);
+        };
+
+        scope.close = function () {
+            element.modal("hide");
         };
         
     };
