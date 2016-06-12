@@ -14,6 +14,11 @@
         scope.date = moment().toDate();
         scope.amount = 0;
 
+    
+        $(element[0].querySelector('.datetimepicker-date')).datetimepicker(
+            {format: "L", showTodayButton: true}
+            );
+
         scope.save = function () {
             scope.error = null;
             try {
