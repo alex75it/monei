@@ -39,7 +39,9 @@ namespace Monei.MvcApplication
                 "~/Content/bootstrap-multiselect.css"
                 ));
 
-            //bundles.Add(new LessBundle );
+            //bundles.Add(new LessBundle("~/LESS/Bootstrap").Include(
+            //   // "~/Content/bootstrap-datetimepicker-build.less"
+            //    ));
 
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -87,7 +89,7 @@ namespace Monei.MvcApplication
 
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include(
-                    "~/Content/monei.css", 
+                    "~/Content/monei.css",
                     "~/Content/monei bootstrap overload.css")
                 );
 
@@ -107,5 +109,10 @@ namespace Monei.MvcApplication
 
 
         }
+        //BundleTable.EnableOptimizations = true;
+
+//#if DEBUG
+//        BundleTable.EnableOptimizations = false;
+//#endif
     }
 }
