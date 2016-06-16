@@ -12,16 +12,13 @@
     directive.templateUrl = "/Scripts for monei/directive-templates/RegistryCreatePanel.html";
 
     directive.link = function (scope, element, attrs) {
-        //scope.date = moment().add(1, "days");
-        scope.amount = 0;
-
-    
+        
         $(element[0].querySelector('.datetimepicker-date')).datetimepicker(
             {
                 format: "L",
                 showTodayButton: true
             }
-            );
+        );
 
         scope.save = function () {
             scope.error = null;
@@ -46,11 +43,22 @@
             element.modal("hide");
         };
         
-        scope.me.reset = 
-        scope.reset = function () {
-            alert("reset");
-            scope.date = moment();
+         
+        scope.reset = function () {     
+            
+            scope.date = moment().format("L");
         };
+
+        scope.me.reset = scope.reset;
+
+
+        scope.setDate = function(days) {
+            scope.date = moment().add(days, "days").format("L");
+            scope.amount = 0;
+        };
+
+        // call reset
+        scope.reset();
         
     };
 

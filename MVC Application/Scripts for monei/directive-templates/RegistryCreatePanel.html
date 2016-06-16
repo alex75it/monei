@@ -9,7 +9,12 @@
                 <form class="">
                     <div class="form-group">
                         <label>Date</label>
-                        <input type="text" class="form-control datetimepicker-date" ng-model="date" />
+                        <input type="text" class="form-control datetimepicker-date" ng-model="date" />                     
+                        <div class="btn-group-xs" role="group" style="margin-top:3px">
+                            <div ng-click="setDate(-2)" class="btn btn-default">2 days ago</div>
+                            <div ng-click="setDate(-1)" class="btn btn-default">yesterday</div>
+                            <div ng-click="setDate(0)" class="btn btn-default">today</div>
+                        </div>                        
                     </div>
                     <div class="form-group">
                         <label>
