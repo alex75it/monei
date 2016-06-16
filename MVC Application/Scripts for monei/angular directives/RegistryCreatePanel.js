@@ -3,7 +3,8 @@
 
     var directive = {
         scope: {
-            onRecordCreated: "&"
+            onRecordCreated: "&",
+            me: "="
         }
     };
     directive.restrict = "E";
@@ -11,12 +12,15 @@
     directive.templateUrl = "/Scripts for monei/directive-templates/RegistryCreatePanel.html";
 
     directive.link = function (scope, element, attrs) {
-        scope.date = moment().toDate();
+        //scope.date = moment().add(1, "days");
         scope.amount = 0;
 
     
         $(element[0].querySelector('.datetimepicker-date')).datetimepicker(
-            {format: "L", showTodayButton: true}
+            {
+                format: "L",
+                showTodayButton: true
+            }
             );
 
         scope.save = function () {
@@ -40,6 +44,12 @@
 
         scope.close = function () {
             element.modal("hide");
+        };
+        
+        scope.me.reset = 
+        scope.reset = function () {
+            alert("reset");
+            scope.date = moment();
         };
         
     };

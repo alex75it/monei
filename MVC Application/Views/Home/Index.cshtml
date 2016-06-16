@@ -48,7 +48,7 @@
             <br />Header "Accepted-Language": @Html.Raw(HttpContext.Current.Request.Headers["Accept-Language"])
         </div>
 
-        <monei-registry-create-panel id="moneiCreatePanel" on-record-created="onRecordCreated()"></monei-registry-create-panel>
+        <monei-registry-create-panel id="moneiCreatePanel" on-record-created="onRecordCreated()" me="registryCreatePanel"></monei-registry-create-panel>
 
     </div>
 
