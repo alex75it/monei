@@ -44,17 +44,18 @@
         };
         
          
-        scope.reset = function () {     
-            
+        scope.reset = function () {   
             scope.date = moment().format("L");
+            scope.amount = 0;
+            scope.category = null;
+            scope.subcategory = null;
         };
 
         scope.me.reset = scope.reset;
 
 
         scope.setDate = function(days) {
-            scope.date = moment().add(days, "days").format("L");
-            scope.amount = 0;
+            scope.date = moment().add(days, "days").format("L");            
         };
 
         // call reset
