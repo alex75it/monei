@@ -5,6 +5,12 @@
     padding: 2px 3px !important;
 }
 
+button.multiselect {
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    padding-right: 6px !important;
+}
+                    
+
 .form-control { height: auto !important;}
 
 select { padding-right:1px !important; height:1.6em }
@@ -33,12 +39,12 @@ body {background-color: transparent !important}
 /*
 .modal-backdrop {background-color:#fff ;}
 .radio, .checkbox {padding-left:0 !important}
-	*/
+    */
 
 .well {
-	background-color: #fff9eb;
-	/*background-color: #f9f9f9;*/
-	border: 1px solid #E2C186;
+    background-color: #fff9eb;
+    /*background-color: #f9f9f9;*/
+    border: 1px solid #E2C186;
 }
 
 /*.color_main { background-color: #fceabb;}

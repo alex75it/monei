@@ -12,10 +12,7 @@
     directive.templateUrl = "/Scripts for monei/directive-templates/RegistryCreatePanel.html";
 
     directive.link = function (scope, element, attrs) {
-
-        scope.category = "2222";
-        scope.pizza = "123";
-        
+               
         $(element[0].querySelector('.datetimepicker-date')).datetimepicker(
             {
                 format: "L",
