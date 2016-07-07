@@ -5,6 +5,8 @@ function ($scope) {
     $scope.loginFailCounter = 0;
     $scope.registryCreatePanel = {};
 
+    $scope.categories = {};
+
     $scope.loggedIn = function () {
         console.info("loggedin");
     };

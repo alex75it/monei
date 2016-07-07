@@ -8,21 +8,20 @@ function (utils, CategoryDataProvider) {
     directive.templateUrl = "/Scripts for monei/directive-templates/CategorySelector.html";
 
     directive.scope = {
-        selectedCategories: "=categories"
+        selectedCategories: "="
     };
 
     directive.link = function(scope, element, attrs) {
         scope.loading = true;
-        scope.selectedCategories = {};
 
         scope.onChange = function (element, selected) {
-            alert(selected);
-            scope.selectedCategories = selected;
+            //alert(selected + " 123");
+            //scope.selectedCategories = selected;
         };
 
         element.find("select").multiselect({
             templates: {
-                button: '<button type="button" class="multiselect dropdown-toggle form-control" data-toggle="dropdown"></button>'
+                button: '<button type="button" class="multiselect dropdown-toggle form-control" data-toggle="dropdown" style="min-width:100px"</button>'
             },
             buttonClass: 'btn btn-default',
             buttonWidth: 'auto',

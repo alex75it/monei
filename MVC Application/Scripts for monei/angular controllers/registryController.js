@@ -7,6 +7,8 @@ function ($scope, $http, registryDataProvider, utils) {
 	$scope.filters = {};
 	$scope.records = [];
 	$scope.runExport = false;
+
+	$scope.categories = null;
 		
 	$scope.openCreatePanel = function () {
 		$("#modal_create").modal("show");

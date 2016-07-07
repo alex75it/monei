@@ -4,7 +4,8 @@
     var directive = {
         scope: {
             onRecordCreated: "&",
-            me: "="
+            //me: "=",
+            selectedCategories: "="
         }
     };
     directive.restrict = "E";
