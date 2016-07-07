@@ -28,6 +28,7 @@ function ($scope) {
 
     $scope.onRecordCreated = function () {
         // todo: show an alert
+        alert(123);
     };
 }
 

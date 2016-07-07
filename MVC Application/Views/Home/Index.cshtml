@@ -47,17 +47,8 @@
             Culture: @Html.Raw(System.Threading.Thread.CurrentThread.CurrentCulture.DisplayName)
             <br />Header "Accepted-Language": @Html.Raw(HttpContext.Current.Request.Headers["Accept-Language"])
         </div>
-
-        <monei-registry-create-panel id="moneiCreatePanel" on-record-created="onRecordCreated()" me="registryCreatePanel"></monei-registry-create-panel>
-
-    </div>
-
-    <div>
-        test
-        <br />
-        <monei-category-selector selected-categories="categories"></monei-category-selector>
-        categories:
-        {{categories}}
+        
+        <monei-registry-create-panel id="moneiCreatePanel" on-record-created="onRecordCreated" me="registryCreatePanel"></monei-registry-create-panel>
 
     </div>
 
