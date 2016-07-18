@@ -12,29 +12,29 @@ namespace Monei.MvcApplication.Controllers
         // GET: /Home/
         public ActionResult Index()
         {
-			ViewBag.Title = "Home page"; // l10n
-			ViewBag.Message = "This is the home page of \"monei\"";	// l10n
+            ViewBag.Title = "Home page"; // l10n
+            ViewBag.Message = "This is the home page of \"monei\"";	// l10n
 
             return View();
         }
 
-		// GET: /Home/About
-		public ActionResult About()
-		{
-			ViewBag.Title = "About";	//l10n
-			ViewBag.Message = "Your app description page.";
+        // GET: /Home/About
+        public ActionResult About()
+        {
+            ViewBag.Title = "About";	//l10n
+            ViewBag.Message = "Your app description page.";
 
-			return View();
-		}
+            return View();
+        }
 
-		// GET: /Home/Contact
-		public ActionResult Contact()
-		{ 
-			//ViewBag.Title = 
-			ViewBag.Message = "Contact of the site."; //l10n
-			
-			return View();
-		}
+        // GET: /Home/Contact
+        public ActionResult Contact()
+        { 
+            //ViewBag.Title = 
+            ViewBag.Message = "Contact of the site."; //l10n
+            
+            return View();
+        }
 
     }//class
 }

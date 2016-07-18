@@ -362,6 +362,7 @@
     <Content Include="Scripts for monei\directive-templates\login-panel.html" />
     <Content Include="Scripts for monei\directive-templates\RegistryCreatePanel.html" />
     <Content Include="Scripts for monei\directive-templates\SubcategorySelector.html" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -388,7 +389,7 @@
     <Content Include="Scripts\angular-touch.js" />
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
-    <Content Include="Scripts\angular.min.js" />
+    <None Include="Scripts\angular.min.js.original" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />

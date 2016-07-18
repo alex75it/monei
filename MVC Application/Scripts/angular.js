@@ -27896,10 +27896,10 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
         var optionValues = valuesFn(scope) || [];
         var optionValuesKeys = getOptionValuesKeys(optionValues);
         var optionValuesLength = optionValuesKeys.length;
-
+        
         for (var index = 0; index < optionValuesLength; index++) {
           var key = (optionValues === optionValuesKeys) ? index : optionValuesKeys[index];
-          var value = optionValues[key];
+          var value = optionValues[key];          
           var locals = getLocals(value, key);
           var viewValue = viewValueFn(scope, locals);
           var selectValue = getTrackByValueFn(viewValue, locals);
@@ -27907,7 +27907,6 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
           var group = groupByFn(scope, locals);
           var disabled = disableWhenFn(scope, locals);
           var optionItem = new Option(selectValue, viewValue, label, group, disabled);
-
           optionItems.push(optionItem);
           selectValueMap[selectValue] = optionItem;
         }
@@ -27954,6 +27953,7 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
 
       var unknownOption = jqLite(optionTemplate.cloneNode(false));
       unknownOption.val('?');
+      unknownOption.html("unknown option");
 
       var options;
       var ngOptions = parseOptionsExpression(attr.ngOptions, selectElement, scope);
@@ -27978,7 +27978,8 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
       };
 
 
-      var renderUnknownOption = function() {
+      var renderUnknownOption = function () {
+        //  alert("render unknown");
         selectElement.prepend(unknownOption);
         selectElement.val('?');
         unknownOption.prop('selected', true); // needed for IE
@@ -27992,7 +27993,9 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
       // Update the controller methods for multiple selectable options
       if (!multiple) {
 
-        selectCtrl.writeValue = function writeNgOptionsValue(value) {
+          selectCtrl.writeValue = function writeNgOptionsValue(value) {
+
+//alert("writeNgOptionsValue: " + value);
           var option = options.getOptionFromViewValue(value);
 
           if (option) {

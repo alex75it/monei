@@ -24,7 +24,7 @@
 
         @if (User.Identity.IsAuthenticated)
         {
-            <div style="margin-top:2em" class="panel">
+            <div style="margin-top:1em" class="panel">
                 <div>
                     <a href="@Url.Action("Index", "Dashboard")" class="btn"><img src="~/Images/dashboard_big.png" /><h3>Dashboard</h3></a>
                     <a href="@Url.Action("Index", "Registry")" class="btn"><img src="~/Images/registry_big_3.png" /><h3>Registry</h3></a>
@@ -47,7 +47,7 @@
             Culture: @Html.Raw(System.Threading.Thread.CurrentThread.CurrentCulture.DisplayName)
             <br />Header "Accepted-Language": @Html.Raw(HttpContext.Current.Request.Headers["Accept-Language"])
         </div>
-        
+
         <monei-registry-create-panel id="moneiCreatePanel" on-record-created="onRecordCreated" me="registryCreatePanel"></monei-registry-create-panel>
 
     </div>

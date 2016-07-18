@@ -5,8 +5,6 @@ function ($scope) {
     $scope.loginFailCounter = 0;
     $scope.registryCreatePanel = {};
 
-    $scope.categories = {};
-
     $scope.loggedIn = function () {
         console.info("loggedin");
     };
@@ -18,7 +16,6 @@ function ($scope) {
         {
             $scope.loginFailCounter = 0;
         }
-
     };
 
     $scope.openCreatePanel = function () {
@@ -27,8 +24,8 @@ function ($scope) {
     }
 
     $scope.onRecordCreated = function () {
-        // todo: show an alert
-        alert(123);
+        // todo: show a notify
+        alert("onRecordCreated");
     };
 }
 

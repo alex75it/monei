@@ -1,3 +1,4 @@
-﻿<div>
-	<select ng-class="{'loading': loading}" ng-options="s.id as s.name for s in subcategories" ng-model="filters.subcategories" multiple="multiple"></select>
-</div>
+﻿<select data-ng-class="{'loading': loading}" 
+    data-ng-options="s.id as s.name for s in subcategories" 
+    data-ng-model="selectedSubcategories">
+</select>

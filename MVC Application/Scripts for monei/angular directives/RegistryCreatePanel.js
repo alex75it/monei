@@ -13,6 +13,9 @@
 
     directive.link = function (scope, element, attrs) {
                
+        scope.selectedCategory = null;
+        scope.selectedSubcategory = null;
+
         $(element[0].querySelector('.datetimepicker-date')).datetimepicker(
             {
                 format: "L",
@@ -53,14 +56,16 @@
 
         scope.me.reset = scope.reset;
 
-
         scope.setDate = function(days) {
             scope.date = moment().add(days, "days").format("L");            
         };
 
+        scope.$watch(function () { return scope.selectedCategory; }, function () {
+            //alert("category is changed");
+        });
+
         // call reset
-        scope.reset();
-        
+        scope.reset();        
     };
 
     return directive;
