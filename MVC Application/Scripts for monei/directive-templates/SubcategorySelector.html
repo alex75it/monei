@@ -1,4 +1,7 @@
-﻿<select data-ng-class="{'loading': loading}" 
-    data-ng-options="s.id as s.name for s in subcategories" 
-    data-ng-model="selectedSubcategories">
-</select>
+﻿<div>
+    <select data-ng-class="{'loading': loading}" data-ng-hide="loading"
+            data-ng-options="s.id as s.name for s in subcategories"
+            data-ng-model="selectedSubcategories">
+    </select>
+    <span id="loadingPanel_{{id}}" data-ng-show="loading">{{loadingText}}</span>
+</div>

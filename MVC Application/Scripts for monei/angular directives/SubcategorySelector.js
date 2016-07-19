@@ -11,14 +11,24 @@ function (subcategoryDataProvider) {
     };
 
     directive.scope = {
+        id: "=",
         selectedCategory: "=category"    // atribute categories must exists and bind to selectedCategory
         , selectedSubcategories: "=" // attribute "selected-subcategories" must exists
     };
 
     directive.link = function(scope, element, attrs) {
 
+        scope.loadingText = "(none category selected)"; // todo: pass as attribute
+
+        var selectElement = element.find("select");  // if none container is used use just "element"
+        var loadingPanel = element.find("#loadingPanel_" + scope.id);
+
+        // pass class attribute from container to select
+        selectElement.attr("class", element.attr("class"));
+        element.attr("class", ""); // remove "form-control" class
+        
         function createMultiselect() {
-            var selectElement = element; // if a container is used use element.find("select")
+            // var selectElement = element; // if a container is used use element.find("select")
 
             selectElement.multiselect({
                 templates: {
@@ -47,7 +57,6 @@ function (subcategoryDataProvider) {
         scope.$watch(
             function () { return scope.selectedCategory; },
             function () {
-                //console.log("categories: " + scope.categories);
                 scope.subcategories = [];
                 scope.loading = true;
                 if (scope.selectedCategory) {
