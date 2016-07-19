@@ -32,22 +32,21 @@
                         <label>Note</label>
                         <textarea type="text" class="form-control" ng-model="note" rows="4"></textarea>
                     </div>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <span class="form-group col-md-6">
+                        <div>
+                            <span class="form-group" style="margin-right: 2em">
                                 <label>
                                     Tax deductible
-                                    <input type="checkbox" class="checkbox-inline" ng-model="taxDeductible">
+                                    <input type="checkbox" class="checkbox" ng-model="taxDeductible" style="width:auto; text-align: left; vertical-align: middle;">
                                 </label>
                             </span>
-                            <span class="form-group col-md-6">
+                            <span class="form-group">
                                 <label>
                                     Special event
-                                    <input type="checkbox" class="checkbox-inline" ng-model="specialEvent">
+                                    <input type="checkbox" class="checkbox" ng-model="specialEvent" style="width:auto; text-align: left; vertical-align: middle;">
                                 </label>
                             </span>
                         </div>
-                    </div>
+                    
                     <div ng-show="error" class="alert alert-danger" role="alert">{{error}}</div>
                     <div class="modal-footer">
                         <button type="button" ng-click="save();" class="btn btn-primary">Save</button>
