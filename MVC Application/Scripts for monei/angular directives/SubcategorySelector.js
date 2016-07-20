@@ -14,23 +14,23 @@ function (subcategoryDataProvider) {
         id: "=",
         selectedCategory: "=category"    // atribute categories must exists and bind to selectedCategory
         , selectedSubcategories: "=" // attribute "selected-subcategories" must exists
+        , noSelectionText: "="  // text to show when there isn't a selection      
     };
 
     directive.link = function(scope, element, attrs) {
 
         scope.loadingText = "(none category selected)"; // todo: pass as attribute
+        // var selectElement = element; // if a container is used use element.find("select")
+        scope.selectElement = element.find("select");  // if none container is used use just "element"
 
-        var selectElement = element.find("select");  // if none container is used use just "element"
         var loadingPanel = element.find("#loadingPanel_" + scope.id);
 
         // pass class attribute from container to select
-        selectElement.attr("class", element.attr("class"));
+        scope.selectElement.attr("class", element.attr("class"));
         element.attr("class", ""); // remove "form-control" class
         
-        function createMultiselect() {
-            // var selectElement = element; // if a container is used use element.find("select")
-
-            selectElement.multiselect({
+        function createMultiselect() {     
+            scope.selectElement.multiselect({
                 templates: {
                     button: '<button type="button" class="multiselect dropdown-toggle form-control" data-toggle="dropdown"></button>'
                 },
@@ -67,6 +67,9 @@ function (subcategoryDataProvider) {
                                 setTimeout(function () {
                                     createMultiselect()
                                 }, 0.5 * 1000); // little delay is needed
+                            }
+                            else {
+                                scope.selectElement.find("option")[0].innerHTML = scope.noSelectionText;
                             }
                         },
                         function(error) { alert(error); },

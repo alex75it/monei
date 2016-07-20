@@ -15,6 +15,8 @@
                
         scope.selectedCategory = null;
         scope.selectedSubcategory = null;
+        scope.noCategorySelectedText = "(select one)";
+        scope.noSubategorySelectedText = "(select one)";
 
         $(element[0].querySelector('.datetimepicker-date')).datetimepicker(
             {

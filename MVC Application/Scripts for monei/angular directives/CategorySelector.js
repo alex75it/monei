@@ -9,18 +9,20 @@ function (utils, CategoryDataProvider) {
 
     directive.scope = {
         selectedCategories: "=" // the container should use the property "selected-categories"
+        , noSelectionText: "="  // text to show when there isn't a selection         
     };
 
     directive.link = function(scope, element, attrs) {
         scope.loading = true;
-        
-        function createMultiselect() {
-            var selectElement = element; // if a container is used use element.find("select")
+
+        scope.selectElement = element; // if a container is used use element.find("select")
+
+        function createMultiselect() {            
 
             // remove unknown empty option cretaed by Angular because "multiple" prop is not set at angular compile time.
             // $('option[value="?"]', selectElement).remove();
 
-            selectElement.multiselect({
+            scope.selectElement.multiselect({
                 templates: {
                     button: '<button type="button" class="multiselect dropdown-toggle form-control" data-toggle="dropdown" style="min-width:100px"></button>'
                 },
@@ -54,6 +56,9 @@ function (utils, CategoryDataProvider) {
                     setTimeout(function () {
                         createMultiselect();
                     }, 0.5 * 1000); // a little delay is needed
+                }
+                else {
+                    scope.selectElement.find("option")[0].innerHTML = scope.noSelectionText;
                 }
             },
             function(error) { throw Error("Fail to load categories. " + error); },
