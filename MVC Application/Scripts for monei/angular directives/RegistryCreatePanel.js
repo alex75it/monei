@@ -1,5 +1,6 @@
 ﻿app.directive("moneiRegistryCreatePanel",
-["$timeout", "CategoryDataProvider", function ($timeout, CategoryDataProvider) {
+["$timeout", "CategoryDataProvider", "PurchaseProvider", "NotificationService", 
+    function ($timeout, CategoryDataProvider, PurchaseProvider, NotificationService) {
 
     var directive = {
         scope: {
@@ -28,7 +29,11 @@
         scope.save = function () {
             scope.error = null;
             try {
-                throw "Not yet implemented";
+                var purchase = {};
+
+                PurchaseProvider.save(                    
+                    scope.savePurchaseSuccess, scope.savePurchaseFail, scope.savePurchaseFinish
+                    );
             }
             catch(error)
             {
@@ -46,8 +51,7 @@
 
         scope.close = function () {
             element.modal("hide");
-        };
-        
+        };        
          
         scope.reset = function () {   
             scope.date = moment().format("L");
@@ -56,18 +60,28 @@
             scope.subcategory = null;
         };
 
+        // expose the reset method to container 
+        // todo: it is usedd?
         scope.me.reset = scope.reset;
 
         scope.setDate = function(days) {
             scope.date = moment().add(days, "days").format("L");            
         };
 
-        scope.$watch(function () { return scope.selectedCategory; }, function () {
-            //alert("category is changed");
-        });
-
         // call reset
-        scope.reset();        
+        scope.reset();
+
+        scope.savePurchaseSuccess = function () {
+            NotificationService.info("Purchase saved");
+        };
+
+        scope.savePurchaseFail = function () {
+            NotificationService.error("Purchase saved");
+        };
+
+        scope.savePurchaseFinish = function () {
+            scope.reset();
+        };
     };
 
     return directive;
