@@ -69,7 +69,7 @@ function (subcategoryDataProvider) {
                                 }, 0.5 * 1000); // little delay is needed
                             }
                             else {
-                                scope.selectElement.find("option")[0].innerHTML = scope.noSelectionText;
+                                scope.selectElement.find("option")[0].innerHTML = scope.noSelectionText || "";
                             }
                         },
                         function(error) { alert(error); },

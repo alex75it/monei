@@ -58,7 +58,7 @@ function (utils, CategoryDataProvider) {
                     }, 0.5 * 1000); // a little delay is needed
                 }
                 else {
-                    scope.selectElement.find("option")[0].innerHTML = scope.noSelectionText;
+                    scope.selectElement.find("option")[0].innerHTML = scope.noSelectionText || "";
                 }
             },
             function(error) { throw Error("Fail to load categories. " + error); },
