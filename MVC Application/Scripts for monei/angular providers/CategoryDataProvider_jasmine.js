@@ -1,6 +1,6 @@
 ﻿"use strict";
 /// Jasmine tests
-describe("categoryDataProvider", function() {
+describe("CategoryDataProvider", function() {
 
 	var appName = app.name; // this "initialize" module, all other way give an error
 	beforeEach(angular.mock.module("monei")); // this is needed to make injection of providers works
@@ -17,13 +17,13 @@ describe("categoryDataProvider", function() {
 	}));
 
 	it("contains \"getCategories\" function", function () {
-		inject(function (categoryDataProvider) {
-			expect(categoryDataProvider.getCategories).toBeDefined();
+		inject(function (CategoryDataProvider) {
+			expect(CategoryDataProvider.getCategories).toBeDefined();
 		});
 	});
 
 	it("when call \"getCategories\" function the \"callback\" function is called", function() {
-		inject(function (categoryDataProvider) {
+		inject(function (CategoryDataProvider) {
 			// Arrange
 			var url = baseUrl + "list";
 			httpBackend.expectGET(url).respond([{ id: 123, name: "Home" }]);
@@ -34,7 +34,7 @@ describe("categoryDataProvider", function() {
 			spyOn(callbackSpy, "success");
 
 			// Act
-			categoryDataProvider.getCategories(callbackSpy.success);
+			CategoryDataProvider.getCategories(callbackSpy.success);
 			httpBackend.flush();
 
 			// Assert
@@ -43,7 +43,7 @@ describe("categoryDataProvider", function() {
 	});
 
 	it("when call \"getCategories\" returns data", function () {
-		inject(function (categoryDataProvider) {
+		inject(function (CategoryDataProvider) {
 			// Arrange
 			var url = baseUrl + "list";
 			httpBackend.expectGET(url).respond([{ id: 123, name: "Home" }]);
@@ -52,7 +52,7 @@ describe("categoryDataProvider", function() {
 			var success = function(data) { returnData = data; };
 
 			// Act
-			categoryDataProvider.getCategories(success);
+			CategoryDataProvider.getCategories(success);
 			httpBackend.flush();
 
 			// Assert

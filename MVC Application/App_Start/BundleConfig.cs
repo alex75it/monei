@@ -85,8 +85,7 @@ namespace Monei.MvcApplication
 
 
             // exclude Jasmine tests
-            bundles.IgnoreList.Ignore("*_test.js", OptimizationMode.Always);
-            bundles.IgnoreList.Ignore("**.jasmine.js", OptimizationMode.Always);
+            bundles.IgnoreList.Ignore("*_jasmine.js", OptimizationMode.Always);
 
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include(

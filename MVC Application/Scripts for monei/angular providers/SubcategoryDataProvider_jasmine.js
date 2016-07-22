@@ -1,6 +1,6 @@
 ﻿"use strict";
 /// Jasmine tests
-describe("subcategoryDataProvider", function () {
+describe("SubcategoryDataProvider", function () {
 
 	//var subcategoryProvider;
 	var appName = app.name; // this "initialize" module, all other way give an error
@@ -14,23 +14,23 @@ describe("subcategoryDataProvider", function () {
 	}));
 
 	it("contains getSubcategories function", function () {
-		inject(function (subcategoryDataProvider) {
-			expect(subcategoryDataProvider.getSubcategories).toBeDefined();
+		inject(function (SubcategoryDataProvider) {
+			expect(SubcategoryDataProvider.getSubcategories).toBeDefined();
 		});
 	});
 
 	it("when getSubcategories is called it call success callback", function () {
-		inject(function (subcategoryDataProvider) {
+		inject(function (SubcategoryDataProvider) {
 			// Arrange
-			requestHandler.respond([{ name: "subcategory A" }]);
-			$httpBackend.expectGET("/api/subcategory/");
+		    var categoryId = 1;
+			$httpBackend.expectGET("/api/subcategory/category/" + categoryId).respond(true);
 
 			var service = {
 				success: function (data) { }
 			};
 			spyOn(service, "success");
-			// Act
-			subcategoryDataProvider.getSubcategories(service.success);
+		    // Act
+			SubcategoryDataProvider.getSubcategories(categoryId, service.success);
 
 			$httpBackend.flush();
 			// Assert
@@ -40,18 +40,19 @@ describe("subcategoryDataProvider", function () {
 
 
 	it("when getSubcategories is called success return expected data", function () {
-		inject(function (subcategoryDataProvider) {
-			requestHandler.respond([{ name: "subcategory A" }]);
-			$httpBackend.expectGET("/api/subcategory/");
+		inject(function (SubcategoryDataProvider) {
+		    var categoryId = 1;
+		    var returnedSubcategories = [{ "id": 1, "name": "subcategory A" }, {"id":2}];
+			$httpBackend.expectGET("/api/subcategory/category/" + categoryId).respond(returnedSubcategories);
 
 			var result;
 			var success = function (data) { result = data; };
-			subcategoryDataProvider.getSubcategories(success);
+			SubcategoryDataProvider.getSubcategories(categoryId, success);
 			$httpBackend.flush();
 
 			expect(result).not.toBeUndefined();
 			expect(result).not.toBeNull();
-			expect(result.length).toBe(1);
+			expect(result.length).toBe(2);
 			expect(result[0].name).toEqual("subcategory A");
 		});
 	});
