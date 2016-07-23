@@ -352,8 +352,8 @@
     <Content Include="Scripts for monei\angular directives\SubcategorySelector.js" />
     <Content Include="Scripts for monei\angular filters\momentFilter.js" />
     <Content Include="Scripts for monei\angular providers\CategoryDataProvider_jasmine.js" />
-    <Content Include="Scripts for monei\angular providers\PurchaseProvider.js" />
-    <Content Include="Scripts for monei\angular providers\PurchaseProvider_jasmine.js" />
+    <Content Include="Scripts for monei\angular providers\PurchaseDataProvider.js" />
+    <Content Include="Scripts for monei\angular providers\PurchaseDataProvider_jasmine.js" />
     <Content Include="Scripts for monei\angular providers\RegistryDataProvider_jasmine.js" />
     <Content Include="Scripts for monei\angular providers\SubcategoryDataProvider_jasmine.js" />
     <Content Include="Scripts for monei\angular providers\SubcategoryDataProvider.js" />

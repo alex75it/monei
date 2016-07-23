@@ -1,6 +1,6 @@
-﻿app.factory("PurchaseProvider",
+﻿app.factory("PurchaseDataProvider",
 ["$http",
-function PurchaseProvider($http) {
+function PurchaseDataProvider($http) {
     var baseUrl = "/api/purchase/";
     var provider = {};
 

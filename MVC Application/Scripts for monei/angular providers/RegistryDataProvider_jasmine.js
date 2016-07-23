@@ -16,7 +16,7 @@ describe("registryDataProvider", function () {
 		httpBackend = $injector.get("$httpBackend");
 	}));
 
-	it("contains \"search\" function", function () {
+	it("has \"search\" function", function () {
 		inject(function (registryDataProvider) {
 			expect(registryDataProvider.search).toBeDefined();
 		});
