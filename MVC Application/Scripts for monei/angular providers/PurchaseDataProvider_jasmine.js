@@ -14,6 +14,11 @@ describe("PurchaseDataProvider", function () {
         httpBackend = $injector.get("$httpBackend");
     }));
 
+    afterEach(function(){
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
+    });
+
     it("has \"save\" function", function () {
         inject(function (PurchaseDataProvider) {
             expect(PurchaseDataProvider.save).toBeDefined();
@@ -22,18 +27,21 @@ describe("PurchaseDataProvider", function () {
 
     describe("save()", function () {
         it("should call /api/purcase/ with POST HTTP method", function () {
-            var url = baseUrl;
-            httpBackend.expectPOST(baseUrl).respond(null);
+            inject(function (PurchaseDataProvider) {
+                var url = baseUrl;
+                httpBackend.expectPOST(baseUrl, {}).respond(null);
 
-            httpBackend.verifyNoOutstandingExpectation();
-            httpBackend.verifyNoOutstandingRequest();
+                PurchaseDataProvider.save({});
+                httpBackend.flush();
+
+                expect(true).toBe(true);
+            });
         });
 
         describe("when call return an error", function () {
             it("should call error and finish callbacks", function () {
-                inject(function (PurchaseDataProvider) {
-                    var url = baseUrl;
-                    httpBackend.expectPOST(baseUrl).respond(null);
+                inject(function (PurchaseDataProvider) {                    
+                    httpBackend.expectPOST(baseUrl).respond(500, ""); // respond(null);
 
                     var callbackSpy = {
                         error: function () { },
@@ -43,9 +51,25 @@ describe("PurchaseDataProvider", function () {
                     spyOn(callbackSpy, "finish");
 
                     PurchaseDataProvider.save({}, null, callbackSpy.error, callbackSpy.finish);
+                    httpBackend.flush();
 
                     expect(callbackSpy.error).toHaveBeenCalled();
                     expect(callbackSpy.finish).toHaveBeenCalled();
+                });
+            });
+        });
+
+        describe("when call return data", function () {
+            it("should call success callback with data", function () {
+                inject(function (PurchaseDataProvider) {
+                    var expectedData = 1;
+                    httpBackend.whenPOST(baseUrl).respond(expectedData);
+
+                    var returnedData = null;
+                    PurchaseDataProvider.save(null, function (newId) { returnedData = newId; });
+                    httpBackend.flush();
+
+                    expect(returnedData).toEqual(expectedData);
                 });
             });
         });
@@ -57,6 +81,7 @@ describe("PurchaseDataProvider", function () {
 
                 var callCheck = false;
                 PurchaseDataProvider.save({}, null, null, function() { callCheck = true; });
+                httpBackend.flush();
 
                 expect(callCheck).toBe(true);
             });

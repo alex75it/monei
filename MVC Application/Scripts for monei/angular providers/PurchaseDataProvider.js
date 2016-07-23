@@ -1,15 +1,16 @@
 ﻿app.factory("PurchaseDataProvider",
 ["$http",
 function PurchaseDataProvider($http) {
-    var baseUrl = "/api/purchase/";
+    var baseUrl = "/api/purchase";
     var provider = {};
 
 
     provider.save = function (data, callback, errorCallback, finallyCallback) {
-        $http.get(baseUrl + "list")
-            .success(function (data) { callback(data); })
+        $http.post(baseUrl, data)
+            .success(function (data) { callback && callback(data); })
             .error(function (data, status) { errorCallback && errorCallback(data); })
-            .finally(function () { finallyCallback && finallyCallback(); });
+            .finally(function () { finallyCallback && finallyCallback(); })
+        ;
     };
 
     return provider;
