@@ -1,6 +1,6 @@
 ﻿app.directive("moneiRegistryCreatePanel",
-["$timeout", "CategoryDataProvider", "PurchaseDatyaProvider", "NotificationService", 
-    function ($timeout, CategoryDataProvider, PurchaseDatyaProvider, NotificationService) {
+["$timeout", "CategoryDataProvider", "PurchaseDataProvider", "NotificationService", 
+    function ($timeout, CategoryDataProvider, PurchaseDataProvider, NotificationService) {
 
     var directive = {
         scope: {
@@ -31,7 +31,7 @@
             try {
                 var purchase = {};
 
-                PurchaseDatyaProvider.save(
+                PurchaseDataProvider.save(
                     scope.savePurchaseSuccess, scope.savePurchaseFail, scope.savePurchaseFinish
                     );
             }
