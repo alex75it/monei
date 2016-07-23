@@ -361,6 +361,8 @@
     <Content Include="Scripts for monei\angular providers\AccountProvider.js" />
     <Content Include="Scripts for monei\angular providers\RegistryDataProvider.js" />
     <Content Include="Scripts for monei\angular providers\UtilsProvider_jasmine.js" />
+    <Content Include="Scripts for monei\angular services\NotificationService_jasmine.js" />
+    <Content Include="Scripts for monei\angular services\NotificationService.js" />
     <Content Include="Scripts for monei\directive-templates\CategorySelector.html" />
     <Content Include="Scripts for monei\directive-templates\login-panel.html" />
     <Content Include="Scripts for monei\directive-templates\RegistryCreatePanel.html" />

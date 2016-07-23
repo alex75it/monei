@@ -1,53 +1,53 @@
 "use strict";
-	
+    
 describe("UtilsProvider", function() {
-	var utilsProvider, httpBackend;
-	var appName = app.name; // this "initialize" module, all other way give an error
-	
-	beforeEach(angular.mock.module("monei"));
+    var utilsProvider, httpBackend;
+    var appName = app.name; // this "initialize" module, all other way give an error
+    
+    beforeEach(angular.mock.module("monei"));
 
-	//var $injector = angular.injector(["monei"]);
+    //var $injector = angular.injector(["monei"]);
 
-	it("inject \"utils\" should contains UtilsService", function () {
-		window.inject(function(utils) {
-			expect(utils).not.toEqual(null);
-		});
-	});
+    it("inject \"utils\" should contains UtilsService", function () {
+        window.inject(function(utils) {
+            expect(utils).not.toEqual(null);
+        });
+    });
 
-	it("when call toShortDate() with null should return empty string", function () {
-		inject(function (utils) {
-			var date = null;
-			expect(utils.toShortDate()).toEqual("");
-		});
-	});
+    it("when call toShortDate() with null should return empty string", function () {
+        inject(function (utils) {
+            var date = null;
+            expect(utils.toShortDate()).toEqual("");
+        });
+    });
 
-	it("when call toShortDate() with moment() object should return shortDate format date", function () {
-		inject(function (utils) {
-			var date = moment();
-			var result = utils.toShortDate(date);
-			expect(result).not.toEqual(null);
-			expect(result).not.toEqual("");
-			// todo... how to test culture dipendent format?
-		});
-	});
+    it("when call toShortDate() with moment() object should return shortDate format date", function () {
+        inject(function (utils) {
+            var date = moment();
+            var result = utils.toShortDate(date);
+            expect(result).not.toEqual(null);
+            expect(result).not.toEqual("");
+            // todo... how to test culture dipendent format?
+        });
+    });
 
-	it("when call getDate() with moment() object should return not null or empty", function() {
-		inject(function(utils) {
-			var date = moment();
-			var result = utils.getDate(date);
-			expect(result).not.toEqual(null);
-			expect(result).not.toEqual("");
-		});
-	});
+    it("when call getDate() with moment() object should return not null or empty", function() {
+        inject(function(utils) {
+            var date = moment();
+            var result = utils.getDate(date);
+            expect(result).not.toEqual(null);
+            expect(result).not.toEqual("");
+        });
+    });
 
-	it("when call getDate() with Date() object should return not null or empty", function () {
-		inject(function (utils) {
-			var date = Date();
-			var result = utils.getDate(date);
-			expect(result).not.toEqual(null);
-			expect(result).not.toEqual("");
-		});
-	});
+    it("when call getDate() with Date() object should return not null or empty", function () {
+        inject(function (utils) {
+            var date = Date();
+            var result = utils.getDate(date);
+            expect(result).not.toEqual(null);
+            expect(result).not.toEqual("");
+        });
+    });
 
 });
 
