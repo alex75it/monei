@@ -34,15 +34,16 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
             var returnedRegistryRecord = new RegistryRecord();
             returnedRegistryRecord.Id = 1;
 
-            var callConfiguration = A.CallTo(() => registryRepository.AddRecord(record));
-            callConfiguration.Returns(returnedRegistryRecord);
-            callConfiguration.MustHaveHappened(Repeated.Exactly.Once);
+            var callToAddRecord = A.CallTo(() => registryRepository.AddRecord(record));
+            callToAddRecord.Returns(returnedRegistryRecord);
+            
             controller.RegistryRepository = registryRepository;
 
             // Act
             int newId = controller.Create(record);
 
             // Assert
+            callToAddRecord.MustHaveHappened(Repeated.Exactly.Once);
             newId.ShouldEqual(returnedRegistryRecord.Id);
         }  
     }

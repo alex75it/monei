@@ -124,7 +124,6 @@
     <Compile Include="MVC Application\Api\AccountApiControllerTest.cs" />
     <Compile Include="MVC Application\Api\RegistryApiControllerTest.cs" />
     <Compile Include="MVC Application\Api\CategoryApiControllerTest.cs" />
-    <Compile Include="MVC Application\Api\UnitTest1.cs" />
     <Compile Include="MVC Application\Area\Management\Controllers\CategoryControllerTest.cs" />
     <Compile Include="MVC Application\WebApiConfigTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
