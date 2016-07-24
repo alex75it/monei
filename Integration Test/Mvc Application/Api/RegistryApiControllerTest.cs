@@ -13,7 +13,7 @@ using Should;
 namespace Monei.Test.IntegrationTest.Mvc_Application.Api
 {
 
-	[TestFixture, Category("API"), Category("Registry")]
+	[TestFixture, Category("Web API"), Category("Registry")]
 	public class RegistryApiControllerTest : ApiControllerTestBase
 	{
 		private const string baseUri = "/api/registry/";

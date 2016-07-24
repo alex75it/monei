@@ -20,7 +20,7 @@ using Monei.MvcApplication.Controllers.Api.PostDataObjects;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
-	[TestFixture, Category("API"), Category("Subcategory")]
+	[TestFixture, Category("Web API"), Category("Subcategory")]
 	public class SubcategorApiyControllerTest :ApiControllerTestBase
 	{
 		private const string ROUTE_PREFIX = "api/subcategory/";

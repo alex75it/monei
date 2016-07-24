@@ -11,34 +11,37 @@ using OfficeOpenXml;
 
 namespace Monei.MvcApplication.Api
 {
-	[RoutePrefix("api/registry")]
-	public class RegistryApiController : ApiControllerBase
-	{
-		[HttpPost, Route("search")]
-		public IEnumerable<RegistryRecord> Search(RegistrySearchPostData data)
-		{
-			RegistryFilters filters = new RegistryFilters();
-			filters.StartDate = data.FromDate;
-			filters.EndDate = data.ToDate;
-			filters.Categories = data.Categories;
+    [RoutePrefix("api/registry")]
+    public class RegistryApiController : ApiControllerBase
+    {
+        [HttpPost, Route("search")]
+        public IEnumerable<RegistryRecord> Search(RegistrySearchPostData data)
+        {
+            RegistryFilters filters = new RegistryFilters();
+            filters.StartDate = data.FromDate;
+            filters.EndDate = data.ToDate;
+            filters.Categories = data.Categories;
 
-			var list = RegistryRepository.ListRecords(filters);
-			return list;
-		}
-		
-		
+            var list = RegistryRepository.ListRecords(filters);
+            return list;
+        }      
 
-		#region private
-		private ExcelPackage CreateExcel(IEnumerable<RegistryRecord> records)
-		{
-			ExcelPackage package = new ExcelPackage();
-			ExcelWorksheet sheet = package.Workbook.Worksheets.Add("Export");
+        #region private
+        private ExcelPackage CreateExcel(IEnumerable<RegistryRecord> records)
+        {
+            ExcelPackage package = new ExcelPackage();
+            ExcelWorksheet sheet = package.Workbook.Worksheets.Add("Export");
 
-			sheet.Cells["A1"].Value = "aaa";
-			return package;
-		}
+            sheet.Cells["A1"].Value = "aaa";
+            return package;
+        }
 
-		#endregion
+        public int Create(RegistryRecord record)
+        {
+            throw new NotImplementedException();
+        }
 
-	}
+        #endregion
+
+    }
 }

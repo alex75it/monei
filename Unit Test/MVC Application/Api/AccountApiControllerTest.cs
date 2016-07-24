@@ -15,7 +15,7 @@ using Should;
 
 namespace Monei.Test.UnitTest.MVC_Application.Api
 {
-	[TestFixture, Category("API"), Category("Account")]
+	[TestFixture, Category("Web API"), Category("Account")]
 	public class AccountApiControllerTest
 	{
 

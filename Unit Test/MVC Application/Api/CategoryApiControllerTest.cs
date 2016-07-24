@@ -12,29 +12,9 @@ using Should;
 
 namespace Monei.Test.UnitTest.MvcApplication.Api
 {
-    [TestFixture, Category("Web")]
-    public class CategoryControllerTest
+    [TestFixture, Category("Web API"), Category("Category"),]
+    public class CategoryApiControllerTest
     {
-        //todo: this test is no more necessary, use it as template and delete after first "use"
-        [Test]
-        public void Get()
-        {
-            // Arrange
-            var controller = new CategoryApiController();
-
-            ICategoryRepository categoryRepository = A.Fake<ICategoryRepository>();
-            IList<Category> data = new List<Category>();
-            data.Add(new Category() { Id = 1, Name = "Test" });
-            A.CallTo(() => categoryRepository.List()).Returns(data);
-            controller.CategoryRepository = categoryRepository;
-
-            // Act
-            IEnumerable<Category> list = controller.Get();
-
-            // Assert
-            list.ShouldNotBeEmpty();
-        }
-
         [Test]
         public void List_when_OrderByMostUsed_then_ReturnedList_should_BeOrderedByUsage()
         {

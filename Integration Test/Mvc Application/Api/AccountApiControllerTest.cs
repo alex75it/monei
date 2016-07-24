@@ -13,7 +13,7 @@ using Should;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
-	[TestFixture, Category("API"), Category("Account")]
+	[TestFixture, Category("Web API"), Category("Account")]
 	public class AccountApiControllerTest :ApiControllerTestBase
 	{
 

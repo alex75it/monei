@@ -16,8 +16,8 @@ using Should;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
-	[TestFixture, Category("API"), Category("Category")]
-	public class CategorApiyControllerTest :ApiControllerTestBase
+	[TestFixture, Category("Web API"), Category("Category")]
+	public class CategorApiControllerTest :ApiControllerTestBase
 	{
 		private readonly string routePrefix = "api/category/";
 
