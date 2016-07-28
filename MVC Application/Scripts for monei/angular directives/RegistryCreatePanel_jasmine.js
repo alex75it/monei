@@ -1,5 +1,5 @@
 ﻿"use strict";
 /// Jasmine tests
-describe("RegistryCreastePanel", function () {
+describe("RegistryCreatePanel", function () {
 
 });

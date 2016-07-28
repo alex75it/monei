@@ -76,6 +76,7 @@
         };
 
         scope.savePurchaseFail = function () {
+            scope.showError("Create Purchase fail");
             NotificationService.error("Purchase saved");
         };
 

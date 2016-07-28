@@ -1,8 +1,8 @@
 ﻿"use strict";
 
 app.directive("moneiSubcategorySelector",
-["subcategoryDataProvider",
-function (subcategoryDataProvider) {
+["SubcategoryDataProvider",
+function (SubcategoryDataProvider) {
 
     var directive = {
         restrict: "E",
@@ -60,7 +60,7 @@ function (subcategoryDataProvider) {
                 scope.subcategories = [];
                 scope.loading = true;
                 if (scope.selectedCategory) {
-                    subcategoryDataProvider.getSubcategories(scope.selectedCategory,
+                    SubcategoryDataProvider.getSubcategories(scope.selectedCategory,
                         function(data) {
                             scope.subcategories = data;
                             if (element.attr("multiple")) {

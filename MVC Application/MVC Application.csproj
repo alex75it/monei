@@ -349,6 +349,7 @@
     <Content Include="Scripts for monei\angular directives\LoginPanel.js" />
     <Content Include="Scripts for monei\angular directives\RegistryCreatePanel_jasmine.js" />
     <Content Include="Scripts for monei\angular directives\RegistryCreatePanel.js" />
+    <Content Include="Scripts for monei\angular directives\SubcategorySelector_jasmine.js" />
     <Content Include="Scripts for monei\angular directives\SubcategorySelector.js" />
     <Content Include="Scripts for monei\angular filters\momentFilter.js" />
     <Content Include="Scripts for monei\angular providers\CategoryDataProvider_jasmine.js" />

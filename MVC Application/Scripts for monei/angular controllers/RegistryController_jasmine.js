@@ -1,7 +1,6 @@
 ﻿// Jasmine test
 "use strict";
 
-
 describe("RegistryController", function () {
 
     var scope;
