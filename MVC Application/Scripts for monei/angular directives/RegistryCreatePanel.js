@@ -1,6 +1,6 @@
 ﻿app.directive("moneiRegistryCreatePanel",
-["$timeout", "CategoryDataProvider", "PurchaseDataProvider", "NotificationService", 
-    function ($timeout, CategoryDataProvider, PurchaseDataProvider, NotificationService) {
+["$timeout", "CategoryDataProvider", "RegistryDataProvider", "NotificationService", 
+    function ($timeout, CategoryDataProvider, RegistryDataProvider, NotificationService) {
 
     var directive = {
         scope: {

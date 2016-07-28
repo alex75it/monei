@@ -13,19 +13,29 @@ using Should;
 namespace Monei.Test.IntegrationTest.Mvc_Application.Api
 {
 
-	[TestFixture, Category("Web API"), Category("Registry")]
-	public class RegistryApiControllerTest : ApiControllerTestBase
-	{
-		private const string baseUri = "/api/registry/";
+    [TestFixture, Category("Web API"), Category("Registry")]
+    public class RegistryApiControllerTest : ApiControllerTestBase
+    {
+        private const string baseUri = "/api/registry";
 
-		[Test]
-		public void Search_Should_ReturnAList()
-		{
-			RegistrySearchPostData data = new RegistrySearchPostData() { };
+        [Test]
+        public void Search_Should_ReturnAList()
+        {
+            RegistrySearchPostData data = new RegistrySearchPostData() { };
 
-			var result = base.CallApi<RegistrySearchPostData, IEnumerable<RegistryRecord>>(baseUri + "search", HttpMethod.Post, data);
-			result.ShouldNotBeEmpty();
-		}
+            var result = base.CallApi<RegistrySearchPostData, IEnumerable<RegistryRecord>>(baseUri + "/search", HttpMethod.Post, data);
+            result.ShouldNotBeEmpty();
+        }
 
-	}
+        [Test]
+        public void PostNewRecord()
+        {
+            RegistryRecord record = new RegistryRecord();
+
+            base.CallApi<RegistryRecord>(baseUri, HttpMethod.Post, record);
+
+            Assert.Pass();
+        }
+
+    }
 }
