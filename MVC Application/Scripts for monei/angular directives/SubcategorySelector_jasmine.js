@@ -2,19 +2,35 @@
 /// Jasmine tests
 describe("Subcategory Selector", function () {
 
+    var compile;
     var scope;
-    var directive;
-    beforeEach(module(app.name));
+    var directiveElement;
+    
 
-    beforeEach(inject(function ($rootScope, $directive, SubcategoryDataProvider) {
-        //scope = $rootScope.$new();
-        directive = app.directive("moneiSubcategorySelector");
-        alert(directive);
+    beforeEach( function(){
+        module(app.name);
+        inject(function ($compile, $rootScope) {
+            compile = $compile;
+            scope = $rootScope.$new();
 
-    }));
+            directiveElement = getDirectiveElement();
+        });
+    });
 
-    it("should can be created", function () {
-        expect(directive).toBeDefined();
+    function getDirectiveElement() {
+        var element = angular.element("<moneiSubcategorySelector></moneiSubcategorySelector>")
+        var compiledElement = compile(element)(scope);
+        scope.$digest();
+        return compiledElement;
+    };
+
+    //https://docs.angularjs.org/guide/unit-testing
+    //https://www.sitepoint.com/angular-testing-tips-testing-directives/
+       
+
+    it("should render a <select> element", function () {
+        var select = directiveElement.find("select");
+        expect(select).toBeDefined();
     });
 
 });
