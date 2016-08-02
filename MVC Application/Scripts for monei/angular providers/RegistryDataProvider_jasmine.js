@@ -92,7 +92,7 @@ describe("registryDataProvider", function () {
             expect(true).toBe(true);          
         });
 
-        describe("when call to Web API return an error", function () {
+        describe("when call to Web API returns an error", function () {
             it('should call "error" and "finish" callbacks', function () {
                 httpBackend.expectPOST(baseUrl).respond(500, ""); // respond(null);
 
@@ -111,10 +111,10 @@ describe("registryDataProvider", function () {
             });
         });
 
-        describe("when call to Web API return data", function () {
+        describe("when call to Web API returns data", function () {
             it('should call "success" callback with data', function () {
                 var expectedData = 1;
-                httpBackend.whenPOST(baseUrl).respond(expectedData);
+                httpBackend.whenPOST(baseUrl).respond(200, expectedData);
 
                 var returnedData = null;
                 registryDataProvider.save(null, function (newId) { returnedData = newId; });

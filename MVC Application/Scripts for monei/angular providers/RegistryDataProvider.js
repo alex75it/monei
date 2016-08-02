@@ -11,10 +11,10 @@ function ($http) {
             .finally(function() { finallyCallback && finallyCallback() });
     };
 
-    provider.save = function (data, callback, errorCallback, finallyCallback) {
-        $http.post(baseUrl, data)
+    provider.save = function (record, callback, errorCallback, finallyCallback) {
+        $http.post(baseUrl, record)
             .success(function (data) { callback && callback(data); })
-            .error(function (data, status) { errorCallback && errorCallback(data); })
+            .error(function (error, status) { errorCallback && errorCallback(error); })
             .finally(function () { finallyCallback && finallyCallback(); })
         ;
     };
