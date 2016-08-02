@@ -2,142 +2,138 @@
 /// Jasmine tests
 describe("registryDataProvider", function () {
 
-	var homeCategoryId = 3;
+    var homeCategoryId = 3;
 
-	var appName = app.name; // this "initialize" module, all other ways return an error
-	beforeEach(angular.mock.module("monei")); // this is needed to make injection of providers works
+    var appName = app.name; // this "initialize" module, all other ways return an error
+    beforeEach(angular.mock.module("monei")); // this is needed to make injection of providers works
 
-	var baseUrl = "/api/registry";
+    var baseUrl = "/api/registry";
 
-	// mock the Angular $http service
-	var requestHandler;
-	var httpBackend;
+    // mock the Angular $http service
+    var requestHandler;
+    var httpBackend;
+    var registryDataProvider;
 
-	beforeEach(inject(function ($injector) {
-		httpBackend = $injector.get("$httpBackend");
-	}));
+    beforeEach(inject(function (_registryDataProvider_, $injector) { // uderscore are removed by Angular
+        httpBackend = $injector.get("$httpBackend");
+        registryDataProvider = _registryDataProvider_;
+    }));
 
-	afterEach(function () {
-	    httpBackend.verifyNoOutstandingExpectation();
-	    httpBackend.verifyNoOutstandingRequest();
-	});
+    afterEach(function () {
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
+    });
 
-	it("has \"search\" function", function () {
-		inject(function (registryDataProvider) {
-			expect(registryDataProvider.search).toBeDefined();
-		});
-	});
+    describe("search()", function () {
 
-	it("when call \"search\" function the \"callback\" function is called", function () {
-		inject(function (registryDataProvider) {
-			// Arrange
-			var url = baseUrl + "/search";
-			httpBackend.expectPOST(url).respond([{ id: 123, name: "Home" }]);
+        it("should exists", function () {            
+            expect(registryDataProvider.search).toBeDefined();            
+        });
 
-			var callbackSpy = {
-				success: function (data) { }
-			};
-			spyOn(callbackSpy, "success");
+        describe("when call to Web API returns", function() {
+            it('the \"callback\" function is called', function () {
+                // Arrange
+                var url = baseUrl + "/search";
+                httpBackend.expectPOST(url).respond([{ id: 123, name: "Home" }]);
 
-			// Act
-			var postData = {};
-			registryDataProvider.search(postData, callbackSpy.success);
-			httpBackend.flush();
+                var callbackSpy = {
+                    success: function (data) { }
+                };
+                spyOn(callbackSpy, "success");
 
-			// Assert
-			expect(callbackSpy.success).toHaveBeenCalled();
-		});
-	});
+                // Act
+                var postData = {};
+                registryDataProvider.search(postData, callbackSpy.success);
+                httpBackend.flush();
 
-	it("when call \"search\" returns data", function () {
-		inject(function (registryDataProvider) {
-			// Arrange
-			var url = baseUrl + "/search";
-			httpBackend.expectPOST(url).respond([{ id: 123, date: "2015-03-08" }]);
+                // Assert
+                expect(callbackSpy.success).toHaveBeenCalled();
+            });
+        });
 
-			var returnData = "null";
-			var success = function (data) { returnData = data; };
+        describe("when call to Web API returns data", function () {
+            it("returned data is defined", function () {
+                // Arrange
+                var url = baseUrl + "/search";
+                httpBackend.expectPOST(url).respond([{ id: 123, date: "2015-03-08" }]);
 
-			// Act
-			var postData = { categories: [homeCategoryId] };
-			registryDataProvider.search(postData, success);
-			httpBackend.flush();
+                var returnData = "null";
+                var success = function (data) { returnData = data; };
 
-			// Assert
-			expect(returnData).not.toBeUndefined();
-			expect(returnData).not.toBeNull();
-			expect(returnData.length).toBe(1);
-			expect(returnData[0].date).toEqual("2015-03-08");
-		});
-	});
+                // Act
+                var postData = { categories: [homeCategoryId] };
+                registryDataProvider.search(postData, success);
+                httpBackend.flush();
 
-	it("has \"save\" function", function () {
-	    inject(function (registryDataProvider) {
-	        expect(registryDataProvider.save).toBeDefined();
-	    });
-	})
+                // Assert
+                expect(returnData).not.toBeUndefined();
+                expect(returnData).not.toBeNull();
+                expect(returnData.length).toBe(1);
+                expect(returnData[0].date).toEqual("2015-03-08");
+            });
+        });
 
-	describe("save()", function () {
-	    it("should call /api/registry with POST HTTP method", function () {
-	        inject(function (registryDataProvider) {
-	            var url = baseUrl;
-	            httpBackend.expectPOST(baseUrl, {}).respond(null);
+    });
+    
+    describe("save()", function () {
 
-	            registryDataProvider.save({});
-	            httpBackend.flush();
+        it("should exists", function () {
+            expect(registryDataProvider.save).toBeDefined();
+        })
 
-	            expect(true).toBe(true);
-	        });
-	    });
+        it('should call "/api/registry" with POST HTTP method', function () {
 
-	    describe("when call return an error", function () {
-	        it("should call error and finish callbacks", function () {
-	            inject(function (registryDataProvider) {
-	                httpBackend.expectPOST(baseUrl).respond(500, ""); // respond(null);
+            var url = baseUrl;
+            httpBackend.expectPOST(baseUrl, {}).respond(null);
 
-	                var callbackSpy = {
-	                    error: function () { },
-	                    finish: function () { }
-	                }
-	                spyOn(callbackSpy, "error");
-	                spyOn(callbackSpy, "finish");
+            registryDataProvider.save({});
+            httpBackend.flush();
 
-	                registryDataProvider.save({}, null, callbackSpy.error, callbackSpy.finish);
-	                httpBackend.flush();
+            expect(true).toBe(true);          
+        });
 
-	                expect(callbackSpy.error).toHaveBeenCalled();
-	                expect(callbackSpy.finish).toHaveBeenCalled();
-	            });
-	        });
-	    });
+        describe("when call to Web API return an error", function () {
+            it('should call "error" and "finish" callbacks', function () {
+                httpBackend.expectPOST(baseUrl).respond(500, ""); // respond(null);
 
-	    describe("when call return data", function () {
-	        it("should call success callback with data", function () {
-	            inject(function (registryDataProvider) {
-	                var expectedData = 1;
-	                httpBackend.whenPOST(baseUrl).respond(expectedData);
+                var callbackSpy = {
+                    error: function () { },
+                    finish: function () { }
+                }
+                spyOn(callbackSpy, "error");
+                spyOn(callbackSpy, "finish");
 
-	                var returnedData = null;
-	                registryDataProvider.save(null, function (newId) { returnedData = newId; });
-	                httpBackend.flush();
+                registryDataProvider.save({}, null, callbackSpy.error, callbackSpy.finish);
+                httpBackend.flush();
 
-	                expect(returnedData).toEqual(expectedData);
-	            });
-	        });
-	    });
+                expect(callbackSpy.error).toHaveBeenCalled();
+                expect(callbackSpy.finish).toHaveBeenCalled();               
+            });
+        });
 
-	    it("should call finish callback", function () {
-	        inject(function (registryDataProvider) {
-	            var url = baseUrl;
-	            httpBackend.expectPOST(baseUrl).respond(null);
+        describe("when call to Web API return data", function () {
+            it('should call "success" callback with data', function () {
+                var expectedData = 1;
+                httpBackend.whenPOST(baseUrl).respond(expectedData);
 
-	            var callCheck = false;
-	            registryDataProvider.save({}, null, null, function () { callCheck = true; });
-	            httpBackend.flush();
+                var returnedData = null;
+                registryDataProvider.save(null, function (newId) { returnedData = newId; });
+                httpBackend.flush();
 
-	            expect(callCheck).toBe(true);
-	        });
-	    });
-	});
+                expect(returnedData).toEqual(expectedData);               
+            });
+        });
+
+        it("should call finish callback", function () {
+            var url = baseUrl;
+            httpBackend.expectPOST(baseUrl).respond(null);
+
+            var callCheck = false;
+            registryDataProvider.save({}, null, null, function () { callCheck = true; });
+            httpBackend.flush();
+
+            expect(callCheck).toBe(true);           
+        });
+    });
 
 });
