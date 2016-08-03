@@ -8,10 +8,9 @@ using NHibernate;
 
 namespace Monei.DataAccessLayer.SqlServer
 {
-	public class AbstractRepository<TKey,TEntity> :RepositoryBase<TKey, TEntity> where TEntity:EntityBase<TKey>
-	{
+    public class AbstractRepository<TKey,TEntity> :RepositoryBase<TKey, TEntity> where TEntity:EntityBase<TKey>
+    {
+        
 
-		
-
-	}
+    }
 }

@@ -9,6 +9,7 @@ using Monei.MvcApplication.Api.PostDataObjects;
 using Monei.Test.IntegrationTest.MvcApplication.Api;
 using NUnit.Framework;
 using Should;
+using Monei.DataAccessLayer.SqlServer;
 
 namespace Monei.Test.IntegrationTest.Mvc_Application.Api
 {
@@ -28,14 +29,34 @@ namespace Monei.Test.IntegrationTest.Mvc_Application.Api
         }
 
         [Test]
-        public void PostNewRecord()
+        public void PostNewRecord_should_CreateNewRecord()
         {
-            RegistryRecord record = new RegistryRecord();
+            RegistryNewRecordPostData record = new RegistryNewRecordPostData()
+            {
+                CategoryId = 1,
+                SubcategoryId = 2
+            };
 
-            base.CallApi<RegistryRecord>(baseUri, HttpMethod.Post, record);
+            var newId = base.CallApi<RegistryNewRecordPostData, int>(baseUri, HttpMethod.Post, record);
 
             Assert.Pass();
+
+            RegistryRecord data = GetRegistryRecord(newId);
+            data.ShouldNotBeNull();
+            data.Date.ShouldEqual(record.Date);
+            //data.Subcategory.Id.ShouldEqual(record.)
         }
 
+        #region utilities method
+        private RegistryRecord GetRegistryRecord(int newId)
+        {
+            var repository = new RegistryRepository();
+
+            var record = repository.Read(newId);
+
+            return record;
+        }
+
+        #endregion
     }
 }

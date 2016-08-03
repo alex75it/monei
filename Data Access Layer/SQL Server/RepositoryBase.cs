@@ -27,7 +27,7 @@ namespace Monei.DataAccessLayer.SqlServer
                     }
                     catch (Exception exc)
                     {
-                        throw new Exception("Fail to load connection string.", exc);
+                        throw new Exception("Fail to load \"monei\" connection string from .config file.", exc);
                     }
                 }
                 return ConnectionString;
