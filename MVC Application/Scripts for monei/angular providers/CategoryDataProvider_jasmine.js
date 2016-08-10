@@ -2,66 +2,65 @@
 /// Jasmine tests
 describe("CategoryDataProvider", function() {
 
-	var appName = app.name; // this "initialize" module, all other way give an error
-	beforeEach(angular.mock.module("monei")); // this is needed to make injection of providers works
+    var appName = app.name; // this "initialize" module, all other way give an error
+    beforeEach(angular.mock.module("monei")); // this is needed to make injection of providers works
 
-	var baseUrl = "/api/category/";
+    var baseUrl = "/api/category/";
 
-	// mock the Angular $http service
-	var requestHandler;
-	var httpBackend;
-	beforeEach(inject(function($injector) {
-		httpBackend = $injector.get("$httpBackend");
-		// default response
-		//requestHandler = 
-	}));
+    // mock the Angular $http service
+    var requestHandler;
+    var httpBackend;
+    var CategoryDataProvider;
 
-	it("contains \"getCategories\" function", function () {
-		inject(function (CategoryDataProvider) {
-			expect(CategoryDataProvider.getCategories).toBeDefined();
-		});
-	});
+    beforeEach(inject(function ($injector, _CategoryDataProvider_) {
+        httpBackend = $injector.get("$httpBackend");
+        // default response
+        CategoryDataProvider = _CategoryDataProvider_;
+    }));
 
-	it("when call \"getCategories\" function the \"callback\" function is called", function() {
-		inject(function (CategoryDataProvider) {
-			// Arrange
-			var url = baseUrl + "list";
-			httpBackend.expectGET(url).respond([{ id: 123, name: "Home" }]);
+    it("is injected", function() {
+        expect(CategoryDataProvider).toBeDefined();
+    });
 
-			var callbackSpy = {
-				success: function(data) {}
-			};
-			spyOn(callbackSpy, "success");
+    it("getCategories() is defined", function () {
+        expect(CategoryDataProvider.getCategories).toBeDefined();		
+    });
 
-			// Act
-			CategoryDataProvider.getCategories(callbackSpy.success);
-			httpBackend.flush();
+    it("when call \"getCategories\" function the \"callback\" function is called", function() {
+        // Arrange
+        var url = baseUrl + "list";
+        httpBackend.expectGET(url).respond([{ id: 123, name: "Home" }]);
 
-			// Assert
-			expect(callbackSpy.success).toHaveBeenCalled();
-		});
-	});
+        var callbackSpy = {
+            success: function(data) {}
+        };
+        spyOn(callbackSpy, "success");
 
-	it("when call \"getCategories\" returns data", function () {
-		inject(function (CategoryDataProvider) {
-			// Arrange
-			var url = baseUrl + "list";
-			httpBackend.expectGET(url).respond([{ id: 123, name: "Home" }]);
+        // Act
+        CategoryDataProvider.getCategories(callbackSpy.success);
+        httpBackend.flush();
 
-			var returnData = "null";
-			var success = function(data) { returnData = data; };
+        // Assert
+        expect(callbackSpy.success).toHaveBeenCalled();	
+    });
 
-			// Act
-			CategoryDataProvider.getCategories(success);
-			httpBackend.flush();
+    it("when call \"getCategories\" returns data", function () {
+        // Arrange
+        var url = baseUrl + "list";
+        httpBackend.expectGET(url).respond([{ id: 123, name: "Home" }]);
 
-			// Assert
-			expect(returnData).not.toBeUndefined();
-			expect(returnData).not.toBeNull();
-			expect(returnData.length).toBe(1);
-			expect(returnData[0].name).toEqual("Home");
-		});
-	});
+        var returnData = "null";
+        var success = function(data) { returnData = data; };
 
+        // Act
+        CategoryDataProvider.getCategories(success);
+        httpBackend.flush();
 
+        // Assert
+        expect(returnData).not.toBeUndefined();
+        expect(returnData).not.toBeNull();
+        expect(returnData.length).toBe(1);
+        expect(returnData[0].name).toEqual("Home");	
+    });
+    
 });

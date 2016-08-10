@@ -1,6 +1,6 @@
 ﻿"use strict";
 /// Jasmine tests
-describe("registryDataProvider", function () {
+describe("RegistryDataProvider", function () {
 
     var homeCategoryId = 3;
 

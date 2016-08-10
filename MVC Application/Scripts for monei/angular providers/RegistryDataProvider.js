@@ -1,6 +1,7 @@
-﻿app.factory("registryDataProvider",
+﻿app.factory("RegistryDataProvider",
 ["$http",
 function ($http) {
+
     var baseUrl = "/api/registry";
     var provider = {};
 

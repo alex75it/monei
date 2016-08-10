@@ -60,8 +60,7 @@
             scope.subcategory = null;
         };
 
-        // expose the reset method to container 
-        // todo: it is usedd?
+        // expose the reset method to container. "me" is a property of the directive scope that exists for this specific need.        
         scope.me.reset = scope.reset;
 
         scope.setDate = function(days) {
