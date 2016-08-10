@@ -31,6 +31,22 @@ namespace Monei.MvcApplication.Api
             return record.Id;
         }
 
+        [HttpPost, Route("")]
+        public int Create(RegistryNewRecordPostData postData)
+        {
+            var record = new RegistryRecord() {
+                Category = new Category() { Id = postData.CategoryId },
+                Subcategory = new Subcategory() { Id = postData.SubcategoryId },                
+                Amount = postData.Amount,
+                CreationAccount = base.CurrentAccount,
+                //Date = postData.Date,
+                Note = postData.Note
+            };
+
+            record = RegistryRepository.AddRecord(record);
+            return record.Id;
+        }
+
         #region private
         private ExcelPackage CreateExcel(IEnumerable<RegistryRecord> records)
         {

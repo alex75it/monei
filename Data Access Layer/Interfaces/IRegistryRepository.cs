@@ -8,7 +8,7 @@ using Monei.Entities;
 
 namespace Monei.DataAccessLayer.Interfaces
 {
-	public interface IRegistryRepository //:IDisposable
+	public interface IRegistryRepository
 	{
 		RegistryRecord Read(int id);
 		IList<RegistryRecord> ListRecords(RegistryFilters filters);
@@ -16,7 +16,5 @@ namespace Monei.DataAccessLayer.Interfaces
 		void UpdateRecord(RegistryRecord record);
 		void DeleteRecord(int recordId);
 		bool IsSubcategoryUsed(int subcategoryId);
-
-	}//interface
-
+	}
 }

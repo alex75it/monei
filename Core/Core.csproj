@@ -52,9 +52,9 @@
     <Compile Include="Data Analysis\Business Objects\MonthData.cs" />
     <Compile Include="Data Analysis\Business Objects\YearData.cs" />
     <Compile Include="Data Analysis\Engine.cs" />
-    <Compile Include="Managers\CategoryManager.cs" />
-    <Compile Include="Managers\IAccountManager.cs" />
-    <Compile Include="RegistryManager.cs" />
+    <Compile Include="Entity Managers\CategoryManager.cs" />
+    <Compile Include="Entity Managers\IAccountManager.cs" />
+    <Compile Include="Entity Managers\RegistryManager.cs" />
     <Compile Include="SubcategoryManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

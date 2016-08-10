@@ -10,6 +10,8 @@ using Monei.Test.IntegrationTest.MvcApplication.Api;
 using NUnit.Framework;
 using Should;
 using Monei.DataAccessLayer.SqlServer;
+using System.Reflection;
+using System.IO;
 
 namespace Monei.Test.IntegrationTest.Mvc_Application.Api
 {
@@ -31,20 +33,45 @@ namespace Monei.Test.IntegrationTest.Mvc_Application.Api
         [Test]
         public void PostNewRecord_should_CreateNewRecord()
         {
-            RegistryNewRecordPostData record = new RegistryNewRecordPostData()
+            RegistryNewRecordPostData data = new RegistryNewRecordPostData()
             {
                 CategoryId = 1,
                 SubcategoryId = 2
             };
 
-            var newId = base.CallApi<RegistryNewRecordPostData, int>(baseUri, HttpMethod.Post, record);
+            try
+            { 
 
-            Assert.Pass();
+                var newId = base.CallApi<RegistryNewRecordPostData, int>(baseUri, HttpMethod.Post, data);
 
-            RegistryRecord data = GetRegistryRecord(newId);
-            data.ShouldNotBeNull();
-            data.Date.ShouldEqual(record.Date);
-            //data.Subcategory.Id.ShouldEqual(record.)
+                Assert.Pass();
+
+                RegistryRecord record = GetRegistryRecord(newId);
+                record.ShouldNotBeNull();
+                //data.Date.ShouldEqual(record.Date);
+                //data.Subcategory.Id.ShouldEqual(record.)
+
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (Exception exSub in ex.LoaderExceptions)
+                {
+                    sb.AppendLine(exSub.Message);
+                    FileNotFoundException exFileNotFound = exSub as FileNotFoundException;
+                    if (exFileNotFound != null)
+                    {                
+                        if(!string.IsNullOrEmpty(exFileNotFound.FusionLog))
+                        {
+                            sb.AppendLine("Fusion Log:");
+                            sb.AppendLine(exFileNotFound.FusionLog);
+                        }
+                    }
+                    sb.AppendLine();
+                }
+                string errorMessage = sb.ToString();
+                //Display or log the error based on your application.
+            }
         }
 
         #region utilities method
