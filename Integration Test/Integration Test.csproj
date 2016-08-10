@@ -85,6 +85,7 @@
       <HintPath>..\packages\Should.1.1.20\lib\Should.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -153,6 +154,7 @@
     <Compile Include="Mvc Application\Api\CategoryApiControllerTest.cs" />
     <Compile Include="Mvc Application\Api\RegistryApiControllerTest.cs" />
     <Compile Include="Mvc Application\Api\SubcategoryApiControllerTest.cs" />
+    <Compile Include="Mvc Application\Api\TestDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

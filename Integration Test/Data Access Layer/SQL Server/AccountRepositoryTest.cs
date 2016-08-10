@@ -10,14 +10,12 @@ using NUnit.Framework;
 using Should;
 
 
-
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
     [TestFixture]
     public class AccountRepositoryTest : RepositoryTestBase
     {
-
-
+        
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {

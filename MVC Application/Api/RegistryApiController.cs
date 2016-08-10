@@ -35,11 +35,12 @@ namespace Monei.MvcApplication.Api
         public int Create(RegistryNewRecordPostData postData)
         {
             var record = new RegistryRecord() {
+                CreationAccount = base.CurrentAccount,
+                Account = base.CurrentAccount, // temporary unsettable
+                Date = postData.Date,
                 Category = new Category() { Id = postData.CategoryId },
                 Subcategory = new Subcategory() { Id = postData.SubcategoryId },                
-                Amount = postData.Amount,
-                CreationAccount = base.CurrentAccount,
-                //Date = postData.Date,
+                Amount = postData.Amount,                                
                 Note = postData.Note
             };
 

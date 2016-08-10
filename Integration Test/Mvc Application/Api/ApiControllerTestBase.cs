@@ -20,6 +20,8 @@ using Monei.MvcApplication.Code;
 using Monei.MvcApplication.Core.Installers;
 using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
+using System.Configuration;
+using Monei.Entities;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
@@ -32,16 +34,18 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         protected HttpMethod POST = HttpMethod.Post;
         protected HttpMethod DELETE = HttpMethod.Delete ;
         protected Random random = new Random(DateTime.Now.Millisecond);
+        protected TestDataProvider testDataProvider;
 
         private HttpServer server;
         private const string BASE_URL = "http://www.apitest.com/";
         private IWindsorContainer container;
+        
 
         // todo: CLEAN THIS CLASS
 
         public ApiControllerTestBase()
         {
-
+            testDataProvider = new TestDataProvider();
         }
 
         /// <summary>
@@ -110,8 +114,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             var httpDependencyResolver = new WindsorDependencyResolver(container);
             GlobalConfiguration.Configuration.DependencyResolver = httpDependencyResolver;
         }
-
-
 
         protected HttpConfiguration GetConfiguration()
         {
@@ -248,7 +250,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         {
             if (server != null)
                 server.Dispose();
-        }
+        }      
 
     }
 }

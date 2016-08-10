@@ -13,14 +13,14 @@ using Monei.DataAccessLayer.SqlServer;
 using System.Reflection;
 using System.IO;
 
-namespace Monei.Test.IntegrationTest.Mvc_Application.Api
+namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
 
     [TestFixture, Category("Web API"), Category("Registry")]
     public class RegistryApiControllerTest : ApiControllerTestBase
     {
         private const string baseUri = "/api/registry";
-
+        
         [Test]
         public void Search_Should_ReturnAList()
         {
@@ -33,45 +33,27 @@ namespace Monei.Test.IntegrationTest.Mvc_Application.Api
         [Test]
         public void PostNewRecord_should_CreateNewRecord()
         {
+            int categoryId = testDataProvider.GetTestCategory().Id;
+            int subcategoryId = testDataProvider.GetTestSubcategory(categoryId).Id;
+
             RegistryNewRecordPostData data = new RegistryNewRecordPostData()
             {
-                CategoryId = 1,
-                SubcategoryId = 2
+                Date = DateTime.Today,
+                CategoryId = categoryId,
+                SubcategoryId = subcategoryId,
+                Amount = 1.23m,
+                Note = "Note",                
             };
 
-            try
-            { 
+            var newId = base.CallApi<RegistryNewRecordPostData, int>(baseUri, HttpMethod.Post, data);
 
-                var newId = base.CallApi<RegistryNewRecordPostData, int>(baseUri, HttpMethod.Post, data);
-
-                Assert.Pass();
-
-                RegistryRecord record = GetRegistryRecord(newId);
-                record.ShouldNotBeNull();
-                //data.Date.ShouldEqual(record.Date);
-                //data.Subcategory.Id.ShouldEqual(record.)
-
-            }
-            catch (ReflectionTypeLoadException ex)
-            {
-                StringBuilder sb = new StringBuilder();
-                foreach (Exception exSub in ex.LoaderExceptions)
-                {
-                    sb.AppendLine(exSub.Message);
-                    FileNotFoundException exFileNotFound = exSub as FileNotFoundException;
-                    if (exFileNotFound != null)
-                    {                
-                        if(!string.IsNullOrEmpty(exFileNotFound.FusionLog))
-                        {
-                            sb.AppendLine("Fusion Log:");
-                            sb.AppendLine(exFileNotFound.FusionLog);
-                        }
-                    }
-                    sb.AppendLine();
-                }
-                string errorMessage = sb.ToString();
-                //Display or log the error based on your application.
-            }
+            RegistryRecord record = GetRegistryRecord(newId);
+            record.ShouldNotBeNull();
+            record.Date.ShouldEqual(data.Date);
+            record.Category.Id.ShouldEqual(data.CategoryId);
+            record.Subcategory.Id.ShouldEqual(data.SubcategoryId);
+            record.Amount.ShouldEqual(data.Amount);
+            record.Note.ShouldEqual(data.Note);
         }
 
         #region utilities method
