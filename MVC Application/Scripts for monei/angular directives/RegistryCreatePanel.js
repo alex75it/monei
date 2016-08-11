@@ -33,7 +33,7 @@
 
                 PurchaseDataProvider.save(
                     scope.savePurchaseSuccess, scope.savePurchaseFail, scope.savePurchaseFinish
-                    );
+                );
             }
             catch(error)
             {
@@ -71,10 +71,12 @@
         scope.reset();
 
         scope.savePurchaseSuccess = function () {
+            alert("success");
             NotificationService.info("Purchase saved");
         };
 
         scope.savePurchaseFail = function () {
+            alert("fail");
             scope.showError("Create Purchase fail");
             NotificationService.error("Purchase saved");
         };

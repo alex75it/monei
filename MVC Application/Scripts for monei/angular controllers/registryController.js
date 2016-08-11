@@ -1,8 +1,8 @@
 ﻿"use strict";
 
 app.controller("RegistryController", [
-"$scope", "$http", "registryDataProvider", "utils",
-function ($scope, $http, registryDataProvider, utils) {
+"$scope", "$http", "RegistryDataProvider", "utils",
+function ($scope, $http, RegistryDataProvider, utils) {
 	_scope = $scope;
 	$scope.filters = {};
 	$scope.records = [];
@@ -40,7 +40,7 @@ function ($scope, $http, registryDataProvider, utils) {
 
 		$scope.error = null;
 
-		registryDataProvider.search(
+		RegistryDataProvider.search(
 			filters,
 			/*success*/
 			function (data) { $scope.records = data; },

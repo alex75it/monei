@@ -7,12 +7,12 @@ describe("RegistryController", function () {
     var controller;
     beforeEach(module(app.name));
 
-    beforeEach(inject(function ($rootScope, $controller, utils, registryDataProvider) {
+    beforeEach(inject(function ($rootScope, $controller, utils, RegistryDataProvider) {
         scope = $rootScope.$new();
         controller = $controller("RegistryController", {
             $scope: scope,
             utils: utils,
-            registryDataProvider: registryDataProvider
+            RegistryDataProvider: RegistryDataProvider
         });
     }));
     
