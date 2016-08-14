@@ -1,9 +1,30 @@
 ﻿"use strict";
-/// Jasmine tests
-describe("RegistryCreatePanel", function () {
 
-    var appName = app.name; // this "initialize" module, all other way give an error
-    beforeEach(angular.mock.module("monei")); // this is needed to make injection of providers works
+/// Jasmine tests
+describe("Directive: RegistryCreatePanel", function () {
+
+    var $compile;
+    var $rootScope;
+    var directiveElement;
+    
+    beforeEach( function(){
+        //angular.mock.module("monei");
+        angular.module(app.name);
+
+        inject(function (_$compile_, _$rootScope_) {
+            $compile = _$compile_;
+            $rootScope = _$rootScope_;
+            directiveElement = getDirectiveElement();
+        });
+    });
+
+    function getDirectiveElement() {
+        var element = angular.element("<moneiRegistryCreatePanel></moneiRegistryCreatePanel>");
+        var compiledElement = $compile(element)($rootScope);
+        $rootScope.$digest();
+        return compiledElement;
+    };
+
 
     /**
     beforeEach(function () {
@@ -25,33 +46,18 @@ describe("RegistryCreatePanel", function () {
         alert("mocked");
     });
     */
-    
-
-    
+        
 
     //http://stackoverflow.com/questions/14238490/injecting-dependent-services-when-unit-testing-angularjs-services
     //http://stackoverflow.com/questions/14773269/injecting-a-mock-into-an-angularjs-service
 
-    var panel;
-
-    //beforeEach(inject(function (/*RegistryCreatePanel*/RegistryDataProvider) {
-    beforeEach(function () {
-
-        
-
-        //alert(RegistryCreatePanel);
-        //panel = RegistryCreatePanel;
-
-        //alert("RegistryDataProvider: " + RegistryDataProvider);
-    });
-
-    it("is injected", function () {
-        expect(panel).toBeDefined();
+    it("is compiled", function () {
+        expect(directiveElement).toBeDefined();
     });
 
     describe("save()", function () {
         it("is defined", function () {
-            expect(panel.save).toBeDefined();
+            expect(directiveElement.save).toBeDefined();
         });
     });
 
