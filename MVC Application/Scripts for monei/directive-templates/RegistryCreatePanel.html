@@ -49,7 +49,7 @@
                     
                     <div ng-show="error" class="alert alert-danger" role="alert">{{error}}</div>
                     <div class="modal-footer">
-                        <button type="button" ng-click="save();" class="btn btn-primary">Save</button>
+                        <button type="button" id="{{id}}_saveButton" ng-click="save();" class="btn btn-primary">Save</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </form>

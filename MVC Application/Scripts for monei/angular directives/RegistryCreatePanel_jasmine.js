@@ -19,46 +19,44 @@ describe("Directive: RegistryCreatePanel", function () {
     });
 
     function getDirectiveElement() {
-        var element = angular.element("<moneiRegistryCreatePanel></moneiRegistryCreatePanel>");
+        var element = angular.element('<moneiRegistryCreatePanel id="registryCreatePanel"></moneiRegistryCreatePanel>');
         var compiledElement = $compile(element)($rootScope);
         $rootScope.$digest();
         return compiledElement;
     };
 
-
-    /**
-    beforeEach(function () {
-        var mockModule = angular.module("mockServices", [])
-        //["$timeout", "CategoryDataProvider", "RegistryDataProvider", "NotificationService", 
-        mockModule.service("CategoryDataProvider", function () {
-            
-        });
-
-        mockModule.service("RegistryDataProvider", function () {
-
-        });
-
-        mockModule.service("NotificationService", function () {
-
-        });
-        var app = angular.module("monei", [mockModule]);
-
-        alert("mocked");
-    });
-    */
-        
-
-    //http://stackoverflow.com/questions/14238490/injecting-dependent-services-when-unit-testing-angularjs-services
-    //http://stackoverflow.com/questions/14773269/injecting-a-mock-into-an-angularjs-service
-
+    
     it("is compiled", function () {
         expect(directiveElement).toBeDefined();
     });
 
-    describe("save()", function () {
+    describe('"save" button', function () {
+        var saveButton;
+        beforeEach(function () {
+            saveButton = directiveElement.find("#registryCreatePanel_saveButton");
+        });
+        
+        it("should exists", function () { 
+            expect(saveButton).toBeDefined();
+        });
+
+        describe("when clicked", function () {
+            xit("should call Proder save function", function () {
+
+            });
+        });
+
+    });
+
+    xdescribe("save()", function () {
         it("is defined", function () {
             expect(directiveElement.save).toBeDefined();
         });
     });
 
+    xdescribe("reset()", function () {
+        it("is defined", function () {
+            expect(directiveElement.reset).toBeDefined();
+        });
+    });
 });

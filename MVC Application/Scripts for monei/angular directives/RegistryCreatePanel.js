@@ -13,7 +13,9 @@
     directive.templateUrl = "/Scripts for monei/directive-templates/RegistryCreatePanel.html";
 
     directive.link = function (scope, element, attrs) {
-               
+        
+        scope.id = attrs.id;
+
         scope.selectedCategory = null;
         scope.selectedSubcategory = null;
         scope.noCategorySelectedText = "(select one)";
@@ -25,6 +27,7 @@
                 showTodayButton: true
             }
         );
+        //$(element.find('.datetimepicker-date')).        
 
         scope.save = function () {
             scope.error = null;
