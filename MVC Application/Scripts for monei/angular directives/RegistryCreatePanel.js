@@ -1,6 +1,4 @@
-﻿var _error;
-
-app.directive("moneiRegistryCreatePanel",
+﻿app.directive("moneiRegistryCreatePanel",
 ["$timeout", "CategoryDataProvider", "RegistryDataProvider", "NotificationService", 
     function ($timeout, CategoryDataProvider, RegistryDataProvider, NotificationService) {
 
@@ -45,7 +43,6 @@ app.directive("moneiRegistryCreatePanel",
             }
             catch(error)
             {
-                _error = error;
                 scope.showError(error);
                 return;
             }
@@ -53,8 +50,8 @@ app.directive("moneiRegistryCreatePanel",
             scope.close();            
         };
 
-        scope.showError = function(error){
-            scope.error = error;
+        scope.showError = function (error) {  
+            scope.error = error.message || error;
             $timeout(function () { scope.error = null; }, 3 * 1000);
         };
 
