@@ -20,6 +20,7 @@ describe("RegistryCreatePanel directive", function () {
 
     function getDirectiveElement() {
         var element = angular.element('<moneiRegistryCreatePanel id="registryCreatePanel"></moneiRegistryCreatePanel>');
+
         var compiledElement = $compile(element)($rootScope);
         $rootScope.$digest();
         return compiledElement;
@@ -43,10 +44,16 @@ describe("RegistryCreatePanel directive", function () {
         describe("when clicked", function () {
 
             beforeEach(function () {
-                $(saveButton).click.apply($(saveButton)); // can be done without jQuery ?
+                //$(saveButton).click.apply($(saveButton)); // can be done without jQuery ?
                 //browserTrigger(saveButton, "click");
 
+                //alert(saveButton.triggerHandler);
                 saveButton.triggerHandler("click");
+
+                $rootScope.save();
+
+                //$rootScope.$digest();
+                // todo: I don't know how to test this. 
             });
 
             it("should call Provider save function", function () {
