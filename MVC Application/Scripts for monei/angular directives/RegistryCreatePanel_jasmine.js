@@ -6,6 +6,8 @@ describe("RegistryCreatePanel directive", function () {
     var $compile;
     var $rootScope;
     var directiveElement;
+
+    var DIRECTIVE_ID = "registryCreatePanel";
     
     beforeEach( function(){
         //angular.mock.module("monei");
@@ -19,12 +21,21 @@ describe("RegistryCreatePanel directive", function () {
     });
 
     function getDirectiveElement() {
-        var element = angular.element('<moneiRegistryCreatePanel id="registryCreatePanel"></moneiRegistryCreatePanel>');
+        var element = angular.element('<moneiRegistryCreatePanel id="' + DIRECTIVE_ID + '"></moneiRegistryCreatePanel>');
 
         var compiledElement = $compile(element)($rootScope);
         $rootScope.$digest();
         return compiledElement;
     };
+
+    function getErrorContainer()
+    {
+        var errorContainer = directiveElement.find("#" + DIRECTIVE_ID + "_error");
+        if (!errorContainer)
+            throw Error("fail to find error contaginer");
+
+        return errorContainer;
+    }
 
     
     it("is compiled", function () {
@@ -50,7 +61,7 @@ describe("RegistryCreatePanel directive", function () {
                 //alert(saveButton.triggerHandler);
                 saveButton.triggerHandler("click");
 
-                $rootScope.save();
+                //$rootScope.save();
 
                 //$rootScope.$digest();
                 // todo: I don't know how to test this. 
@@ -61,7 +72,28 @@ describe("RegistryCreatePanel directive", function () {
                 expect(true).toBeTruthy();
             });
         });
+    });
 
+    describe("showError()", function () {
+        var errorContainer = null;
+
+        beforeEach(function () {
+            errorContainer = getErrorContainer();
+        });
+
+        it("is defined", function () {
+            expect(errorContainer).toBeDefined();
+        });
+
+        describe("whne called with 'test error'", function () {
+            xit("set text in error container and set it visible", function () {
+                var errorContainer = getErrorContainer();
+                // todo: I don't know how to test this
+                //directive.showError("test error");
+
+                expect(errorContainer.text()).toEquual("test error");
+            });
+        });
     });
 
     xdescribe("save()", function () {
