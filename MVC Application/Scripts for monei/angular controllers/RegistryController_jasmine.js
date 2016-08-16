@@ -21,7 +21,7 @@ describe("RegistryController", function () {
     });
     
     it("contains \"init\" function", function() {
-            expect(scope.init).toBeDefined();
+        expect(scope.init).toBeDefined();
     });
     
 

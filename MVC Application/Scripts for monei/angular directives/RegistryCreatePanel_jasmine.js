@@ -1,7 +1,7 @@
 ﻿"use strict";
 
 /// Jasmine tests
-describe("Directive: RegistryCreatePanel", function () {
+describe("RegistryCreatePanel directive", function () {
 
     var $compile;
     var $rootScope;
@@ -9,8 +9,8 @@ describe("Directive: RegistryCreatePanel", function () {
     
     beforeEach( function(){
         //angular.mock.module("monei");
-        angular.module(app.name);
-
+        //angular.module(app.name, []);
+        
         inject(function (_$compile_, _$rootScope_) {
             $compile = _$compile_;
             $rootScope = _$rootScope_;
@@ -41,8 +41,17 @@ describe("Directive: RegistryCreatePanel", function () {
         });
 
         describe("when clicked", function () {
-            xit("should call Proder save function", function () {
 
+            beforeEach(function () {
+                $(saveButton).click.apply($(saveButton)); // can be done without jQuery ?
+                //browserTrigger(saveButton, "click");
+
+                saveButton.triggerHandler("click");
+            });
+
+            it("should call Provider save function", function () {
+                //controllerSpy.
+                expect(true).toBeTruthy();
             });
         });
 

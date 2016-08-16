@@ -347,6 +347,7 @@
     <Content Include="Scripts for monei\angular controllers\LoginController.js" />
     <Content Include="Scripts for monei\angular controllers\HomeController_jasmine.js" />
     <Content Include="Scripts for monei\angular controllers\RegistryController_jasmine.js" />
+    <Content Include="Scripts for monei\angular controllers\RegistryCreateController_jasmine.js" />
     <Content Include="Scripts for monei\angular directives\CategorySelector_jasmine.js" />
     <Content Include="Scripts for monei\angular directives\CategorySelector.js" />
     <Content Include="Scripts for monei\angular directives\DashboardMonthDirective_jasmine.js" />

@@ -30,6 +30,9 @@
         //$(element.find('.datetimepicker-date')).        
 
         scope.save = function () {
+
+            alert("save");
+
             scope.error = null;
             try {
                 var purchase = {};
