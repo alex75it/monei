@@ -90,8 +90,8 @@
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
     -->
 
-    <script>
-        moment.lang("@Html.Raw(System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.ToLowerInvariant())");
+    <script>        
+        moment.locale("@Html.Raw(System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.ToLowerInvariant())");
     </script>
     <script>
         // fix for JQuery.Validation that not accept comma as decimal separator
