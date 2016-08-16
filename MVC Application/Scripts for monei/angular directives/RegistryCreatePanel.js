@@ -31,23 +31,22 @@
 
         scope.save = function () {
 
-            alert("save");
+            //alert("save");
+            TODO: implement method
 
             scope.error = null;
             try {
-                var purchase = {};
+                var data = {};
 
-                PurchaseDataProvider.save(
-                    scope.savePurchaseSuccess, scope.savePurchaseFail, scope.savePurchaseFinish
+                RegistryDataProvider.save( data,
+                    scope.saveRecordSuccess, scope.saveRecordFail, scope.saveRecordFinish
                 );
             }
             catch(error)
             {
                 scope.showError(error);
                 return;
-            }
-            scope.onRecordCreated();
-            scope.close();            
+            }           
         };
 
         scope.showError = function (error) {  
@@ -76,18 +75,18 @@
         // call reset
         scope.reset();
 
-        scope.savePurchaseSuccess = function () {
-            alert("success");
+        scope.saveRecordSuccess = function () {
             NotificationService.info("Purchase saved");
+            scope.onRecordCreated();
+            scope.close();
         };
 
-        scope.savePurchaseFail = function () {
-            alert("fail");
-            scope.showError("Create Purchase fail");
-            NotificationService.error("Purchase saved");
+        scope.saveRecordFail = function (error) {
+            scope.showError(error);
+            NotificationService.error("Record saved");
         };
 
-        scope.savePurchaseFinish = function () {
+        scope.saveRecordFinish = function () {
             scope.reset();
         };
     };
