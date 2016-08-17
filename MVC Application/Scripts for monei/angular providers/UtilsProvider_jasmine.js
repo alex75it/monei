@@ -1,115 +1,81 @@
 "use strict";
     
-describe("UtilsProvider", function() {
-    var utilsProvider, httpBackend;
+describe("UtilsService", function() {
+    var utils, httpBackend;
     var appName = app.name; // this "initialize" module, all other way give an error
     
     beforeEach(angular.mock.module("monei"));
 
+    beforeEach(window.inject(function (_utils_) { 
+        utils = _utils_;
+    }));
+
     //var $injector = angular.injector(["monei"]);
 
-    it("inject \"utils\" should contains UtilsService", function () {
-        window.inject(function(utils) {
-            expect(utils).not.toEqual(null);
+    it("should be injected", function () {
+        //expect(utils).not.toBeNull();
+        expect(utils).toBeDefined();
+    });
+
+    describe("setAccountGuid()", function () {
+        it("should exists", function () {
+            expect(utils.setAccountGuid).toBeDefined();
+        });
+
+        it("should set AccountGuid", function () {
+            var accountGuid = "1";
+            utils.setAccountGuid(accountGuid);
+            var value = utils.getAccountGuid();
+            expect(value).toEqual(accountGuid);
+        });
+    });
+
+    describe("getAccountGuid()", function () {
+        it("should exists", function () {
+            expect(utils.getAccountGuid).toBeDefined();
+        });
+
+        describe("when AccountGuid is set", function () {
+            var accountGuid = "2";
+            beforeEach(function () { utils.setAccountGuid(accountGuid); });
+            it("should return the value", function () {
+                var value = utils.getAccountGuid();
+                expect(value).toEqual(accountGuid);
+            });
+        });
+
+        describe("when AccountGuid is NOT set", function () {
+            it("should throw error", function () {
+                expect(utils.getAccountGuid).toThrow();
+            });
         });
     });
 
     it("when call toShortDate() with null should return empty string", function () {
-        inject(function (utils) {
-            var date = null;
-            expect(utils.toShortDate()).toEqual("");
-        });
+        var date = null;
+        expect(utils.toShortDate()).toEqual("");      
     });
 
     it("when call toShortDate() with moment() object should return shortDate format date", function () {
-        inject(function (utils) {
-            var date = moment();
-            var result = utils.toShortDate(date);
-            expect(result).not.toEqual(null);
-            expect(result).not.toEqual("");
-            // todo... how to test culture dipendent format?
-        });
+        var date = moment();
+        var result = utils.toShortDate(date);
+        expect(result).not.toEqual(null);
+        expect(result).not.toEqual("");
+        // todo... how to test culture dipendent format?     
     });
 
     it("when call getDate() with moment() object should return not null or empty", function() {
-        inject(function(utils) {
-            var date = moment();
-            var result = utils.getDate(date);
-            expect(result).not.toEqual(null);
-            expect(result).not.toEqual("");
-        });
+        var date = moment();
+        var result = utils.getDate(date);
+        expect(result).not.toEqual(null);
+        expect(result).not.toEqual("");      
     });
 
     it("when call getDate() with Date() object should return not null or empty", function () {
-        inject(function (utils) {
-            var date = Date();
-            var result = utils.getDate(date);
-            expect(result).not.toEqual(null);
-            expect(result).not.toEqual("");
-        });
+        var date = Date();
+        var result = utils.getDate(date);
+        expect(result).not.toEqual(null);
+        expect(result).not.toEqual("");
     });
 
 });
-
-
-/*
-describe("Player", function () {
-  var player;
-  var song;
-
-  beforeEach(function() {
-    player = new Player();
-    song = new Song();
-  });
-
-  it("should be able to play a Song", function() {
-    player.play(song);
-    expect(player.currentlyPlayingSong).toEqual(song);
-
-    //demonstrates use of custom matcher
-    expect(player).toBePlaying(song);
-  });
-
-  describe("when song has been paused", function() {
-    beforeEach(function() {
-      player.play(song);
-      player.pause();
-    });
-
-    it("should indicate that the song is currently paused", function() {
-      expect(player.isPlaying).toBeFalsy();
-
-      // demonstrates use of 'not' with a custom matcher
-      expect(player).not.toBePlaying(song);
-    });
-
-    it("should be possible to resume", function() {
-      player.resume();
-      expect(player.isPlaying).toBeTruthy();
-      expect(player.currentlyPlayingSong).toEqual(song);
-    });
-  });
-
-  // demonstrates use of spies to intercept and test method calls
-  it("tells the current song if the user has made it a favorite", function() {
-    spyOn(song, 'persistFavoriteStatus');
-
-    player.play(song);
-    player.makeFavorite();
-
-    expect(song.persistFavoriteStatus).toHaveBeenCalledWith(true);
-  });
-
-  //demonstrates use of expected exceptions
-  describe("#resume", function() {
-    it("should throw an exception if song is already playing", function() {
-      player.play(song);
-
-      expect(function() {
-        player.resume();
-      }).toThrowError("song is already playing");
-    });
-  });
-});
-
-*/

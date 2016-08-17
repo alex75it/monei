@@ -7,27 +7,38 @@ Requires:
   
 Usage:
 app.config( function(utilsProvider){
-	utilsProvider.language
+    utilsProvider.language
 });
 
  */
 
 
 app.factory("utils", function () {
-	
-	var provider = {};
+    
+    var accountGuid = null;
 
-	provider.toShortDate = function(date) {
-		if (!date) return "";
-		return moment(date).format('L');
-	};
+    var provider = {};
 
-	provider.getDate = function(date) {
-		if (!date) return null;
-		return moment(date, "L").toDate();
-	};
+    provider.setAccountGuid = function (guid) {
+        accountGuid = guid;
+    };
 
-	return provider;
+    provider.getAccountGuid = function () {
+        if (!accountGuid)
+            throw Error("AccountGuid not set");
+        return accountGuid;
+    };
 
+    provider.toShortDate = function(date) {
+        if (!date) return "";
+        return moment(date).format('L');
+    };
+
+    provider.getDate = function(date) {
+        if (!date) return null;
+        return moment(date, "L").toDate();
+    };
+
+    return provider;
 });
 

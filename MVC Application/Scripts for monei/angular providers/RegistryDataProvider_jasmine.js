@@ -14,9 +14,10 @@ describe("RegistryDataProvider", function () {
     var httpBackend;
     var registryDataProvider;
 
-    beforeEach(inject(function (_RegistryDataProvider_, $injector) { // uderscore are removed by Angular
+    beforeEach(inject(function (_RegistryDataProvider_, _utils_, $injector) { // uderscore are removed by Angular
         httpBackend = $injector.get("$httpBackend");
         registryDataProvider = _RegistryDataProvider_;
+        _utils_.setAccountGuid("0000");
     }));
 
     afterEach(function () {

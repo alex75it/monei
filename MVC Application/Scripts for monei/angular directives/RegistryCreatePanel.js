@@ -1,4 +1,6 @@
-﻿app.directive("moneiRegistryCreatePanel",
+﻿var _error;
+
+app.directive("moneiRegistryCreatePanel",
 ["$timeout", "CategoryDataProvider", "RegistryDataProvider", "NotificationService", 
     function ($timeout, CategoryDataProvider, RegistryDataProvider, NotificationService) {
 
@@ -30,13 +32,15 @@
         //$(element.find('.datetimepicker-date')).        
 
         scope.save = function () {
-
-            //alert("save");
-            TODO: implement method
-
             scope.error = null;
             try {
-                var data = {};
+                var data = {
+                    date: scope.date,
+                    categoryId: scope.selectedCategory,
+                    subcategoryId: scope.selectedSubcategory,
+                    amount: scope.amount,
+                    note: scope.note
+                };
 
                 RegistryDataProvider.save( data,
                     scope.saveRecordSuccess, scope.saveRecordFail, scope.saveRecordFinish
@@ -50,7 +54,7 @@
         };
 
         scope.showError = function (error) {  
-            scope.error = error.message || error;
+            scope.error = error.exceptionMessage || error.message || error;
             $timeout(function () { scope.error = null; }, 3 * 1000);
         };
 
@@ -76,17 +80,19 @@
         scope.reset();
 
         scope.saveRecordSuccess = function () {
-            NotificationService.info("Purchase saved");
+            alert("saveRecordSuccess");
+            NotificationService.info("Record saved");
             scope.onRecordCreated();
             scope.close();
         };
 
         scope.saveRecordFail = function (error) {
             scope.showError(error);
-            NotificationService.error("Record saved");
+            NotificationService.error("Record NOT saved");
         };
 
         scope.saveRecordFinish = function () {
+            alert("saveRecordFinish");
             scope.reset();
         };
     };
