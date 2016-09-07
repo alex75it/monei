@@ -81,24 +81,7 @@ nav, section { display: block; }
 }
 
 .display-inline {display:inline}
-/*
-h1, h2, h3,
-h4, h5, h6 {
-    margin-bottom: 0.5em;
-    padding-bottom: 0;
-}
 
-h1 { font-size: 1.6em;}
-h2 { font-size: 1.4em;}
-h3 { font-size: 1.15em;}
-h4 { font-size: 1.05em;}
-h5, h6 { font-size: 1em;}
-
-    h5 a:link, h5 a:visited, h5 a:active {
-        padding: 0;
-        text-decoration: none;
-    }
-*/
 
 /*
 .glyphicon-refresh-animate {
@@ -236,6 +219,10 @@ footer {
 
 }
 
+#logoutForm {
+    display: inline;
+}
+
 
 /* menu
 ----------------------------------------------------------*/
@@ -263,6 +250,19 @@ ul#menu {
             color: #212A70;
             text-decoration: none;
         }
+
+
+.btn-gold {
+    color: #000;
+    background-color: #ffc442;
+    border-color: #E2C186;
+}
+
+.btn-gold:hover, .btn-gold:focus, .btn-gold.focus, .btn-gold:active, .btn-gold.active, .open>.dropdown-toggle.btn-gold {
+    color: #000;
+    background-color: #ffd800;
+    border-color: #ffc442;
+}
 
 
 /* page elements
@@ -352,6 +352,12 @@ fieldset {
 form.labels-on-top label {display:block}
 
 form.labels-on-top .form-group  { margin-right: 1em}
+
+label {
+    display: block;
+    font-size: 1.05em;
+    font-weight: 700;
+}
 
 label.checkbox {
     display: inline;
