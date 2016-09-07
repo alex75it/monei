@@ -10,35 +10,41 @@
 select { padding-right:1px !important; height:1.6em }
 
 
-.btn-gold {
-  color: #000;
-  background-color: #ffc442;
-  border-color: #E2C186;
-}
-
-.btn-gold:hover, .btn-gold:focus, .btn-gold.focus, .btn-gold:active, .btn-gold.active, .open>.dropdown-toggle.btn-gold {
-color: #000;
-background-color: #ffd800;
-border-color: #ffc442;
-}
-
-  /*#E2C186*/
+/*#E2C186*/
 
 
-   /* Bootstrap overrides */
+/* Bootstrap overrides */
 
 form {margin:0}
 body {background-color: transparent !important}
 
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0.5em;
+    padding-bottom: 0;
+}
+
+h1 { font-size: 1.6em;}
+h2 { font-size: 1.4em;}
+h3 { font-size: 1.15em;}
+h4 { font-size: 1.05em;}
+h5, h6 { font-size: 1em;}
+
+    h5 a:link, h5 a:visited, h5 a:active {
+        padding: 0;
+        text-decoration: none;
+    }
+
+
 /*
 .modal-backdrop {background-color:#fff ;}
 .radio, .checkbox {padding-left:0 !important}
-	*/
+    */
 
 .well {
-	background-color: #fff9eb;
-	/*background-color: #f9f9f9;*/
-	border: 1px solid #E2C186;
+    background-color: #fff9eb;
+    /*background-color: #f9f9f9;*/
+    border: 1px solid #E2C186;
 }
 
 /*.color_main { background-color: #fceabb;}
@@ -48,3 +54,35 @@ body {background-color: transparent !important}
 .color_2_old{ background-color: #333}
 .color_2_new { background-color:#212A70}*/
 
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input 
+{
+    vertical-align: middle;
+    border-radius: 4px;
+}
+
+input, select, input:focus {
+    border: 1px solid #e2c186;
+    background: #fff;
+    color: #212a70;
+    width: 300px;
+}
+
+
+input[type="submit"],
+input[type="button"],
+button {
+    background-color: #d3dce0;
+    border: 1px solid #787878;
+    cursor: pointer;
+    font-size: 1.05em;
+    font-weight: 600;
+    /*padding: 7px;*/
+    margin-right: 8px;
+    width: auto;
+}
+
+.btn-mini {
+    padding: 0 6px;
+    font-size: 10.5px;
+    border-radius: 3px;
+}
