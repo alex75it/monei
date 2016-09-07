@@ -66,14 +66,17 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     border-radius: 4px;
 }
 
+/*
 input, select, input:focus {
     border: 1px solid #e2c186;
     background: #fff;
     color: #212a70;
     width: 300px;
 }
+*/
 
 
+/*
 input[type="submit"],
 input[type="button"],
 button {
@@ -82,10 +85,10 @@ button {
     cursor: pointer;
     font-size: 1.05em;
     font-weight: 600;
-    /*padding: 7px;*/
     margin-right: 8px;
     width: auto;
 }
+*/
 
 .btn-mini {
     padding: 0 6px;

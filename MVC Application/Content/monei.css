@@ -353,11 +353,11 @@ form.labels-on-top label {display:block}
 
 form.labels-on-top .form-group  { margin-right: 1em}
 
-label {
+/*label {
     display: block;
     font-size: 1.05em;
     font-weight: 700;
-}
+}*/
 
 label.checkbox {
     display: inline;
