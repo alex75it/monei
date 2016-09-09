@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Monei.Entities
 {
@@ -16,8 +14,6 @@ namespace Monei.Entities
 		public string Description { get; set; }
 		public Category Category { get; set; }
 
-
-
 		public override int GetHashCode()
 		{
 			return Id;
@@ -28,6 +24,5 @@ namespace Monei.Entities
 			//return obj is Subcategory && ((Subcategory) obj).Id == Id;
 			return obj != null && obj.GetHashCode() == GetHashCode();
 		}
-
-	}//class
+	}
 }

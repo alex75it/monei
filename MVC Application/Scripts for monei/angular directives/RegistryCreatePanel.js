@@ -21,6 +21,15 @@
         scope.noCategorySelectedText = "(select one)";
         scope.noSubategorySelectedText = "(select one)";
 
+        scope.operationTypes = [
+            { name: "Income", value: +1 },
+            { name: "Outcome", value: -1 },
+            { name: "Transfer", value: 0 }
+        ];
+
+        scope.selectedOperationType = scope.operationTypes[1].value; // outcome selected by default
+
+
         $(element[0].querySelector('.datetimepicker-date')).datetimepicker(
             {
                 format: "L",
@@ -31,12 +40,23 @@
 
         scope.save = function () {
 
-            //alert("save");
-            //TODO: implement method
+            var date = scope.date;
+            var amount = scope.amount;
+            var note = scope.note;
+            var operationType = scope.selectedOperationType;   
 
             scope.error = null;
             try {
-                var data = {};
+                var data = {
+                    date: date,
+                    categoryId: scope.selectedCategory,
+                    subcategoryId: scope.selectedSubcategory,
+                    operationType: operationType,
+                    amount: amount,
+                    note: note
+                };
+
+                alert(data.categoryId);
 
                 RegistryDataProvider.save( data,
                     scope.saveRecordSuccess, scope.saveRecordFail, scope.saveRecordFinish

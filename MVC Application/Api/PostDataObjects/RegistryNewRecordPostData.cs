@@ -11,7 +11,8 @@ namespace Monei.MvcApplication.Api.PostDataObjects
         public DateTime Date { get; set; }
         public int CategoryId { get; set; }
         public int SubcategoryId { get; set; }
+        public OperationType OperationType { get; set; }
         public decimal Amount { get; set; }
-        public string Note { get; set; }                
+        public string Note { get; set; }
     }
 }

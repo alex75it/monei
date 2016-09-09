@@ -25,11 +25,6 @@ namespace Monei.MvcApplication.Api
             var list = RegistryRepository.ListRecords(filters);
             return list;
         }
-        public int Create(RegistryRecord record)
-        {
-            record = RegistryRepository.AddRecord(record);
-            return record.Id;
-        }
 
         [HttpPost, Route("")]
         public int Create(RegistryNewRecordPostData postData)
@@ -48,7 +43,13 @@ namespace Monei.MvcApplication.Api
             return record.Id;
         }
 
+        public RegistryRecord CreateRecord(RegistryNewRecordPostData postData)
+        {
+            throw new NotImplementedException();
+        }
+
         #region private
+
         private ExcelPackage CreateExcel(IEnumerable<RegistryRecord> records)
         {
             ExcelPackage package = new ExcelPackage();

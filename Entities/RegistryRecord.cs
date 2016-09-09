@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Monei.Entities.Interfaces;
 
 namespace Monei.Entities
 {
-    public enum OperationType { Income = +1, Outcome = -1, Transfer = 0, }
 
-    
+    public enum OperationType
+    {
+        Income = +1,
+        Outcome = -1,
+        Transfer = 0,
+    }
+
     public class RegistryRecord : EntityBase<int>, ICsvFormattable
     {
         public const Decimal MAX_AMOUNT = 99999;
@@ -28,7 +31,6 @@ namespace Monei.Entities
         public virtual DateTime Date { get; set; }
 
         [Required]
-        //[DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode=true)]
         public virtual decimal Amount { get; set; }
         public OperationType OperationType {get; set;}    
         public virtual string Note { get; set; }

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Enumerators.cs" />
     <Compile Include="Data Analysis\Business Objects\CategoriesData.cs" />
     <Compile Include="Data Analysis\Business Objects\CategoryData.cs" />
     <Compile Include="Data Analysis\Business Objects\MonthData.cs" />

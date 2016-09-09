@@ -7,32 +7,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Monei.Entities
 {
-	public class EntityBase<TKey>
-	{
-		public const int EMPTY_ID = 0;
+    public class EntityBase<TKey>
+    {
+        public const int EMPTY_ID = 0;
 
-		public EntityBase()
-		{
-			CreationDate = DateTime.UtcNow;
-		}
+        public EntityBase()
+        {
+            CreationDate = DateTime.UtcNow;
+            LastChangeDate = null;
+        }
 
-		//public static EntityBase New()
-		//{
-		//	return new EntityBase()
-		//	{
-		//		CreationDate = DateTime.Now,
-		//	};
-		//}
-
-		public virtual TKey Id { get; set; }
-		//[BsonId]
-		//public ObjectId Id {get; set;}
-
-		//[ScaffoldColumn(false)]
-		public virtual DateTime CreationDate { get; set; }
-		public virtual DateTime? LastChangeDate { get; set; }
-		public virtual Account CreationAccount { get; set; }
-		public virtual Account LastUpdateAccount { get; set; }
-
-	}
+        public virtual TKey Id { get; set; }
+        public virtual DateTime CreationDate { get; set; }
+        public virtual DateTime? LastChangeDate { get; set; }
+        public virtual Account CreationAccount { get; set; }
+        public virtual Account LastUpdateAccount { get; set; }
+    }
 }

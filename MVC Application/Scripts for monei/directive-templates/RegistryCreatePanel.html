@@ -17,6 +17,10 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label>Operation type</label>
+                        <select class="form-control" ng-options="op.value as op.name for op in operationTypes" ng-model="selectedOperationType"></select>
+                    </div>
+                    <div class="form-group">
                         <label>Category</label>
                         <monei-category-selector selected-categories="selectedCategory" no-selection-text="noCategorySelectedText" class="form-control"></monei-category-selector>
                     </div>
@@ -32,21 +36,21 @@
                         <label>Note</label>
                         <textarea type="text" class="form-control" ng-model="note" rows="4"></textarea>
                     </div>
-                        <div>
-                            <span class="form-group" style="margin-right: 2em">
-                                <label>
-                                    Tax deductible
-                                    <input type="checkbox" class="checkbox" ng-model="taxDeductible" style="width:auto; text-align: left; vertical-align: middle;">
-                                </label>
-                            </span>
-                            <span class="form-group">
-                                <label>
-                                    Special event
-                                    <input type="checkbox" class="checkbox" ng-model="specialEvent" style="width:auto; text-align: left; vertical-align: middle;">
-                                </label>
-                            </span>
-                        </div>
-                    
+                    <div>
+                        <span class="form-group" style="margin-right: 2em">
+                            <label>
+                                Tax deductible
+                                <input type="checkbox" class="checkbox" ng-model="taxDeductible" style="width:auto; text-align: left; vertical-align: middle;">
+                            </label>
+                        </span>
+                        <span class="form-group">
+                            <label>
+                                Special event
+                                <input type="checkbox" class="checkbox" ng-model="specialEvent" style="width:auto; text-align: left; vertical-align: middle;">
+                            </label>
+                        </span>
+                    </div>
+
                     <div ng-show="error" class="alert alert-danger" role="alert">{{error}}</div>
                     <div class="modal-footer">
                         <button type="button" id="{{id}}_saveButton" ng-click="save();" class="btn btn-primary">Save</button>
