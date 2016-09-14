@@ -2,15 +2,17 @@
 ["$http", "utils",
 function ($http, utils) {
 
-    var baseUrl = "/api/registry";
-    var provider = {};
+    var baseUrl = "/api/registry";  
+    var accountId = utils.getAccountGuid()
 
     var getHttpData = function () {
         var data = {};
         data.headers = {};
-        data.headers["account-guid"] = utils.getAccountGuid();
+        data.headers["account-guid"] = accountId;
         return data;
     };
+
+    var provider = {};
 
     provider.search = function(filters, callback, errorCallback, finallyCallback) {
         $http.post(baseUrl + "/search", filters)
