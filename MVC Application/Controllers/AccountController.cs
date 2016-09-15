@@ -32,7 +32,6 @@ namespace Monei.MvcApplication.Controllers
             this.webAuthenticationWorker = webAuthenticationWorker;
         }
 
-        //
         // GET: /Account/
         // GET: /Account/Login
         [AllowAnonymous]
@@ -41,9 +40,7 @@ namespace Monei.MvcApplication.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
-
-        // 
+        
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -76,7 +73,6 @@ namespace Monei.MvcApplication.Controllers
 
 
         // POST: /Account/LogOff
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -87,7 +83,6 @@ namespace Monei.MvcApplication.Controllers
         }
 
         // GET: /Account/Register
-
         [AllowAnonymous]
         public ActionResult Register()
         {	
@@ -95,7 +90,6 @@ namespace Monei.MvcApplication.Controllers
         }
         
         // POST: /Account/Register
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -132,7 +126,6 @@ namespace Monei.MvcApplication.Controllers
 
 
         // POST: /Account/Disassociate
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Disassociate(string provider, string providerUserId)
@@ -161,7 +154,6 @@ namespace Monei.MvcApplication.Controllers
         }
 
         // GET: /Account/Manage
-
         public ActionResult Manage(ManageMessageId? message)
         { 
             ViewBag.StatusMessage = 
@@ -179,7 +171,6 @@ namespace Monei.MvcApplication.Controllers
         }
 
         // POST: /Account/Manage
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
@@ -243,7 +234,6 @@ namespace Monei.MvcApplication.Controllers
         }
 
         // POST: /Account/ExternalLogin
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -253,7 +243,6 @@ namespace Monei.MvcApplication.Controllers
         }
 
         // GET: /Account/ExternalLoginCallback
-
         [AllowAnonymous]
         public ActionResult ExternalLoginCallback(string returnUrl)
         {
@@ -330,14 +319,12 @@ namespace Monei.MvcApplication.Controllers
         }
 
         // GET: /Account/ExternalLoginFailure
-
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
             return View();
         }
-
-
+        
         [AllowAnonymous]
         [ChildActionOnly]
         public ActionResult ExternalLoginsList(string returnUrl)

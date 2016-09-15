@@ -15,19 +15,7 @@ app.config( function(utilsProvider){
 
 app.factory("utils", function () {
     
-    var accountGuid = null;
-
     var provider = {};
-
-    provider.setAccountGuid = function (guid) {
-        accountGuid = guid;
-    };
-
-    provider.getAccountGuid = function () {
-        if (!accountGuid)
-            throw Error("AccountGuid not set");
-        return accountGuid;
-    };
 
     provider.toShortDate = function(date) {
         if (!date) return "";

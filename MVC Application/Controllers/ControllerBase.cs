@@ -11,18 +11,12 @@ namespace Monei.MvcApplication.Controllers
 {
 	public class MoneiControllerBase : Controller, IController
 	{
-
-		public /*static*/ /*readonly*/ ILog logger; // = LogManager.GetLogger(typeof(MoneiControllerBase));
+		public ILog logger;
 
 		public const string SESSION_RETURN_URL = "returnUrl";
 		public const int UNDEFINED_ID = -1;
 
 		public IAccountRepository AccountRepository { get; set; }
-
-		//public Account Account { get {
-		//	if (account != null)
-		//		return account;
-		//} }
 
 		public MoneiControllerBase()
 		{

@@ -11,6 +11,6 @@ namespace Monei.MvcApplication.Core
 		public void SetAuthenticationCookie(string username, bool persistCookie)
 		{
 			FormsAuthentication.SetAuthCookie(username, persistCookie);
-		}
+		}        
 	}
 }

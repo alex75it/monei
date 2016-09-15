@@ -33,12 +33,9 @@ namespace Monei.MvcApplication.Helpers
 
         public LoginResult Login(string username, string password, bool persistCookie = false)
         {
-            //todo register last login in database
-
             try
             {
                 Account account = accountRepository.Read(username);
-
 
                 if (account == null)
                 {

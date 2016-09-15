@@ -2,15 +2,7 @@
 ["$http", "utils",
 function ($http, utils) {
 
-    var baseUrl = "/api/registry";  
-    var accountId = utils.getAccountGuid()
-
-    var getHttpData = function () {
-        var data = {};
-        data.headers = {};
-        data.headers["account-guid"] = accountId;
-        return data;
-    };
+    var baseUrl = "/api/registry";
 
     var provider = {};
 
@@ -22,7 +14,7 @@ function ($http, utils) {
     };
 
     provider.save = function (record, callback, errorCallback, finallyCallback) {
-        $http.post(baseUrl, record, getHttpData())
+        $http.post(baseUrl, record)
             .success(function (data) { callback && callback(data); })
             .error(function (error, status) { errorCallback && errorCallback(error); })
             .finally(function () { finallyCallback && finallyCallback(); })
