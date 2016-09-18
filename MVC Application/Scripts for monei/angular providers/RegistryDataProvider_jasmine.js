@@ -17,12 +17,15 @@ describe("RegistryDataProvider", function () {
     beforeEach(inject(function (_RegistryDataProvider_, _utils_, $injector) { // uderscore are removed by Angular
         httpBackend = $injector.get("$httpBackend");
         registryDataProvider = _RegistryDataProvider_;
-        _utils_.setAccountGuid("0000");
     }));
 
     afterEach(function () {
         httpBackend.verifyNoOutstandingExpectation();
         httpBackend.verifyNoOutstandingRequest();
+    });
+
+    it("is injected", function () {
+        expect(registryDataProvider).toBeDefined();
     });
 
     describe("search()", function () {
@@ -74,6 +77,83 @@ describe("RegistryDataProvider", function () {
             });
         });
 
+    });
+    
+    describe("validateData()", function () {
+        it("should exists", function () {
+            expect(registryDataProvider.validateData).toBeDefined();
+            expect(typeof(registryDataProvider.validateData)).toBe("function");
+        });
+
+        describe("when date is undefined", function () {
+            it('should raise Error("Date must be specified")', function () {
+                var data = {};
+                data.categoryId = 1;
+                data.amount = 1;
+                data.description = "aaa";
+                expect(function () { registryDataProvider.validateData(data) }).toThrowError("Date must be specified");
+            });
+        });
+
+        describe("when categoryId is not specified", function () {
+            it('should raise Error("Category must be specified")', function () {
+                var data = {};
+                data.date = moment().toDate();
+                data.amount = 1;
+                data.description = "aaa";
+                expect(function () { registryDataProvider.validateData(data) }).toThrow();
+                expect(function () { registryDataProvider.validateData(data) }).toThrowError("Category must be specified");
+            });
+        });
+
+        describe("when amount is undefined", function () {            
+            it('should raise Error("Amount must be specified")', function(){
+                var data = {};
+                data.date = moment().toDate();
+                data.categoryId = 1;
+                data.description = "aaa";
+                expect(function () { registryDataProvider.validateData(data) }).toThrowError("Amount must be specified");
+            });
+        });
+
+        describe("when amount is zero", function () {
+            describe("and operation is Transfer", function () {
+                it("should not raise an error", function () {
+                    var data = {};
+                    data.date = moment().toDate();
+                    data.categoryId = 1;
+                    data.operation = registryDataProvider.OPERATION_TYPE_TRANSFER;
+                    data.amount = 0;
+                    data.description = "aaa";
+                    expect(function () { registryDataProvider.validateData(data) }).not.toThrow();
+                });
+            });
+
+            describe("and operation is not Transfer", function () {
+                it("should raise an error", function () {
+                    var data = {};
+                    data.date = moment().toDate();
+                    data.categoryId = 1;
+                    data.operation = registryDataProvider.OPERATION_TYPE_INBOUND;
+                    data.amount = 0;
+                    data.description = "aaa";
+                    expect(function () { registryDataProvider.validateData(data) }).toThrow();
+                    expect(function () { registryDataProvider.validateData(data) }).toThrowError("Amount must be specified");
+                });
+            });
+        });
+
+        describe("when description is empty", function () {
+            it('should raise Error("Description cannot be empty")', function () {
+                var data = {};
+                data.date = momemt().toDate();
+                data.categoryId = 1;
+                data.operation = registryDataProvider.OPERATION_TYPE_INBOUND;
+                data.amount = 1;
+                expect(function () { registryDataProvider.validateData(data) }).toThrow();
+                expect(function () { registryDataProvider.validateData(data) }).toThrowError("Description cannot be empty");
+            });
+        });
     });
     
     describe("save()", function () {
