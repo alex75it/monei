@@ -17,40 +17,6 @@ describe("UtilsService", function() {
         expect(utils).toBeDefined();
     });
 
-    describe("setAccountGuid()", function () {
-        it("should exists", function () {
-            expect(utils.setAccountGuid).toBeDefined();
-        });
-
-        it("should set AccountGuid", function () {
-            var accountGuid = "1";
-            utils.setAccountGuid(accountGuid);
-            var value = utils.getAccountGuid();
-            expect(value).toEqual(accountGuid);
-        });
-    });
-
-    describe("getAccountGuid()", function () {
-        it("should exists", function () {
-            expect(utils.getAccountGuid).toBeDefined();
-        });
-
-        describe("when AccountGuid is set", function () {
-            var accountGuid = "2";
-            beforeEach(function () { utils.setAccountGuid(accountGuid); });
-            it("should return the value", function () {
-                var value = utils.getAccountGuid();
-                expect(value).toEqual(accountGuid);
-            });
-        });
-
-        describe("when AccountGuid is NOT set", function () {
-            it("should throw error", function () {
-                expect(utils.getAccountGuid).toThrow();
-            });
-        });
-    });
-
     it("when call toShortDate() with null should return empty string", function () {
         var date = null;
         expect(utils.toShortDate()).toEqual("");      
