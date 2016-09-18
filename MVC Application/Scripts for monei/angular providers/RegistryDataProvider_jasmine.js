@@ -146,7 +146,7 @@ describe("RegistryDataProvider", function () {
         describe("when description is empty", function () {
             it('should raise Error("Description cannot be empty")', function () {
                 var data = {};
-                data.date = momemt().toDate();
+                data.date = moment().toDate();
                 data.categoryId = 1;
                 data.operation = registryDataProvider.OPERATION_TYPE_INBOUND;
                 data.amount = 1;
