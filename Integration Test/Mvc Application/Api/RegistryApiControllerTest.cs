@@ -39,9 +39,10 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             RegistryNewRecordPostData data = new RegistryNewRecordPostData()
             {
                 Date = DateTime.Today,
-                CategoryId = categoryId,
-                SubcategoryId = subcategoryId,
+                Operation = OperationType.Income,
                 Amount = 1.23m,
+                CategoryId = categoryId,
+                SubcategoryId = subcategoryId,                
                 Note = "Note",                
             };
 
@@ -50,10 +51,11 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             RegistryRecord record = GetRegistryRecord(newId);
             record.ShouldNotBeNull();
             record.Date.ShouldEqual(data.Date);
+            record.OperationType.ShouldEqual(data.Operation);
+            record.Amount.ShouldEqual(data.Amount);
             record.Category.Id.ShouldEqual(data.CategoryId);
             record.Subcategory.Id.ShouldEqual(data.SubcategoryId);
-            record.Amount.ShouldEqual(data.Amount);
-            record.Note.ShouldEqual(data.Note);
+            record.Note.ShouldEqual(data.Note);            
         }
 
         #region utilities method

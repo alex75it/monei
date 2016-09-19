@@ -25,18 +25,18 @@ namespace Monei.MvcApplication.Api
             var list = RegistryRepository.ListRecords(filters);
             return list;
         }
-        public int Create(RegistryRecord record)
-        {
-            record = RegistryRepository.AddRecord(record);
-            return record.Id;
-        }
+        //public int Create(RegistryRecord record)
+        //{
+        //    record = RegistryRepository.AddRecord(record);
+        //    return record.Id;
+        //}
 
         [HttpPost, Route("")]
         public int Create(RegistryNewRecordPostData postData)
         {
             var record = new RegistryRecord() {
                 CreationAccount = base.CurrentAccount,
-                Account = base.CurrentAccount, // temporary unsettable
+                Account = base.CurrentAccount, // currently is not possible to set data for another account
                 Date = postData.Date,
                 Category = new Category() { Id = postData.CategoryId },
                 Subcategory = new Subcategory() { Id = postData.SubcategoryId },                
