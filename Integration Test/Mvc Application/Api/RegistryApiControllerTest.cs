@@ -31,7 +31,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         }
 
         [Test]
-        public void PostNewRecord_should_CreateNewRecord()
+        public void PostNewRecord_should_CreateANewRecord()
         {
             int categoryId = testDataProvider.GetTestCategory().Id;
             int subcategoryId = testDataProvider.GetTestSubcategory(categoryId).Id;

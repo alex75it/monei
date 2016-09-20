@@ -22,31 +22,15 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
         public void SetUp()
         {
             controller = new RegistryApiController();
+            IAccountRepository accountRepository = A.Fake<IAccountRepository>();
+            Account account = new Account() {
+                Id=1,
+                Guid = Guid.NewGuid(),
+                Username = "test",
+            };
+            A.CallTo(() => accountRepository.Read(A.Dummy<string>())).Returns(account);
+            controller.AccountRepository = accountRepository;
         }
-        
-        //[Test]
-        //public void Create/*_should_CallTheRegistryMethodForCreateNewRecord*/ ()
-        //{
-        //    // Arrange
-        //    RegistryRecord record = new RegistryRecord();
-            
-        //    IRegistryRepository registryRepository = A.Fake<IRegistryRepository>();
-
-        //    var returnedRegistryRecord = new RegistryRecord();
-        //    returnedRegistryRecord.Id = 1;
-
-        //    var callToAddRecord = A.CallTo(() => registryRepository.AddRecord(record));
-        //    callToAddRecord.Returns(returnedRegistryRecord);
-            
-        //    controller.RegistryRepository = registryRepository;
-
-        //    // Act
-        //    int newId = controller.Create(record);
-
-        //    // Assert
-        //    callToAddRecord.MustHaveHappened(Repeated.Exactly.Once);
-        //    newId.ShouldEqual(returnedRegistryRecord.Id);
-        //}
 
         [Test]
         public void Create_when_DateIsNotDefined_should_ThrowAnException()
@@ -63,8 +47,7 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
 
             A.CallTo(controller.Create(postData)).Throws<Exception>();
         }
-
-
+        
         [Test]
         public void Create_when_OperationIsNotDefined_should_ThrowAnException()
         {
@@ -120,24 +103,30 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
         [Test]
         public void Create_should_CallRepositoryWithRightData()
         {
+            IRegistryRepository registryRepositoryMock = A.Fake<IRegistryRepository>();
+            controller.RegistryRepository = registryRepositoryMock;
+
             RegistryRecord record = new RegistryRecord();
 
             RegistryNewRecordPostData postData = new RegistryNewRecordPostData()
             {
-                Amount = 0,
+                Date = DateTime.Now,
+                Amount = 1m,
                 Operation = OperationType.Income,
                 CategoryId = 1,
                 Note = "aaa",
             };
 
-            A.CallTo(controller.RegistryRepository.AddRecord(A<RegistryRecord>.That.Matches(r =>
+            controller.Create(postData);
+
+            A.CallTo( () => controller.RegistryRepository.AddRecord(
+                A<RegistryRecord>
+                .That.Matches(r =>
                 r.Date == postData.Date
                 && r.OperationType == postData.Operation
                 && r.Amount == postData.Amount
                 && r.Category.Id == postData.CategoryId
-            ))).MustHaveHappened();
-
-            controller.Create(postData);
+            ))).MustHaveHappened();            
         }
     }
 }
