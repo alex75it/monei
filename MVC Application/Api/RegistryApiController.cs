@@ -29,6 +29,9 @@ namespace Monei.MvcApplication.Api
         [HttpPost, Route("")]
         public int Create(RegistryNewRecordPostData postData)
         {
+            if (postData.Amount == 0)
+                throw new Exception("Amount is zero");
+
             var record = new RegistryRecord() {
                 CreationAccount = base.CurrentAccount,
                 Account = base.CurrentAccount, // currently is not possible to set data for another account

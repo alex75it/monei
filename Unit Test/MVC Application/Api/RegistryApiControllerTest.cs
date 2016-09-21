@@ -14,7 +14,7 @@ using Monei.MvcApplication.Api.PostDataObjects;
 namespace Monei.Test.UnitTest.MvcApplication.Api
 {
     [TestFixture, Category("Web API"), Category("Registry")]
-    public class RegistryApiControllerTest
+    public class RegistryApiControllerTest :TestBase
     {
         private RegistryApiController controller;
 
@@ -22,6 +22,7 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
         public void SetUp()
         {
             controller = new RegistryApiController();
+
             IAccountRepository accountRepository = A.Fake<IAccountRepository>();
             Account account = new Account() {
                 Id=1,
@@ -30,6 +31,9 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
             };
             A.CallTo(() => accountRepository.Read(A.Dummy<string>())).Returns(account);
             controller.AccountRepository = accountRepository;
+
+            IRegistryRepository registryRepository = A.Fake<IRegistryRepository>();
+            controller.RegistryRepository = registryRepository; 
         }
 
         [Test]
@@ -61,7 +65,8 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
                 Note = "aaa",
             };
 
-            A.CallTo(controller.Create(postData)).Throws<Exception>();
+            //A.CallTo(controller.Create(postData)).Throws<Exception>();
+            AssertExceptionIsRaised(() => controller.Create(postData), new ArgumentException("Operation is not defined"));
         }
 
         [Test]
@@ -80,7 +85,10 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
                 Note = "aaa",
             };
 
-            A.CallTo(controller.Create(postData)).Throws<Exception>();
+            //A.CallTo(() => controller.Create(postData)).Throws(new Exception("Amount is zero"));
+            // System.ArgumentException : The specified object is not recognized as a fake object.
+
+            AssertExceptionIsRaised(() => controller.Create(postData), new Exception("Amount is zero"));
         }
 
         [Test]
@@ -92,12 +100,13 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
             {
                 Date = DateTime.Now,
                 Operation = OperationType.Income,
-                Amount = 0,
+                Amount = 1,
                 CategoryId = 1,
                 Note = "aaa",
             };
 
-            A.CallTo(controller.Create(postData)).Throws<Exception>();
+            //A.CallTo(controller.Create(postData)).Throws<Exception>();
+            base.AssertExceptionIsRaised(() => controller.Create(postData), new Exception("Category is not defined"));            
         }
 
         [Test]
