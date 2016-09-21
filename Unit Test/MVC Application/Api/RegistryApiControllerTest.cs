@@ -43,32 +43,16 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
 
             RegistryNewRecordPostData postData = new RegistryNewRecordPostData()
             {
-                Amount = 0,
+                Amount = 1,
                 Operation = OperationType.Income,
                 CategoryId = 1,
                 Note = "aaa",
             };
 
-            A.CallTo(controller.Create(postData)).Throws<Exception>();
+            //A.CallTo(controller.Create(postData)).Throws<Exception>();
+            AssertExceptionIsRaised(() => controller.Create(postData), new Exception("Date is not defined"));
         }
         
-        [Test]
-        public void Create_when_OperationIsNotDefined_should_ThrowAnException()
-        {
-            RegistryRecord record = new RegistryRecord();
-
-            RegistryNewRecordPostData postData = new RegistryNewRecordPostData()
-            {
-                Date = DateTime.Now,
-                Amount = 0,
-                CategoryId = 1,
-                Note = "aaa",
-            };
-
-            //A.CallTo(controller.Create(postData)).Throws<Exception>();
-            AssertExceptionIsRaised(() => controller.Create(postData), new ArgumentException("Operation is not defined"));
-        }
-
         [Test]
         [TestCase(OperationType.Income)]
         [TestCase(OperationType.Outcome)]
@@ -101,7 +85,7 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
                 Date = DateTime.Now,
                 Operation = OperationType.Income,
                 Amount = 1,
-                CategoryId = 1,
+                CategoryId = 0,
                 Note = "aaa",
             };
 

@@ -29,14 +29,15 @@ namespace Monei.MvcApplication.Api
         [HttpPost, Route("")]
         public int Create(RegistryNewRecordPostData postData)
         {
-            if (postData.Amount == 0)
-                throw new Exception("Amount is zero");
+            if (postData.Date == DateTime.MinValue) throw new Exception("Date is not defined");
+            if (postData.Amount == 0) throw new Exception("Amount is zero");
+            if (postData.CategoryId == 0) throw new Exception("Category is not defined");
 
             var record = new RegistryRecord() {
                 CreationAccount = base.CurrentAccount,
                 Account = base.CurrentAccount, // currently is not possible to set data for another account
                 Date = postData.Date,
-                OperationType =postData.Operation,
+                OperationType = postData.Operation,
                 Category = new Category() { Id = postData.CategoryId },
                 Subcategory = new Subcategory() { Id = postData.SubcategoryId },                
                 Amount = postData.Amount,                                
