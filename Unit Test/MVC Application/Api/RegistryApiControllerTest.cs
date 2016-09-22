@@ -36,6 +36,24 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
             controller.RegistryRepository = registryRepository; 
         }
 
+        //[Test]
+        //public void Create_when_AccountIsNotDefined_should_ThrowAnException()
+        //{
+        //    RegistryRecord record = new RegistryRecord();
+
+        //    RegistryNewRecordPostData postData = new RegistryNewRecordPostData()
+        //    {
+        //        Date = DateTime.Now,
+        //        Amount = 1,
+        //        Operation = OperationType.Income,
+        //        CategoryId = 1,
+        //        Note = "aaa",
+        //    };
+
+        //    //A.CallTo(controller.Create(postData)).Throws<Exception>();
+        //    AssertExceptionIsRaised(() => controller.Create(postData), new Exception("Account is not defined"));
+        //}
+
         [Test]
         public void Create_when_DateIsNotDefined_should_ThrowAnException()
         {
