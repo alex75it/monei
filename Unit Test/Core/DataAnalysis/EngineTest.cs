@@ -15,7 +15,7 @@ namespace Monei.Test.UnitTest.Core.DataAnalysis
 	public class EngineTest
 	{
 		[Test]
-		public void Aaa()
+		public void GetYearData_should_()
 		{
 			int accountId = 1;
 			int year = DateTime.Today.Year;

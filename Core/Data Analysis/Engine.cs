@@ -66,7 +66,7 @@ namespace Monei.Core.DataAnalysis
 				
 				foreach(var byCategory in monthRecords.GroupBy(r => r.Category).ToList())
 					monthData.Categories.AddValue(byCategory.Key.Id, new CategoryData(byCategory.Key, byCategory.Sum(r => r.RealAmount)));
-				monthData.Categories.SetAllCategories(usedCategories);
+				monthData.Categories.AddNewCategories(usedCategories);
 
 				yearData.Months.Add(monthData);
 			}
