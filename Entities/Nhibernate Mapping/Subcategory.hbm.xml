@@ -13,7 +13,7 @@
         <property name="LastChangeDate" />
         <!--<property name="DeletionDate" />-->
 
-        <many-to-one name="Category" column="CategoryId" class="Category" />
+        <many-to-one name="Category" column="CategoryId" class="Category" fetch="join" />
                       
     </class>
 </hibernate-mapping>

@@ -16,7 +16,8 @@ namespace Monei.MvcApplication.Helpers
         public static readonly ILog logger = LogManager.GetLogger(typeof(WebSecurity));
         private readonly IAccountRepository accountRepository;
         private readonly IWebAuthenticationWorker webAuthenticationWorker;
-                
+
+
         public enum LoginResult
         {
             Ok = 0, 
@@ -68,10 +69,6 @@ namespace Monei.MvcApplication.Helpers
                 return LoginResult.InternalError;
             }
         }
-
-        
-
-
         public static int GetUserId(string username)
         {
             //todo
@@ -79,14 +76,11 @@ namespace Monei.MvcApplication.Helpers
             return 0;
         }
 
-
         public static void Logout()
         { 
             // todo: register action in database
             FormsAuthentication.SignOut();
         }
-
-
 
         public override bool ConfirmAccount(string accountConfirmationToken)
         {
@@ -103,15 +97,15 @@ namespace Monei.MvcApplication.Helpers
             throw new NotImplementedException();
         }
 
-        public override string CreateUserAndAccount(string username, string password, bool requireConfirmation, IDictionary<string, object> values)
-        {
-            // todo: get currency from user selection
-            Account.AccountRole role = Account.AccountRole.User;
-            Currency currency = new CurrencyRepository().Read(Currency.EUR_CODE);
-            Account account = accountRepository.Create(username, password, role, currency);
+        //public override string CreateUserAndAccount(string username, string password, bool requireConfirmation, IDictionary<string, object> values)
+        //{
+        //    // todo: get currency from user selection
+        //    Account.AccountRole role = Account.AccountRole.User;
+        //    Currency currency = currencyRepository.Read(Currency.EUR_CODE);
+        //    Account account = accountRepository.Create(username, password, role, currency);
 
-            return account.Id.ToString();
-        }
+        //    return account.Id.ToString();
+        //}
 
         public override bool DeleteAccount(string username)
         {
@@ -302,6 +296,11 @@ namespace Monei.MvcApplication.Helpers
 
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string CreateUserAndAccount(string userName, string password, bool requireConfirmation, IDictionary<string, object> values)
         {
             throw new NotImplementedException();
         }

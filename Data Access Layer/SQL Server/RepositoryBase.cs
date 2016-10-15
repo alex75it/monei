@@ -13,9 +13,16 @@ namespace Monei.DataAccessLayer.SqlServer
     /// 
     /// </summary>
     /// <typeparam name="TEntity">Entity managed by this repository</typeparam>
-    public class RepositoryBase<TKey, TEntity>: IRepository<TKey, TEntity> //where TEntity: BaseEntity
+    public abstract class RepositoryBase<TKey, TEntity>: IRepository<TKey, TEntity> //where TEntity: BaseEntity
     {
         private string connectionString;
+
+        private ISessionFactory sessionFactory;
+
+        public RepositoryBase(ISessionFactoryProvider sessionFactoryProvider)
+        {
+            sessionFactory = sessionFactoryProvider.GetSessionFactory();
+        }
          
         protected string ConnectionString { get
             {
@@ -32,28 +39,17 @@ namespace Monei.DataAccessLayer.SqlServer
                 }
                 return ConnectionString;
             }
-         }
-                
-        protected ISessionFactory GetSessionFactory()
-        { 
-            var configuration = new NHibernate.Cfg.Configuration();
-            configuration.Configure(); // it fail ONLY in debug mode, just go on !
-
-            ISessionFactory sessionFactory = configuration.BuildSessionFactory();
-    
-            return sessionFactory;
-        }
+        }                
 
         protected ISession OpenSession()
         {
-            return GetSessionFactory().OpenSession();
+            return sessionFactory.OpenSession();
         }
 
         protected IStatelessSession OpenStatelessSession()
         {
-            return GetSessionFactory().OpenStatelessSession();
+            return sessionFactory.OpenStatelessSession();
         }
-
 
         public TKey Create(TEntity data)
         {

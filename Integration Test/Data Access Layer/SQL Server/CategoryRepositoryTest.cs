@@ -11,105 +11,124 @@ using NUnit.Framework;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-	[TestFixture, Category("Repository"), Category("Category")]
-	public class CategoryRepositoryTest :RepositoryTestBase
-	{
-		[Test]
-		public void List()
-		{
-			ICategoryRepository repository = new CategoryRepository();
+    [TestFixture, Category("Repository"), Category("Category")]
+    public class CategoryRepositoryTest :RepositoryTestBase
+    {
+        private CategoryRepository repository;
 
-			IEnumerable<Category> list = repository.List();
+        private ISessionFactoryProvider sessionFactoryProvider;
 
-			// Verify
-			list.ShouldNotBeEmpty();
-			
-		}
+        [SetUp]
+        public void SetUp()
+        {
+            sessionFactoryProvider = new SessionFactoryProvider();
 
-		[Test]
-		public void AddCategory()
-		{
-			string name = "Transport and Parking";
-			string description = "Airplane, train and bus tickets, highway tolls, parking fees.";
+            repository = new CategoryRepository(sessionFactoryProvider);
+        }
 
-			var category = new Category()
-			{
-				Name = name,
-				Description = description,
-				ImageName = null,
-			};
+        [Test]
+        public void List()
+        {
+            IEnumerable<Category> list = repository.ListWithSubcategories();
 
-			Helper.GetTestAccount();
+            list.ShouldNotBeEmpty();            
+        }
 
-			// create
-			category = CategoryRepository.Create(category);
+        [Test, Category("NHibernate")]
+        public void List_should_ExecuteOnlyAQuery()
+        {
+            var sessionFactory = sessionFactoryProvider.GetSessionFactory();
+            sessionFactory.Statistics.Clear();
 
-			Assert.IsNotNull(category);
+            repository.List();
 
-			Assert.AreEqual(name, category.Name, "Names are not equal.");
-			Assert.AreEqual(description, category.Description, "Descriptions are not equal.");
+            sessionFactory.Statistics.CloseStatementCount.ShouldEqual(1);
+        }
 
-			// cleanup
-			CategoryRepository.Delete(category.Id);
+        [Test]
+        public void AddCategory()
+        {
+            string name = "Transport and Parking";
+            string description = "Airplane, train and bus tickets, highway tolls, parking fees.";
 
+            var category = new Category()
+            {
+                Name = name,
+                Description = description,
+                ImageName = null,
+            };
 
-			// test max length for name
-			int maxLength = Category.NAME_MAX_LENGTH;
+            Helper.GetTestAccount();
 
-			name = new String('a', maxLength + 1);
-			category.Name = name;
-			try
-			{
-				CategoryRepository.Create(category);
-			}
-			catch (Exception)
-			{
-				//Assert.();
-			}
+            // create
+            category = CategoryRepository.Create(category);
 
-			CategoryRepository.Delete(category.Id);
-		}
+            Assert.IsNotNull(category);
 
-		[Test]
-		public void UpdateCategory()
-		{
-			string changedName = "Test B";
-			string changedDescription = "Description B";
+            Assert.AreEqual(name, category.Name, "Names are not equal.");
+            Assert.AreEqual(description, category.Description, "Descriptions are not equal.");
 
-			Account account = Helper.GetTestAccount();
-			Category category = new Category()
-			{
-				Name = "Test A",
-				Description = "aaa bbb",
-			};
-
-			// Clean up data
-
-			var categories = CategoryRepository.List().Where(c => c.Name == category.Name || c.Name == changedName ).ToList();
-			foreach(var c in categories)
-				CategoryRepository.Delete(c.Id);
-
-			category.CreationAccount = account;
+            // cleanup
+            CategoryRepository.Delete(category.Id);
 
 
-			int categoryId = CategoryRepository.Create(category).Id;
+            // test max length for name
+            int maxLength = Category.NAME_MAX_LENGTH;
+
+            name = new String('a', maxLength + 1);
+            category.Name = name;
+            try
+            {
+                CategoryRepository.Create(category);
+            }
+            catch (Exception)
+            {
+                //Assert.();
+            }
+
+            CategoryRepository.Delete(category.Id);
+        }
+
+        [Test]
+        public void UpdateCategory()
+        {
+            string changedName = "Test B";
+            string changedDescription = "Description B";
+
+            Account account = Helper.GetTestAccount();
+            Category category = new Category()
+            {
+                Name = "Test A",
+                Description = "aaa bbb",
+            };
+
+            // Clean up data
+
+            var categories = CategoryRepository.List().Where(c => c.Name == category.Name || c.Name == changedName ).ToList();
+            foreach(var c in categories)
+                CategoryRepository.Delete(c.Id);
+
+            category.CreationAccount = account;
 
 
-			category = CategoryRepository.Read(categoryId);
+            int categoryId = CategoryRepository.Create(category).Id;
 
-			category.Name = changedName;
-			category.Description = changedDescription;
-			category.CreationAccount = account; //todo: set a new Account, it Creation Account MUST not change with update
 
-			// Exceute
-			CategoryRepository.Update(category);
+            category = CategoryRepository.Read(categoryId);
 
-			// Verify
-			Category testCategory = CategoryRepository.Read(category.Id);
-			testCategory.Name.ShouldEqual(changedName);
-			testCategory.Description.ShouldEqual(changedDescription);
-			//testCategory.CreationAccount...
-		}
+            category.Name = changedName;
+            category.Description = changedDescription;
+            category.CreationAccount = account; //todo: set a new Account, it Creation Account MUST not change with update
 
-	}
+            // Exceute
+            CategoryRepository.Update(category);
+
+            // Verify
+            Category testCategory = CategoryRepository.Read(category.Id);
+            testCategory.Name.ShouldEqual(changedName);
+            testCategory.Description.ShouldEqual(changedDescription);
+            //testCategory.CreationAccount...
+        }
+
+    }
 }

@@ -11,9 +11,12 @@ using NHibernate.Linq;
 
 namespace Monei.DataAccessLayer.SqlServer 
 {
-    public class AccountRepository :AbstractRepository<int, Account>, IAccountRepository
+    public class AccountRepository :RepositoryBase<int, Account>, IAccountRepository
     {
-        
+        public AccountRepository(ISessionFactoryProvider sessionFactoryProvider) : base(sessionFactoryProvider)
+        {
+        }
+
         public Account Read(string username)
         {
             using (ISession session = OpenSession())

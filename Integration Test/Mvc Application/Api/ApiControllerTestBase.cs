@@ -28,6 +28,8 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
     [TestFixture]
     public class ApiControllerTestBase :IDisposable
     {
+        protected ISessionFactoryProvider sessionFactoryProvider = new SessionFactoryProvider();
+
         public string testAccountGuid = "00000000-0000-0000-0000-000000000000";
 
         protected HttpMethod GET = HttpMethod.Get;
@@ -39,12 +41,11 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         private HttpServer server;
         private const string BASE_URL = "http://www.apitest.com/";
         private IWindsorContainer container;
-        
 
         // todo: CLEAN THIS CLASS
 
         public ApiControllerTestBase()
-        {
+        {            
             testDataProvider = new TestDataProvider();
         }
 
@@ -62,7 +63,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         }
 
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Initialize()
         {			
             InitializeWindsorContainer();
@@ -78,15 +79,16 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
         private void InitializeWindsorContainer()
         {
-
             container = new WindsorContainer();
 
             container.Register(
-                Component.For(typeof(IAccountRepository)).ImplementedBy(typeof(AccountRepository)), //.LifestylePerWebRequest(),
-                Component.For(typeof(IRegistryRepository)).ImplementedBy(typeof(RegistryRepository)), //.LifestylePerWebRequest(),
-                Component.For(typeof(ICurrencyRepository)).ImplementedBy(typeof(CurrencyRepository)), //.LifestylePerWebRequest(),
-                Component.For(typeof(ICategoryRepository)).ImplementedBy(typeof(CategoryRepository)), //.LifestylePerWebRequest(),
-                Component.For(typeof(ISubcategoryRepository)).ImplementedBy(typeof(SubcategoryRepository)) //.LifestylePerWebRequest(),
+                Component.For<ISessionFactoryProvider>().ImplementedBy<SessionFactoryProvider>(),
+
+                Component.For<IAccountRepository>().ImplementedBy(typeof(AccountRepository)), //.LifestylePerWebRequest(),
+                Component.For<IRegistryRepository>().ImplementedBy(typeof(RegistryRepository)), //.LifestylePerWebRequest(),
+                Component.For<ICurrencyRepository>().ImplementedBy(typeof(CurrencyRepository)), //.LifestylePerWebRequest(),
+                Component.For<ICategoryRepository>().ImplementedBy(typeof(CategoryRepository)), //.LifestylePerWebRequest(),
+                Component.For<ISubcategoryRepository>().ImplementedBy(typeof(SubcategoryRepository)) //.LifestylePerWebRequest(),
 
                 //Component.For(typeof(SubcategoryManager)).ImplementedBy(typeof(SubcategoryManager)), //.LifestylePerWebRequest()
             );

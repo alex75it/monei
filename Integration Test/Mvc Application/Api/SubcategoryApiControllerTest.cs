@@ -21,7 +21,7 @@ using Monei.MvcApplication.Controllers.Api.PostDataObjects;
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
 	[TestFixture, Category("Web API"), Category("Subcategory")]
-	public class SubcategorApiyControllerTest :ApiControllerTestBase
+	public class SubcategorApiControllerTest :ApiControllerTestBase
 	{
 		private const string ROUTE_PREFIX = "api/subcategory/";
 
@@ -56,7 +56,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		public void Search_Should_ReturnAList()
 		{
 			//Arrange
-			var categoryId = new CategoryRepository().List().First().Id;
+			var categoryId = new CategoryRepository(sessionFactoryProvider).List().First().Id;
 			string url = ROUTE_PREFIX + "category/" + categoryId;
 
 			// Act
@@ -71,8 +71,8 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		public void Create_Should_ReturnOk()
 		{
 			// Arrange
-			int categoryId = new CategoryRepository().List().First().Id;
-			ISubcategoryRepository repository = new SubcategoryRepository();
+			int categoryId = new CategoryRepository(sessionFactoryProvider).List().First().Id;
+			ISubcategoryRepository repository = new SubcategoryRepository(sessionFactoryProvider);
 
 			SubcategoryPostData postData = new SubcategoryPostData()
 			{

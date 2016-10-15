@@ -18,9 +18,10 @@ namespace Monei.MvcApplication.Api
 
         private readonly IWebAuthenticationWorker webAuthenticationWorker;
 
-        public AccountApiController(IAccountRepository accountRepository, IWebAuthenticationWorker webAuthenticationWorker)
+        public AccountApiController(IAccountRepository accountRepository, ICurrencyRepository currencyRepository, IWebAuthenticationWorker webAuthenticationWorker)
         {
             AccountRepository = accountRepository;
+            CurrencyRepository = currencyRepository;
             this.webAuthenticationWorker = webAuthenticationWorker;
         }
 

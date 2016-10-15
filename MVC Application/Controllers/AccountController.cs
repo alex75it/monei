@@ -20,7 +20,6 @@ namespace Monei.MvcApplication.Controllers
     //[InitializeSimpleMembership]
     public class AccountController : MoneiControllerBase
     {
-
         private IAccountRepository accountRepository;
         private ICurrencyRepository currencyRepository;
         private IWebAuthenticationWorker webAuthenticationWorker;

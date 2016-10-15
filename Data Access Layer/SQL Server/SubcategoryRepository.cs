@@ -11,16 +11,19 @@ using NHibernate.Criterion;
 
 namespace Monei.DataAccessLayer.SqlServer
 {
-	public class SubcategoryRepository :AbstractRepository<int, Subcategory>, ISubcategoryRepository
-	{
+    public class SubcategoryRepository :RepositoryBase<int, Subcategory>, ISubcategoryRepository
+    {
+        public SubcategoryRepository(ISessionFactoryProvider sessionFactoryProvider) : base(sessionFactoryProvider)
+        {
+        }
 
-		public List<Subcategory> List(int categoryId)
-		{
-			using (ISession session = OpenSession())
-			{
-				return session.Query<Subcategory>().Where(s => s.Category.Id == categoryId).ToList();
-			}
-		}				
+        public List<Subcategory> List(int categoryId)
+        {
+            using (ISession session = OpenSession())
+            {
+                return session.Query<Subcategory>().Where(s => s.Category.Id == categoryId).ToList();
+            }
+        }				
 
-	}
+    }
 }

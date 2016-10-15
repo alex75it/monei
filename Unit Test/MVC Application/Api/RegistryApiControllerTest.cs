@@ -9,6 +9,7 @@ using Monei.Entities;
 using Monei.MvcApplication.Api;
 using NUnit.Framework;
 using Should;
+using Monei.DataAccessLayer.SqlServer;
 
 namespace Monei.Test.UnitTest.MvcApplication.Api
 {
@@ -19,7 +20,7 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
 
         [SetUp]
         public void SetUp()
-        {
+        {          
             controller = new RegistryApiController();
         }
         

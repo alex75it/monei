@@ -13,17 +13,17 @@
         <property name="LastChangeDate" />
         <property name="DeletionDate" />
         <!--<bag name="Subcategories" table="Subcategory" lazy="false" >
-			--><!--collection-type="System.Collections.Generic.IList"--><!--
-			<key column="CategoryId"></key>
+      --><!--collection-type="System.Collections.Generic.IList"--><!--
+      <key column="CategoryId"></key>
             <one-to-many class="Subcategory"/>
         </bag>-->
-		<!-- I prefer "list" because it is unique and ...-->
-		<list name="Subcategories" table="Subcategory" lazy="false" >
-			<!--collection-type="System.Collections.Generic.IList"-->
-			<key column="CategoryId"></key>
-			<index column="Id"></index>
-			<one-to-many class="Subcategory"/>
-		</list>
+      <!-- I prefer "list" because it is unique and ...-->
+      <list name="Subcategories" table="Subcategory" lazy="false" >
+        <!--collection-type="System.Collections.Generic.IList"-->
+        <key column="CategoryId"></key>
+        <index column="Id"></index>
+        <one-to-many class="Subcategory" />
+      </list>
        
     </class>
 </hibernate-mapping>

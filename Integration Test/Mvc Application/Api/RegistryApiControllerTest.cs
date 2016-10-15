@@ -59,7 +59,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         #region utilities method
         private RegistryRecord GetRegistryRecord(int newId)
         {
-            var repository = new RegistryRepository();
+            var repository = new RegistryRepository(sessionFactoryProvider);
 
             var record = repository.Read(newId);
 
