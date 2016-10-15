@@ -9,12 +9,16 @@ namespace Monei.DataAccessLayer.SqlServer
 {
     public class SessionFactoryProvider : ISessionFactoryProvider
     {
+        private ISessionFactory sessionFactory;
         public ISessionFactory GetSessionFactory()
         {
-            var configuration = new NHibernate.Cfg.Configuration();
-            configuration.Configure(); // it fail ONLY in debug mode, just go on !
+            if (sessionFactory == null)
+            {
+                var configuration = new NHibernate.Cfg.Configuration();
+                configuration.Configure(); // it fail ONLY in debug mode, just go on !
 
-            ISessionFactory sessionFactory = configuration.BuildSessionFactory();
+                sessionFactory = configuration.BuildSessionFactory();
+            }
 
             return sessionFactory;
         }

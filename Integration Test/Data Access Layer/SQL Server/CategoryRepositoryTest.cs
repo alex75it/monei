@@ -38,6 +38,10 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         public void List_should_ExecuteOnlyAQuery()
         {
             var sessionFactory = sessionFactoryProvider.GetSessionFactory();
+
+            if (!sessionFactory.Statistics.IsStatisticsEnabled)
+                Assert.Ignore("Statistics should be enabled");
+
             sessionFactory.Statistics.Clear();
 
             repository.List();
