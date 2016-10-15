@@ -23,12 +23,6 @@ namespace Monei.DataAccessLayer.SqlServer
             {
                 return session.Query<Category>().ToList();
             }
-        }		
-
-        public new Category Create(Category item)
-        {
-            int id = base.Create(item);
-            return Read(id);
         }
 
         public IEnumerable<Category> ListWithSubcategories()
@@ -39,6 +33,11 @@ namespace Monei.DataAccessLayer.SqlServer
             }
         }
 
+        public new Category Create(Category item)
+        {
+            int id = base.Create(item);
+            return Read(id);
+        }
 
         public void MoveSubcategory(int subcategoryId, int categoryId)
         {		

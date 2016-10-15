@@ -44,7 +44,26 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
             sessionFactory.Statistics.Clear();
 
+            // Execute
             repository.List();
+
+            sessionFactory.Statistics.CloseStatementCount.ShouldEqual(1);
+        }
+
+        [Test, Category("NHibernate")]
+        public void ListWithSubcategories_should_ExecuteOnlyAQuery()
+        {
+            var sessionFactory = sessionFactoryProvider.GetSessionFactory();
+
+            if (!sessionFactory.Statistics.IsStatisticsEnabled)
+                Assert.Ignore("Statistics should be enabled");
+
+            sessionFactory.Statistics.Clear();
+
+            // Execute
+            var categories = repository.ListWithSubcategories();
+
+            categories.ToList()[0].Subcategories.ShouldNotBeEmpty();
 
             sessionFactory.Statistics.CloseStatementCount.ShouldEqual(1);
         }
