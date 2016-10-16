@@ -71,7 +71,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         }
 
         [Test]
-        public void List_when_StartDateAndEndDateAreSet_should_ReturnAList()
+        public void List_when_FilterStartDateAndEndDate_should_ReturnAList()
         {
             RegistryFilters filters = new RegistryFilters();
             filters.StartDate = DateTime.Today.AddDays(-3);
@@ -82,6 +82,25 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             };
 
             CreateTestRecord(registryRecord);            
+
+            var list = repository.ListRecords(filters);
+            list.ShouldNotBeEmpty();
+        }
+
+        [Test]
+        public void List_when_FilterCategory_should_ReturnAList()
+        {
+            RegistryFilters filters = new RegistryFilters();
+            var category = Helper.GetRandomCategory();
+            filters.Categories = new int[] { category.Id };
+
+            RegistryRecord registryRecord = new RegistryRecord()
+            {
+                Date = DateTime.Today,
+                Category = category,
+            };
+
+            CreateTestRecord(registryRecord);
 
             var list = repository.ListRecords(filters);
             list.ShouldNotBeEmpty();
@@ -155,7 +174,6 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         [Test]
         public void AddRecord()
         {
-
             DateTime date = DateTime.Now;
             decimal amount = 123.45m;
             string note = "This is a test description";

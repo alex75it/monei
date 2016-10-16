@@ -10,7 +10,6 @@
         <property name="Description" />        
         <property name="CreationDate" />
         <property name="LastChangeDate" />
-        <many-to-one name="Category" column="CategoryId" class="Category" fetch="join" />
-                      
+        <many-to-one name="Category" column="CategoryId" class="Category" fetch="join" lazy="false" />                      
     </class>
 </hibernate-mapping>
