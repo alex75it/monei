@@ -22,8 +22,18 @@ namespace Monei.MvcApplication.Api
             filters.EndDate = data.ToDate;
             filters.Categories = data.Categories;
 
-            var list = RegistryRepository.ListRecords(filters);
-            return list;
+            var records = RegistryRepository.ListRecords(filters);
+
+            // HACK: remove subitems to prevent LazyInitializationException 
+            foreach (var record in records)
+            {
+                if (record.Category != null)
+                    record.Category.Subcategories = null;
+                if (record.Subcategory != null)
+                    record.Subcategory.Category = null;
+            }
+
+            return records;
         }
         public int Create(RegistryRecord record)
         {
