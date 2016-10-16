@@ -69,47 +69,25 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         }
 
         [Test]
-        public void AddCategory()
+        public void Create_should_CreateANewEntity()
         {
             string name = "Transport and Parking";
             string description = "Airplane, train and bus tickets, highway tolls, parking fees.";
 
-            var category = new Category()
-            {
-                Name = name,
-                Description = description,
-                ImageName = null,
-            };
+            Category category = ExecuteCreateMethod(name, description);
 
-            Helper.GetTestAccount();
+            category.ShouldNotBeNull();
+        }
 
-            // create
-            category = CategoryRepository.Create(category);
-
-            Assert.IsNotNull(category);
-
-            Assert.AreEqual(name, category.Name, "Names are not equal.");
-            Assert.AreEqual(description, category.Description, "Descriptions are not equal.");
-
-            // cleanup
-            CategoryRepository.Delete(category.Id);
-
-
+        [Test]
+        public void Create_when_NameIsTooLong_should_RaiseASpecificException()
+        {
             // test max length for name
             int maxLength = Category.NAME_MAX_LENGTH;
-
-            name = new String('a', maxLength + 1);
-            category.Name = name;
-            try
-            {
-                CategoryRepository.Create(category);
-            }
-            catch (Exception)
-            {
-                //Assert.();
-            }
-
-            CategoryRepository.Delete(category.Id);
+            string name = new String('a', maxLength + 1);
+            string description = "description";
+                        
+            Assert.Throws<ArgumentException>( () => ExecuteCreateMethod(name, description));
         }
 
         [Test]
@@ -153,5 +131,36 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             //testCategory.CreationAccount...
         }
 
+        #region utils
+        private Category ExecuteCreateMethod(string name, string description)
+        {
+            var category = new Category()
+            {
+                Name = name,
+                Description = description,
+                ImageName = null,
+            };
+
+            try
+            {
+                // Execute
+                category = CategoryRepository.Create(category);
+
+                category = CategoryRepository.Read(category.Id);
+
+                Assert.IsNotNull(category);
+                Assert.AreEqual(name, category.Name, "Names are not equal.");
+                Assert.AreEqual(description, category.Description, "Descriptions are not equal.");
+            }
+            finally
+            {
+                // cleanup
+                CategoryRepository.Delete(category.Id);
+            }
+
+            return category;
+        }
+
+        #endregion
     }
 }
