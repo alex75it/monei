@@ -22,7 +22,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         private const string baseUri = "/api/registry";
         
         [Test]
-        public void Search_Should_ReturnAList()
+        public void Search_should_ReturnAList()
         {
             RegistrySearchPostData data = new RegistrySearchPostData() { };
 

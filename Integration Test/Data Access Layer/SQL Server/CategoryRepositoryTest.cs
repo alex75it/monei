@@ -153,7 +153,6 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             }
             finally
             {
-                // cleanup
                 CategoryRepository.Delete(category.Id);
             }
 
