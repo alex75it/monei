@@ -7,12 +7,9 @@
             <generator class="identity" />
         </id>
         <property name="Name" />
-        <property name="Description" />
-        
+        <property name="Description" />        
         <property name="CreationDate" />
         <property name="LastChangeDate" />
-        <!--<property name="DeletionDate" />-->
-
         <many-to-one name="Category" column="CategoryId" class="Category" fetch="join" />
                       
     </class>

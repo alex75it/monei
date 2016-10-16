@@ -12,13 +12,9 @@ namespace Monei.Test.IntegrationTest.Entities.NHibernateMappings
         [Test]
         public void AccountMappingTest()
         {
-
             Assembly assembly = Assembly.GetAssembly(typeof(Monei.Entities.Account));
 
-            //string a = NHibernate.Cfg.Configuration.DefaultHibernateCfgFileName ;
-
             NHibernate.Cfg.Configuration configuration = new NHibernate.Cfg.Configuration();
-            //configuration.AddAssembly("Monei.Entities");
             configuration.Configure();
 
             Assert.IsNotEmpty(configuration.ClassMappings, "None class mapping loaded.");

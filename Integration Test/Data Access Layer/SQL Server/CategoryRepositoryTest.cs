@@ -8,6 +8,7 @@ using Monei.Entities;
 using Monei.Test.IntegrationTest.DataAccessLayer.SqlServer;
 using Should;
 using NUnit.Framework;
+using NHibernate.Linq;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
@@ -69,14 +70,16 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         }
 
         [Test]
-        public void Create_should_CreateANewEntity()
+        public void Create_should_CreateANewCategory()
         {
-            string name = "Transport and Parking";
-            string description = "Airplane, train and bus tickets, highway tolls, parking fees.";
+            string name = "Category";
+            string description = "Category description";
 
             Category category = ExecuteCreateMethod(name, description);
 
             category.ShouldNotBeNull();
+            category.Name.ShouldEqual(name, "Names are not equal.");
+            category.Description.ShouldEqual(description, "Descriptions are not equal.");
         }
 
         [Test]
@@ -85,7 +88,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             // test max length for name
             int maxLength = Category.NAME_MAX_LENGTH;
             string name = new String('a', maxLength + 1);
-            string description = "description";
+            string description = "Category description";
                         
             Assert.Throws<ArgumentException>( () => ExecuteCreateMethod(name, description));
         }
@@ -93,19 +96,19 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         [Test]
         public void UpdateCategory()
         {
-            string changedName = "Test B";
-            string changedDescription = "Description B";
+            string newName = "Category B";
+            string newDescription = "Description B";
 
             Account account = Helper.GetTestAccount();
             Category category = new Category()
             {
-                Name = "Test A",
-                Description = "aaa bbb",
+                Name = "Category A",
+                Description = "Description B",
             };
 
             // Clean up data
 
-            var categories = CategoryRepository.List().Where(c => c.Name == category.Name || c.Name == changedName ).ToList();
+            var categories = CategoryRepository.List().Where(c => c.Name == category.Name || c.Name == newName ).ToList();
             foreach(var c in categories)
                 CategoryRepository.Delete(c.Id);
 
@@ -117,8 +120,8 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
             category = CategoryRepository.Read(categoryId);
 
-            category.Name = changedName;
-            category.Description = changedDescription;
+            category.Name = newName;
+            category.Description = newDescription;
             category.CreationAccount = account; //todo: set a new Account, it Creation Account MUST not change with update
 
             // Exceute
@@ -126,14 +129,14 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
             // Verify
             Category testCategory = CategoryRepository.Read(category.Id);
-            testCategory.Name.ShouldEqual(changedName);
-            testCategory.Description.ShouldEqual(changedDescription);
+            testCategory.Name.ShouldEqual(newName);
+            testCategory.Description.ShouldEqual(newDescription);
             //testCategory.CreationAccount...
         }
 
         #region utils
         private Category ExecuteCreateMethod(string name, string description)
-        {
+        {            
             var category = new Category()
             {
                 Name = name,
@@ -141,16 +144,12 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
                 ImageName = null,
             };
 
+            DeleteCategoryWithName(category.Name);
+
             try
             {
                 // Execute
                 category = CategoryRepository.Create(category);
-
-                category = CategoryRepository.Read(category.Id);
-
-                Assert.IsNotNull(category);
-                Assert.AreEqual(name, category.Name, "Names are not equal.");
-                Assert.AreEqual(description, category.Description, "Descriptions are not equal.");
             }
             finally
             {
@@ -159,6 +158,17 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             }
 
             return category;
+        }
+
+        private void DeleteCategoryWithName(string name)
+        {
+            using (var session = sessionFactoryProvider.GetSessionFactory().OpenSession())
+            {
+                var category = session.Query<Category>().Where(c => c.Name == name).SingleOrDefault();
+                if (category != null)
+                    session.Delete(category);
+                session.Flush();
+            }
         }
 
         #endregion
