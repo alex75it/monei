@@ -27,7 +27,7 @@ namespace Monei.Entities
                 Guid = Guid.NewGuid(),
                 Username = username,
                 Password = password,
-                Role = AccountRole.User,
+                Role = role,
                 Currency = currency,
                 LastLogin = null,
                 CreationDate = DateTime.UtcNow,

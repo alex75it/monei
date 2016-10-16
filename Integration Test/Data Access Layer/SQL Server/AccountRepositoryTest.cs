@@ -16,7 +16,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
     public class AccountRepositoryTest : RepositoryTestBase
     {
         
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void TestFixtureSetUp()
         {
             //Helper.RemoveTestAccount();

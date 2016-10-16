@@ -145,6 +145,7 @@
     <Compile Include="Data Access Layer\SQL Server\CurrencyRepositoryTest.cs" />
     <Compile Include="Data Access Layer\SQL Server\RegistryRepositoryTest.cs" />
     <Compile Include="Data Access Layer\SQL Server\RepositoryTestBase.cs" />
+    <Compile Include="Data Access Layer\SQL Server\SessionFactoryProviderTest.cs" />
     <Compile Include="Data Access Layer\SQL Server\SubcategoryRepositoryTest.cs" />
     <Compile Include="Data Access Layer\SQL Server\TestHelper.cs" />
     <Compile Include="Entities\NHibernate Mappings\NHibernateMappingsTest.cs" />

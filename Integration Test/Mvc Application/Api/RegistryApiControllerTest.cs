@@ -22,7 +22,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         private const string baseUri = "/api/registry";
         
         [Test]
-        public void Search_Should_ReturnAList()
+        public void Search_should_ReturnAList()
         {
             RegistrySearchPostData data = new RegistrySearchPostData() { };
 
@@ -61,7 +61,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         #region utilities method
         private RegistryRecord GetRegistryRecord(int newId)
         {
-            var repository = new RegistryRepository();
+            var repository = new RegistryRepository(sessionFactoryProvider);
 
             var record = repository.Read(newId);
 

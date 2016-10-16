@@ -20,7 +20,7 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
 
         [SetUp]
         public void SetUp()
-        {
+        {          
             controller = new RegistryApiController();
 
             IAccountRepository accountRepository = A.Fake<IAccountRepository>();

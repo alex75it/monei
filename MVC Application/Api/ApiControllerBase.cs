@@ -20,6 +20,9 @@ namespace Monei.MvcApplication.Api
         public IRegistryRepository RegistryRepository { get; set; }
         public ISubcategoryRepository SubcategoryRepository { get; set; }
 
+        public ICurrencyRepository CurrencyRepository { get; set; }
+
+
         public SubcategoryManager SubcategoryManager { get; set; }
 
         protected readonly ILog logger;
