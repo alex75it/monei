@@ -11,35 +11,29 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
     public class TestHelper
     {
-
         public readonly string TEST_USERNAME = "TEST name";
         public readonly string DEMO_USERNAME = "DEMO name";
 
         public ICurrencyRepository CurrencyRepository { get; set; }
         public IAccountRepository AccountRepository { get; set; }
         public ICategoryRepository CategoryRepository { get; set; }
+        public ISubcategoryRepository SubcategoryRepository { get; set; }
         public IRegistryRepository RegistryRepository { get; set; }
         
-
-
         private Random random = new Random(DateTime.Now.Millisecond);
 
-
-
-        /// <summary>
-        /// Compare DateTime witout check miliseconds (these is lose when date is stored in datetime field of SQL Server).
-        /// Also Kind can change when stored in SQL Server (a Kind.Local date become Kind.Unspecified).
-        /// Other difference on 
-        /// </summary>
-        /// <param name="date_A"></param>
-        /// <param name="date_B"></param>
-        /// <returns></returns>
-        //public int AreEqualDate(DateTime date_A, DateTime date_B)
-        //{
-        //	//date_A.Ticks-date_B.Tick;
-
-        //}
-
+        public TestHelper(IAccountRepository accountRepository,
+            ICurrencyRepository currencyRepository,
+            ICategoryRepository categoryRepository,
+            ISubcategoryRepository subcategoryRepository,
+            IRegistryRepository registryRepository)
+        {
+            AccountRepository = accountRepository;
+            CurrencyRepository = currencyRepository;            
+            CategoryRepository = CategoryRepository;
+            SubcategoryRepository = subcategoryRepository;
+            RegistryRepository = RegistryRepository;
+        }
 
         public Account GetTestAccount()
         {

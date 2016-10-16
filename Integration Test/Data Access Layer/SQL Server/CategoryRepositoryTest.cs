@@ -23,7 +23,6 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         public void SetUp()
         {
             sessionFactoryProvider = new SessionFactoryProvider();
-
             repository = new CategoryRepository(sessionFactoryProvider);
         }
 
@@ -85,6 +84,8 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         [Test]
         public void Create_when_NameIsTooLong_should_RaiseASpecificException()
         {
+            Assert.Ignore("This test should be done on CategoryManager");
+
             // test max length for name
             int maxLength = Category.NAME_MAX_LENGTH;
             string name = new String('a', maxLength + 1);

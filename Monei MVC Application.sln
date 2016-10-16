@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC Application", "MVC Appl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9D253066-E775-4503-8F8D-80EE26D4523E}"
 	ProjectSection(SolutionItems) = preProject
-		Graph1.dgml = Graph1.dgml
+		CategoryManager.dgml = CategoryManager.dgml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Access Layer", "Data Access Layer\Data Access Layer.csproj", "{85D1F40C-F9CC-42F7-AC99-C83E53FD8ED4}"

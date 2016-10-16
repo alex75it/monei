@@ -8,6 +8,7 @@ using Monei.Entities;
 using NUnit.Framework;
 using Should;
 using Assert = NUnit.Framework.Assert;
+using Monei.DataAccessLayer.SqlServer;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
@@ -18,25 +19,25 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         private const string DEFAULT_TEST_DESCRPTION = "$$$ This is a TEST - Delete me. $$$";
 
         private static int testAccountId;
+        private RegistryRepository repository;
+        
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void TestInitialize()
         {
-            //IList<RegistryRecord> records = RegistryRepository.ListRecods(new RegistryFilters() { EndDate = new DateTime(2005, 1, 1) });
+            var sessionFactoryProvider = new SessionFactoryProvider();
+            repository = new RegistryRepository(sessionFactoryProvider);
 
             testAccountId = Helper.GetTestAccount().Id;
-
             DeleteRecordsOfTestAccount();
         }
 
         [TearDown]
         public void TestClenup()
         {
-
             DeleteRecordsOfTestAccount();
         }
-
-
+        
         [Test]
         public void DeleteRecord()
         {
@@ -55,7 +56,36 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             RegistryRecord searchedRecord = RegistryRepository.ListRecords(filters).FirstOrDefault(r => r.Id == record.Id);
             Assert.IsTrue(searchedRecord == null);
         }
-                    
+
+        private RegistryFilters[] registryFiltersForListTest = new RegistryFilters[] {
+            new RegistryFilters() { } // empty
+            };
+
+        //[TestCaseSource(RegistryFilters]
+        [Test]
+        public void List_should_ReturnAList()
+        {
+            RegistryFilters filters = new RegistryFilters();
+            var list = repository.ListRecords(filters);
+            list.ShouldNotBeEmpty();
+        }
+
+        [Test]
+        public void List_when_StartDateAndEndDateAreSet_should_ReturnAList()
+        {
+            RegistryFilters filters = new RegistryFilters();
+            filters.StartDate = DateTime.Today.AddDays(-3);
+            filters.EndDate = DateTime.Today;
+
+            RegistryRecord registryRecord = new RegistryRecord() {
+                Date = DateTime.Today.AddDays(-3),
+            };
+
+            CreateTestRecord(registryRecord);            
+
+            var list = repository.ListRecords(filters);
+            list.ShouldNotBeEmpty();
+        }
 
         [Test]
         public void List()
@@ -64,7 +94,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             DateTime startDate = new DateTime(2005, 1, 1);
             DateTime endDate = new DateTime(2005, 1, 31);
 
-            DeleteRegistryRecordInPEriod(startDate, endDate);
+            DeleteRegistryRecordInPeriod(startDate, endDate);
 
             RegistryFilters filters;
 
@@ -121,7 +151,6 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
             // todo: add other tests
         }
-
 
         [Test]
         public void AddRecord()
@@ -182,7 +211,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
                 RegistryRepository.DeleteRecord(r.Id);
         }
         
-        private void DeleteRegistryRecordInPEriod(DateTime startDate, DateTime endDate)
+        private void DeleteRegistryRecordInPeriod(DateTime startDate, DateTime endDate)
         {
             IList<RegistryRecord> records = RegistryRepository.ListRecords(new RegistryFilters() { StartDate = startDate, EndDate=endDate });
 
@@ -190,31 +219,18 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
                 RegistryRepository.DeleteRecord(r.Id);
         }
 
-        private RegistryRecord CreateTestRecord()
+        private RegistryRecord CreateTestRecord(RegistryRecord record = null)
         {
-            DateTime date = DateTime.Now;
-            decimal amount = 123.45m;
-            string note = "DEFAULT_TEST_DESCRPTION";
-            Account account = Helper.GetTestAccount();
-            Category category = Helper.GetRandomCategory();
-            Subcategory subcategory = null;
-
-            RegistryRecord record = new RegistryRecord()
-            {
-                Date = date,
-                Amount = amount,
-                Note = note,
-                Category = category,
-                Subcategory = subcategory,
-                Account = account,
-            };
-
-            RegistryRecord recod = RegistryRepository.AddRecord(record);
+            record = record ?? new RegistryRecord();
+            if (record.Date == default(DateTime)) record.Date = DateTime.Today;
+            if (record.Category == null) record.Category = Helper.GetRandomCategory();
+            if (record.Account == null) record.Account = Helper.GetTestAccount();
+            
+            record = RegistryRepository.AddRecord(record);
             return record;
         }
 
         #endregion
 
-
-    }//class
+    }
 }

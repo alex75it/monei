@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Castle.MicroKernel.Registration;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
+using Monei.Test.IntegrationTest.DataAccessLayer.SqlServer;
 
 namespace Monei.Test.IntegrationTest.Installers
 {
@@ -22,7 +23,7 @@ namespace Monei.Test.IntegrationTest.Installers
                 Component.For<IRegistryRepository>().ImplementedBy<RegistryRepository>().LifestyleTransient(),
                 Component.For<ICategoryRepository>().ImplementedBy<CategoryRepository>().LifestyleTransient(),
                 Component.For<ISubcategoryRepository>().ImplementedBy<SubcategoryRepository>().LifestyleTransient()
-                );
+            );
         }
     }
 
