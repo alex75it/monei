@@ -19,7 +19,6 @@ namespace Monei.MvcApplication.Api
         public ICategoryRepository CategoryRepository { get; set; }
         public IRegistryRepository RegistryRepository { get; set; }
         public ISubcategoryRepository SubcategoryRepository { get; set; }
-
         public ICurrencyRepository CurrencyRepository { get; set; }
 
 

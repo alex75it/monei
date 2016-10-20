@@ -42,6 +42,10 @@ namespace Monei.MvcApplication
                 //defaults: new { p1 = RouteParameter.Optional, p2 = RouteParameter.Optional }
             );
 
+            //config.SuppressDefaultHostAuthentication();  // Owin
+            config.SuppressHostPrincipal();
+
+
             // Uncomment the following line of code to enable query support for actions with an IQueryable or IQueryable<T> return type.
             // To avoid processing unexpected or malicious queries, use the validation settings on QueryableAttribute to validate incoming queries.
             // For more information, visit http://go.microsoft.com/fwlink/?LinkId=279712.
@@ -51,8 +55,7 @@ namespace Monei.MvcApplication
             
             
             //config.MessageHandlers.Add(new CultureDelegatingHandler());
-            config.Formatters.Add(new CsvFormatter());
-            
+            config.Formatters.Add(new CsvFormatter());            
 
             // lower JSON property name
             //var formatters = GlobalConfiguration.Configuration.Formatters;

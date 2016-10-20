@@ -102,7 +102,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             */
 
             // for check...
-            IAccountRepository accountREpository = container.Resolve<IAccountRepository>();
+            IAccountRepository accountRepository = container.Resolve<IAccountRepository>();
 
             container.Install( new ControllerInstaller());
 
@@ -123,6 +123,10 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             var dependencyResolver = new WindsorDependencyResolver(container);
             configuration.DependencyResolver = dependencyResolver;
             WebApiConfig.Register(configuration);
+
+            //configuration.SuppressDefaultHostAuthentication();  // Owin
+            configuration.SuppressHostPrincipal();
+            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
             return configuration;
         }
