@@ -12,7 +12,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
     public class TestDataProvider
     {
         private ISessionFactory sessionFactory;
-        private string connectionSring;
 
         public TestDataProvider()
         {
