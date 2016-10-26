@@ -27,10 +27,9 @@ namespace Monei.MvcApplication.Core.Installers
                 Component.For<ICategoryRepository>().ImplementedBy<CategoryRepository>().LifestylePerWebRequest(),
                 Component.For<ISubcategoryRepository>().ImplementedBy<SubcategoryRepository>().LifestylePerWebRequest(),
                              
-                Component.For<SubcategoryManager>().ImplementedBy(typeof(SubcategoryManager)).LifestylePerWebRequest()
+                Component.For<SubcategoryManager>().ImplementedBy<SubcategoryManager>().LifestylePerWebRequest()
 
             );
-
         }
     }
 }

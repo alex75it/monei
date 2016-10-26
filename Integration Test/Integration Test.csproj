@@ -130,7 +130,6 @@
     <Compile Include="Data Access Layer\SQL Server\SubcategoryRepositoryTest.cs" />
     <Compile Include="Data Access Layer\SQL Server\TestHelper.cs" />
     <Compile Include="Entities\NHibernate Mappings\NHibernateMappingsTest.cs" />
-    <Compile Include="Installers\RepositoriesInstaller.cs" />
     <Compile Include="Mvc Application\Api\AccountApiControllerTest.cs" />
     <Compile Include="Mvc Application\Api\ApiControllerTestBase.cs" />
     <Compile Include="Mvc Application\Api\CategoryApiControllerTest.cs" />

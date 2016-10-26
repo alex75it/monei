@@ -70,7 +70,6 @@ namespace Monei.MvcApplication
 
         public void InitializeWindsorContainer()
         {
-            // WindsorCastle
             container = new WindsorContainer().Install(
                 //FromAssembly.This()
                 new RepositoriesInstaller(),
@@ -85,9 +84,7 @@ namespace Monei.MvcApplication
 
             var httpDependencyResolver = new WindsorDependencyResolver(container);
             GlobalConfiguration.Configuration.DependencyResolver =  httpDependencyResolver;
-            
-            //container.Install(new RepositoryInstaller());
         }
 
-    }//class
+    }
 }

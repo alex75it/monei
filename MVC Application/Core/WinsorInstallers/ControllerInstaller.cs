@@ -13,20 +13,20 @@ using Monei.MvcApplication.Controllers.Api;
 
 namespace Monei.MvcApplication.Core.Installers
 {
-	public class ControllerInstaller :IWindsorInstaller
-	{
-		public void Install(IWindsorContainer container, IConfigurationStore store)
-		{
-			container.Register(
-				Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient(),
-				Classes.FromThisAssembly().BasedOn<MoneiControllerBase>().LifestyleTransient(),
-				Classes.FromThisAssembly().BasedOn<ApiControllerBase>().LifestyleTransient(), // .LifestyleScoped()
-				
-				//Component.For<IAccountRepository>().DependsOn<IAccountRepository>().in
-				Component.For<IWebAuthenticationWorker>().ImplementedBy<WebAuthenticationWorker>()
+    public class ControllerInstaller :IWindsorInstaller
+    {
+        public void Install(IWindsorContainer container, IConfigurationStore store)
+        {
+            container.Register(
+                // lifeStyleTransient, lifeStylePerWebRequest, lifeStyleScoped... why one or the other?
 
-				);
-		}
+                Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient(),
+                Classes.FromThisAssembly().BasedOn<MoneiControllerBase>().LifestyleTransient(),
+                Classes.FromThisAssembly().BasedOn<ApiControllerBase>().LifestyleTransient(), // .LifestyleScoped()			
+                
+                Component.For<IWebAuthenticationWorker>().ImplementedBy<WebAuthenticationWorker>()
+            );
+        }
 
-	}
+    }
 }

@@ -8,8 +8,11 @@ using Castle.Windsor;
 using Castle.Windsor.Installer;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
-using Monei.Test.IntegrationTest.Installers;
 using NUnit.Framework;
+using Monei.MvcApplication.Core.Installers;
+using Castle.MicroKernel.ModelBuilder;
+using Castle.MicroKernel;
+using Castle.Core;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
@@ -27,27 +30,29 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         [OneTimeSetUp]
         public void Initialize()
         {
-        //	try
-        //	{
-        		IWindsorContainer container = new WindsorContainer();
-        		container.Install(
-        			new RepositoriesInstaller(),
-        			FromAssembly.This()
-        			);
+        	IWindsorContainer container = new WindsorContainer();
 
-        		container.Register(
-        			Component.For<TestHelper>().ImplementedBy<TestHelper>()
+            // prevent the error of PerWebREquestStyle module missing because there is not a web request.
+            //container.Kernel.ComponentModelBuilder.AddContributor(new SingletonEqualizer());
+
+            container.Install(
+        		new RepositoriesInstaller()
+        		//FromAssembly.This()
         		);
 
-        		Helper = container.Resolve<TestHelper>();
+        	container.Register(
+        		Component.For<TestHelper>().ImplementedBy<TestHelper>()
+        	);
 
-        //	}
-        //	catch (Exception exc)
-        //	{
-        //		Console.WriteLine("Error: " + exc);
-        //		throw;
-        //	}
+        	Helper = container.Resolve<TestHelper>();
+        }
 
+        public class SingletonEqualizer :IContributeComponentModelConstruction
+        {
+            public void ProcessModel(IKernel kernel, ComponentModel model)
+            {
+                model.LifestyleType = LifestyleType.Singleton;
+            }
         }
 
     }
