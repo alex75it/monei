@@ -40,7 +40,7 @@ namespace Monei.MvcApplication.Api
                 {
 
 
-                    // do not use the User.Identity. It is set by ASP cookie, so does not work with calls from outside the web site.
+                    // do not use the User.Identity. It is set by ASP using cookie, so does not work with calls from outside the web site.
                     // and if you use it you are exposed to CSRF
 
                     //if (User.Identity.IsAuthenticated)

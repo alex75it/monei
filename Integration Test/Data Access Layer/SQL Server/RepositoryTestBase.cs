@@ -32,8 +32,8 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         {
         	IWindsorContainer container = new WindsorContainer();
 
-            // prevent the error of PerWebREquestStyle module missing because there is not a web request.
-            //container.Kernel.ComponentModelBuilder.AddContributor(new SingletonEqualizer());
+            // prevent the error of PerWebRequestStyle module missing because there is not a web request.
+            container.Kernel.ComponentModelBuilder.AddContributor(new LifestyleSingletonContributor());
 
             container.Install(
         		new RepositoriesInstaller()
@@ -47,7 +47,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         	Helper = container.Resolve<TestHelper>();
         }
 
-        public class SingletonEqualizer :IContributeComponentModelConstruction
+        public class LifestyleSingletonContributor : IContributeComponentModelConstruction
         {
             public void ProcessModel(IKernel kernel, ComponentModel model)
             {
