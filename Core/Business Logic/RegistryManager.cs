@@ -11,7 +11,6 @@ namespace Monei.Core
 
     public interface IRegistryManager
     {
-
         int CreateRecord(RegistryRecord record);
     }
 

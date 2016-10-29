@@ -9,9 +9,9 @@ using Monei.DataAccessLayer.SqlServer;
 using Monei.Entities;
 using Monei.MvcApplication.Core;
 
-namespace Monei.MvcApplication.Helpers
+namespace Monei.MvcApplication.Core
 {
-    public class WebSecurity :WebMatrix.WebData.ExtendedMembershipProvider
+    public class __WebSecurity :WebMatrix.WebData.ExtendedMembershipProvider
     {
         public static readonly ILog logger = LogManager.GetLogger(typeof(WebSecurity));
         private readonly IAccountRepository accountRepository;
@@ -26,7 +26,7 @@ namespace Monei.MvcApplication.Helpers
             InternalError = 30,
         }
 
-        public WebSecurity(IAccountRepository accountRepository, IWebAuthenticationWorker webAuthenticationWorker)
+        public __WebSecurity(IAccountRepository accountRepository, IWebAuthenticationWorker webAuthenticationWorker)
         {
             this.accountRepository = accountRepository;
             this.webAuthenticationWorker = webAuthenticationWorker;

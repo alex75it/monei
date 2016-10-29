@@ -232,10 +232,13 @@
     <Compile Include="Core\ColumnNameForExportAttribute.cs" />
     <Compile Include="Core\CsvFormatter.cs" />
     <Compile Include="Core\ExceptionLogger.cs" />
-    <Compile Include="Core\WinsorInstallers\ControllerInstaller.cs" />
-    <Compile Include="Core\WinsorInstallers\RepositoriesInstaller.cs" />
-    <Compile Include="Core\WinsorInstallers\WindsorDependencyResolver.cs" />
-    <Compile Include="Core\WinsorInstallers\WindsorDependencyScope.cs" />
+    <Compile Include="Core\WebSecurity - Copy.cs" />
+    <Compile Include="Core\WindsorInstallers\BusinessLogicInstaller.cs" />
+    <Compile Include="Core\WindsorInstallers\ControllersInstaller.cs" />
+    <Compile Include="Core\WindsorInstallers\RepositoriesInstaller.cs" />
+    <Compile Include="Core\WindsorInstallers\WindsorBootstrapper.cs" />
+    <Compile Include="Core\WindsorInstallers\WindsorDependencyResolver.cs" />
+    <Compile Include="Core\WindsorInstallers\WindsorDependencyScope.cs" />
     <Compile Include="Core\IWebAuthenticationWorker.cs" />
     <Compile Include="Core\WebAuthenticationWorker.cs" />
     <Compile Include="Core\WindsorControllerFactory.cs" />
@@ -256,7 +259,7 @@
     <Compile Include="Helpers\ExportResponseCreator.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Helpers\ViewHelper.cs" />
-    <Compile Include="Helpers\WebSecurity.cs" />
+    <Compile Include="Core\WebSecurity.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\ContractsModel.cs" />
     <Compile Include="Models\RegistryModel.cs" />

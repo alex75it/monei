@@ -8,14 +8,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Castle.Windsor;
-using Castle.Windsor.Installer;
 using log4net;
-using Monei.MvcApplication.Api;
-using Monei.MvcApplication.Code;
-using Monei.MvcApplication.Controllers;
-using Monei.MvcApplication.Controllers.Api;
-using Monei.MvcApplication.Core.Installers;
-using Monei.MvcApplication.DelegatingHandlers;
+using Monei.MvcApplication.Core.WindsorInstallers;
 
 namespace Monei.MvcApplication
 {
@@ -24,9 +18,9 @@ namespace Monei.MvcApplication
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static IWindsorContainer container;
+        //private static IWindsorContainer container;
 
-        public IWindsorContainer WindSorContainer { get { return container; } }
+        private WindsorBootstrapper windsorBootstrapper;
 
         protected void Application_Start()
         {
@@ -43,14 +37,17 @@ namespace Monei.MvcApplication
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            log4net.Config.XmlConfigurator.Configure(); 
+            log4net.Config.XmlConfigurator.Configure();
 
-            InitializeWindsorContainer();	 
+            // Dependency Injection with Windsor Castle
+            windsorBootstrapper = new WindsorBootstrapper();
+            windsorBootstrapper.Initialize();
         }
 
         protected void Application_End()
         {
-            container.Dispose();
+            windsorBootstrapper.Dispose();
+            //container.Dispose();
         }
         
         protected void Application_Error()
@@ -67,24 +64,5 @@ namespace Monei.MvcApplication
             
             Server.TransferRequest("Error", false);
         }
-
-        public void InitializeWindsorContainer()
-        {
-            container = new WindsorContainer().Install(
-                //FromAssembly.This()
-                new RepositoriesInstaller(),
-                new ControllerInstaller()
-                );
-
-            container.Resolve<MoneiControllerBase>();
-            container.Resolve<ApiControllerBase>();
-
-            var controllerFactory = new WindsorControllerFactory(container.Kernel);
-            ControllerBuilder.Current.SetControllerFactory(controllerFactory);
-
-            var httpDependencyResolver = new WindsorDependencyResolver(container);
-            GlobalConfiguration.Configuration.DependencyResolver =  httpDependencyResolver;
-        }
-
     }
 }

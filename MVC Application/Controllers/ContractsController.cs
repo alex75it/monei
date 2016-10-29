@@ -6,29 +6,30 @@ using System.Web.Mvc;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
 using Monei.MvcApplication.Models;
-
+using Monei.Core.BusinessLogic;
 
 namespace Monei.MvcApplication.Controllers
 {
-	[Authorize]
+    [Authorize]
     public class ContractsController : MoneiControllerBase
     {
 
-		private readonly IContractRepository contractRepository;
+        private readonly IContractRepository contractRepository;
 
-		public ContractsController(IContractRepository contractRepository)
-		{
-			this.contractRepository = contractRepository;
-		}
+        public ContractsController(IAccountManager accountManager, IContractRepository contractRepository)
+            :base(accountManager)
+        {
+            this.contractRepository = contractRepository;
+        }
 
 
         // GET: /Contracts/
         public ActionResult Index()
         {
-			//AccountId
+            //AccountId
 
-			ContractListModel model = new ContractListModel();
-			model.Contracts = contractRepository.ListContracts(GetAccount().Id);			
+            ContractListModel model = new ContractListModel();
+            model.Contracts = contractRepository.ListContracts(GetAccount().Id);			
 
             return View("Contracts-Index", model);
         }
@@ -45,8 +46,8 @@ namespace Monei.MvcApplication.Controllers
         // GET: /Contracts/Create
         public ActionResult Create()
         {
-			ContractModel model = new ContractModel();
-			model.Contract = null;
+            ContractModel model = new ContractModel();
+            model.Contract = null;
 
             return View(model);
         }
@@ -60,38 +61,38 @@ namespace Monei.MvcApplication.Controllers
             {
                 // TODO: Add insert logic here
 
-				string supplier = collection["Contract.Supplier"];
-				string startDateText = collection["Contract.StartDate"];
-				string endDateText = collection["Contract.EndDate"];
-				string dueAmountText = collection["Contract.DueAmount"];
+                string supplier = collection["Contract.Supplier"];
+                string startDateText = collection["Contract.StartDate"];
+                string endDateText = collection["Contract.EndDate"];
+                string dueAmountText = collection["Contract.DueAmount"];
 
-				DateTime startDate = DateTime.Parse(startDateText);
-				DateTime? endDate = null;
-				if(endDateText != "") endDate = DateTime.Parse(endDateText);
-				decimal dueAmount = Decimal.Parse(dueAmountText);
+                DateTime startDate = DateTime.Parse(startDateText);
+                DateTime? endDate = null;
+                if(endDateText != "") endDate = DateTime.Parse(endDateText);
+                decimal dueAmount = Decimal.Parse(dueAmountText);
 
-				
+                
 
-				Contract contract = new Contract()
-				{
-					Account = GetAccount(),
-					Supplier = supplier,
-					StartDate = startDate,
-					EndDate = endDate,
-					DueAmount = dueAmount,
+                Contract contract = new Contract()
+                {
+                    Account = GetAccount(),
+                    Supplier = supplier,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    DueAmount = dueAmount,
 
-				};
+                };
 
-				contractRepository.CreateContract(GetAccount().Id, contract);
+                contractRepository.CreateContract(GetAccount().Id, contract);
 
 
                 return RedirectToAction("Index");
             }
             catch(Exception exc)
             {
-				logger.Error(exc);
-				string errorMessage = "Fail to create the contract. " + exc.Message;
-				ViewBag.ErrorMessage = errorMessage;
+                logger.Error(exc);
+                string errorMessage = "Fail to create the contract. " + exc.Message;
+                ViewBag.ErrorMessage = errorMessage;
                 return View();
             }
         }
@@ -128,21 +129,21 @@ namespace Monei.MvcApplication.Controllers
         [HttpPost]
         public ActionResult Delete( string id /*int id, FormCollection collection*/)
         {
-			logger.InfoFormat("Delete the contract with id: " + id);
+            logger.InfoFormat("Delete the contract with id: " + id);
 
             try
             {
                 // TODO: Add delete logic here
 
-				int contractId = int.Parse(id);
+                int contractId = int.Parse(id);
 
-				contractRepository.Delete(contractId);
+                contractRepository.Delete(contractId);
 
                 return RedirectToAction("Index");
             }
             catch(Exception exc)
             {
-				logger.ErrorFormat("Fail to delete Contract, Id: \"{0}\". Error:\n{1}", id, exc);
+                logger.ErrorFormat("Fail to delete Contract, Id: \"{0}\". Error:\n{1}", id, exc);
                 return View();
             }
         }

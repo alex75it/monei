@@ -1,27 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Mvc;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
-using Castle.Windsor.Installer;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using Monei.MvcApplication;
-using Monei.MvcApplication.Api;
-using Monei.MvcApplication.Code;
-using Monei.MvcApplication.Core.Installers;
 using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 using System.Configuration;
 using Monei.Entities;
+using Monei.MvcApplication.Core;
+using Monei.MvcApplication.Core.WindsorInstallers;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
@@ -79,7 +74,12 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
         private void InitializeWindsorContainer()
         {
-            container = new WindsorContainer();
+            new WindsorBootstrapper()
+                .Initialize();
+
+            return;
+
+            var container = new WindsorContainer();
 
             container.Register(
                 Component.For<ISessionFactoryProvider>().ImplementedBy<SessionFactoryProvider>(),
@@ -104,7 +104,10 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             // for check...
             IAccountRepository accountRepository = container.Resolve<IAccountRepository>();
 
-            container.Install( new ControllerInstaller());
+
+
+
+            container.Install( new ControllersInstaller());
 
             //container.Resolve<MoneiControllerBase>();
             //ApiController controller = container.Resolve<ApiControllerBase>();

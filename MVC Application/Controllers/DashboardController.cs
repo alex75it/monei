@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Monei.Core.BusinessLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,12 @@ namespace Monei.MvcApplication.Controllers
 {
 	public class DashboardController : MoneiControllerBase
     {
+        public DashboardController(IAccountManager accountyManager)
+            :base(accountyManager)
+        {
+
+        }
+
         // GET: Dashboard
         public ActionResult Index()
         {

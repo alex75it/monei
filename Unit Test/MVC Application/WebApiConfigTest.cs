@@ -7,7 +7,7 @@ using System.Web.Http;
 using Monei.MvcApplication;
 using NUnit.Framework;
 
-namespace Monei.Test.UnitTest.MVC_Application
+namespace Monei.Test.UnitTest.MvcApplication
 {
 	[TestFixture]
 	public class WebApiConfigTest

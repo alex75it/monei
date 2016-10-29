@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FakeItEasy;
-using Monei.Core.Managers;
 using Monei.DataAccessLayer.Exceptions;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
 using NUnit.Framework;
 using Should;
+using Monei.Core.BusinessLogic;
 
 namespace Monei.Test.UnitTest.Core.Managers
 {
@@ -17,7 +17,7 @@ namespace Monei.Test.UnitTest.Core.Managers
     public class CategoryManagerTest
     {
         [Test]
-        public void Update_WhenCategoryHasATooLongName_Should_ThrowsSpecificException()
+        public void Update_when_CategoryHasATooLongName_should_ThrowsSpecificException()
         {
             ICategoryRepository categoryRepository = A.Fake<ICategoryRepository>();
             CategoryManager manager = new CategoryManager(categoryRepository);

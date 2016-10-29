@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -47,14 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business Logic\AccountManager.cs" />
     <Compile Include="Data Analysis\Business Objects\CategoriesData.cs" />
     <Compile Include="Data Analysis\Business Objects\CategoryData.cs" />
     <Compile Include="Data Analysis\Business Objects\MonthData.cs" />
     <Compile Include="Data Analysis\Business Objects\YearData.cs" />
     <Compile Include="Data Analysis\Engine.cs" />
-    <Compile Include="Entity Managers\CategoryManager.cs" />
-    <Compile Include="Entity Managers\IAccountManager.cs" />
-    <Compile Include="Entity Managers\RegistryManager.cs" />
+    <Compile Include="Business Logic\AccountSecurity.cs" />
+    <Compile Include="Business Logic\CategoryManager.cs" />
+    <Compile Include="Business Logic\RegistryManager.cs" />
+    <Compile Include="Enums\LoginResult.cs" />
     <Compile Include="SubcategoryManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
