@@ -9,10 +9,10 @@ using Castle.Windsor.Installer;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using NUnit.Framework;
-using Monei.MvcApplication.Core.Installers;
 using Castle.MicroKernel.ModelBuilder;
 using Castle.MicroKernel;
 using Castle.Core;
+using Monei.MvcApplication.Core.WindsorInstallers;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
@@ -37,7 +37,6 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
             container.Install(
         		new RepositoriesInstaller()
-        		//FromAssembly.This()
         		);
 
         	container.Register(
