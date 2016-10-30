@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Http.Dependencies;
 using Castle.Windsor;
 
-namespace Monei.MvcApplication.Core.Installers
+namespace Monei.MvcApplication.Core.WindsorInstallers
 {
 	/// <summary>
 	/// 

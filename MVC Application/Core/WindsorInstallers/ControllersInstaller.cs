@@ -9,11 +9,10 @@ using Castle.Windsor;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.MvcApplication.Api;
 using Monei.MvcApplication.Controllers;
-using Monei.MvcApplication.Controllers.Api;
 
-namespace Monei.MvcApplication.Core.Installers
+namespace Monei.MvcApplication.Core.WindsorInstallers
 {
-    public class ControllerInstaller :IWindsorInstaller
+    public class ControllersInstaller :IWindsorInstaller
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {

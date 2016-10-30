@@ -10,7 +10,7 @@ using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using Monei.MvcApplication.Controllers;
 
-namespace Monei.MvcApplication.Core.Installers
+namespace Monei.MvcApplication.Core.WindsorInstallers
 {
     public class RepositoriesInstaller: IWindsorInstaller
     {
@@ -19,16 +19,12 @@ namespace Monei.MvcApplication.Core.Installers
             container.Register(
 
                 Component.For<ISessionFactoryProvider>().ImplementedBy<SessionFactoryProvider>().LifeStyle.Singleton,
-
-                // Repositories
+                                
                 Component.For<IAccountRepository>().ImplementedBy<AccountRepository>().LifestylePerWebRequest(),
                 Component.For<IRegistryRepository>().ImplementedBy<RegistryRepository>().LifestylePerWebRequest(),
                 Component.For<ICurrencyRepository>().ImplementedBy<CurrencyRepository>().LifestylePerWebRequest(),
                 Component.For<ICategoryRepository>().ImplementedBy<CategoryRepository>().LifestylePerWebRequest(),
-                Component.For<ISubcategoryRepository>().ImplementedBy<SubcategoryRepository>().LifestylePerWebRequest(),
-                             
-                Component.For<SubcategoryManager>().ImplementedBy<SubcategoryManager>().LifestylePerWebRequest()
-
+                Component.For<ISubcategoryRepository>().ImplementedBy<SubcategoryRepository>().LifestylePerWebRequest()
             );
         }
     }

@@ -18,9 +18,12 @@ namespace Monei.MvcApplication
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        //private static IWindsorContainer container;
-
         private WindsorBootstrapper windsorBootstrapper;
+
+        public MvcApplication()
+        {
+
+        }
 
         protected void Application_Start()
         {
@@ -42,7 +45,7 @@ namespace Monei.MvcApplication
             // Dependency Injection with Windsor Castle
             windsorBootstrapper = new WindsorBootstrapper();
             windsorBootstrapper.Initialize();
-        }
+        }        
 
         protected void Application_End()
         {
@@ -64,5 +67,7 @@ namespace Monei.MvcApplication
             
             Server.TransferRequest("Error", false);
         }
+
+        
     }
 }

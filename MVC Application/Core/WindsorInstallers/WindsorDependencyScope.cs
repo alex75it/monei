@@ -7,7 +7,7 @@ using Castle.MicroKernel.Lifestyle.Scoped;
 using Castle.Windsor;
 
 
-namespace Monei.MvcApplication.Core.Installers
+namespace Monei.MvcApplication.Core.WindsorInstallers
 {
 	public class WindsorDependencyScope :IDependencyScope
 	{
