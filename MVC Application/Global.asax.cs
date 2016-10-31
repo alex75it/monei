@@ -19,14 +19,11 @@ using Monei.MvcApplication.DelegatingHandlers;
 
 namespace Monei.MvcApplication
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-
     public class MvcApplication : System.Web.HttpApplication
     {
         private static IWindsorContainer container;
 
-        public IWindsorContainer WindSorContainer { get { return container; } }
+        public IWindsorContainer WindsorContainer { get { return container; } }
 
         protected void Application_Start()
         {
@@ -70,24 +67,21 @@ namespace Monei.MvcApplication
 
         public void InitializeWindsorContainer()
         {
-            // WindsorCastle
-            container = new WindsorContainer().Install(
+            // http://stackoverflow.com/questions/32852440/dependency-injection-in-asp-net-session-start-method
+
+            container = new WindsorContainer();
+
+            container.Install(
                 //FromAssembly.This()
                 new RepositoriesInstaller(),
                 new ControllerInstaller()
                 );
-
-            container.Resolve<MoneiControllerBase>();
-            container.Resolve<ApiControllerBase>();
 
             var controllerFactory = new WindsorControllerFactory(container.Kernel);
             ControllerBuilder.Current.SetControllerFactory(controllerFactory);
 
             var httpDependencyResolver = new WindsorDependencyResolver(container);
             GlobalConfiguration.Configuration.DependencyResolver =  httpDependencyResolver;
-            
-            //container.Install(new RepositoryInstaller());
         }
-
-    }//class
+    }
 }
