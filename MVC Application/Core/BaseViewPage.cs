@@ -13,21 +13,28 @@ namespace Monei.MvcApplication
     {
         private ILog logger = LogManager.GetLogger(typeof(BaseViewPage<TModel>));
 
-        private IAccountRepository accountRepository;
-
         public Account Account { get; private set; }
 
         public BaseViewPage()
         {
-            MvcApplication application = HttpContext.Current.ApplicationInstance as MvcApplication;
-            accountRepository = application.WindsorContainer.Resolve<IAccountRepository>();
+
         }
 
         protected override void InitializePage()
         {
             base.InitializePage();
-            if (User.Identity.IsAuthenticated)
+
+            Account = Session["Account"] as Account;
+
+            // Session can be expired
+            if (Account == null && User.Identity.IsAuthenticated)
+            {
+                logger.WarnFormat("Session aCcount is null but User is authenticated");
+                MvcApplication application = (MvcApplication)HttpContext.Current.ApplicationInstance;
+                IAccountRepository accountRepository = application.WindsorContainer.Resolve<IAccountRepository>();
                 Account = accountRepository.Read(User.Identity.Name);
+                Session["Account"] = Account;
+            }
         }
 
         public override void Execute()

@@ -16,6 +16,8 @@ using Monei.MvcApplication.Controllers;
 using Monei.MvcApplication.Controllers.Api;
 using Monei.MvcApplication.Core.Installers;
 using Monei.MvcApplication.DelegatingHandlers;
+using Monei.Entities;
+using Monei.DataAccessLayer.Interfaces;
 
 namespace Monei.MvcApplication
 {
@@ -27,6 +29,8 @@ namespace Monei.MvcApplication
 
         protected void Application_Start()
         {
+            //this.PostAuthenticateRequest += MvcApplication_PostAuthenticateRequest;
+
             AreaRegistration.RegisterAllAreas();
 
             //GlobalConfiguration.Configuration.MessageHandlers.Add(new CultureDelegatingHandler());
@@ -43,6 +47,25 @@ namespace Monei.MvcApplication
             log4net.Config.XmlConfigurator.Configure(); 
 
             InitializeWindsorContainer();	 
+        }
+
+        private void Session_Start(object sender, EventArgs e)
+        {
+            Session["Account"] = null;
+        }
+
+        private void MvcApplication_PostAuthenticateRequest(object sender, EventArgs e)
+        {
+            try
+            {
+                IAccountRepository accountRepository = container.Resolve<IAccountRepository>();
+                Account account = accountRepository.Read(Request.LogonUserIdentity.Name);
+                Session["Account"] = account;
+            }
+            catch (Exception exc)
+            {
+                throw new Exception("Fail to obtain Account from authenticated user.", exc);
+            }
         }
 
         protected void Application_End()
