@@ -5,7 +5,7 @@ function (utils, CategoryDataProvider) {
     var directive = {};
     directive.restrict = "E";
     directive.replace = true;
-    directive.templateUrl =  "/Scripts for monei/directive-templates/CategorySelector.html";
+    directive.templateUrl =  "/Scripts for monei/Angular/directive-templates/CategorySelector.html";
 
     directive.scope = {
         selectedCategories: "=" // the container should use the property "selected-categories"

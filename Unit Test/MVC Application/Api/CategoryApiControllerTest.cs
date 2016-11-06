@@ -13,13 +13,15 @@ using Should;
 namespace Monei.Test.UnitTest.MvcApplication.Api
 {
     [TestFixture, Category("Web API"), Category("Category"),]
-    public class CategoryApiControllerTest
+    internal class CategoryApiControllerTest :ApiControllerTestBase
     {
         [Test]
         public void List_when_OrderByMostUsed_then_ReturnedList_should_BeOrderedByUsage()
         {
             // Arrange
             var controller = new CategoryApiController();
+
+            SetRequestUser(controller);
 
             ICategoryRepository categoryRepository = A.Fake<ICategoryRepository>();
             IList<Category> data = new List<Category>();

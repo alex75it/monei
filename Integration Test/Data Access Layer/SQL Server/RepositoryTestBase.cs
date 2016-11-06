@@ -12,7 +12,7 @@ using NUnit.Framework;
 using Castle.MicroKernel.ModelBuilder;
 using Castle.MicroKernel;
 using Castle.Core;
-using Monei.MvcApplication.Core.WindsorInstallers;
+using Monei.MvcApplication.Core.DependencyInjection;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {

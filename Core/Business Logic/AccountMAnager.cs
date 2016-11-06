@@ -14,7 +14,7 @@ namespace Monei.Core.BusinessLogic
         Account CreateAccount(string username, string password);
     }
 
-    internal class AccountManager : IAccountManager
+    public class AccountManager : IAccountManager
 
     {
         private readonly IAccountRepository accountRepository;

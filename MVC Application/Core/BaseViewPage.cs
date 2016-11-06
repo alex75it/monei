@@ -17,16 +17,9 @@ namespace Monei.MvcApplication
     public class BaseViewPage<TModel> : WebViewPage<TModel>
     {
         private ILog logger;
-        //private readonly IAccountManager accountManager;
 
         public Account Account { get; private set; }
-
-        //public BaseViewPage(IAccountManager accountManager)
-        //{
-        //    logger = LogManager.GetLogger(this.GetType());
-        //    this.accountManager = accountManager;
-        //}
-
+        
         public BaseViewPage()
         {
             logger = LogManager.GetLogger(this.GetType());
@@ -35,35 +28,24 @@ namespace Monei.MvcApplication
         protected override void InitializePage()
         {
             base.InitializePage();
-            Account = GetAccount();
-        }
 
-        //public bool HasRole(params Account.AccountRole[] roles)
-        //{
-        //    if (Account == null)
-        //        return false;
-        //    return roles.Contains(Account.Role);
-        //}
+            Account = Session["Account"] as Account;
 
-        private Account GetAccount()
-        {
-            //Account account = null;
-
-            //if (User.Identity.IsAuthenticated)
-            //    account = accountManager.Read(User.Identity.Name);            
-
-            Account account = Session["Account"] as Account;
-
-            if (User.Identity.IsAuthenticated && account == null)
-                logger.ErrorFormat("REquest authenticated but Account is null");
-
-            return account;
+            // Session can be expired
+            if (Account == null && User.Identity.IsAuthenticated)
+            {
+                logger.WarnFormat("Session Account is null but User is authenticated");
+                //MvcApplication application = (MvcApplication)HttpContext.Current.ApplicationInstance;
+                IAccountManager accountManager = MvcApplication.DependencyInjectionManager.Resolve<IAccountManager>();
+                Account = accountManager.Read(User.Identity.Name);
+                Session["Account"] = Account;
+            }
         }
 
         public override void Execute()
         {
-            logger.ErrorFormat("Call to \"Execute\" is not implemented");
+            logger.ErrorFormat("Call to Execute() not implemented");
             throw new NotImplementedException();
-        }
+        }		
     }
 }

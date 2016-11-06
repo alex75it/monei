@@ -12,7 +12,7 @@ app.directive("moneiRegistryCreatePanel",
     };
     directive.restrict = "E";
     directive.replace = true;
-    directive.templateUrl = "/Scripts for monei/directive-templates/RegistryCreatePanel.html";
+    directive.templateUrl = "/Scripts for monei/Angular/directive-templates/RegistryCreatePanel.html";
 
     directive.link = function (scope, element, attrs) {
         

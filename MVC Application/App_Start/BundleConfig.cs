@@ -8,9 +8,8 @@ namespace Monei.MvcApplication
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/moment").Include(
-                // moment
-                //"~/Scripts/moment.min.js",
+            // moment.js
+            bundles.Add(new ScriptBundle("~/bundles/moment").Include(                
                 "~/Scripts/moment-with-locales.min.js"
             ));
 
@@ -75,16 +74,19 @@ namespace Monei.MvcApplication
                 // monei
                 "~/Scripts for monei/monei.js",
                 "~/Scripts for monei/monei.utils.js",
-                "~/Scripts for monei/angular app.js",
-                "~/Scripts for monei/angular controllers/*.js",
-                "~/Scripts for monei/angular directives/*.js",
-                "~/Scripts for monei/angular providers/*.js",
-                "~/Scripts for monei/angular services/*.js",
-                "~/Scripts for monei/angular filters/*.js"
-                )
-                );
+                "~/Scripts for monei/angular app.js"
+                )                
+                // WARN this one fail
+                //.IncludeDirectory("~/Scripts for monei/Angular", "*.js", true)
+            );
 
-
+            ScriptBundle moneiBundle = bundles.GetBundleFor("~/bundles/monei") as ScriptBundle;
+            moneiBundle.IncludeDirectory("~/Scripts for monei/Angular/controllers", "*.js");
+            moneiBundle.IncludeDirectory("~/Scripts for monei/Angular/directives", "*.js");
+            moneiBundle.IncludeDirectory("~/Scripts for monei/Angular/filters", "*.js");
+            moneiBundle.IncludeDirectory("~/Scripts for monei/Angular/providers", "*.js");
+            moneiBundle.IncludeDirectory("~/Scripts for monei/Angular/services", "*.js");
+            
             // exclude Jasmine test files
             bundles.IgnoreList.Ignore("*_jasmine.js", OptimizationMode.Always);
 

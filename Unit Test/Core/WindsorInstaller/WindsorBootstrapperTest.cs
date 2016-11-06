@@ -1,32 +1,26 @@
-﻿using Monei.MvcApplication.Controllers;
-using Monei.MvcApplication.Core.WindsorInstallers;
+﻿using Monei.Core.BusinessLogic;
+using Monei.MvcApplication.Controllers;
+using Monei.MvcApplication.Core.DependencyInjection;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Should;
 
-namespace Monei.Test.UnitTest.Core.WindsorInstaller
+namespace Monei.Test.UnitTest.Core.DependencyInjection
 {
     [TestFixture]
-    public class WindsorBootstrapperTest
+    public class WindsorCastleDependencyInjectionTest
     {
-
-
-        public void Initialize_should_MakeBusinessLogicResolvable()
+        public void Constructor_should_MakeBusinessLogicResolvable()
         {
-            using (WindsorBootstrapper bootstrapper = new WindsorBootstrapper())
+            using (WindsorCastleDependencyInjection dependencyInjection = new WindsorCastleDependencyInjection())
             {
-                bootstrapper.Initialize();
-
-
-                //AccountController controller = new WindsorContainer
+                IAccountManager accountManager = dependencyInjection.Resolve<IAccountManager>();
+                accountManager.ShouldNotBeNull();
             }
-
-
-
-
         }
 
 

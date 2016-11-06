@@ -6,7 +6,7 @@ function (SubcategoryDataProvider) {
 
     var directive = {
         restrict: "E",
-        templateUrl: "/Scripts for monei/directive-templates/SubcategorySelector.html",
+        templateUrl: "/Scripts for monei/Angular/directive-templates/SubcategorySelector.html",
         replace: true
     };
 

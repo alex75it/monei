@@ -9,22 +9,17 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Castle.Windsor;
 using log4net;
-using Monei.MvcApplication.Core.WindsorInstallers;
+using Monei.MvcApplication.Core.DependencyInjection;
+using Monei.Entities;
+using Monei.DataAccessLayer.Interfaces;
 
 namespace Monei.MvcApplication
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-
     public class MvcApplication : System.Web.HttpApplication
-    {
-        private WindsorBootstrapper windsorBootstrapper;
+    {       
 
-        public MvcApplication()
-        {
-
-        }
-
+        public static WindsorCastleDependencyInjection DependencyInjectionManager { get; private set; }
+              
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -42,15 +37,35 @@ namespace Monei.MvcApplication
 
             log4net.Config.XmlConfigurator.Configure();
 
-            // Dependency Injection with Windsor Castle
-            windsorBootstrapper = new WindsorBootstrapper();
-            windsorBootstrapper.Initialize();
+            // http://stackoverflow.com/questions/32852440/dependency-injection-in-asp-net-session-start-method   
+            
+            DependencyInjectionManager = new WindsorCastleDependencyInjection();
+            GlobalConfiguration.Configuration.DependencyResolver = DependencyInjectionManager;
         }        
+
+        private void Session_Start(object sender, EventArgs e)
+        {
+            Session["Account"] = null;
+        }
+
+        private void MvcApplication_PostAuthenticateRequest(object sender, EventArgs e)
+        {
+            try
+            {
+                IAccountRepository accountRepository = DependencyInjectionManager.Resolve<IAccountRepository>();
+                Account account = accountRepository.Read(Request.LogonUserIdentity.Name);
+                Session["Account"] = account;
+            }
+            catch (Exception exc)
+            {
+                throw new Exception("Fail to obtain Account from authenticated user.", exc);
+            }
+        }
 
         protected void Application_End()
         {
-            windsorBootstrapper.Dispose();
-            //container.Dispose();
+            if(DependencyInjectionManager != null)
+                DependencyInjectionManager.Dispose();
         }
         
         protected void Application_Error()
@@ -66,8 +81,6 @@ namespace Monei.MvcApplication
             }
             
             Server.TransferRequest("Error", false);
-        }
-
-        
-    }
+        }             
+    }    
 }

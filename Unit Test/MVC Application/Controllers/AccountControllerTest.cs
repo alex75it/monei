@@ -1,5 +1,5 @@
 ﻿using Monei.MvcApplication.Controllers;
-using Monei.MvcApplication.Core.WindsorInstallers;
+using Monei.MvcApplication.Core.DependencyInjection;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

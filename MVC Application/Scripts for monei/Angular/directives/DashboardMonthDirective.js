@@ -8,7 +8,7 @@ app.directive("dashboardMonth", function () {
 	var directive = {};
 	directive.restrict = "EA";
 	directive.replace = true;
-	directive.templateUrl = "/Scripts for monei/directive-templates/dashboard-month.html";
+	directive.templateUrl = "/Scripts for monei/Angular/directive-templates/dashboard-month.html";
 	directive.scope = {
 		month: "=month"
 	};

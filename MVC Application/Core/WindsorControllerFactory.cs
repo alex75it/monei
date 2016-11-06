@@ -13,7 +13,6 @@ namespace Monei.MvcApplication.Core
 
     public class WindsorControllerFactory :DefaultControllerFactory
     {
-        //IWindsorContainer container;
         private readonly IKernel kernel;
 
         public WindsorControllerFactory(IKernel kernel)

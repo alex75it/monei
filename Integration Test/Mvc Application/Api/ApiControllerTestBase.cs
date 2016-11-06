@@ -16,7 +16,7 @@ using NUnit.Framework;
 using System.Configuration;
 using Monei.Entities;
 using Monei.MvcApplication.Core;
-using Monei.MvcApplication.Core.WindsorInstallers;
+using Monei.MvcApplication.Core.DependencyInjection;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
@@ -35,7 +35,8 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
         private HttpServer server;
         private const string BASE_URL = "http://www.apitest.com/";
-        private IWindsorContainer container;
+
+        private WindsorCastleDependencyInjection dependencyInjectionManager;
 
         // todo: CLEAN THIS CLASS
 
@@ -50,7 +51,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         /// <returns></returns>
         public HttpServer InitializeServer()
         {
-            //todo: is this needed?
             if (server != null)
                 server.Dispose();
             server = new HttpServer(GetConfiguration());
@@ -65,7 +65,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             //server = new HttpServer(GetConfiguration());
         }
 
-
         protected HttpClient GetClient()
         {
             return new HttpClient(InitializeServer());
@@ -74,57 +73,13 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
         private void InitializeWindsorContainer()
         {
-            new WindsorBootstrapper()
-                .Initialize();
-
-            return;
-
-            var container = new WindsorContainer();
-
-            container.Register(
-                Component.For<ISessionFactoryProvider>().ImplementedBy<SessionFactoryProvider>(),
-
-                Component.For<IAccountRepository>().ImplementedBy(typeof(AccountRepository)), //.LifestylePerWebRequest(),
-                Component.For<IRegistryRepository>().ImplementedBy(typeof(RegistryRepository)), //.LifestylePerWebRequest(),
-                Component.For<ICurrencyRepository>().ImplementedBy(typeof(CurrencyRepository)), //.LifestylePerWebRequest(),
-                Component.For<ICategoryRepository>().ImplementedBy(typeof(CategoryRepository)), //.LifestylePerWebRequest(),
-                Component.For<ISubcategoryRepository>().ImplementedBy(typeof(SubcategoryRepository)) //.LifestylePerWebRequest(),
-
-                //Component.For(typeof(SubcategoryManager)).ImplementedBy(typeof(SubcategoryManager)), //.LifestylePerWebRequest()
-            );
-            
-            // todo: try to use this...
-            //container.Install(new RepositoriesInstaller());
-            // give this error:
-            /*
-            An exception of type 'Castle.MicroKernel.ComponentResolutionException' occurred in Castle.Windsor.dll but was not handled in user code
-            Additional information: Looks like you forgot to register the http module Castle.MicroKernel.Lifestyle.PerWebRequestLifestyleModule
-            */
-
-            // for check...
-            IAccountRepository accountRepository = container.Resolve<IAccountRepository>();
-
-
-
-
-            container.Install( new ControllersInstaller());
-
-            //container.Resolve<MoneiControllerBase>();
-            //ApiController controller = container.Resolve<ApiControllerBase>();
-
-            var controllerFactory = new WindsorControllerFactory(container.Kernel);
-            ControllerBuilder.Current.SetControllerFactory(controllerFactory);
-            
-
-            var httpDependencyResolver = new WindsorDependencyResolver(container);
-            GlobalConfiguration.Configuration.DependencyResolver = httpDependencyResolver;
+            dependencyInjectionManager = new WindsorCastleDependencyInjection();
         }
 
         protected HttpConfiguration GetConfiguration()
         {
             HttpConfiguration configuration = new HttpConfiguration();		
-            var dependencyResolver = new WindsorDependencyResolver(container);
-            configuration.DependencyResolver = dependencyResolver;
+            configuration.DependencyResolver = dependencyInjectionManager;
             WebApiConfig.Register(configuration);
 
             //configuration.SuppressDefaultHostAuthentication();  // Owin

@@ -10,7 +10,7 @@ using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using Monei.MvcApplication.Controllers;
 
-namespace Monei.MvcApplication.Core.WindsorInstallers
+namespace Monei.MvcApplication.Core.DependencyInjection
 {
     public class RepositoriesInstaller: IWindsorInstaller
     {

@@ -12,6 +12,8 @@ namespace Monei.Test.UnitTest
         protected DateTime minSqlDate = System.Data.SqlTypes.SqlDateTime.MinValue.Value;
         protected DateTime maxSqlDate = System.Data.SqlTypes.SqlDateTime.MaxValue.Value;
 
+        protected const string TEST_USERNAME = "test";
+
         protected bool IsValidSqlDate(DateTime date)
         {
             return date >= minSqlDate

@@ -7,11 +7,11 @@ using Castle.MicroKernel.Lifestyle.Scoped;
 using Castle.Windsor;
 
 
-namespace Monei.MvcApplication.Core.WindsorInstallers
+namespace Monei.MvcApplication.Core.DependencyInjection
 {
 	public class WindsorDependencyScope :IDependencyScope
 	{
-		private readonly IWindsorContainer container;
+	    private readonly IWindsorContainer container;
 		private readonly IDisposable scope;
 
 		public WindsorDependencyScope(IWindsorContainer container)

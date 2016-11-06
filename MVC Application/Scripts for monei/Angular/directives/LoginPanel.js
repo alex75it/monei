@@ -5,7 +5,7 @@ app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (Accoun
 
 	directive.restrict = "E";
 	directive.replace = true;
-	directive.templateUrl = "/Scripts for monei/directive-templates/login-panel.html"
+	directive.templateUrl = "/Scripts for monei/Angular/directive-templates/login-panel.html"
 
 	directive.scope = {
 		//redirectUrl: "=redirectTo",

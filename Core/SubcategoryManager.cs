@@ -8,7 +8,6 @@ using Monei.DataAccessLayer.Interfaces;
 
 namespace Monei.Core
 {
-
     public class SubcategoryManager
     {
         public IRegistryRepository RegistryRepository { get; set; } // todo: set as construtor parameter

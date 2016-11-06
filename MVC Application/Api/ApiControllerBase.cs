@@ -32,6 +32,7 @@ namespace Monei.MvcApplication.Api
 
         protected readonly ILog logger;
         private Account currentAccount;
+        
         public Account CurrentAccount
         {
             get
@@ -39,6 +40,7 @@ namespace Monei.MvcApplication.Api
                 if (currentAccount == null)
                 {
 
+                    http://stackoverflow.com/questions/19793845/authenticating-asp-net-web-api?rq=1
 
                     // do not use the User.Identity. It is set by ASP using cookie, so does not work with calls from outside the web site.
                     // and if you use it you are exposed to CSRF
@@ -71,12 +73,11 @@ namespace Monei.MvcApplication.Api
                 return currentAccount;
             }
         }
-                
 
-        //public ApiControllerBase(IAuthenticationModule)
-        //{
-        //    logger = LogManager.GetLogger(this.GetType());
-        //}
+        public ApiControllerBase()
+        {
+            logger = LogManager.GetLogger(this.GetType());
+        }        
 
     }
 }
