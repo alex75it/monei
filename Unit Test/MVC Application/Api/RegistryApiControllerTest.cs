@@ -15,28 +15,27 @@ using System.Net.Http;
 namespace Monei.Test.UnitTest.MvcApplication.Api
 {
     [TestFixture, Category("Web API"), Category("Registry")]
-    internal class RegistryApiControllerTest : ApiControllerTestBase
+    internal class RegistryApiControllerTest : ApiControllerTestBase<RegistryApiController>
     {
         private RegistryApiController controller;
 
         [SetUp]
         public void SetUp()
-        {          
-            controller = new RegistryApiController();
+        {
+            controller = CreateController();
 
             SetRequestUser(controller);
 
-            IAccountRepository accountRepository = A.Fake<IAccountRepository>();
+            controller.AccountRepository = A.Fake<IAccountRepository>();
             Account account = new Account() {
                 Id=1,
                 Guid = Guid.NewGuid(),
                 Username = "test",
             };
-            A.CallTo(() => accountRepository.Read(A.Dummy<string>())).Returns(account);
-            controller.AccountRepository = accountRepository;
+            A.CallTo(() => controller.AccountRepository.Read(A.Dummy<string>())).Returns(account);
 
-            IRegistryRepository registryRepository = A.Fake<IRegistryRepository>();
-            controller.RegistryRepository = registryRepository; 
+
+            //registryRepository = A.Fake<IRegistryRepository>();
         }
 
         [Test]
@@ -99,9 +98,6 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
         [Test]
         public void Create_should_CallRepositoryWithRightData()
         {
-            IRegistryRepository registryRepositoryMock = A.Fake<IRegistryRepository>();
-            controller.RegistryRepository = registryRepositoryMock;
-
             RegistryRecord record = new RegistryRecord();
 
             RegistryNewRecordPostData postData = new RegistryNewRecordPostData()

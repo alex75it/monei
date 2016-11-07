@@ -18,12 +18,13 @@ namespace Monei.MvcApplication.Core.DependencyInjection
         {
             container.Register(
                 // lifeStyleTransient, lifeStylePerWebRequest, lifeStyleScoped... why one or the other?
+                // LifestylePerWebRequest to prevent memory leak caused by the non 
 
-                Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient(),
-                Classes.FromThisAssembly().BasedOn<MoneiControllerBase>().LifestyleTransient(),
-                Classes.FromThisAssembly().BasedOn<ApiControllerBase>().LifestyleTransient(), // .LifestyleScoped()			
+                Classes.FromThisAssembly().BasedOn<IController>().LifestylePerWebRequest(),
+                Classes.FromThisAssembly().BasedOn<MoneiControllerBase>().LifestylePerWebRequest(),
+                Classes.FromThisAssembly().BasedOn<ApiControllerBase>().LifestylePerWebRequest(),			
                 
-                Component.For<IWebAuthenticationWorker>().ImplementedBy<WebAuthenticationWorker>()
+                Component.For<IWebAuthenticationWorker>().ImplementedBy<WebAuthenticationWorker>().LifestylePerWebRequest()
             );
         }
 

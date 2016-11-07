@@ -9,6 +9,7 @@ using Monei.MvcApplication.Api.PostDataObjects;
 using Monei.MvcApplication.Controllers.Api;
 using Monei.MvcApplication.Controllers.Api.PostDataObjects;
 using Newtonsoft.Json.Linq;
+using Monei.DataAccessLayer.Interfaces;
 
 namespace Monei.MvcApplication.Api
 {	
@@ -21,7 +22,6 @@ namespace Monei.MvcApplication.Api
             return "api/subcategory";
         }
 
-
         [HttpGet, Route("category/{categoryId}")]
         public IEnumerable<Subcategory> Search(int categoryId)
         {
@@ -33,7 +33,6 @@ namespace Monei.MvcApplication.Api
 
             return subcategories;
         }
-
 
         [HttpPost, Route("")]
         public int Create(SubcategoryPostData data)
@@ -48,7 +47,6 @@ namespace Monei.MvcApplication.Api
 
             return newId;
         }
-
 
         [HttpDelete, Route("{id}")]
         public virtual HttpResponseMessage Delete(int id)

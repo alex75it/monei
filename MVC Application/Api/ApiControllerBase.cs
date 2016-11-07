@@ -15,31 +15,35 @@ namespace Monei.MvcApplication.Api
 
     public interface IAuthenticationModule {
         bool IsAuthenticated();
-        string GEtUserName();
+        string GetUserName();
     }
 
     public class ApiControllerBase :ApiController
     {
         // injected properties
+        // Inject properties permits to not override the constructor on every derived API controller
         public IAccountRepository AccountRepository { get; set; }
         public ICategoryRepository CategoryRepository { get; set; }
         public IRegistryRepository RegistryRepository { get; set; }
         public ISubcategoryRepository SubcategoryRepository { get; set; }
         public ICurrencyRepository CurrencyRepository { get; set; }
-
-
         public SubcategoryManager SubcategoryManager { get; set; }
+
 
         protected readonly ILog logger;
         private Account currentAccount;
-        
+
+        public ApiControllerBase()
+        {
+            logger = LogManager.GetLogger(this.GetType());
+        }
+
         public Account CurrentAccount
         {
             get
             {
                 if (currentAccount == null)
                 {
-
                     http://stackoverflow.com/questions/19793845/authenticating-asp-net-web-api?rq=1
 
                     // do not use the User.Identity. It is set by ASP using cookie, so does not work with calls from outside the web site.
@@ -72,12 +76,7 @@ namespace Monei.MvcApplication.Api
                 }
                 return currentAccount;
             }
-        }
-
-        public ApiControllerBase()
-        {
-            logger = LogManager.GetLogger(this.GetType());
-        }        
+        } 
 
     }
 }

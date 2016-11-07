@@ -6,19 +6,25 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Http.Dependencies;
+using Castle.Core;
+using Castle.MicroKernel.ModelBuilder;
 
 namespace Monei.MvcApplication.Core.DependencyInjection
 {
     /// <summary>
     /// Manage Dependency Injection using Windsor Castle
     /// </summary>
-    public class WindsorCastleDependencyInjection : IDisposable, System.Web.Http.Dependencies.IDependencyResolver // IDependencyResolver
+    public class WindsorCastleDependencyInjection : IDisposable, System.Web.Http.Dependencies.IDependencyResolver, System.Web.Mvc.IDependencyResolver
     {
         private IWindsorContainer container;
 
-        public WindsorCastleDependencyInjection()
+        public WindsorCastleDependencyInjection(IContributeComponentModelConstruction contributor = null)
         {
             container = new WindsorContainer();
+
+            if(contributor != null)
+                container.Kernel.ComponentModelBuilder.AddContributor(contributor);
+
             try
             {
                 Initialize();
@@ -67,7 +73,6 @@ namespace Monei.MvcApplication.Core.DependencyInjection
                 return container.Resolve(serviceType);
             else
                 return null;
-                //throw new Exception("Cannot resoilve service type \"" + serviceType + "\".");
         }
 
         public IEnumerable<object> GetServices(Type serviceType)

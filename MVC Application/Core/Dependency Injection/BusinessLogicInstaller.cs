@@ -7,6 +7,7 @@ using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Monei.Core;
 using Monei.Core.BusinessLogic;
+using Castle.Core;
 
 namespace Monei.MvcApplication.Core.DependencyInjection
 {
@@ -14,12 +15,12 @@ namespace Monei.MvcApplication.Core.DependencyInjection
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(
+            IWindsorContainer thisContainer = container.Register(
                 Component.For<IAccountManager>().ImplementedBy<AccountManager>().LifestylePerWebRequest(),
                 Component.For<SubcategoryManager>().ImplementedBy<SubcategoryManager>().LifestylePerWebRequest(),                
                 Component.For<ICategoryManager>().ImplementedBy<CategoryManager>().LifestylePerWebRequest(),
-                Component.For<IRegistryManager>().ImplementedBy<RegistryManager>()
-            );
+                Component.For<IRegistryManager>().ImplementedBy<RegistryManager>().LifestylePerWebRequest()
+            );            
         }
     }
 }

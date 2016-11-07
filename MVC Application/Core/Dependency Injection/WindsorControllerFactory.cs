@@ -6,9 +6,8 @@ using System.Web.Mvc;
 using Castle.MicroKernel;
 using Castle.Windsor;
 
-namespace Monei.MvcApplication.Core
+namespace Monei.MvcApplication.Core.DependencyInjection
 {
-
     // ref: http://docs.castleproject.org/Windsor.Windsor-tutorial-part-two-plugging-Windsor-in.ashx
 
     public class WindsorControllerFactory :DefaultControllerFactory

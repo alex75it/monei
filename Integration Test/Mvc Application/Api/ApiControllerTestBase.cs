@@ -73,7 +73,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
         private void InitializeWindsorContainer()
         {
-            dependencyInjectionManager = new WindsorCastleDependencyInjection();
+            dependencyInjectionManager = new WindsorCastleDependencyInjection(new LifecycleTransientComponentModelContructionContributor() );
         }
 
         protected HttpConfiguration GetConfiguration()

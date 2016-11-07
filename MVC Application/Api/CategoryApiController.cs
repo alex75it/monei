@@ -23,7 +23,7 @@ namespace Monei.MvcApplication.Api
         [HttpGet, Route("list")]
         public IEnumerable<Category> Get()
         {
-            IEnumerable<Category> list = base.CategoryRepository.List();
+            IEnumerable<Category> list = CategoryRepository.List();
             foreach(var category in list)
             {
                 category.Subcategories = null;
@@ -35,7 +35,7 @@ namespace Monei.MvcApplication.Api
         [HttpGet, Route("list")]
         public IEnumerable<Category> Get(string orderBy)
         {
-            IEnumerable<Category> list = base.CategoryRepository.List();
+            IEnumerable<Category> list = CategoryRepository.List();
             foreach (var category in list)
             {
                 category.Subcategories = null;

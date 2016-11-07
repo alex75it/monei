@@ -241,7 +241,7 @@
     <Compile Include="Core\Dependency Injection\WindsorDependencyScope.cs" />
     <Compile Include="Core\IWebAuthenticationWorker.cs" />
     <Compile Include="Core\WebAuthenticationWorker.cs" />
-    <Compile Include="Core\WindsorControllerFactory.cs" />
+    <Compile Include="Core\Dependency Injection\WindsorControllerFactory.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ContractsController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />

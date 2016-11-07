@@ -15,13 +15,11 @@ namespace Monei.MvcApplication.Api
     [RoutePrefix("api/account")]
     public class AccountApiController :ApiControllerBase
     {
-
         private readonly IWebAuthenticationWorker webAuthenticationWorker;
 
-        public AccountApiController(IAccountRepository accountRepository, ICurrencyRepository currencyRepository, IWebAuthenticationWorker webAuthenticationWorker)
+
+        public AccountApiController(IAccountRepository accountRepository, ICurrencyRepository currencyRepository, IWebAuthenticationWorker webAuthenticationWorker)            
         {
-            AccountRepository = accountRepository;
-            CurrencyRepository = currencyRepository;
             this.webAuthenticationWorker = webAuthenticationWorker;
         }
 
@@ -33,8 +31,7 @@ namespace Monei.MvcApplication.Api
 
         [HttpPost, Route("login")]
         public LoginResult Login(LoginPostData data)
-        {	
-            
+        {	            
             WebSecurity.LoginResult result = new WebSecurity(AccountRepository, webAuthenticationWorker).Login(data.Username, data.Password, persistCookie: data.RememberMe);
 
             switch (result)

@@ -1,4 +1,8 @@
-﻿using System;
+﻿using FakeItEasy;
+using Monei.DataAccessLayer.Interfaces;
+using Monei.MvcApplication.Api;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
@@ -9,8 +13,24 @@ using System.Web.Http;
 
 namespace Monei.Test.UnitTest.MvcApplication.Api
 {
-    internal abstract class ApiControllerTestBase : TestBase
+    internal abstract class ApiControllerTestBase<T> : TestBase 
+        where T: ApiControllerBase, new()
     {
+        protected IAccountRepository accountRepository;
+        protected IRegistryRepository registryRepository;
+        protected ICategoryRepository categoryRepository;
+
+        internal T CreateController() //where T: ApiControllerBase, new()
+        {
+            T controller = new T();
+
+            controller.AccountRepository = A.Fake<IAccountRepository>();
+            controller.RegistryRepository = A.Fake<IRegistryRepository>();
+            controller.CategoryRepository = A.Fake<ICategoryRepository>();
+
+            return controller;
+        }
+
         protected void SetRequestUser(ApiController controller)
         {
             Thread.CurrentPrincipal = new GenericPrincipal
