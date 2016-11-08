@@ -69,8 +69,7 @@ namespace Monei.DataAccessLayer.SqlServer
 
             return Create(account);
         }
-
-
+        
         public void UpdateLastLogin(int accountId, DateTime date)
         {
             using (ISession session = OpenSession())
@@ -87,22 +86,14 @@ namespace Monei.DataAccessLayer.SqlServer
                 throw new EntityAlreadyExistsException("username");
 
             int accountId = base.Create(account);
-            account =  Read(accountId);
-            //using (ISession session = OpenSession())
-            //{
-            //	account = session.Get<Account>(accountId);
-            //	account.is
-            //}
-            return account;
-        }
-        
+            return Read(accountId);
+        }        
 
         public new Account Update(Account account)
         {
             base.Update(account);
             return Read(account.Id);
-        }
-        
+        }        
 
         public IList<Account> ListAll()
         {
@@ -112,5 +103,10 @@ namespace Monei.DataAccessLayer.SqlServer
             }
         }
 
-    }//class
+        public Guid GetAccountIdByApiToken(Guid apiToken)
+        {
+            // temporary
+            return apiToken;
+        }
+    }
 }

@@ -12,6 +12,7 @@ namespace Monei.Core.BusinessLogic
     {
         Account Read(string username);
         Account CreateAccount(string username, string password);
+        Account GetAccountByApiToken(Guid apiToken);
     }
 
     public class AccountManager : IAccountManager
@@ -33,5 +34,13 @@ namespace Monei.Core.BusinessLogic
         {
             return accountRepository.Read(username);
         }
+
+        public Account GetAccountByApiToken(Guid apiToken)
+        {
+            Guid accountId = accountRepository.GetAccountIdByApiToken(apiToken);
+
+            return accountRepository.Read(accountId);
+        }
+
     }
 }

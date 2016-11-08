@@ -45,7 +45,8 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
                 SubcategoryId = subcategoryId,                
                 Note = "Note",                
             };
-
+            
+            // Execute
             var newId = base.CallApi<RegistryNewRecordPostData, int>(baseUri, HttpMethod.Post, data);
 
             RegistryRecord record = GetRegistryRecord(newId);
@@ -58,7 +59,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             record.Note.ShouldEqual(data.Note);            
         }
 
-        #region utilities method
+        #region utility methods
         private RegistryRecord GetRegistryRecord(int newId)
         {
             var repository = new RegistryRepository(sessionFactoryProvider);
