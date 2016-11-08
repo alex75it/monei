@@ -156,7 +156,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         /// <returns></returns>
         protected TReturn CallApi<TPost, TReturn>(string url, HttpMethod httpMethod, TPost data)
             where TPost : class
-            //where TReturn : class
         {
             using (var client = GetClient())
             using (var result = client.SendAsync(CreateRequest<TPost>(url, httpMethod, data)).Result)

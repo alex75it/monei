@@ -136,8 +136,8 @@
     <Compile Include="Mvc Application\Api\CategoryApiControllerTest.cs" />
     <Compile Include="Mvc Application\Api\RegistryApiControllerTest.cs" />
     <Compile Include="Mvc Application\Api\SubcategoryApiControllerTest.cs" />
-    <Compile Include="Mvc Application\Api\TestDataProvider.cs" />
-    <Compile Include="Mvc Application\Api\LifecycleTransientComponentModelContructionContributor.cs" />
+    <Compile Include="Mvc Application\Api\Helpers\TestDataProvider.cs" />
+    <Compile Include="Mvc Application\Api\Helpers\LifecycleTransientComponentModelContructionContributor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -30,7 +30,10 @@ namespace Monei.Test.UnitTest.MVC_Application.Api
             account.Password = "bbb";
             A.CallTo(() => accountRepository.Read(account.Username)).Returns(account);
 
-            AccountApiController controller = new AccountApiController(accountRepository, currencyRepository, webAuthenticationWorker);
+            AccountApiController controller = new AccountApiController(webAuthenticationWorker);
+            controller.AccountRepository = accountRepository;
+            controller.CurrencyRepository = currencyRepository;
+
             var data = A.Fake<LoginPostData>();
             data.Username = account.Username;
             data.Password = account.Password;

@@ -20,13 +20,15 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
         protected IRegistryRepository registryRepository;
         protected ICategoryRepository categoryRepository;
 
-        internal T CreateController() //where T: ApiControllerBase, new()
+        internal T CreateController(bool setAuthentication = true) //where T: ApiControllerBase, new()
         {
             T controller = new T();
 
             controller.AccountRepository = A.Fake<IAccountRepository>();
             controller.RegistryRepository = A.Fake<IRegistryRepository>();
-            controller.CategoryRepository = A.Fake<ICategoryRepository>();
+            controller.CategoryRepository = A.Fake<ICategoryRepository>();            
+
+            SetRequestUser(controller);
 
             return controller;
         }
