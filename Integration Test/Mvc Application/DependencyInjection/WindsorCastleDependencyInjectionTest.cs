@@ -14,8 +14,10 @@ using Castle.MicroKernel.ModelBuilder;
 using Castle.Core;
 using Castle.MicroKernel;
 
-namespace Monei.Test.UnitTest.DependencyInjection
+namespace Monei.Test.IntegrationTest.MvcApplication.DependencyInjection
 {
+    /// Thgese tests cannto be Unit tests because the SessionProvider require a real working configuration
+
     [TestFixture, Category("Dependency Injection")]
     public class WindsorCastleDependencyInjectionTest
     {
@@ -40,9 +42,10 @@ namespace Monei.Test.UnitTest.DependencyInjection
             using (WindsorCastleDependencyInjection dependencyInjection = new WindsorCastleDependencyInjection(lifestyleSingletonComponentModelConstruction))
             {
                 IAccountRepository accountRepository = dependencyInjection.Resolve<IAccountRepository>();
-                SessionFactoryProvider sessionFActoryProvider = dependencyInjection.Resolve<SessionFactoryProvider>();
+                ISessionFactoryProvider sessionFActoryProvider = dependencyInjection.Resolve<ISessionFactoryProvider>();
 
                 accountRepository.ShouldNotBeNull();
+                sessionFActoryProvider.ShouldNotBeNull();
             }
         }
 

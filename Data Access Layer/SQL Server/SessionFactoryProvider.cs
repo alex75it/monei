@@ -15,7 +15,7 @@ namespace Monei.DataAccessLayer.SqlServer
             if (sessionFactory == null)
             {
                 var configuration = new NHibernate.Cfg.Configuration();
-                configuration.Configure(); // it fail ONLY in debug mode, just go on !
+                configuration.Configure(); // require NHibernate section in .config file
 
                 sessionFactory = configuration.BuildSessionFactory();
             }

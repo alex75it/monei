@@ -138,6 +138,7 @@
     <Compile Include="Mvc Application\Api\SubcategoryApiControllerTest.cs" />
     <Compile Include="Mvc Application\Api\Helpers\TestDataProvider.cs" />
     <Compile Include="Mvc Application\Api\Helpers\LifecycleTransientComponentModelContructionContributor.cs" />
+    <Compile Include="Mvc Application\DependencyInjection\WindsorCastleDependencyInjectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +148,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{95254dd8-6bfe-4daf-be3b-9eb56472e867}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj">
       <Project>{85d1f40c-f9cc-42f7-ac99-c83e53fd8ed4}</Project>
       <Name>Data Access Layer</Name>
