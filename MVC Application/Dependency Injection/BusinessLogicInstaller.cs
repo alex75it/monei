@@ -9,7 +9,7 @@ using Monei.Core;
 using Monei.Core.BusinessLogic;
 using Castle.Core;
 
-namespace Monei.MvcApplication.Core.DependencyInjection
+namespace Monei.MvcApplication.DependencyInjection
 {
     public class BusinessLogicInstaller : IWindsorInstaller
     {

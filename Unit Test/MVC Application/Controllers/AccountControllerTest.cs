@@ -1,11 +1,15 @@
-﻿using Monei.MvcApplication.Controllers;
-using Monei.MvcApplication.Core.DependencyInjection;
+﻿using FakeItEasy;
+using Monei.Core.BusinessLogic;
+using Monei.DataAccessLayer.Interfaces;
+using Monei.MvcApplication.Controllers;
+using Monei.MvcApplication.Core;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Monei.Test.UnitTest.MVC_Application.Controllers
 {
@@ -17,12 +21,20 @@ namespace Monei.Test.UnitTest.MVC_Application.Controllers
         [SetUp]
         public void SetUp()
         {
-            //accountController
+            IAccountSecurity accountSecurity = A.Fake<IAccountSecurity>();
+            IAccountManager accountManager = A.Fake<IAccountManager>();
+            ICurrencyRepository currencyRepository = A.Fake<ICurrencyRepository>();
+            IWebAuthenticationWorker webAuthenticationWorker = A.Fake<IWebAuthenticationWorker>();
+
+            accountController = new AccountController(accountSecurity, accountManager, currencyRepository, webAuthenticationWorker);
         }
 
         public void IsInitialized()
         {
+            string returnUrl = "returnUrl";
+            ActionResult result = accountController.Login(returnUrl);
 
+            Assert.IsNotNull(result);
         }
         
     }  

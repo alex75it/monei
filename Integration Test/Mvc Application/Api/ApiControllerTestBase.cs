@@ -5,18 +5,11 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using System.Web.Mvc;
-using Castle.MicroKernel.Registration;
-using Castle.Windsor;
-using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using Monei.MvcApplication;
 using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
-using System.Configuration;
-using Monei.Entities;
-using Monei.MvcApplication.Core;
-using Monei.MvcApplication.Core.DependencyInjection;
+using Monei.MvcApplication.DependencyInjection;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
@@ -70,10 +63,9 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             return new HttpClient(InitializeServer());
         }
 
-
         private void InitializeWindsorContainer()
         {
-            dependencyInjectionManager = new WindsorCastleDependencyInjection(new LifecycleTransientComponentModelContructionContributor() );
+            dependencyInjectionManager = new WindsorCastleDependencyInjection(new LifestyleSingletonComponentModelContruction() );
         }
 
         protected HttpConfiguration GetConfiguration()

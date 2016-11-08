@@ -7,9 +7,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Castle.Windsor;
 using log4net;
-using Monei.MvcApplication.Core.DependencyInjection;
+using Monei.MvcApplication.DependencyInjection;
 using Monei.Entities;
 using Monei.DataAccessLayer.Interfaces;
 
@@ -23,9 +22,6 @@ namespace Monei.MvcApplication
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
-            //GlobalConfiguration.Configuration.MessageHandlers.Add(new CultureDelegatingHandler());
-            //config.MessageHandlers.Add(new CultureDelegatingHandler());
 
             // http://www.asp.net/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2
             // WebApiConfig.Register(GlobalConfiguration.Configuration);

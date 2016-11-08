@@ -9,11 +9,11 @@ using Castle.MicroKernel;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
-    internal class LifecycleTransientComponentModelContructionContributor : IContributeComponentModelConstruction
+    internal class LifestyleSingletonComponentModelContruction : IContributeComponentModelConstruction
     {
         public void ProcessModel(IKernel kernel, ComponentModel model)
         {
-            model.LifestyleType = LifestyleType.Transient;
+            model.LifestyleType = LifestyleType.Singleton;
         }
     }
 }

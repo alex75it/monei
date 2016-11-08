@@ -9,7 +9,7 @@ using System.Web.Http.Dependencies;
 using Castle.Core;
 using Castle.MicroKernel.ModelBuilder;
 
-namespace Monei.MvcApplication.Core.DependencyInjection
+namespace Monei.MvcApplication.DependencyInjection
 {
     /// <summary>
     /// Manage Dependency Injection using Windsor Castle

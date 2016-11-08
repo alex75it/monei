@@ -9,8 +9,9 @@ using Castle.Windsor;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.MvcApplication.Api;
 using Monei.MvcApplication.Controllers;
+using Monei.MvcApplication.Core;
 
-namespace Monei.MvcApplication.Core.DependencyInjection
+namespace Monei.MvcApplication.DependencyInjection
 {
     public class ControllersInstaller :IWindsorInstaller
     {
@@ -18,7 +19,7 @@ namespace Monei.MvcApplication.Core.DependencyInjection
         {
             container.Register(
                 // lifeStyleTransient, lifeStylePerWebRequest, lifeStyleScoped... why one or the other?
-                // LifestylePerWebRequest to prevent memory leak caused by the non 
+                // LifestylePerWebRequest to prevent memory leak caused by the non-release of managed components 
 
                 Classes.FromThisAssembly().BasedOn<IController>().LifestylePerWebRequest(),
                 Classes.FromThisAssembly().BasedOn<MoneiControllerBase>().LifestylePerWebRequest(),
