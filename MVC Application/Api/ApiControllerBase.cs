@@ -15,7 +15,7 @@ namespace Monei.MvcApplication.Api
     {
         // injected properties
         // Inject properties permits to not override the constructor on every derived API controller
-        public IWebAuthenticationWorker webAuthenticationWorker;
+        public IWebAuthenticationWorker WebAuthenticationWorker { get; set; }
         public SubcategoryManager SubcategoryManager { get; set; }
         public IAccountRepository AccountRepository { get; set; }
         public ICategoryRepository CategoryRepository { get; set; }
@@ -25,7 +25,6 @@ namespace Monei.MvcApplication.Api
 
 
         protected readonly ILog logger;
-        public string API_TOKEN = "api token";
         private Account currentAccount;
         
 
@@ -40,7 +39,10 @@ namespace Monei.MvcApplication.Api
             {
                 if (currentAccount == null)
                 {
-                    http://stackoverflow.com/questions/19793845/authenticating-asp-net-web-api?rq=1
+                    currentAccount = WebAuthenticationWorker.GetAccount(Request);
+
+
+                    // http://stackoverflow.com/questions/19793845/authenticating-asp-net-web-api?rq=1
 
                     // do not use the User.Identity. It is set by ASP using cookie, so does not work with calls from outside the web site.
                     // and if you use it you are exposed to CSRF
@@ -52,19 +54,18 @@ namespace Monei.MvcApplication.Api
                     //}
                     //else if (!Request.Headers.Contains("api token"))
                     //    throw new Exception("Missing \"api token\" header");
+                                        
 
-                    currentAccount = webAuthenticationWorker.GetAccount(Request);
-
-                    if (User.Identity.IsAuthenticated)
-                    {
-                        logger.DebugFormat("User.Identity ({0}): {1}", User.Identity.AuthenticationType, User.Identity.Name);
-                        currentAccount = AccountRepository.Read(User.Identity.Name);
-                    }
-                    else
-                    {
-                        logger.ErrorFormat("User is not authenticated");
-                        throw new Exception("User is not authenticated");
-                    }
+                    //if (User.Identity.IsAuthenticated)
+                    //{
+                    //    logger.DebugFormat("User.Identity ({0}): {1}", User.Identity.AuthenticationType, User.Identity.Name);
+                    //    currentAccount = AccountRepository.Read(User.Identity.Name);
+                    //}
+                    //else
+                    //{
+                    //    logger.ErrorFormat("User is not authenticated");
+                    //    throw new Exception("User is not authenticated");
+                    //}
                 }
                 return currentAccount;
             }

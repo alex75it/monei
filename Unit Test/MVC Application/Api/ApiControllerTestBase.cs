@@ -1,6 +1,8 @@
 ﻿using FakeItEasy;
+using Monei.Core.BusinessLogic;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.MvcApplication.Api;
+using Monei.MvcApplication.Core;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -25,6 +27,7 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
             T controller = new T();
 
             controller.AccountRepository = A.Fake<IAccountRepository>();
+            controller.WebAuthenticationWorker = A.Fake<IWebAuthenticationWorker>();
             controller.RegistryRepository = A.Fake<IRegistryRepository>();
             controller.CategoryRepository = A.Fake<ICategoryRepository>();            
 

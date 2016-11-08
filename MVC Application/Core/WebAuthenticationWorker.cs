@@ -11,9 +11,10 @@ namespace Monei.MvcApplication.Core
 {
     public class WebAuthenticationWorker : IWebAuthenticationWorker
     {
-        private const string API_TOKEN = "api token";
+        public const string API_TOKEN = "api_token";
 
         public IAccountManager AccountManager { get; set; } // injected
+        public IAccountSecurity AccountSecurity { get; set; } // injected
 
         public void SetAuthenticationCookie(string username, bool persistCookie)
         {
@@ -25,6 +26,7 @@ namespace Monei.MvcApplication.Core
         {
             Guid apiToken = GetApiToken(request);
 
+            //AccountSecurity.GET
             return AccountManager.GetAccountByApiToken(apiToken);
         }
 

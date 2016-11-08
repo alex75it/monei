@@ -24,9 +24,6 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
         {
             controller = CreateController();
 
-            SetRequestUser(controller);
-
-            controller.AccountRepository = A.Fake<IAccountRepository>();
             Account account = new Account() {
                 Id=1,
                 Guid = Guid.NewGuid(),
@@ -92,7 +89,7 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
             };
 
             //A.CallTo(controller.Create(postData)).Throws<Exception>();
-            base.AssertExceptionIsRaised(() => controller.Create(postData), new Exception("Category is not defined"));            
+            AssertExceptionIsRaised(() => controller.Create(postData), new Exception("Category is not defined"));            
         }
 
         [Test]

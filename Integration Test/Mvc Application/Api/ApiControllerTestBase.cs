@@ -10,6 +10,7 @@ using Monei.MvcApplication;
 using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 using Monei.MvcApplication.DependencyInjection;
+using Monei.MvcApplication.Core;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
@@ -112,7 +113,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         protected HttpRequestMessage CreateRequest<T>(string url, HttpMethod method,  T content, string mediaType = "application/json")
         {
             var request = CreateRequest(url, method, mediaType);
-            request.Headers.Add("-guid", testAccountGuid);
+            request.Headers.Add(WebAuthenticationWorker.API_TOKEN, testAccountGuid);
             // todo: is this needed? (CamelCasePropertyNameContractResolver)
             JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
             formatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
