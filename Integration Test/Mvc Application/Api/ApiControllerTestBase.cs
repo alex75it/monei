@@ -15,11 +15,12 @@ using Monei.MvcApplication.Core;
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
     [TestFixture]
-    public class ApiControllerTestBase :IDisposable
+    public class ApiControllerTestBase<TApiController> :IDisposable
     {
         protected ISessionFactoryProvider sessionFactoryProvider = new SessionFactoryProvider();
 
         public string testAccountGuid = "00000000-0000-0000-0000-000000000000";
+        private const string BASE_URL = "http://www.apitest.com/";
 
         protected HttpMethod GET = HttpMethod.Get;
         protected HttpMethod POST = HttpMethod.Post;
@@ -28,11 +29,9 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         protected TestDataProvider testDataProvider;
 
         private HttpServer server;
-        private const string BASE_URL = "http://www.apitest.com/";
+        private HttpClient client;        
 
         private WindsorCastleDependencyInjection dependencyInjectionManager;
-
-        // todo: CLEAN THIS CLASS
 
         public ApiControllerTestBase()
         {            
@@ -45,23 +44,30 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         /// <returns></returns>
         public HttpServer InitializeServer()
         {
-            if (server != null)
-                server.Dispose();
             server = new HttpServer(GetConfiguration());
             return server;
         }
-
 
         [OneTimeSetUp]
         public void Initialize()
         {			
             InitializeWindsorContainer();
-            //server = new HttpServer(GetConfiguration());
+        }
+        
+        [TearDown]
+        public void TearDown()
+        {
+            if (server != null)
+                server.Dispose();
+
+            if (client != null)
+                client.Dispose();
         }
 
         protected HttpClient GetClient()
         {
-            return new HttpClient(InitializeServer());
+            client = new HttpClient(InitializeServer());
+            return client;
         }
 
         private void InitializeWindsorContainer()
@@ -71,12 +77,12 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
         protected HttpConfiguration GetConfiguration()
         {
-            HttpConfiguration configuration = new HttpConfiguration();		
+            HttpConfiguration configuration = new HttpConfiguration();
             configuration.DependencyResolver = dependencyInjectionManager;
             WebApiConfig.Register(configuration);
 
-            //configuration.SuppressDefaultHostAuthentication();  // Owin
             configuration.SuppressHostPrincipal();
+            //configuration.SuppressDefaultHostAuthentication();  // Owin
             //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
             return configuration;

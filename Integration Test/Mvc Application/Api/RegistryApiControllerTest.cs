@@ -12,12 +12,13 @@ using Should;
 using Monei.DataAccessLayer.SqlServer;
 using System.Reflection;
 using System.IO;
+using Monei.MvcApplication.Api;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
 
     [TestFixture, Category("Web API"), Category("Registry")]
-    public class RegistryApiControllerTest : ApiControllerTestBase
+    public class RegistryApiControllerTest : ApiControllerTestBase<RegistryApiController>
     {
         private const string baseUri = "/api/registry";
         
