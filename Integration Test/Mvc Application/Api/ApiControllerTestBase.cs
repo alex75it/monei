@@ -11,11 +11,14 @@ using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 using Monei.MvcApplication.DependencyInjection;
 using Monei.MvcApplication.Core;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web.Http.ExceptionHandling;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
     [TestFixture]
-    public class ApiControllerTestBase<TApiController> :IDisposable
+    public class ApiControllerTestBase<TApiController>
     {
         protected ISessionFactoryProvider sessionFactoryProvider = new SessionFactoryProvider();
 
@@ -29,9 +32,9 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         protected TestDataProvider testDataProvider;
 
         private HttpServer server;
-        private HttpClient client;        
+        private HttpClient client;    
 
-        private WindsorCastleDependencyInjection dependencyInjectionManager;
+        //private WindsorCastleDependencyInjection dependencyInjectionManager;
 
         public ApiControllerTestBase()
         {            
@@ -51,7 +54,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         [OneTimeSetUp]
         public void Initialize()
         {			
-            InitializeWindsorContainer();
+            //InitializeWindsorContainer();
         }
         
         [TearDown]
@@ -70,22 +73,30 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             return client;
         }
 
-        private void InitializeWindsorContainer()
-        {
-            dependencyInjectionManager = new WindsorCastleDependencyInjection(new LifestyleSingletonComponentModelContruction() );
-        }
-
         protected HttpConfiguration GetConfiguration()
-        {
+        {            
             HttpConfiguration configuration = new HttpConfiguration();
-            configuration.DependencyResolver = dependencyInjectionManager;
+            // configuration.DependencyResolver = dependencyInjectionManager; // cause error on second call of the same controller. 
+            // probably controller is not resolved. Impossible to debug. 
+            configuration.DependencyResolver = new WindsorCastleDependencyInjection(new LifestyleSingletonComponentModelContruction());
             WebApiConfig.Register(configuration);
 
-            configuration.SuppressHostPrincipal();
-            //configuration.SuppressDefaultHostAuthentication();  // Owin
-            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            // pratically undocumented: http://stackoverflow.com/questions/21901808/need-a-complete-sample-to-handle-unhandled-exceptions-using-exceptionhandler-i
+            configuration.Services.Replace(typeof(IExceptionHandler), new UnitTestExceptionHandler());
+                        
+            configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
             return configuration;
+        }
+
+        private class UnitTestExceptionHandler : ExceptionHandler
+        {
+            public Task Handle(ExceptionHandlerContext context, CancellationToken cancellationToken)
+            {
+                Console.WriteLine("Error. CatchBlock: " + context.CatchBlock);
+                string name = context.CatchBlock.Name;
+                return null;
+            }
         }
 
         /// <summary>
@@ -201,18 +212,9 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
                 Assert.Fail("Server error. Url: " + url + ".\r\n" + result);
         }
 
-
         protected int RandomInt()
         {
             return random.Next();
         }
-
-
-        public void Dispose()
-        {
-            if (server != null)
-                server.Dispose();
-        }      
-
     }
 }

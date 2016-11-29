@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Should;
 using Monei.MvcApplication.Api;
+using System.Diagnostics;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
@@ -20,67 +21,55 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         [Test]
         public void Ping_Should_RespondOk()
         {
-            using (var client = new HttpClient(InitializeServer()))
             using (var request = CreateRequest("api/account/ping", HttpMethod.Get))
-            using (var response = client.SendAsync(request).Result)
+            using (var response = GetClient().SendAsync(request).Result)
             {
-                response.IsSuccessStatusCode.ShouldBeTrue();
+                response.IsSuccessStatusCode.ShouldBeTrue(@"Status code is not ""Success"".");
             }
         }
 
         [Test]
         public void Login_Should_ReturnResult()
-        {
-
-            // ref: http://www.strathweb.com/2012/06/asp-net-web-api-integration-testing-with-in-memory-hosting/
-            // this one promise to use ALL the pipeline:
-            //– submitting a request
-            //– a message handler
-            //– custom action filter attribute
-            //– controller action
-            //– JSON formatter applied to the incoming response
-            //– receiving the response
-                        
-
-            var client = new HttpClient(InitializeServer());
-
+        {           
+            string url = "api/account/login";
             var data = new LoginPostData() { 
-                Username = "pippo",
-                Password = "pluto"
+                Username = "username",
+                Password = "password"
             };
-            var request = CreateRequest<LoginPostData>("api/account/login", HttpMethod.Post, data);
 
-            using (var response = client.SendAsync(request).Result)
+            // execute
+            using (var request = CreateRequest<LoginPostData>(url, HttpMethod.Post, data))
+            using (var response = GetClient().SendAsync(request).Result)
             {
-                response.IsSuccessStatusCode.ShouldEqual(true);
+                response.IsSuccessStatusCode.ShouldEqual(true, @"Status code is not ""Success"".");
                 response.Content.ShouldNotBeNull();
                 response.Content.ShouldNotBeType<HttpError>();
             }
-
-            request.Dispose();
         }
 
         [Test]
         public void Login_Should_ReturnUsernameNotFound()
         {
+            /* if test fail the only way to find the error is to debug the controller, if the error is in there ... */
+
             string url = "api/account/login";
             var data = new LoginPostData()
             {
-                Username = "none",
-                Password = "pluto"
+                Username = "username",
+                Password = "password"
             };
 
             // Execute
             using (var request = CreateRequest<LoginPostData>(url, HttpMethod.Post, data))
             using (var response = GetClient().SendAsync(request).Result)
             {
-                response.IsSuccessStatusCode.ShouldEqual(true);
+                response.IsSuccessStatusCode.ShouldEqual(true, @"Status code is not ""Success"". " + response.ReasonPhrase);
                 response.Content.ShouldNotBeNull();
                 response.Content.ShouldNotBeType<HttpError>();
 
                 LoginResult result = response.Content.ReadAsAsync<LoginResult>().Result;
                 result.ShouldEqual(LoginResult.UsernameNotFound);
-            }
+            }         
         }
 
         [Test]

@@ -15,24 +15,24 @@ namespace Monei.MvcApplication.Api
     [RoutePrefix("api/account")]
     public class AccountApiController :ApiControllerBase
     {
-        private readonly IWebAuthenticationWorker webAuthenticationWorker;
+        //private readonly IWebAuthenticationWorker webAuthenticationWorker;
 
 
-        public AccountApiController(IWebAuthenticationWorker webAuthenticationWorker)            
-        {
-            this.webAuthenticationWorker = webAuthenticationWorker;
-        }
+        //public AccountApiController(IWebAuthenticationWorker webAuthenticationWorker)            
+        //{
+        //    this.webAuthenticationWorker = webAuthenticationWorker;
+        //}
 
         [HttpGet, Route("ping")]
         public void Ping() {
 
-            //return "pong";
+            var response = "pong";
         }
 
         [HttpPost, Route("login")]
         public LoginResult Login(LoginPostData data)
         {	            
-            WebSecurity.LoginResult result = new WebSecurity(AccountRepository, webAuthenticationWorker).Login(data.Username, data.Password, persistCookie: data.RememberMe);
+            WebSecurity.LoginResult result = new WebSecurity(AccountRepository, WebAuthenticationWorker).Login(data.Username, data.Password, persistCookie: data.RememberMe);
 
             switch (result)
             {
