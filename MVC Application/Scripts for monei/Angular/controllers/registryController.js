@@ -7,13 +7,18 @@ function ($scope, $http, RegistryDataProvider, utils) {
     $scope.filters = {};
     $scope.records = [];
     $scope.runExport = false;
-
     $scope.categories = null;
+    $scope.registryCreatePanel = {}; // reference to the Registry create panel
+
         
     $scope.openCreatePanel = function () {
-        $("#modal_create").modal("show");
+        $('#moneiCreatePanel').modal('show');
     };
 
+    $scope.onRecordCreated = function () {
+        // todo: show a notify
+        $scope.search();
+    };
 
     $scope.search = function () {
         if ($scope.loading)
@@ -35,7 +40,6 @@ function ($scope, $http, RegistryDataProvider, utils) {
             fromDate: utils.getDate($scope.filters.from),
             toDate: utils.getDate($scope.filters.to),
             categories: $scope.filters.categories // ? $scope.filters.categories.id : null
-
         };
 
         $scope.error = null;

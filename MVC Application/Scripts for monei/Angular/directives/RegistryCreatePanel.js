@@ -69,7 +69,7 @@ app.directive("moneiRegistryCreatePanel",
             scope.subcategory = null;
         };
 
-        // expose the reset method to container. "me" is a property of the directive scope that exists for this specific need.        
+        // expose the reset method to the container. "me" is a property of the directive scope that exists for this specific need.        
         scope.me.reset = scope.reset;
 
         scope.setDate = function(days) {
@@ -92,7 +92,6 @@ app.directive("moneiRegistryCreatePanel",
         };
 
         scope.saveRecordFinish = function () {
-            alert("saveRecordFinish");
             scope.reset();
         };
     };
