@@ -29,6 +29,8 @@ namespace Monei.Core.BusinessLogic
 
         public Category Create(Category category)
         {
+            if (category.Name.Length > Category.NAME_MAX_LENGTH)
+                throw new CategoryTooLongNameException(Category.NAME_MAX_LENGTH);
             return categoryRepository.Create(category);
         }
 

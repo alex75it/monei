@@ -113,6 +113,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Core\Business Logic\CategoryManagerTest.cs" />
     <Compile Include="Core\Managers\CategoryManagerTest.cs" />
     <Compile Include="Data Access Layer\DateTimeExtensionsTest.cs" />
     <Compile Include="Data Access Layer\Filters\BaseFiltersTest.cs" />
