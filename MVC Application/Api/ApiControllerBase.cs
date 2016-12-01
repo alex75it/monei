@@ -40,7 +40,7 @@ namespace Monei.MvcApplication.Api
                 if (currentAccount == null)
                 {
                     currentAccount = WebAuthenticationWorker.GetAccount(Request);
-
+                       
 
                     // http://stackoverflow.com/questions/19793845/authenticating-asp-net-web-api?rq=1
 
@@ -54,7 +54,7 @@ namespace Monei.MvcApplication.Api
                     //}
                     //else if (!Request.Headers.Contains("api token"))
                     //    throw new Exception("Missing \"api token\" header");
-                                        
+
 
                     //if (User.Identity.IsAuthenticated)
                     //{
