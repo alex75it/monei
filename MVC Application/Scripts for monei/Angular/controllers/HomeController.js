@@ -3,7 +3,6 @@
 function ($scope) {
     
     $scope.loginFailCounter = 0;
-    $scope.registryCreatePanel = {};
 
     $scope.loggedIn = function () {
         console.info("loggedin");

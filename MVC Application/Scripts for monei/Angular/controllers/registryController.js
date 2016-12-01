@@ -3,18 +3,13 @@
 app.controller("RegistryController", [
 "$scope", "$http", "RegistryDataProvider", "utils",
 function ($scope, $http, RegistryDataProvider, utils) {
-    _scope = $scope;
+
     $scope.filters = {};
     $scope.records = [];
     $scope.runExport = false;
     $scope.categories = null;
-    $scope.registryCreatePanel = {}; // reference to the Registry create panel
-
-        
-    $scope.openCreatePanel = function () {
-        $('#moneiCreatePanel').modal('show');
-    };
-
+    //$scope.registryCreatePanel = {}; // reference to the Registry create panel
+       
     $scope.onRecordCreated = function () {
         // todo: show a notify
         $scope.search();

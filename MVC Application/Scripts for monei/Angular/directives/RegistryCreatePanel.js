@@ -5,9 +5,10 @@ app.directive("moneiRegistryCreatePanel",
     function ($timeout, CategoryDataProvider, RegistryDataProvider, NotificationService) {
 
     var directive = {
-        scope: {
-            onRecordCreated: "&",
-            me: "=",
+        scope: {            
+            open: "=",            
+            close: "=",
+            onRecordCreated: "&"
         }
     };
     directive.restrict = "E";
@@ -20,6 +21,7 @@ app.directive("moneiRegistryCreatePanel",
 
         scope.selectedCategory = null;
         scope.selectedSubcategory = null;
+        scope.amount = 0.0;
         scope.noCategorySelectedText = "(select one)";
         scope.noSubategorySelectedText = "(select one)";
 
@@ -29,7 +31,24 @@ app.directive("moneiRegistryCreatePanel",
                 showTodayButton: true
             }
         );
-        //$(element.find('.datetimepicker-date')).        
+        //$(element.find('.datetimepicker-date')).    
+
+        scope.open = function () {
+            scope.reset();
+            element.modal("show");
+        };
+
+        scope.close = function () {
+            element.modal("hide");
+        };
+
+        scope.reset = function () {
+            scope.date = moment().format("L");
+            scope.amount = 0;
+            scope.category = null;
+            scope.subcategory = null;
+            scope.note = ""
+        };
 
         scope.save = function () {
             scope.error = null;
@@ -53,27 +72,13 @@ app.directive("moneiRegistryCreatePanel",
             }           
         };
 
+        scope.setDate = function (days) {
+            scope.date = moment().add(days, "days").format("L");
+        };
+
         scope.showError = function (error) {  
             scope.error = error.exceptionMessage || error.message || error;
             $timeout(function () { scope.error = null; }, 3 * 1000);
-        };
-
-        scope.close = function () {
-            element.modal("hide");
-        };        
-         
-        scope.reset = function () {   
-            scope.date = moment().format("L");
-            scope.amount = 0;
-            scope.category = null;
-            scope.subcategory = null;
-        };
-
-        // expose the reset method to the container. "me" is a property of the directive scope that exists for this specific need.        
-        scope.me.reset = scope.reset;
-
-        scope.setDate = function(days) {
-            scope.date = moment().add(days, "days").format("L");            
         };
 
         // call reset
@@ -92,7 +97,7 @@ app.directive("moneiRegistryCreatePanel",
         };
 
         scope.saveRecordFinish = function () {
-            scope.reset();
+            alert('finish');
         };
     };
 

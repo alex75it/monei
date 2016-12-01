@@ -36,13 +36,11 @@ describe("RegistryController", function () {
         expect(scope.loading).toBe(true);
     });
 
-    xit("export call should works", function() {
-        
+    xit("export call should works", function() {        
 
     });
 
-    xit("showError function works", function() {
-        
+    xit("showError function works", function() {        
 
     });
 
