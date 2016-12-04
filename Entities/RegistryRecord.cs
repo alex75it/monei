@@ -16,7 +16,7 @@ namespace Monei.Entities
         public const Decimal MAX_AMOUNT = 99999;
         public const Decimal MIN_AMOUNT = -99999;
         public const int NOTE_MAX_LENGTH = 500;
-
+           
         public const string FIELD_ACCOUNT = "Account";
         public const string FIELD_DATE = "Date";
         public const string FIELD_CATEGORY = "Category";
@@ -71,7 +71,6 @@ namespace Monei.Entities
                 Note	// 5
             );
         }
-
         
-    }//class
+    }
 }
