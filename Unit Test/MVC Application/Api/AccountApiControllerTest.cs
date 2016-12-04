@@ -23,7 +23,7 @@ namespace Monei.Test.UnitTest.MVC_Application.Api
         {
             IAccountRepository accountRepository = A.Fake<IAccountRepository>();
             ICurrencyRepository currencyRepository = A.Fake<ICurrencyRepository>();
-            IWebAuthenticationWorker webAuthenticationWorker = A.Fake<IWebAuthenticationWorker>();
+            IAuthenticationWorker webAuthenticationWorker = A.Fake<IAuthenticationWorker>();
 
             var account = A.Dummy<Account>();
             account.Username = "aaa";
@@ -31,7 +31,7 @@ namespace Monei.Test.UnitTest.MVC_Application.Api
             A.CallTo(() => accountRepository.Read(account.Username)).Returns(account);
 
             AccountApiController controller = new AccountApiController();
-            controller.WebAuthenticationWorker = webAuthenticationWorker;
+            controller.AuthenticationWorker = webAuthenticationWorker;
             controller.AccountRepository = accountRepository;
             controller.CurrencyRepository = currencyRepository;
 

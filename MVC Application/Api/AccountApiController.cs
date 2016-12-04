@@ -32,7 +32,7 @@ namespace Monei.MvcApplication.Api
         [HttpPost, Route("login")]
         public LoginResult Login(LoginPostData data)
         {	            
-            WebSecurity.LoginResult result = new WebSecurity(AccountRepository, WebAuthenticationWorker).Login(data.Username, data.Password, persistCookie: data.RememberMe);
+            WebSecurity.LoginResult result = new WebSecurity(AccountRepository, AuthenticationWorker).Login(data.Username, data.Password, persistCookie: data.RememberMe);
 
             switch (result)
             {

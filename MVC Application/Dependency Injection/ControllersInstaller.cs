@@ -25,7 +25,7 @@ namespace Monei.MvcApplication.DependencyInjection
                 Classes.FromThisAssembly().BasedOn<MoneiControllerBase>().LifestylePerWebRequest(),
                 Classes.FromThisAssembly().BasedOn<ApiControllerBase>().LifestylePerWebRequest(),			
                 
-                Component.For<IWebAuthenticationWorker>().ImplementedBy<WebAuthenticationWorker>().LifestylePerWebRequest()
+                Component.For<IAuthenticationWorker>().ImplementedBy<AuthenticationWorker>().LifestylePerWebRequest()
             );
         }
 

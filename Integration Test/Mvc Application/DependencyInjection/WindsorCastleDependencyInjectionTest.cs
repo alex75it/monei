@@ -29,7 +29,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.DependencyInjection
             using (WindsorCastleDependencyInjection dependencyInjection = new WindsorCastleDependencyInjection(lifestyleSingletonComponentModelConstruction))
             {
                 IAccountManager accountManager = dependencyInjection.Resolve<IAccountManager>();
-                IWebAuthenticationWorker webAuthenticationWorker = dependencyInjection.Resolve<IWebAuthenticationWorker>();
+                IAuthenticationWorker webAuthenticationWorker = dependencyInjection.Resolve<IAuthenticationWorker>();
                 IAccountSecurity accountSecurity = dependencyInjection.Resolve<IAccountSecurity>();
                 accountManager.ShouldNotBeNull();
                 webAuthenticationWorker.ShouldNotBeNull();

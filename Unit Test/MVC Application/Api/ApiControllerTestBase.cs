@@ -27,7 +27,7 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
             T controller = new T();
 
             controller.AccountRepository = A.Fake<IAccountRepository>();
-            controller.WebAuthenticationWorker = A.Fake<IWebAuthenticationWorker>();
+            controller.AuthenticationWorker = A.Fake<IAuthenticationWorker>();
             controller.RegistryRepository = A.Fake<IRegistryRepository>();
             controller.CategoryRepository = A.Fake<ICategoryRepository>();            
 

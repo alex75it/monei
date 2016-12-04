@@ -22,9 +22,6 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <Content Include="Web API Session Token.activitydiagram">
-      <SubType>Content</SubType>
-    </Content>
     <Content Include="Web Application use Web API.sequencediagram">
       <SubType>Content</SubType>
     </Content>

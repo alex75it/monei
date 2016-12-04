@@ -15,7 +15,7 @@ namespace Monei.MvcApplication.Core
     {
         public static readonly ILog logger = LogManager.GetLogger(typeof(WebSecurity));
         private readonly IAccountRepository accountRepository;
-        private readonly IWebAuthenticationWorker webAuthenticationWorker;
+        private readonly IAuthenticationWorker webAuthenticationWorker;
 
 
         public enum LoginResult
@@ -26,7 +26,7 @@ namespace Monei.MvcApplication.Core
             InternalError = 30,
         }
 
-        public WebSecurity(IAccountRepository accountRepository, IWebAuthenticationWorker webAuthenticationWorker)
+        public WebSecurity(IAccountRepository accountRepository, IAuthenticationWorker webAuthenticationWorker)
         {
             this.accountRepository = accountRepository;
             this.webAuthenticationWorker = webAuthenticationWorker;

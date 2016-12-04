@@ -130,7 +130,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         protected HttpRequestMessage CreateRequest<T>(string url, HttpMethod method,  T content, string mediaType = "application/json")
         {
             var request = CreateRequest(url, method, mediaType);
-            request.Headers.Add(WebAuthenticationWorker.API_TOKEN, testAccountGuid);
+            request.Headers.Add(AuthenticationWorker.API_TOKEN, testAccountGuid);
             // todo: is this needed? (CamelCasePropertyNameContractResolver)
             JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
             formatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

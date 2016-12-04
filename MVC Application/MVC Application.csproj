@@ -240,8 +240,8 @@
     <Compile Include="Dependency Injection\RepositoriesInstaller.cs" />
     <Compile Include="Dependency Injection\WindsorCastleDependencyInjection.cs" />
     <Compile Include="Dependency Injection\WindsorDependencyScope.cs" />
-    <Compile Include="Core\IWebAuthenticationWorker.cs" />
-    <Compile Include="Core\WebAuthenticationWorker.cs" />
+    <Compile Include="Core\IAuthenticationWorker.cs" />
+    <Compile Include="Core\AuthenticationWorker.cs" />
     <Compile Include="Dependency Injection\WindsorControllerFactory.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ContractsController.cs" />

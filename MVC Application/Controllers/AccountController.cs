@@ -25,9 +25,9 @@ namespace Monei.MvcApplication.Controllers
         private readonly IAccountSecurity accountSecurity;
         private readonly IAccountManager accountManager;
         private readonly ICurrencyRepository currencyRepository;
-        private readonly IWebAuthenticationWorker webAuthenticationWorker;
+        private readonly IAuthenticationWorker webAuthenticationWorker;
 
-        public AccountController(IAccountSecurity accountSecurity, IAccountManager accountManager, ICurrencyRepository currencyRepository, IWebAuthenticationWorker webAuthenticationWorker)
+        public AccountController(IAccountSecurity accountSecurity, IAccountManager accountManager, ICurrencyRepository currencyRepository, IAuthenticationWorker webAuthenticationWorker)
             :base(accountManager)
         {
             this.accountSecurity = accountSecurity;

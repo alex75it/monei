@@ -9,7 +9,7 @@ using System.Web.Security;
 
 namespace Monei.MvcApplication.Core
 {
-    public class WebAuthenticationWorker : IWebAuthenticationWorker
+    public class AuthenticationWorker : IAuthenticationWorker
     {
         public const string API_TOKEN = "api_token";
 
