@@ -26,7 +26,7 @@ namespace Monei.Test.UnitTest.Core.Managers
                 Name = new String('a', 1000)
             };
 
-            Assert.Throws<CategoryTooLongNameException>(() => manager.Update(category));
+            Assert.Throws<TooLongCategoryNameException>(() => manager.Update(category));
         }
 
 

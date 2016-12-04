@@ -97,13 +97,12 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             try
             {
                 AccountRepository.Create(account_2);
-                Assert.Fail("Duplicate username haven't tot be permitted.");
+                Assert.Fail("Duplicate username haven't to be permitted.");
             }
-            catch (EntityAlreadyExistsException)
+            catch (EntityAlreadyExistsException exc)
             {
-                // expected
+                exc.PropertyName.ShouldEqual("username");
             }
-
 
             // clean 
             AccountRepository.Delete(account.Id);

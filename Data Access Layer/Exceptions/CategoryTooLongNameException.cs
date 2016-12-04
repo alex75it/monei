@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Monei.DataAccessLayer.Exceptions
 {
-	public class CategoryTooLongNameException : TooLongPropertyBaseException
+	public class TooLongCategoryNameException : TooLongPropertyBaseException
 	{
-		public CategoryTooLongNameException(int maxLength)
+		public TooLongCategoryNameException(int maxLength)
 			: base(maxLength)
 		{ }
 	}

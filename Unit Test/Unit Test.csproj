@@ -47,6 +47,7 @@
       <HintPath>..\packages\FakeItEasy.2.2.0\lib\net40\FakeItEasy.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -116,6 +117,7 @@
     <Compile Include="Core\Business Logic\CategoryManagerTest.cs" />
     <Compile Include="Core\Managers\CategoryManagerTest.cs" />
     <Compile Include="Data Access Layer\DateTimeExtensionsTest.cs" />
+    <Compile Include="Data Access Layer\Exceptions\TooLongCategoryNameExceptionTest.cs" />
     <Compile Include="Data Access Layer\Filters\BaseFiltersTest.cs" />
     <Compile Include="Data Access Layer\Filters\RegistryFiltersTest.cs" />
     <Compile Include="Core\SubcategoryManagerTest.cs" />
@@ -136,6 +138,7 @@
     <Compile Include="MVC Application\Api\CategoryApiControllerTest.cs" />
     <Compile Include="MVC Application\Area\Management\Controllers\CategoryControllerTest.cs" />
     <Compile Include="MVC Application\Controllers\AccountControllerTest.cs" />
+    <Compile Include="MVC Application\Controllers\CategoryControllerTest.cs" />
     <Compile Include="MVC Application\WebApiConfigTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />

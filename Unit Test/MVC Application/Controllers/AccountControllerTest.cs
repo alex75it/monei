@@ -13,7 +13,7 @@ using System.Web.Mvc;
 
 namespace Monei.Test.UnitTest.MVC_Application.Controllers
 {
-    [TestFixture]
+    [TestFixture, Category("Controllers")]
     public class AccountControllerTest //: ControllerTestBase
     {
         private AccountController accountController;

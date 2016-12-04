@@ -30,7 +30,7 @@ namespace Monei.Core.BusinessLogic
         public Category Create(Category category)
         {
             if (category.Name.Length > Category.NAME_MAX_LENGTH)
-                throw new CategoryTooLongNameException(Category.NAME_MAX_LENGTH);
+                throw new TooLongCategoryNameException(Category.NAME_MAX_LENGTH);
             return categoryRepository.Create(category);
         }
 
@@ -52,7 +52,7 @@ namespace Monei.Core.BusinessLogic
         public void Update(Category category)
         {
             if (category.Name.Length > Category.NAME_MAX_LENGTH)
-                throw new CategoryTooLongNameException(Category.NAME_MAX_LENGTH);
+                throw new TooLongCategoryNameException(Category.NAME_MAX_LENGTH);
             if (category.Name.Length < Category.NAME_MIN_LENGTH)
                 throw new Exception("Name is too short, min length is " + Category.NAME_MIN_LENGTH );
             if (category.Description.Length > Category.DESCRIPTION_MAX_LENGTH)

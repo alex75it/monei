@@ -25,22 +25,5 @@ namespace Monei.DataAccessLayer.SqlServer
                 return session.Query<Currency>().Where(c => c.Code == code).FirstOrDefault();
             }
         }
-
-        public new Currency Create(Currency currency)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(string code)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public abstract class AA<Tkey, Tentity> : RepositoryBase<Tkey, Tentity>
-    {
-        public AA(ISessionFactoryProvider sessionFactoryProvider) : base(sessionFactoryProvider)
-        {
-        }
     }
 }

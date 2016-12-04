@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Monei.DataAccessLayer.Exceptions;
-using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
 using Monei.MvcApplication.Areas.Management.Models;
 using Monei.MvcApplication.Controllers;
@@ -152,10 +151,9 @@ namespace Monei.MvcApplication.Areas.Management.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (CategoryTooLongNameException exc)
+            catch (TooLongCategoryNameException exc)
             {				
-                ViewBag.ErrorMessage = string.Format("Name is too long, must be at most {0} characters long.", exc.MaxLength);
-                //logger.ErrorFormat("Fail to edit Category with id: {0}. Error ID: {0} Error:\n{1}", id, errorId, exc);				
+                ViewBag.ErrorMessage = string.Format("Name is too long, must be at most {0} characters long.", exc.MaxLength);	
             }
             catch (Exception exc)
             {
