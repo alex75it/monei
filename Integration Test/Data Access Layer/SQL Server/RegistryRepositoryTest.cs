@@ -107,6 +107,59 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         }
 
         [Test]
+        public void List_when_AmountIsSet_should_ReturnRightRecords()
+        {
+            var filters = new RegistryFilters() {
+                Amount = 1.11m
+            };
+
+            RegistryRecord record = CreateTestRecord( new RegistryRecord()
+            {
+                Date = DateTime.Today,
+                Category = Helper.GetRandomCategory(),
+                Amount = 1.11m,
+            });            
+
+            try
+            {
+                var records = RegistryRepository.ListRecords(filters);
+                records.Where(r => r.Id == record.Id).ShouldNotBeEmpty();
+            }
+            finally
+            {
+                DeleteTestRecord(record.Id);
+            }
+        }
+
+        [Test]
+        public void List_when_IncludeSpecialEventIsSet_should_ReturnRightRecords()
+        {
+            var filters = new RegistryFilters()
+            {
+                IncludeSpecialEvent = true,
+            };
+
+            RegistryRecord record = CreateTestRecord(new RegistryRecord()
+            {
+                Date = DateTime.Today,
+                Category = Helper.GetRandomCategory(),
+                Amount = 1.23m,
+                IsSpecialEvent = true,
+                Note = "IncludeSpecialEvent"
+            });
+
+            try
+            {
+                var records = RegistryRepository.ListRecords(filters);
+                records.Where(r => r.Id == record.Id).ShouldNotBeEmpty();
+            }
+            finally
+            {
+                DeleteTestRecord(record.Id);
+            }
+        }
+
+        [Test]
         public void List()
         {
             // period of 1 month
@@ -219,6 +272,29 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
         }
 
+        [Test]
+        public void IsSubcategoryUsed()
+        {
+            Category category = CategoryRepository.ListWithSubcategories().First();
+            Subcategory subcategory = category.Subcategories.First();
+
+            var record = Helper.CreateRecord(DateTime.Now, 1.23m, "test", false, false, Helper.GetDemoAccount(), category);
+            record.Subcategory = category.Subcategories.First();
+            record = RegistryRepository.AddRecord(record);
+
+            try
+            {
+                // execute
+                bool isUsed = RegistryRepository.IsSubcategoryUsed(subcategory.Id);
+
+                isUsed.ShouldBeTrue();
+            }
+            finally {
+                DeleteTestRecord(record.Id);
+            }
+        }
+
+
         #region utils methods
 
         private void DeleteRecordsOfTestAccount()
@@ -246,6 +322,11 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             
             record = RegistryRepository.AddRecord(record);
             return record;
+        }
+
+        private void DeleteTestRecord(int recordId)
+        {
+            RegistryRepository.DeleteRecord(recordId);
         }
 
         #endregion

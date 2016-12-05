@@ -13,7 +13,7 @@ using Assert = NUnit.Framework.Assert;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-    [TestFixture, Category("Subcategory")]
+    [TestFixture, Category("Data Access Layer"), Category("Subcategory")]
     public class SubcategoryRepositoryTest :RepositoryTestBase
     {
         [Test]
@@ -158,6 +158,5 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
             Assert.IsNull(subcategory);
         }
-
     }
 }

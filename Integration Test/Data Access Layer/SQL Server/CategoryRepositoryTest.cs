@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using Monei.Entities;
@@ -12,7 +11,7 @@ using NHibernate.Linq;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-    [TestFixture, Category("Repository"), Category("Category")]
+    [TestFixture, Category("Data Access Layer"), Category("Repository"), Category("Category")]
     public class CategoryRepositoryTest :RepositoryTestBase
     {
         private CategoryRepository repository;
@@ -63,9 +62,21 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             // Execute
             var categories = repository.ListWithSubcategories();
 
-            categories.ToList()[0].Subcategories.ShouldNotBeEmpty();
+            categories.First().Subcategories.ShouldNotBeEmpty();
 
             sessionFactory.Statistics.CloseStatementCount.ShouldEqual(1);
+        }
+
+        [Test, Category("NHibernate")]
+        public void ListWithSubcategories()
+        {
+            var sessionFactory = sessionFactoryProvider.GetSessionFactory();
+
+            // Execute
+            var categories = repository.ListWithSubcategories();
+
+            categories.First().Subcategories.ShouldNotBeEmpty();
+            Assert.IsTrue(categories.First().Subcategories.All(c => c != null));
         }
 
         [Test]
@@ -120,6 +131,29 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             testCategory.Name.ShouldEqual(newName);
             testCategory.Description.ShouldEqual(newDescription);
             //testCategory.CreationAccount...
+        }
+
+        [Test]
+        public void MoveSubcategory()
+        {
+            var categories = CategoryRepository.List().ToList();
+            if (categories.Count < 2) Assert.Inconclusive("Almost two categories are required to execute this test");
+            var categoryFrom = categories[0];
+            var categoryTo= categories[1];
+
+            int subcategoryId = SubcategoryRepository.Create(new Subcategory() { Name = "Test", Description="description", Category = categories[0] });
+            try
+            {
+                // execute
+                CategoryRepository.MoveSubcategory(subcategoryId, categoryTo.Id);
+
+                Subcategory subcategoryToCheck = SubcategoryRepository.Read(subcategoryId);
+                subcategoryToCheck.Category.Id.ShouldEqual(categoryTo.Id);
+            }
+            finally
+            {
+                SubcategoryRepository.Delete(subcategoryId);
+            }
         }
 
         #region utils

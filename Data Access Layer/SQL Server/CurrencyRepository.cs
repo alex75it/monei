@@ -12,8 +12,6 @@ namespace Monei.DataAccessLayer.SqlServer
 {
     public class CurrencyRepository :RepositoryBase<int, Currency>, ICurrencyRepository
     {
-        public const string EUR_CODE = "EUR";
-
         public CurrencyRepository(ISessionFactoryProvider sessionFactoryProvider) : base(sessionFactoryProvider)
         {
         }
@@ -22,7 +20,10 @@ namespace Monei.DataAccessLayer.SqlServer
         {
             using (ISession session = OpenSession())
             {
-                return session.Query<Currency>().Where(c => c.Code == code).FirstOrDefault();
+                var currency = session.Query<Currency>().Where(c => c.Code == code).FirstOrDefault();
+                if (currency == null)
+                    throw new ArgumentOutOfRangeException(nameof(code), string.Format($"Currenccy with code {code} does not exists in the system."));
+                return currency;
             }
         }
     }

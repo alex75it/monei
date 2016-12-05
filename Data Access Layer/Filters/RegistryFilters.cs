@@ -17,7 +17,6 @@ namespace Monei.DataAccessLayer.Filters
         public DateTime EndDate { get; set; }
         public int[] Categories { get; set; }
         public IList<int> SubcategoryIds { get; set; }
-        public string SelectedPeriod { get; set; }
         public string TextToSearch { get; set; }
         public decimal Amount { get; set; }
         public bool ShowOnlyTaxDeductible { get; set; }

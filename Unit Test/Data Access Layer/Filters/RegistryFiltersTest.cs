@@ -13,23 +13,22 @@ using NUnit.Framework;
 namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 {
 
-    [TestFixture]
+    [TestFixture,Category("Data Access Layer")]
     public class RegistryFiltersTest : TestBase
     {
 
         [Test]
-        public void Normalize_WhenDAtesAreNotSet()
+        public void Normalize_when_DatesAreNotSet_should_SetValidDates()
         {
             RegistryFilters filters = new RegistryFilters();
             filters.Normalize();
 
             // Verify
             VerifyDates(filters);
-            filters.SelectedPeriod.ShouldBeNull();
         }
 
         [Test]
-        public void Normalize_WhenStartDateIsMinDate()
+        public void Normalize_when_StartDateIsMinDate_should_SetValidDates()
         {
             // Arrange
             RegistryFilters filters = new RegistryFilters();
@@ -44,7 +43,7 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 
 
         [Test]
-        public void Normalize_WhenStartDateIsTooLow()
+        public void Normalize_when_StartDateIsTooLow_should_SetValidDates()
         {
             RegistryFilters filters = new RegistryFilters();
             filters.StartDate = new DateTime(500, 01, 01);
@@ -55,7 +54,7 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
         }
 
         [Test]
-        public void Normalize_WhenEndDateIsToLow()
+        public void Normalize_when_EndDateIsToLow_should_SetValidDates()
         {
             // Arrange
             RegistryFilters filters = new RegistryFilters();
@@ -69,7 +68,7 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
         }
 
         [Test]
-        public void Normalize_WhenEndDateIsTooBig()
+        public void Normalize_when_EndDateIsTooBig_should_SetValidDates()
         {
             RegistryFilters filters = new RegistryFilters();
             filters.EndDate = new DateTime(9000, 01, 01);
@@ -80,7 +79,7 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
         }
 
         [Test]
-        public void Normalize_SwitchDates_WhenThereAreInverted()
+        public void Normalize_when_GivenDatesAreInverted_should_SwitchDates()
         {
             RegistryFilters filters = new RegistryFilters();
             filters.StartDate = new DateTime(9000, 01, 01);
@@ -90,6 +89,25 @@ namespace Monei.Test.UnitTest.DataAccessLayer.Filters
             // Verify
             filters.StartDate.ShouldBeLessThanOrEqualTo(filters.EndDate);
             VerifyDates(filters);
+        }
+
+        [Test]
+        public void ShowOnlytaxDeductible_should_SetThePropertyCorrectly()
+        {
+            RegistryFilters filters = new RegistryFilters();
+            filters.ShowOnlyTaxDeductible = true;
+
+            filters.ShowOnlyTaxDeductible.ShouldBeTrue();
+        }
+
+        [Test]
+        public void SetTextToSearch()
+        {
+            RegistryFilters filters = new RegistryFilters();
+            string textToSearch = "txst";
+            filters.TextToSearch = textToSearch;
+
+            filters.TextToSearch.ShouldEqual(textToSearch);
         }
 
         #region private

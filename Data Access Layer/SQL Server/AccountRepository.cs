@@ -19,15 +19,14 @@ namespace Monei.DataAccessLayer.SqlServer
 
         public Account Read(string username)
         {
+            if (username == null)
+                throw new ArgumentNullException(nameof(username));
+
             using (ISession session = OpenSession())
             {
                 Account account = session.Query<Account>()
                     .Where(a => a.Username.ToLowerInvariant() == username.ToLowerInvariant())
                     .FirstOrDefault();
-
-                // todo: load Role from database
-                if (username == "alex")
-                    account.Role = Account.AccountRole.Administrator;
 
                 return account;
             }
@@ -35,18 +34,14 @@ namespace Monei.DataAccessLayer.SqlServer
 
         public Account Read(Guid accountGuid)
         {
+            if (accountGuid == Guid.Empty)
+                throw new ArgumentException(nameof(accountGuid));
+
             using (ISession session = OpenSession())
             {
                 Account account = session.Query<Account>()
                     .Where(a => a.Guid == accountGuid)
                     .FirstOrDefault();
-
-                if (account == null)
-                    throw new Exception("Account not found for Guid " + accountGuid);
-
-                // todo: load Role from database
-                if (account.Username == "alex")
-                    account.Role = Account.AccountRole.Administrator;
 
                 return account;
             }
