@@ -76,7 +76,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             var categories = repository.ListWithSubcategories();
 
             categories.First().Subcategories.ShouldNotBeEmpty();
-            Assert.IsTrue(categories.First().Subcategories.All(c => c != null));
+            Assert.IsTrue(categories.First().Subcategories.All(c => c != null), "There are null Subcategories");
         }
 
         [Test]

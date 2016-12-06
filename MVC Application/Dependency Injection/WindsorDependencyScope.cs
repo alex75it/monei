@@ -9,34 +9,34 @@ using Castle.Windsor;
 
 namespace Monei.MvcApplication.DependencyInjection
 {
-	public class WindsorDependencyScope :IDependencyScope
-	{
-	    private readonly IWindsorContainer container;
-		private readonly IDisposable scope;
+    public class WindsorDependencyScope :IDependencyScope
+    {
+        private readonly IWindsorContainer container;
+        private readonly IDisposable scope;
 
-		public WindsorDependencyScope(IWindsorContainer container)
-		{
-			this.container = container;
-			//this.scope = container.BeginScope();
-			this.scope = new CallContextLifetimeScope(container);
-		}
+        public WindsorDependencyScope(IWindsorContainer container)
+        {
+            this.container = container;
+            //this.scope = container.BeginScope();
+            this.scope = new CallContextLifetimeScope(container);
+        }
 
-		public object GetService(Type serviceType)
-		{
-			if (container.Kernel.HasComponent(serviceType))
-				return container.Resolve(serviceType);
-			else
-				return null;			
-		}
+        public object GetService(Type serviceType)
+        {
+            if (container.Kernel.HasComponent(serviceType))
+                return container.Resolve(serviceType);
+            else
+                return null;			
+        }
 
-		public IEnumerable<object> GetServices(Type serviceType)
-		{
-			return container.ResolveAll(serviceType).Cast<object>();
-		}
+        public IEnumerable<object> GetServices(Type serviceType)
+        {
+            return container.ResolveAll(serviceType).Cast<object>();
+        }
 
-		public void Dispose()
-		{
-			scope.Dispose();
-		}
-	}
+        public void Dispose()
+        {
+            scope.Dispose();
+        }
+    }
 }
