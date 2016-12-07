@@ -45,3 +45,6 @@ If the token is expired a specific HTTP state is returned and the client can try
 To make simple for the Web Application page that use the Web API to use this token, it is preloaded and stored in the HTML of the View Page 
 to be used from the client library (AngularJs for example).
 This poin must be defined better.
+
+### Cleanup expired tokens
+A scheduled process cleanup tokens expired from almost 1 day or something like this.
