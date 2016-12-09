@@ -61,6 +61,7 @@
     <Compile Include="Exceptions\TooLongPropertyBaseException.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Filters\BaseFilters.cs" />
+    <Compile Include="Interfaces\IApiTokenRepository.cs" />
     <Compile Include="Interfaces\ICategoryRepository.cs" />
     <Compile Include="Interfaces\IContractRepository.cs" />
     <Compile Include="Filters\RegistryFilters.cs" />

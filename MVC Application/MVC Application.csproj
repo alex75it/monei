@@ -212,6 +212,7 @@
     <Compile Include="Api\PostDataObjects\RegistrySearchPostData.cs" />
     <Compile Include="Api\RegistryApiController.cs" />
     <Compile Include="Api\ResponseDataObjects\LoginResult.cs" />
+    <Compile Include="Api\TokenApiController.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

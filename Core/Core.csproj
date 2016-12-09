@@ -63,6 +63,7 @@
     <Compile Include="Business Logic\CategoryManager.cs" />
     <Compile Include="Business Logic\RegistryManager.cs" />
     <Compile Include="Enums\LoginResult.cs" />
+    <Compile Include="Exceptions\ApiTokenExpiredException.cs" />
     <Compile Include="SubcategoryManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
