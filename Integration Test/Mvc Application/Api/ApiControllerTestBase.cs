@@ -15,6 +15,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.ExceptionHandling;
 using Monei.MvcApplication.Filters;
+using Should;
+using System.Net;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
@@ -198,7 +200,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             using (var result = client.SendAsync(CreateRequest<TPost>(url, HttpMethod.Post, data)).Result)
                 return LoadReturnValue<TReturn>(url, result);
         }
-
+   
         /// <summary>
         /// Call API
         /// </summary>
@@ -225,6 +227,15 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             CallApi<TPost>(url, POST, data);
         }
 
+        protected void CallApiExpectingError<TPost>(string url, TPost data, HttpStatusCode expectedStatusCode)
+        {
+            using (var client = GetClient())
+            using (var result = client.SendAsync(CreateRequest<TPost>(url, HttpMethod.Post, data)).Result)
+            {
+                result.IsSuccessStatusCode.ShouldBeFalse();
+                result.StatusCode.ShouldEqual(expectedStatusCode, "StatusCode is wrong");
+            }
+        }
 
         private static TReturn LoadReturnValue<TReturn>(string url, HttpResponseMessage result) 
             //where TReturn : class

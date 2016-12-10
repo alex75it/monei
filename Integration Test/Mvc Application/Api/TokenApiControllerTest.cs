@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Should;
+using System.Net;
+using Monei.Entities;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
@@ -25,10 +27,24 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         }
 
         [Test]
-        public void New()
+        public void New_when_CredentialsAreWrong_should_ReturnAnError()
         {          
             NewApiTokenPostData data = new NewApiTokenPostData() { Username = "username", Password = "password" };
-            Guid newToken = CallApi<NewApiTokenPostData, Guid>(BASE_URL + "/new", data);
+            CallApiExpectingError<NewApiTokenPostData>(BASE_URL + "/new", data, HttpStatusCode.BadRequest);
+        }
+
+        [Test]
+        public void New_should_ReturnAGuid()
+        {
+            Account account = testDataProvider.GetTestAccount();
+            Guid newToken = default(Guid);
+            string username = account.Username;
+            string password = account.Password;
+
+            NewApiTokenPostData data = new NewApiTokenPostData() { Username = username, Password = password };
+            newToken = CallApi<NewApiTokenPostData, Guid>(BASE_URL + "/new", data);
+
+            newToken.ShouldNotEqual(default(Guid));
         }
     }
 }

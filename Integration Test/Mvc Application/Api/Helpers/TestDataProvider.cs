@@ -1,4 +1,5 @@
-﻿using Monei.Entities;
+﻿using Monei.DataAccessLayer.SqlServer;
+using Monei.Entities;
 using NHibernate;
 using System;
 using System.Collections.Generic;
@@ -13,14 +14,14 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
     {
         private ISessionFactory sessionFactory;
 
-        public TestDataProvider()
+        internal TestDataProvider()
         {
             var configuration = new NHibernate.Cfg.Configuration();
             configuration.Configure(); // it fail ONLY in debug mode, just go on !
             sessionFactory = configuration.BuildSessionFactory();            
         }
 
-        public Category GetTestCategory()
+        internal Category GetTestCategory()
         {
             Category category = null;
 
@@ -31,7 +32,8 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
             return category;
         }
-        public Subcategory GetTestSubcategory(int categoryId)
+
+        internal Subcategory GetTestSubcategory(int categoryId)
         {
             Subcategory subcategory = null;
 
@@ -41,6 +43,39 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             }
 
             return subcategory;
+        }
+
+        internal Currency GetTestCurrency()
+        {
+            using (ISession session = sessionFactory.OpenSession())
+                return session.QueryOver<Currency>().Take(1).List().First();
+        }
+
+        internal Account GetTestAccount()
+        {
+            string testAccountUsername = "test";
+            var currency = GetTestCurrency();
+
+            using (ISession session = sessionFactory.OpenSession())
+            {
+                // using ToLowerInvariant() cause a strange exception...
+                //Account account = session.QueryOver<Account>().Where(a => a.Username.ToLowerInvariant() == testAccountUsername).List().FirstOrDefault();
+                Account account = session.QueryOver<Account>().Where(a => a.Username == testAccountUsername).List().FirstOrDefault();
+
+                if (account == null)
+                {
+                    account = new Account() {
+                        Username = testAccountUsername,
+                        Password = "test",
+                        Guid = Guid.NewGuid(),
+                        Currency = currency,
+                    };
+
+                   session.Save(account);
+                }
+
+                return account;
+            }
         }
     }
 }
