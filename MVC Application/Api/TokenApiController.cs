@@ -23,27 +23,29 @@ namespace Monei.MvcApplication.Api
         }
 
         [HttpGet(), Route("ping")]
-        public string Ping()
+        public IHttpActionResult Ping()
         {
             if (AccountManager == null) throw new Exception("AccountManager not injected");
             if (AccountSecurity == null) throw new Exception("AccountSecurity not injected");
-            return "pong";
+            return Ok("pong");
         }
 
         // POST api/token/new
         [HttpPost(), Route("new")]
         //public Guid New([FromBody]string username, [FromBody]string password)
-        public Guid New(NewApiTokenPostData data)
-        {
+        public IHttpActionResult New(NewApiTokenPostData data)
+        {        
             var account = AccountManager.Read(data.Username);
 
             if(account == null)
-               BadRequest($@"Account not found for user ""{data.Username}"".");
+                return BadRequest($@"Account not found for user ""{data.Username}"".");
 
             if (data.Password.ToLowerInvariant() != account.Password.ToLowerInvariant())
-                BadRequest($@"Wrong password.");
+                return BadRequest($@"Wrong password.");
 
-            return AccountSecurity.GetApiTokenForAccount(account.Id);
+            Guid token = AccountSecurity.GetApiTokenForAccount(account.Id);
+
+            return Ok(token);
         }
 
         // GET api/<controller>/5
