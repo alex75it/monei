@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Monei.Entities;
 using Monei.MvcApplication.Api.PostDataObjects;
-using Monei.MvcApplication.Controllers.Api;
-using Monei.MvcApplication.Controllers.Api.PostDataObjects;
 
 namespace Monei.MvcApplication.Api
 {	

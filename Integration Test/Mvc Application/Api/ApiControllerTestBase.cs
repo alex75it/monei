@@ -14,6 +14,7 @@ using Monei.MvcApplication.Core;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.ExceptionHandling;
+using Monei.MvcApplication.Filters;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
@@ -78,6 +79,31 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             HttpConfiguration configuration = new HttpConfiguration();
             // configuration.DependencyResolver = dependencyInjectionManager; // cause error on second call of the same controller. 
             // probably controller is not resolved. Impossible to debug. 
+
+            // A call on a browser show the full error, ho to replicate this ?
+            /*
+             <Error>
+                <Message>An error has occurred.</Message>
+                <ExceptionMessage>
+                An error occurred when trying to create a controller of type 'TokenApiController'. Make sure that the controller has a parameterless public constructor.
+                </ExceptionMessage>
+                <ExceptionType>System.InvalidOperationException</ExceptionType>
+                <StackTrace>
+                at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType) at System.Web.Http.Controllers.HttpControllerDescriptor.CreateController(HttpRequestMessage request) at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+                </StackTrace>
+                <InnerException>
+                <Message>An error has occurred.</Message>
+                <ExceptionMessage>
+                Type 'Monei.MvcApplication.Api.TokenApiController' does not have a default constructor
+                </ExceptionMessage>
+                <ExceptionType>System.ArgumentException</ExceptionType>
+                <StackTrace>
+                at System.Linq.Expressions.Expression.New(Type type) at System.Web.Http.Internal.TypeActivator.Create[TBase](Type instanceType) at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.GetInstanceOrActivator(HttpRequestMessage request, Type controllerType, Func`1& activator) at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
+                </StackTrace>
+                </InnerException>
+                </Error>
+             */
+
             configuration.DependencyResolver = new WindsorCastleDependencyInjection(new LifestyleSingletonComponentModelContruction());
             WebApiConfig.Register(configuration);
 
@@ -85,6 +111,10 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             configuration.Services.Replace(typeof(IExceptionHandler), new UnitTestExceptionHandler());
                         
             configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+
+            configuration.Filters.Add(new ApiControllerExceptionFilterAttribute());
+
+            log4net.Config.XmlConfigurator.Configure();
 
             return configuration;
         }
@@ -140,7 +170,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
 
         protected void CallApi(string url, HttpMethod httpMethod)
-            //where TReturn : class
         {
             using (var client = GetClient())
             using (var result = client.SendAsync(CreateRequest(url, httpMethod)).Result)
@@ -148,7 +177,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         }
 
         protected TReturn CallApi<TReturn>(string url, HttpMethod httpMethod)
-            where TReturn : class
         {
             using (var client = GetClient())
             using (var result = client.SendAsync(CreateRequest(url, httpMethod)).Result)
@@ -164,11 +192,10 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         /// <param name="httpMethod"></param>
         /// <param name="data">POST form collection data</param>
         /// <returns></returns>
-        protected TReturn CallApi<TPost, TReturn>(string url, HttpMethod httpMethod, TPost data)
-            where TPost : class
+        protected TReturn CallApi<TPost, TReturn>(string url, TPost data)
         {
             using (var client = GetClient())
-            using (var result = client.SendAsync(CreateRequest<TPost>(url, httpMethod, data)).Result)
+            using (var result = client.SendAsync(CreateRequest<TPost>(url, HttpMethod.Post, data)).Result)
                 return LoadReturnValue<TReturn>(url, result);
         }
 

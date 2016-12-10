@@ -3,8 +3,6 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Routing;
 using FakeItEasy;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
@@ -13,7 +11,6 @@ using Monei.MvcApplication.Api;
 using NUnit.Framework;
 using Should;
 using Monei.MvcApplication.Controllers.Api.PostDataObjects;
-
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
@@ -77,7 +74,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             int newId = 0;
             try
             {
-                newId = CallApi<SubcategoryPostData, int>(ROUTE_PREFIX, POST, postData);
+                newId = CallApi<SubcategoryPostData, int>(ROUTE_PREFIX, postData);
 
                 // Assert
 

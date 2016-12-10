@@ -1,28 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using Monei.DataAccessLayer.Interfaces;
-using Monei.MvcApplication.Api.PostDataObjects;
 using Monei.MvcApplication.Api.ResponseDataObjects;
 using Monei.MvcApplication.Core;
 using Monei.MvcApplication.Helpers;
+using Monei.MvcApplication.Api.PostDataObjects;
 
 namespace Monei.MvcApplication.Api
 {
     [RoutePrefix("api/account")]
     public class AccountApiController :ApiControllerBase
     {
-        //private readonly IWebAuthenticationWorker webAuthenticationWorker;
-
-
-        //public AccountApiController(IWebAuthenticationWorker webAuthenticationWorker)            
-        //{
-        //    this.webAuthenticationWorker = webAuthenticationWorker;
-        //}
-
         [HttpGet, Route("ping")]
         public void Ping() {
 

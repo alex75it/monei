@@ -5,11 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Monei.Entities;
-using Monei.MvcApplication.Api.PostDataObjects;
-using Monei.MvcApplication.Controllers.Api;
 using Monei.MvcApplication.Controllers.Api.PostDataObjects;
-using Newtonsoft.Json.Linq;
-using Monei.DataAccessLayer.Interfaces;
 
 namespace Monei.MvcApplication.Api
 {	
@@ -27,7 +23,7 @@ namespace Monei.MvcApplication.Api
         {
             var subcategories = SubcategoryRepository.List(categoryId);
 
-            // HACK: remove subitems to avoid LAzyInitializationException            
+            // HACK: remove subitems to avoid LazyInitializationException            
             foreach (var subcategory in subcategories)
                 subcategory.Category = null;
 

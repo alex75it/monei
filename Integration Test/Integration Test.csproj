@@ -50,6 +50,10 @@
       <HintPath>..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -138,6 +142,7 @@
     <Compile Include="Mvc Application\Api\SubcategoryApiControllerTest.cs" />
     <Compile Include="Mvc Application\Api\Helpers\TestDataProvider.cs" />
     <Compile Include="Mvc Application\Api\Helpers\LifecycleTransientComponentModelContructionContributor.cs" />
+    <Compile Include="Mvc Application\Api\TokenApiControllerTest.cs" />
     <Compile Include="Mvc Application\DependencyInjection\WindsorCastleDependencyInjectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

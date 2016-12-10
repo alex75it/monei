@@ -1,28 +1,3 @@
-
-
-## Account ##
-
-In ApiController it is using User.Identity
-
-in tests it is the logged user in the machin, it is not the right one.
-
-From where it is obtained?
-There is a read of the database, in which moment?
-if it is good ok, but it must be injekted/moked, and pass the "account-id" HTTP header and reading user from database became pontless.
-Otherwise it should not be used.
-
-Specifically in ApiControllerbase class.
-wher it is asked for the property CurrentAccount.
-During debug of integration test of RegistryApiController (Monei.Test.IntegrationTest.MvcApplication.Api)
-
-I found that there are "Users" and "Accounts" tables in database.
-Which one is not used?
-
-Try to rename "Users".
-....
-
-
-
 ## Get Categories ##
 
 GetCategories seems to make a lot of queries on database instead of just one.

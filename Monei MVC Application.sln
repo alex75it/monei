@@ -30,7 +30,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{B9C8606A-1F4D-4D08-89AA-52FAADD5528B}"
 	ProjectSection(SolutionItems) = preProject
 		Documentation\Alex notes on developing.txt = Documentation\Alex notes on developing.txt
-		Documentation\TODO.txt = Documentation\TODO.txt
 		Documentation\Web API Token.md = Documentation\Web API Token.md
 	EndProjectSection
 EndProject

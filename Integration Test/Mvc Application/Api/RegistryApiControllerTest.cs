@@ -27,7 +27,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         {
             RegistrySearchPostData data = new RegistrySearchPostData() { };
 
-            var result = base.CallApi<RegistrySearchPostData, IEnumerable<RegistryRecord>>(baseUri + "/search", HttpMethod.Post, data);
+            var result = base.CallApi<RegistrySearchPostData, IEnumerable<RegistryRecord>>(baseUri + "/search", data);
             result.ShouldNotBeEmpty();
         }
 
@@ -48,7 +48,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             };
             
             // Execute
-            var newId = base.CallApi<RegistryNewRecordPostData, int>(baseUri, HttpMethod.Post, data);
+            var newId = base.CallApi<RegistryNewRecordPostData, int>(baseUri, data);
 
             RegistryRecord record = GetRegistryRecord(newId);
             record.ShouldNotBeNull();

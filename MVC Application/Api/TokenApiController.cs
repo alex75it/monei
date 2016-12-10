@@ -1,11 +1,12 @@
-﻿using Monei.Core.BusinessLogic;
-using Monei.MvcApplication.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Monei.Core.BusinessLogic;
+using log4net;
+using Monei.MvcApplication.Api.PostDataObjects;
 
 namespace Monei.MvcApplication.Api
 {
@@ -14,24 +15,24 @@ namespace Monei.MvcApplication.Api
     {
         private readonly IAccountManager accountManager;
         private readonly IAccountSecurity accountSecurity;
+        private ILog logger;
 
-
-        public TokenApiController(IAccountManager accountManager, IAccountSecurity accountSecurity)          
+        public TokenApiController()          
         {
-            this.accountManager = accountManager;
-            this.accountSecurity = accountSecurity;
+            logger = LogManager.GetLogger(this.GetType());
         }
 
-        // GET api/token/new
-        [HttpGet()]
-        public Guid Get(string username, string password)
+        // POST api/token/new
+        [HttpPost(), Route("new")]
+        //public Guid New([FromBody]string username, [FromBody]string password)
+        public Guid New(NewApiTokenPostData data)
         {
-            var account = accountManager.Read(username);
+            var account = accountManager.Read(data.Username);
 
             if(account == null)
-               BadRequest($@"Account not found for user ""{username}"".");
+               BadRequest($@"Account not found for user ""{data.Username}"".");
 
-            if (password.ToLowerInvariant() != account.Password.ToLowerInvariant())
+            if (data.Password.ToLowerInvariant() != account.Password.ToLowerInvariant())
                 BadRequest($@"Wrong password.");
 
             return accountSecurity.GetApiTokenForAccount(account.Id);

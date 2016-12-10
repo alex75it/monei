@@ -205,6 +205,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\PostDataObjects\NewApiTokenPostData.cs" />
     <Compile Include="Api\PostDataObjects\RegistryNewRecordPostData.cs" />
     <Compile Include="Api\SubcategoryApiController.cs" />
     <Compile Include="Api\CategoryApiController.cs" />
