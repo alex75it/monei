@@ -7,7 +7,6 @@ using System.Web.Http;
 using Monei.Core.DataAnalysis;
 using Monei.Core.DataAnalysis.BusinessObjects;
 
-
 namespace Monei.MvcApplication.Api
 {
 	//[Authorize]
@@ -28,14 +27,5 @@ namespace Monei.MvcApplication.Api
 			YearData data = engine.GetYearData(CurrentAccount.Id, year);
 			return data;
 		}
-
-		//[Route("{year:int}/{month:int}")]
-		//public MonthData Get(int year, int month)
-		//{
-		//	Engine engine = new Engine(RegistryRepository);
-		//	MonthData data = engine.GetMonthData(CurrentAccount.Id, year);
-		//	return data;
-		//}
-
 	}
 }

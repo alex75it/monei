@@ -226,9 +226,9 @@
     <Compile Include="Areas\Management\Models\SubcategoryModel.cs" />
     <Compile Include="Api\AccountApiController.cs" />
     <Compile Include="Api\ApiControllerBase.cs" />
-    <Compile Include="Controllers\Api\DashboardController.cs" />
+    <Compile Include="Api\DashboardController.cs" />
     <Compile Include="Api\PostDataObjects\MoveSubcategoryPostData.cs" />
-    <Compile Include="Controllers\Api\PostDataObjects\SubcategoryPostData.cs" />
+    <Compile Include="Api\PostDataObjects\SubcategoryPostData.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Core\BaseViewPage.cs" />

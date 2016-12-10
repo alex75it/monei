@@ -10,7 +10,7 @@ using Monei.Entities;
 using Monei.MvcApplication.Api;
 using NUnit.Framework;
 using Should;
-using Monei.MvcApplication.Controllers.Api.PostDataObjects;
+using Monei.MvcApplication.Api.PostDataObjects;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {

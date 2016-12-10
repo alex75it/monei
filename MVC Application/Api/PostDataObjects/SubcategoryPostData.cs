@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
-namespace Monei.MvcApplication.Controllers.Api.PostDataObjects
+namespace Monei.MvcApplication.Api.PostDataObjects
 {
 	public class SubcategoryPostData
 	{
@@ -13,9 +13,8 @@ namespace Monei.MvcApplication.Controllers.Api.PostDataObjects
 		public string Description { get; set; }
 	}
 
-
-	public class SubcategoryPostDataConverter : TypeConverter
-	{ 
+	//public class SubcategoryPostDataConverter : TypeConverter
+	//{ 
 	
-	}
+	//}
 }
