@@ -13,12 +13,14 @@ using Monei.DataAccessLayer.SqlServer;
 using Castle.MicroKernel.ModelBuilder;
 using Castle.Core;
 using Castle.MicroKernel;
+using System.Reflection;
+using System.Web.Http;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.DependencyInjection
 {
     /// Thgese tests cannto be Unit tests because the SessionProvider require a real working configuration
 
-    [TestFixture, Category("Dependency Injection")]
+    [TestFixture, Category("Dependency Injection"), Category("Web API")]
     public class WindsorCastleDependencyInjectionTest
     {
         private LifestyleSingletonComponentModelContruction lifestyleSingletonComponentModelConstruction = new LifestyleSingletonComponentModelContruction();
@@ -63,15 +65,25 @@ namespace Monei.Test.IntegrationTest.MvcApplication.DependencyInjection
         }
 
         [Test]
-        public void Constructor_should_MakeApiControllersResolvable()
+        public void Resolve_should_CreateApiControllers()
         {
+            // retrieve all the API controllers of the MVC Application
+            Assembly mvcApplication = Assembly.Load("Monei.MvcApplication");
+            if (mvcApplication == null) Assert.Fail("Fail to load Monei.MvcApplication");
+
+            var apiControllers = mvcApplication.GetTypes().Where(t => t.IsSubclassOf(typeof(ApiController))).ToList();
+
             using (WindsorCastleDependencyInjection dependencyInjection = new WindsorCastleDependencyInjection(lifestyleSingletonComponentModelConstruction))
             {
-                AccountApiController accountController = dependencyInjection.Resolve<AccountApiController>();
-                RegistryApiController registryController = dependencyInjection.Resolve<RegistryApiController>();
+                // create dynamically the equivalent of:
+                // AccountApiController accountController = dependencyInjection.Resolve<AccountApiController>();
 
-                accountController.ShouldNotBeNull();
-                registryController.ShouldNotBeNull();
+                MethodInfo resolve = typeof(WindsorCastleDependencyInjection).GetMethod("Resolve");
+                foreach (var apiController in apiControllers)
+                {
+                    MethodInfo recolveGeneric = resolve.MakeGenericMethod(new Type[] { apiController });
+                    var controller = recolveGeneric.Invoke(dependencyInjection, new object[0]);
+                }
             }
         }
     }
