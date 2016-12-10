@@ -22,6 +22,14 @@ namespace Monei.MvcApplication.Api
             logger = LogManager.GetLogger(this.GetType());
         }
 
+        [HttpGet(), Route("ping")]
+        public string Ping()
+        {
+            if (accountManager == null) throw new Exception(nameof(accountManager) + " not injected");
+            if (accountSecurity == null) throw new Exception(nameof(accountSecurity) + " not injected");
+            return "pong";
+        }
+
         // POST api/token/new
         [HttpPost(), Route("new")]
         //public Guid New([FromBody]string username, [FromBody]string password)

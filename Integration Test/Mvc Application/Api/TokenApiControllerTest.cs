@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Should;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
@@ -17,16 +18,15 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         private const string BASE_URL = "api/token";
 
         [Test]
-        public void New()
+        public void Ping()
         {
-            object postData = new { username = "aaa", password = "bbb" };
-            Guid newToken = CallApi<object, Guid>(BASE_URL + "/new", postData);
+            string response = CallApi<string>(BASE_URL + "/ping", HttpMethod.Get);
+            response.ShouldEqual("pong");
         }
 
         [Test]
-        public void New_2()
+        public void New()
         {          
-            //object postData = new { username = "aaa", password = "bbb" };
             NewApiTokenPostData data = new NewApiTokenPostData() { Username = "username", Password = "password" };
             Guid newToken = CallApi<NewApiTokenPostData, Guid>(BASE_URL + "/new", data);
         }
