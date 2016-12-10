@@ -13,8 +13,8 @@ namespace Monei.MvcApplication.Api
     [RoutePrefix("api/token")]
     public class TokenApiController : ApiController
     {
-        private readonly IAccountManager accountManager;
-        private readonly IAccountSecurity accountSecurity;
+        public IAccountManager AccountManager { get; set; }
+        public IAccountSecurity AccountSecurity { get; set; }
         private ILog logger;
 
         public TokenApiController()          
@@ -25,8 +25,8 @@ namespace Monei.MvcApplication.Api
         [HttpGet(), Route("ping")]
         public string Ping()
         {
-            if (accountManager == null) throw new Exception(nameof(accountManager) + " not injected");
-            if (accountSecurity == null) throw new Exception(nameof(accountSecurity) + " not injected");
+            if (AccountManager == null) throw new Exception("AccountManager not injected");
+            if (AccountSecurity == null) throw new Exception("AccountSecurity not injected");
             return "pong";
         }
 
@@ -35,7 +35,7 @@ namespace Monei.MvcApplication.Api
         //public Guid New([FromBody]string username, [FromBody]string password)
         public Guid New(NewApiTokenPostData data)
         {
-            var account = accountManager.Read(data.Username);
+            var account = AccountManager.Read(data.Username);
 
             if(account == null)
                BadRequest($@"Account not found for user ""{data.Username}"".");
@@ -43,7 +43,7 @@ namespace Monei.MvcApplication.Api
             if (data.Password.ToLowerInvariant() != account.Password.ToLowerInvariant())
                 BadRequest($@"Wrong password.");
 
-            return accountSecurity.GetApiTokenForAccount(account.Id);
+            return AccountSecurity.GetApiTokenForAccount(account.Id);
         }
 
         // GET api/<controller>/5

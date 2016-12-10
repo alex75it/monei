@@ -10,6 +10,7 @@ using Monei.DataAccessLayer.Interfaces;
 using Monei.MvcApplication.Api;
 using Monei.MvcApplication.Controllers;
 using Monei.MvcApplication.Core;
+using System.Web.Http;
 
 namespace Monei.MvcApplication.DependencyInjection
 {
@@ -23,8 +24,9 @@ namespace Monei.MvcApplication.DependencyInjection
 
                 Classes.FromThisAssembly().BasedOn<IController>().LifestylePerWebRequest(),
                 Classes.FromThisAssembly().BasedOn<MoneiControllerBase>().LifestylePerWebRequest(),
-                Classes.FromThisAssembly().BasedOn<ApiControllerBase>().LifestylePerWebRequest(),			
-                
+                Classes.FromThisAssembly().BasedOn<ApiControllerBase>().LifestylePerWebRequest(),
+                Classes.FromThisAssembly().BasedOn<ApiController>().LifestylePerWebRequest(),
+
                 Component.For<IAuthenticationWorker>().ImplementedBy<AuthenticationWorker>().LifestylePerWebRequest()
             );
         }
