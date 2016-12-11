@@ -49,7 +49,6 @@
     <Compile Include="Account.cs" />
     <Compile Include="ApiToken.cs" />
     <Compile Include="Category.cs" />
-    <Compile Include="Contract.cs" />
     <Compile Include="Currency.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -36,10 +36,10 @@ namespace Monei.Entities
         public override bool Equals(object obj)
         {
             //if(obj is  NHibernate.Collection.Generic.PersistentGenericList<Subcategory>
-           // if (obj != null && !(obj is Category)) return true;
+            // if (obj != null && !(obj is Category)) return true;
             //return obj != null && obj.GetHashCode() == GetHashCode();
-            // need to avoid LaiInizializationException by CheckForCircularReference method used in Json serializaer
-            return obj is Category && ((Category)obj).Id == Id;
+            // needed to avoid LaiInizializationException by CheckForCircularReference method used in Json serializaer
+            return obj is Category && ((Category)obj).GetHashCode() == GetHashCode();
         }
 
     }
