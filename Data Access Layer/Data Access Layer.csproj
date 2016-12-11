@@ -74,7 +74,7 @@
     <Compile Include="SQL Server\AccountRepository.cs" />
     <Compile Include="SQL Server\CategoryRepository.cs" />
     <Compile Include="SQL Server\CurrencyRepository.cs" />
-    <Compile Include="SQL Server\ISessionFactoryProvider.cs" />
+    <Compile Include="Interfaces\ISessionFactoryProvider.cs" />
     <Compile Include="SQL Server\RegistryRepository.cs" />
     <Compile Include="SQL Server\RepositoryBase.cs" />
     <Compile Include="SQL Server\SessionFactoryProvider.cs" />

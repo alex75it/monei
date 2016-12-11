@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Monei.DataAccessLayer.SqlServer
+namespace Monei.DataAccessLayer.Interfaces
 {
     public interface ISessionFactoryProvider
     {

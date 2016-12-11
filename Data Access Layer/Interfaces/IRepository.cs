@@ -10,7 +10,7 @@ namespace Monei.DataAccessLayer.Interfaces
 	/// 
 	/// </summary>
 	/// <typeparam name="TEntity">Entity managed by this repository</typeparam>
-	public interface IRepository<TKey, TEntity>
+	public interface IRepository<TKey, TEntity> 
 	{
 		TKey Create(TEntity entity);
 		TEntity Read(TKey key);

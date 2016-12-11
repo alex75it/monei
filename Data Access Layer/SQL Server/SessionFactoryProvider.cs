@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NHibernate;
+using Monei.DataAccessLayer.Interfaces;
 
 namespace Monei.DataAccessLayer.SqlServer
 {

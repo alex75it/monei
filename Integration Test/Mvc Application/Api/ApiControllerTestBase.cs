@@ -17,6 +17,7 @@ using System.Web.Http.ExceptionHandling;
 using Monei.MvcApplication.Filters;
 using Should;
 using System.Net;
+using Monei.DataAccessLayer.Interfaces;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {

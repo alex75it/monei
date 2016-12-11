@@ -26,7 +26,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.DependencyInjection
         private LifestyleSingletonComponentModelContruction lifestyleSingletonComponentModelConstruction = new LifestyleSingletonComponentModelContruction();
 
         [Test]
-        public void Constructor_should_MakeBusinessLogicComponentsResolvable()
+        public void Constructor_should_CreateBusinessLogicComponents()
         {
             using (WindsorCastleDependencyInjection dependencyInjection = new WindsorCastleDependencyInjection(lifestyleSingletonComponentModelConstruction))
             {
@@ -39,20 +39,30 @@ namespace Monei.Test.IntegrationTest.MvcApplication.DependencyInjection
         }
 
         [Test]
-        public void Constructor_should_MakeRepositoyComponentsResolvable()
+        public void Resolve_should_CreateRepositories()
         {
-            using (WindsorCastleDependencyInjection dependencyInjection = new WindsorCastleDependencyInjection(lifestyleSingletonComponentModelConstruction))
-            {
-                IAccountRepository accountRepository = dependencyInjection.Resolve<IAccountRepository>();
-                ISessionFactoryProvider sessionFActoryProvider = dependencyInjection.Resolve<ISessionFactoryProvider>();
+            Type[] components = {
+                // Repositories
+                typeof(IAccountRepository),
+                typeof(ICategoryRepository),
+                typeof(ISubcategoryRepository),
+                typeof(ICurrencyRepository),
+                typeof(IRegistryRepository),
+                typeof(IApiTokenRepository),
+                // SessionFactoryProvider
+                typeof(ISessionFactoryProvider),
+            };
 
-                accountRepository.ShouldNotBeNull();
-                sessionFActoryProvider.ShouldNotBeNull();
-            }
+            MethodInfo resolve = typeof(WindsorCastleDependencyInjection).GetMethod("Resolve");
+
+            using (WindsorCastleDependencyInjection dependencyInjection = new WindsorCastleDependencyInjection(lifestyleSingletonComponentModelConstruction))
+                foreach (var component in components)
+                     resolve.MakeGenericMethod(component)
+                        .Invoke(dependencyInjection, new object[0]);            
         }
 
         [Test]
-        public void Constructor_should_MakeControllersResolvable()
+        public void Resolve_should_CreateControllers()
         {
             using (WindsorCastleDependencyInjection dependencyInjection = new WindsorCastleDependencyInjection(lifestyleSingletonComponentModelConstruction))
             {
