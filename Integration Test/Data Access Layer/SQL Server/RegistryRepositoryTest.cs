@@ -12,7 +12,7 @@ using Monei.DataAccessLayer.SqlServer;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-    [TestFixture]
+    [TestFixture, Category("Repository")]
     public class RegistryRepositoryTest : RepositoryTestBase
     {
 

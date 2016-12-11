@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Monei.Test.UnitTest.DataAccessLayer.Filters
 {
 
-    [TestFixture,Category("Data Access Layer")]
+    [TestFixture, Category("Data Access Layer")]
     public class RegistryFiltersTest : TestBase
     {
 
