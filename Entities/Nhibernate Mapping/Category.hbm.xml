@@ -12,11 +12,11 @@
     <property name="CreationDate" />
     <property name="LastChangeDate" />
     <property name="DeletionDate" />
-    <list name="Subcategories" table="Subcategory" lazy="true" inverse="true">
+    <!--<list name="Subcategories" table="Subcategory" lazy="true" inverse="true">
       <key column="CategoryId"></key>
       <index column="Id"></index>
       <one-to-many class="Subcategory" />
-    </list>
+    </list>-->
   </class>
 
 </hibernate-mapping>

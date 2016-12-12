@@ -15,17 +15,16 @@ namespace Monei.Entities
 
         public string ImageName { get; set; }
 
+        private IList<Subcategory> subcategories = null;
+
     
         public string Name { get; set; }	
         public string Description { get; set; }
         public DateTime? DeletionDate { get; set; }
-
-
-        public IList<Subcategory> Subcategories { get; set; }
-
+        
         public Category()
         {
-            Subcategories = new List<Subcategory>();
+            //Subcategories = new List<Subcategory>();
         }
 
         public override int GetHashCode()

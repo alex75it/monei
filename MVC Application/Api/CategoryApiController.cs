@@ -20,11 +20,11 @@ namespace Monei.MvcApplication.Api
         public IEnumerable<Category> Get()
         {
             IEnumerable<Category> list = CategoryRepository.List();
-            // HACK: remove the items otherwise passing it throw the API request  cause a try to load items and an error for closed Session.
-            foreach(var category in list)
-            {
-                category.Subcategories = null;
-            }
+            // HACK: remove the items otherwise there is a LazyInitializationException
+            //foreach(var category in list)
+            //{
+            //    category.Subcategories = null;
+            //}
 
             return list;
         }
@@ -33,10 +33,11 @@ namespace Monei.MvcApplication.Api
         public IEnumerable<Category> Get(string orderBy)
         {
             IEnumerable<Category> list = CategoryRepository.List();
-            foreach (var category in list)
-            {
-                category.Subcategories = null;
-            }
+            // delete subitems to avoid LazyInitializationException
+            //foreach (var category in list)
+            //{
+            //    category.Subcategories = null;
+            //}
 
             return list;
         }

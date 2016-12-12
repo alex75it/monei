@@ -25,8 +25,8 @@ namespace Monei.MvcApplication.Api
             // HACK: remove subitems to prevent LazyInitializationException 
             foreach (var record in records)
             {
-                if (record.Category != null)
-                    record.Category.Subcategories = null;
+                //if (record.Category != null)
+                //    record.Category.Subcategories = null;
                 if (record.Subcategory != null)
                     record.Subcategory.Category = null;
             }

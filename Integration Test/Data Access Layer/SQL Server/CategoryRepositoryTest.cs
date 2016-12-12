@@ -33,17 +33,6 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             list.ShouldNotBeEmpty();            
         }
 
-        [Test]
-        public void List_should_ValorizeSubcategories()
-        {
-            IEnumerable<Category> categories = repository.List();
-
-            foreach (var category in categories)
-            {
-                category.Subcategories.ShouldNotBeEmpty();
-            }
-        }
-
         [Test, Category("NHibernate")]
         public void List_should_ExecuteOnlyAQuery()
         {
