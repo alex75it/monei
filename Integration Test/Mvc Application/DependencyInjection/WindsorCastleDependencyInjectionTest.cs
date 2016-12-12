@@ -26,7 +26,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.DependencyInjection
         private LifestyleSingletonComponentModelContruction lifestyleSingletonComponentModelConstruction = new LifestyleSingletonComponentModelContruction();
 
         [Test]
-        public void Constructor_should_CreateBusinessLogicComponents()
+        public void Resolve_should_ResolveBusinessLogicComponents()
         {
             using (WindsorCastleDependencyInjection dependencyInjection = new WindsorCastleDependencyInjection(lifestyleSingletonComponentModelConstruction))
             {
@@ -39,7 +39,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.DependencyInjection
         }
 
         [Test]
-        public void Resolve_should_CreateRepositories()
+        public void Resolve_should_ResolveRepositories()
         {
             Type[] components = {
                 // Repositories

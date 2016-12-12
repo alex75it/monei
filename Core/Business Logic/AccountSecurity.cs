@@ -31,10 +31,12 @@ namespace Monei.Core.BusinessLogic
         private IAccountRepository accountRepository;
         private IApiTokenRepository apiTokenRepository;
 
-        public AccountSecurity(IAccountRepository accountRepository)
+        public AccountSecurity(IAccountRepository accountRepository, IApiTokenRepository apiTokenRepository)
         {
-            logger = LogManager.GetLogger(this.GetType().Name);
             this.accountRepository = accountRepository;
+            this.apiTokenRepository = apiTokenRepository;
+
+            logger = LogManager.GetLogger(this.GetType().Name);            
         }
 
         public LoginResult Login(string username, string password)

@@ -71,6 +71,7 @@
     <Compile Include="Interfaces\IRegistryRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQL Server\AccountRepository.cs" />
+    <Compile Include="SQL Server\ApiTokenRepository.cs" />
     <Compile Include="SQL Server\CategoryRepository.cs" />
     <Compile Include="SQL Server\CurrencyRepository.cs" />
     <Compile Include="Interfaces\ISessionFactoryProvider.cs" />

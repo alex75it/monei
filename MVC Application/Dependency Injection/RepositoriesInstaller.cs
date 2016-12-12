@@ -21,6 +21,7 @@ namespace Monei.MvcApplication.DependencyInjection
                 Component.For<ISessionFactoryProvider>().ImplementedBy<SessionFactoryProvider>().LifeStyle.Singleton,
                                 
                 Component.For<IAccountRepository>().ImplementedBy<AccountRepository>().LifestylePerWebRequest(),
+                Component.For<IApiTokenRepository>().ImplementedBy<ApiTokenRepository>().LifestylePerWebRequest(),
                 Component.For<IRegistryRepository>().ImplementedBy<RegistryRepository>().LifestylePerWebRequest(),
                 Component.For<ICurrencyRepository>().ImplementedBy<CurrencyRepository>().LifestylePerWebRequest(),
                 Component.For<ICategoryRepository>().ImplementedBy<CategoryRepository>().LifestylePerWebRequest(),
