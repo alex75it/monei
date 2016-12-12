@@ -16,7 +16,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 	[TestFixture, Category("Web API"), Category("Category")]
 	public class CategoryApiControllerTest :ApiControllerTestBase<CategoryApiController>
 	{
-		private readonly string routePrefix = "api/category/";
+		private const string routePrefix = "api/category/";
 
 		[Test]
 		public void Ping_Should_RespondOk()
@@ -26,8 +26,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 			using (var response = client.SendAsync(request).Result)
 			{
 				response.IsSuccessStatusCode.ShouldBeTrue();
-			}
-			
+			}			
 		}
 
 		[Test]
@@ -35,7 +34,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 		{
 			string url = routePrefix + "list";
 			IEnumerable<Category> returnedList;
-
 
 			returnedList = CallApi<IEnumerable<Category>>(url, HttpMethod.Get);
 							

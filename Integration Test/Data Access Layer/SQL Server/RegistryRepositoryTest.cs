@@ -275,11 +275,11 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         [Test]
         public void IsSubcategoryUsed()
         {
-            Category category = CategoryRepository.ListWithSubcategories().First();
-            Subcategory subcategory = category.Subcategories.First();
+            Category category = CategoryRepository.List().First();
+            Subcategory subcategory = SubcategoryRepository.List(category.Id).First();
 
             var record = Helper.CreateRecord(DateTime.Now, 1.23m, "test", false, false, Helper.GetDemoAccount(), category);
-            record.Subcategory = category.Subcategories.First();
+            record.Subcategory = subcategory;
             record = RegistryRepository.AddRecord(record);
 
             try

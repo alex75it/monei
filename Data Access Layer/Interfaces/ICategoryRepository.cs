@@ -18,7 +18,6 @@ namespace Monei.DataAccessLayer.Interfaces
 		void Delete(int id);
 
 		IEnumerable<Category> List();
-		IEnumerable<Category> ListWithSubcategories();
 
 		void MoveSubcategory(int subcategoryId, int categoryId);
 	}

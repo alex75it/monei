@@ -25,14 +25,6 @@ namespace Monei.DataAccessLayer.SqlServer
             }
         }
 
-        public IEnumerable<Category> ListWithSubcategories()
-        {
-            using (ISession session = OpenSession())
-            {
-                return session.Query<Category>().Fetch(c => c.Subcategories).ToList();
-            }
-        }
-
         public new Category Create(Category item)
         {
             int id = base.Create(item);

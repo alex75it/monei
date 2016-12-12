@@ -20,6 +20,7 @@ namespace Monei.MvcApplication.Api
         public IEnumerable<Category> Get()
         {
             IEnumerable<Category> list = CategoryRepository.List();
+            // HACK: remove the items otherwise passing it throw the API request  cause a try to load items and an error for closed Session.
             foreach(var category in list)
             {
                 category.Subcategories = null;
@@ -39,16 +40,6 @@ namespace Monei.MvcApplication.Api
 
             return list;
         }
-
-        [HttpGet /*Route("action/Category/Tree", Name = "Tree")*/]
-        public IList<dynamic> Tree()
-        {
-            IList<dynamic> list = CategoryRepository.ListWithSubcategories().Select(c =>
-                new { id = c.Id, name = c.Name, subcategories = c.Subcategories.Select(s => new { id = s.Id, name = s.Name }).ToList() })
-                .ToList<dynamic>();
-            return list;
-        }
-
 
         [HttpPost]
         //public bool MoveSubcategory([FromBody]int subcategoryId, [FromBody]int categoryId)

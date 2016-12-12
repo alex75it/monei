@@ -28,9 +28,20 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         [Test]
         public void List()
         {
-            IEnumerable<Category> list = repository.ListWithSubcategories();
+            IEnumerable<Category> list = repository.List();
 
             list.ShouldNotBeEmpty();            
+        }
+
+        [Test]
+        public void List_should_ValorizeSubcategories()
+        {
+            IEnumerable<Category> categories = repository.List();
+
+            foreach (var category in categories)
+            {
+                category.Subcategories.ShouldNotBeEmpty();
+            }
         }
 
         [Test, Category("NHibernate")]
@@ -47,36 +58,6 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             repository.List();
 
             sessionFactory.Statistics.CloseStatementCount.ShouldEqual(1);
-        }
-
-        [Test, Category("NHibernate")]
-        public void ListWithSubcategories_should_ExecuteOnlyAQuery()
-        {
-            var sessionFactory = sessionFactoryProvider.GetSessionFactory();
-
-            if (!sessionFactory.Statistics.IsStatisticsEnabled)
-                Assert.Ignore("Statistics should be enabled");
-
-            sessionFactory.Statistics.Clear();
-
-            // Execute
-            var categories = repository.ListWithSubcategories();
-
-            categories.First().Subcategories.ShouldNotBeEmpty();
-
-            sessionFactory.Statistics.CloseStatementCount.ShouldEqual(1);
-        }
-
-        [Test, Category("NHibernate")]
-        public void ListWithSubcategories()
-        {
-            var sessionFactory = sessionFactoryProvider.GetSessionFactory();
-
-            // Execute
-            var categories = repository.ListWithSubcategories();
-
-            categories.First().Subcategories.ShouldNotBeEmpty();
-            Assert.IsTrue(categories.First().Subcategories.All(c => c != null), "There are null Subcategories");
         }
 
         [Test]
