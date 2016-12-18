@@ -7,5 +7,8 @@
     CONSTRAINT [PK_ApiToken] PRIMARY KEY CLUSTERED 
     (
         [Id] ASC
+    ),
+    constraint UK_AccountId UNIQUE (
+        AccountId
     )
 )

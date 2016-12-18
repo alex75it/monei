@@ -13,7 +13,7 @@ using NHibernate.Linq;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-    [TestFixture, Category("Repository")]
+    [TestFixture, Category("Repository"), Category("API Token")]
     public class ApiTokenRepositoryTest : RepositoryTestBase
     {
         private ApiTokenRepository apiTokenRepository;

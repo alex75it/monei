@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Monei.Test.IntegrationTest.Data_Access_Layer.SQL_Server
 {
-    [TestFixture]
+    [TestFixture, Category("NHibernate")]
     public class SessionFactoryProviderTest
     {
         [Test]
