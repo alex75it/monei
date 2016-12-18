@@ -15,32 +15,12 @@ namespace Monei.DataAccessLayer.SqlServer
     /// <typeparam name="TEntity">Entity managed by this repository</typeparam>
     public abstract class RepositoryBase<TKey, TEntity>: IRepository<TKey, TEntity> //where TEntity: BaseEntity
     {
-        private string connectionString;
-
         private ISessionFactory sessionFactory;
 
         public RepositoryBase(ISessionFactoryProvider sessionFactoryProvider)
         {
             sessionFactory = sessionFactoryProvider.GetSessionFactory();
-        }
-         
-        protected string ConnectionString { get
-            {
-                if (connectionString == null)
-                {
-                    try
-                    {
-                        connectionString = ConfigurationManager.ConnectionStrings["monei"].ConnectionString;
-                    }
-                    catch (Exception exc)
-                    {
-                        throw new Exception("Fail to load \"monei\" connection string from .config file.", exc);
-                    }
-                }
-                return ConnectionString;
-            }
-        }                
-
+        }  
         protected ISession OpenSession()
         {
             return sessionFactory.OpenSession();

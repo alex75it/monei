@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business Logic\AccountManager.cs" />
+    <Compile Include="Business Logic\IAccountManager.cs" />
+    <Compile Include="Business Logic\IAccountSecurity.cs" />
     <Compile Include="Data Analysis\Business Objects\CategoriesData.cs" />
     <Compile Include="Data Analysis\Business Objects\CategoryData.cs" />
     <Compile Include="Data Analysis\Business Objects\MonthData.cs" />

@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace Monei.DataAccessLayer.Interfaces
 {
-    public interface IApiTokenRepository : IRepository<Guid, ApiToken>
+    public interface IApiTokenRepository
     {
+        int GetAccountId(Guid token);
         ApiToken GetAccountToken(int accountId);
-        Guid CreateNewToken(int accountId);
+
+        void Delete(Guid tokenId);
+
+        void Create(ApiToken token);
     }
 }

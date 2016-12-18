@@ -12,16 +12,21 @@ It is ok to use a GUID as token passed in a specific HTTP header in the API call
 It should not be used the User or Account ID in this calls. A Token can be replaced anytime (and can be temporary), 
 instead if a Account or Usaer ID is compromised it is a problem.
 
-## Storage
+## Storage)
 
 There is no way for the web API to see the ASP Session, 
 so the token must be stored in the default storage system of the application (actually a database).  
 The token should be related to the User/Account.
 
 ## API Session Token
-When a client want to call a web API method it have to pass a session API token stored in the "api_token" HTP header.  
+The "session" in the name of the token means that it is intended to live only for the necessary amnount of time and expire after a certain amount of inactivity time.
+When a client want to call a web API method it have to pass a session API token stored in the "api_token" HTTP header.  
 The value should by a GUID.  
 If the client does not have that GUID it can request one calling the a specific method that return the session API token.  
+It is possible to have only one token for Account.  
+If an Account (or a process) create a token and than the Account use another browser (or there is another process instance)
+that requerst for a token the token created for "the other" is used and updated.  
+This is the most simple solution and there is not at reasonable reason to distinguish the precise instance of the process which use the API.
 
 ### Token request
 That method accept username and password as parameters.  
@@ -47,4 +52,4 @@ to be used from the client library (AngularJs for example).
 This poin must be defined better.
 
 ### Cleanup expired tokens
-A scheduled process cleanup tokens expired from almost 1 day or something like this.
+A scheduled process delete tokens that were expired from almost 1 day or similar.

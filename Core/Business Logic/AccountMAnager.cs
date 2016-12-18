@@ -8,13 +8,6 @@ using System.Threading.Tasks;
 
 namespace Monei.Core.BusinessLogic
 {
-    public interface IAccountManager
-    {
-        Account Read(string username);
-        Account CreateAccount(string username, string password);
-        Account GetAccountByApiToken(Guid apiToken);
-    }
-
     public class AccountManager : IAccountManager
 
     {

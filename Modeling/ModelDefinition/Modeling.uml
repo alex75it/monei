@@ -180,7 +180,6 @@
           <comment
             Id="852aa9b9-dd17-4f17-b868-af5d820de22d">
             <body>HTTP traffic contains only the token, never the user ID.
-
 </body>
             <annotatedElements>
               <behaviorExecutionSpecificationMoniker
@@ -197,6 +196,17 @@ cookie.</body>
               <behaviorExecutionSpecificationMoniker
                 Id="0dd5c7b8-017a-4c03-b4cd-9d94876357e3"
                 LastKnownName="BehaviorExecutionSpecification4"
+                LastKnownLocation="Modeling.uml" />
+            </annotatedElements>
+          </comment>
+          <comment
+            Id="a347f5bc-38fc-46a6-a38a-80f93ce338f2">
+            <body>API token can be expired.
+</body>
+            <annotatedElements>
+              <behaviorExecutionSpecificationMoniker
+                Id="75526352-3128-41ce-92ac-a3cfdf86933f"
+                LastKnownName="BehaviorExecutionSpecification5"
                 LastKnownLocation="Modeling.uml" />
             </annotatedElements>
           </comment>
@@ -471,22 +481,22 @@ cookie.</body>
             </covered>
           </messageOccurrenceSpecification>
           <messageOccurrenceSpecification
-            Id="35ae7aad-0c28-482c-9284-931b70c233ad"
-            name="MessageOccurrenceSpecification38">
-            <covered>
-              <lifelineMoniker
-                Id="d36b2544-43e4-4334-9880-b43cdd2017da"
-                LastKnownName="Web App"
-                LastKnownLocation="Modeling.uml" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification
             Id="ab736518-0836-4869-9efe-57263f935f5c"
             name="MessageOccurrenceSpecification37">
             <covered>
               <lifelineMoniker
                 Id="edd9c02a-1e45-482c-a9f1-885471289914"
                 LastKnownName="Storage"
+                LastKnownLocation="Modeling.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="35ae7aad-0c28-482c-9284-931b70c233ad"
+            name="MessageOccurrenceSpecification38">
+            <covered>
+              <lifelineMoniker
+                Id="d36b2544-43e4-4334-9880-b43cdd2017da"
+                LastKnownName="Web App"
                 LastKnownLocation="Modeling.uml" />
             </covered>
           </messageOccurrenceSpecification>
@@ -593,22 +603,22 @@ cookie.</body>
             </covered>
           </executionOccurrenceSpecification>
           <messageOccurrenceSpecification
-            Id="b717462b-c358-4a32-802c-17ad6c36afe7"
-            name="MessageOccurrenceSpecification4">
-            <covered>
-              <lifelineMoniker
-                Id="238d303c-abc9-4a6d-ba00-e33b3abf1362"
-                LastKnownName="User"
-                LastKnownLocation="Modeling.uml" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification
             Id="6b5d6a91-4bc0-4011-a8ca-c89056c873dd"
             name="MessageOccurrenceSpecification3">
             <covered>
               <lifelineMoniker
                 Id="d36b2544-43e4-4334-9880-b43cdd2017da"
                 LastKnownName="Web App"
+                LastKnownLocation="Modeling.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="b717462b-c358-4a32-802c-17ad6c36afe7"
+            name="MessageOccurrenceSpecification4">
+            <covered>
+              <lifelineMoniker
+                Id="238d303c-abc9-4a6d-ba00-e33b3abf1362"
+                LastKnownName="User"
                 LastKnownLocation="Modeling.uml" />
             </covered>
           </messageOccurrenceSpecification>
@@ -787,22 +797,22 @@ cookie.</body>
             </covered>
           </messageOccurrenceSpecification>
           <messageOccurrenceSpecification
-            Id="d07f181e-5fb3-40b2-9c47-91c85cf8e524"
-            name="MessageOccurrenceSpecification42">
-            <covered>
-              <lifelineMoniker
-                Id="d36b2544-43e4-4334-9880-b43cdd2017da"
-                LastKnownName="Web App"
-                LastKnownLocation="Modeling.uml" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification
             Id="95303a47-ca46-4cef-a994-69d095a32ccf"
             name="MessageOccurrenceSpecification41">
             <covered>
               <lifelineMoniker
                 Id="91fa7723-0d8d-46cf-9b9b-d095c4836e8f"
                 LastKnownName="Web Session"
+                LastKnownLocation="Modeling.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="d07f181e-5fb3-40b2-9c47-91c85cf8e524"
+            name="MessageOccurrenceSpecification42">
+            <covered>
+              <lifelineMoniker
+                Id="d36b2544-43e4-4334-9880-b43cdd2017da"
+                LastKnownName="Web App"
                 LastKnownLocation="Modeling.uml" />
             </covered>
           </messageOccurrenceSpecification>
@@ -961,22 +971,22 @@ cookie.</body>
             </covered>
           </executionOccurrenceSpecification>
           <messageOccurrenceSpecification
-            Id="5bd4036e-9cd0-4912-badb-b70f79f72bda"
-            name="MessageOccurrenceSpecification47">
-            <covered>
-              <lifelineMoniker
-                Id="4ddbc68a-890b-4ff6-8e7c-5dc1df077cbe"
-                LastKnownName="Web API"
-                LastKnownLocation="Modeling.uml" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification
             Id="48f4434d-4dd2-4e1d-ad58-b1cf7352496a"
             name="MessageOccurrenceSpecification48">
             <covered>
               <lifelineMoniker
                 Id="edd9c02a-1e45-482c-a9f1-885471289914"
                 LastKnownName="Storage"
+                LastKnownLocation="Modeling.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="5bd4036e-9cd0-4912-badb-b70f79f72bda"
+            name="MessageOccurrenceSpecification47">
+            <covered>
+              <lifelineMoniker
+                Id="4ddbc68a-890b-4ff6-8e7c-5dc1df077cbe"
+                LastKnownName="Web API"
                 LastKnownLocation="Modeling.uml" />
             </covered>
           </messageOccurrenceSpecification>
@@ -1089,22 +1099,22 @@ cookie.</body>
             </covered>
           </messageOccurrenceSpecification>
           <messageOccurrenceSpecification
-            Id="3384198d-4146-48fe-b1b4-feeb3bb291f1"
-            name="MessageOccurrenceSpecification23">
-            <covered>
-              <lifelineMoniker
-                Id="edd9c02a-1e45-482c-a9f1-885471289914"
-                LastKnownName="Storage"
-                LastKnownLocation="Modeling.uml" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification
             Id="86c03a6b-16a3-456c-8588-b940b6095bf6"
             name="MessageOccurrenceSpecification24">
             <covered>
               <lifelineMoniker
                 Id="4ddbc68a-890b-4ff6-8e7c-5dc1df077cbe"
                 LastKnownName="Web API"
+                LastKnownLocation="Modeling.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="3384198d-4146-48fe-b1b4-feeb3bb291f1"
+            name="MessageOccurrenceSpecification23">
+            <covered>
+              <lifelineMoniker
+                Id="edd9c02a-1e45-482c-a9f1-885471289914"
+                LastKnownName="Storage"
                 LastKnownLocation="Modeling.uml" />
             </covered>
           </messageOccurrenceSpecification>
@@ -2097,6 +2107,62 @@ cookie.</body>
       <executionEvent
         Id="658baa8d-ce86-4fc4-9f63-6ff0746a6696"
         name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="21f19e0e-ce5a-427c-9609-d0e42087c881"
+        name="Activity1"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <initialNode
+            Id="275d9d66-d9d7-4ce8-8676-3c4c2819b3c5"
+            name="Initial1"
+            isLeaf="false" />
+          <decisionNode
+            Id="ba144c0e-d75e-429b-9877-450861157e34"
+            name="HasApiToken"
+            isLeaf="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="ec2fd423-1ffa-441d-bb4b-42ac7921a502"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="4a4d8fd9-ad3c-4c56-bba5-10f8a47e8f1b"
+                  LastKnownName="Object1"
+                  LastKnownLocation="Modeling.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+          </decisionNode>
+          <objectNode
+            Id="4a4d8fd9-ad3c-4c56-bba5-10f8a47e8f1b"
+            name="Object1"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <upperBound>
+              <literalInteger
+                Id="5dea3808-069c-4904-9f2f-b1133147d153"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <callBehaviorAction
+            Id="28b0da33-31af-42ae-93ba-86f93abf0146"
+            name="Behavior1"
+            isLeaf="false" />
+          <opaqueAction
+            Id="88a9201c-5a60-42e5-b14e-c50743fc6070"
+            name="Action1"
+            isLeaf="false" />
+        </nodes>
+      </activity>
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

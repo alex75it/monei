@@ -7,18 +7,17 @@ using System.Threading.Tasks;
 namespace Monei.Entities
 {
     public class ApiToken
-    {
-        public int UserId { get; set; }
-
+    { 
         public Guid Id { get; set; }
 
-        public DateTime CreationDate { get; set; }
-
-        public DateTime LastUpdateDate { get; set; }
-        public DateTime ExpirationDate { get; set; }
+        public int AccountId { get; set; }
+        
+        public DateTime CreateDate { get; set; }
+        public DateTime? LastUpdateDate { get; set; }
+        public DateTime ExpireDate { get; set; }
         public bool IsExpired {
             get {
-                return ExpirationDate < DateTime.UtcNow;
+                return DateTime.UtcNow > ExpireDate;
             }
         }
     }

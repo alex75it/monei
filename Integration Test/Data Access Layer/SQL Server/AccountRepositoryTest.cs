@@ -46,7 +46,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         public void CreateUserAndAccount()
         {
             //todo: 6s for run this test?
-            //todo: this test fail (the creation date day is wrong) when executed between 24:00 and 01:00
+            //todo: this test fail (the creation date day is wrong) when executed in Italy between 24:00 and 01:00
 
             string username = Helper.TEST_USERNAME;
             string password = "password_test";
@@ -212,11 +212,9 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             Assert.AreEqual(newPassword, account.Password);
             Assert.AreEqual(newRole, account.Role);
 
-
             // clean 
             AccountRepository.Delete(account.Id);
         }
-
 
         [Test]
         public void SetLastLoginDate()
@@ -226,7 +224,6 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             int accountId = account.Id;
             DateTime lastLogin = DateTime.Now.AddHours(-2);
             AccountRepository.UpdateLastLogin(accountId, lastLogin);
-
         }
 
         [Test]

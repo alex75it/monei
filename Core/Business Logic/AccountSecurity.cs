@@ -10,21 +10,6 @@ namespace Monei.Core.BusinessLogic
     using Enums;
     using Exceptions;
 
-    public interface IAccountSecurity
-    {
-        LoginResult Login(string username, string password);
-        void ChangePassword(string name, string oldPassword, string newPassword);
-        string GeneratePassword();
-
-        /// <summary>
-        /// Return the API token assigned to the Account.
-        /// Use an existent one or create a new one if not exists.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Guid GetApiTokenForAccount(int id);
-    }
-
     public class AccountSecurity : IAccountSecurity
     {
         private ILog logger;
@@ -90,8 +75,17 @@ namespace Monei.Core.BusinessLogic
                 if (token != null && token.IsExpired)                
                     apiTokenRepository.Delete(token.Id);
 
-                return apiTokenRepository.CreateNewToken(accountId);                
+                ApiToken newToken = GenerateNewToken(accountId);
+
+                apiTokenRepository.Create(newToken);
+
+                return newToken.Id;
             }                    
+        }
+
+        private ApiToken GenerateNewToken(int accountId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

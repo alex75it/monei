@@ -35,11 +35,9 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             // prevent the error of PerWebRequestStyle module missing because there is not a web request.
             container.Kernel.ComponentModelBuilder.AddContributor(new LifestyleSingletonContributor());
 
-            container.Install(
-        		new RepositoriesInstaller()
-        		);
+            container.Install(new RepositoriesInstaller());
 
-        	container.Register(
+            container.Register(
         		Component.For<TestHelper>().ImplementedBy<TestHelper>()
         	);
 

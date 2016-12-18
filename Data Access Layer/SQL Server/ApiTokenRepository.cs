@@ -9,18 +9,13 @@ using Monei.DataAccessLayer.Interfaces;
 
 namespace Monei.DataAccessLayer.SqlServer
 {
-    public class ApiTokenRepository : RepositoryBase<int, ApiToken>, IApiTokenRepository
+    public class ApiTokenRepository : RepositoryBase<Guid, ApiToken>, IApiTokenRepository
     {
         public ApiTokenRepository(ISessionFactoryProvider sessionFactoryProvider) : base(sessionFactoryProvider)
         {
         }
 
-        public Guid CreateNewToken(int accountId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Guid key)
+        public int GetAccountId(Guid token)
         {
             throw new NotImplementedException();
         }
@@ -30,12 +25,7 @@ namespace Monei.DataAccessLayer.SqlServer
             throw new NotImplementedException();
         }
 
-        public ApiToken Read(Guid key)
-        {
-            throw new NotImplementedException();
-        }
-
-        Guid IRepository<Guid, ApiToken>.Create(ApiToken entity)
+        void IApiTokenRepository.Create(ApiToken token)
         {
             throw new NotImplementedException();
         }

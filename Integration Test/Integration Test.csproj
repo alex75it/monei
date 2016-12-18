@@ -126,6 +126,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Data Access Layer\SQL Server\AccountRepositoryTest.cs" />
+    <Compile Include="Data Access Layer\SQL Server\ApiTokenRepositoryTest.cs" />
     <Compile Include="Data Access Layer\SQL Server\CategoryRepositoryTest.cs" />
     <Compile Include="Data Access Layer\SQL Server\CurrencyRepositoryTest.cs" />
     <Compile Include="Data Access Layer\SQL Server\RegistryRepositoryTest.cs" />
