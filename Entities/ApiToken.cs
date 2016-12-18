@@ -13,11 +13,10 @@ namespace Monei.Entities
         public int AccountId { get; set; }
         
         public DateTime CreateDate { get; set; }
-        public DateTime? LastUpdateDate { get; set; }
-        public DateTime ExpireDate { get; set; }
+        public DateTime ExpiryDate { get; set; }
         public bool IsExpired {
             get {
-                return DateTime.UtcNow > ExpireDate;
+                return DateTime.UtcNow > ExpiryDate;
             }
         }
     }

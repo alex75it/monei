@@ -6,7 +6,6 @@
         <id name="Id" />
         <property name="AccountId" />
         <property name="CreateDate" type="UtcDateTime" />
-        <property name="LastUpdateDate" type="UtcDateTime" /><!-- when readed fromn database the DateTimeKind is set (otherwise it is set as Unknown)-->
-        <property name="ExpireDate" />
+        <property name="ExpiryDate" type="UtcDateTime" /><!-- when readed fromn database the DateTimeKind is set (otherwise it is set as Unknown)-->
     </class>
 </hibernate-mapping>

@@ -36,7 +36,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
                 Id = tokenId,
                 AccountId = accountId,
                 CreateDate = DateTime.UtcNow,
-                ExpireDate = DateTime.UtcNow.AddMinutes(5)
+                ExpiryDate = DateTime.UtcNow.AddMinutes(5)
             };
 
             using (var session = sessionFactoryProvider.GetSessionFactory().OpenSession())
@@ -86,7 +86,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
                 Id = tokenId,
                 AccountId = accountId,
                 CreateDate = DateTime.UtcNow,
-                LastUpdateDate = null
+                ExpiryDate = DateTime.UtcNow.AddMinutes(5)
             };
 
             // execute
@@ -95,6 +95,9 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             returnedTokenId.ShouldEqual(tokenId);
 
             ApiToken tokenForCheck = ReadToken(tokenId);
+
+            tokenForCheck.ShouldNotBeNull();
+            tokenForCheck.Id.ShouldEqual(tokenId);
         }
 
         private ApiToken ReadToken(Guid tokenId)

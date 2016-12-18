@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		Documentation\Web API Token.md = Documentation\Web API Token.md
 	EndProjectSection
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{71165D2F-EF09-40AF-BC3D-0D8174243B97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,12 @@ Global
 		{059CE2EC-38D2-499F-B7A3-04EB18C2C3FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{059CE2EC-38D2-499F-B7A3-04EB18C2C3FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{059CE2EC-38D2-499F-B7A3-04EB18C2C3FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71165D2F-EF09-40AF-BC3D-0D8174243B97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71165D2F-EF09-40AF-BC3D-0D8174243B97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71165D2F-EF09-40AF-BC3D-0D8174243B97}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{71165D2F-EF09-40AF-BC3D-0D8174243B97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71165D2F-EF09-40AF-BC3D-0D8174243B97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71165D2F-EF09-40AF-BC3D-0D8174243B97}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

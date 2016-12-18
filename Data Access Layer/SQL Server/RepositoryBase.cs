@@ -35,7 +35,9 @@ namespace Monei.DataAccessLayer.SqlServer
         {
             using (ISession session = OpenSession())
             {
-                return (TKey)session.Save(data);
+                var key = (TKey)session.Save(data);
+                session.Flush();
+                return key;
             }
         }
 
