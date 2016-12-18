@@ -42,6 +42,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             using (var session = sessionFactoryProvider.GetSessionFactory().OpenSession())
             {
                 session.Save(token);
+                session.Flush();
             };
 
             try
@@ -54,6 +55,16 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             {
                 DeleteToken(tokenId);
             }            
+        }
+
+        [Test]
+        public void GetAccountId_when_TokenNotExists_should_ThrowsArgumentException()
+        {
+            Guid invalidTokenId = Guid.NewGuid();
+
+            Action action = () => apiTokenRepository.GetAccountId(invalidTokenId);
+
+            action.ShouldThrow<ArgumentException>();
         }
 
         [Test]
@@ -70,6 +81,8 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         public void GetAccountToken_when_TokenNotExists()
         {
             var accountId = Helper.GetTestAccount().Id;
+
+            DeleteTokenOfAccount(accountId);
 
             Action action = () => apiTokenRepository.GetAccountToken(accountId);
 
@@ -111,6 +124,19 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             using (var session = sessionFactoryProvider.GetSessionFactory().OpenSession())
             {
                 var token = session.Query<ApiToken>().Where(t => t.Id == tokenId).SingleOrDefault();
+                if (token != null)
+                {
+                    session.Delete(token);
+                    session.Flush();
+                }
+            };
+        }
+
+        private void DeleteTokenOfAccount(int accountId)
+        {
+            using (var session = sessionFactoryProvider.GetSessionFactory().OpenSession())
+            {
+                var token = session.Query<ApiToken>().Where(t => t.AccountId == accountId).SingleOrDefault();
                 if (token != null)
                 {
                     session.Delete(token);
