@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    assembly="Monei.Entities" namespace="Monei.Entities">
+
+    <class name="ApiToken" table="ApiToken" lazy="false" >      
+        <id name="Id" />
+        <property name="AccountId" />
+        <property name="CreateDate" type="UtcDateTime" />
+        <property name="LastUpdateDate" type="UtcDateTime" /><!-- when readed fromn database the DateTimeKind is set (otherwise it is set as Unknown)-->
+        <property name="ExpireDate" />
+    </class>
+</hibernate-mapping>
