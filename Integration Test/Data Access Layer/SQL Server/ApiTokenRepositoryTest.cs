@@ -32,6 +32,8 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             Guid tokenId = Guid.NewGuid();
             int accountId = Helper.GetTestAccount().Id;
 
+            DeleteTokenOfAccount(accountId);
+
             ApiToken token = new ApiToken() {
                 Id = tokenId,
                 AccountId = accountId,
@@ -72,9 +74,19 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         {
             var accountId = Helper.GetTestAccount().Id;
 
-            var token = apiTokenRepository.GetAccountToken(accountId);
+            CreateToken(accountId, DateTime.UtcNow.AddMinutes(5));
 
-            token.ShouldNotBeNull();
+            try
+            {
+                var token = apiTokenRepository.GetAccountToken(accountId);
+
+                token.ShouldNotBeNull();
+                token.AccountId.ShouldEqual(accountId);
+            }
+            finally
+            {
+                DeleteTokenOfAccount(accountId);
+            }
         }
 
         [Test]
@@ -105,12 +117,19 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             // execute
             Guid returnedTokenId = apiTokenRepository.Create(token);
 
-            returnedTokenId.ShouldEqual(tokenId);
+            try
+            {
+                returnedTokenId.ShouldEqual(tokenId);
 
-            ApiToken tokenForCheck = ReadToken(tokenId);
+                ApiToken tokenForCheck = ReadToken(tokenId);
 
-            tokenForCheck.ShouldNotBeNull();
-            tokenForCheck.Id.ShouldEqual(tokenId);
+                tokenForCheck.ShouldNotBeNull();
+                tokenForCheck.Id.ShouldEqual(tokenId);
+            }
+            finally
+            {
+                DeleteTokenOfAccount(accountId);
+            }
         }
 
         private ApiToken ReadToken(Guid tokenId)
@@ -143,6 +162,22 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
                     session.Flush();
                 }
             };
+        }
+        private void CreateToken(int accountId, DateTime expiryDate)
+        {
+            var token = new ApiToken()
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CreateDate = DateTime.UtcNow,
+                ExpiryDate = expiryDate,
+            };
+
+            using (var session = sessionFactoryProvider.GetSessionFactory().OpenSession())
+            {
+                session.Save(token);
+                session.Flush();
+            }
         }
     }
 }
