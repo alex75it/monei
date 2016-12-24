@@ -19,5 +19,15 @@ namespace Monei.Entities
                 return DateTime.UtcNow > ExpiryDate;
             }
         }
+
+        public static ApiToken Create(int accountId, TimeSpan lifeLength)
+        {
+            return new ApiToken() {
+                Id = Guid.NewGuid(),
+                AccountId = accountId,
+                CreateDate = DateTime.UtcNow,
+                ExpiryDate = DateTime.UtcNow.Add(lifeLength)
+            };
+        }
     }
 }

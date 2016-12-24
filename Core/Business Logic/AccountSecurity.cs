@@ -12,6 +12,8 @@ namespace Monei.Core.BusinessLogic
 
     public class AccountSecurity : IAccountSecurity
     {
+        private const int TokenLifeInMinutes = 120;
+
         private ILog logger;
         private IAccountRepository accountRepository;
         private IApiTokenRepository apiTokenRepository;
@@ -75,7 +77,7 @@ namespace Monei.Core.BusinessLogic
                 if (token != null && token.IsExpired)                
                     apiTokenRepository.Delete(token.Id);
 
-                ApiToken newToken = GenerateNewToken(accountId);
+                ApiToken newToken = GenerateNewToken(accountId, TimeSpan.FromMinutes(TokenLifeInMinutes));
 
                 apiTokenRepository.Create(newToken);
 
@@ -83,9 +85,9 @@ namespace Monei.Core.BusinessLogic
             }                    
         }
 
-        private ApiToken GenerateNewToken(int accountId)
+        private ApiToken GenerateNewToken(int accountId, TimeSpan duration)
         {
-            throw new NotImplementedException();
+            return ApiToken.Create(accountId, duration);
         }
     }
 }

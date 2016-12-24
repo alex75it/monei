@@ -9,7 +9,7 @@ using Should;
 
 namespace Monei.Test.UnitTest.Core.DataAnalysis.BusinessObjects
 {
-    [TestFixture]
+    [TestFixture, Category("Category")]
     public class CategoriesDataTest
     {
         [Test]

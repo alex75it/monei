@@ -114,13 +114,13 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Core\Business Logic\AccountSecurityTests.cs" />
     <Compile Include="Core\Business Logic\CategoryManagerTest.cs" />
-    <Compile Include="Core\Managers\CategoryManagerTest.cs" />
     <Compile Include="Data Access Layer\DateTimeExtensionsTest.cs" />
     <Compile Include="Data Access Layer\Exceptions\TooLongCategoryNameExceptionTest.cs" />
     <Compile Include="Data Access Layer\Filters\BaseFiltersTest.cs" />
     <Compile Include="Data Access Layer\Filters\RegistryFiltersTest.cs" />
-    <Compile Include="Core\SubcategoryManagerTest.cs" />
+    <Compile Include="Core\Business Logic\SubcategoryManagerTest.cs" />
     <Compile Include="Core\DataAnalysis\BusinessObjects\CategoriesDataTest.cs" />
     <Compile Include="Core\DataAnalysis\BusinessObjects\CategoryDataTest.cs" />
     <Compile Include="Core\DataAnalysis\BusinessObjects\MonthDataTest.cs" />

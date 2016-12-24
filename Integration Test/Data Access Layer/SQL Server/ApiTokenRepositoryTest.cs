@@ -90,15 +90,14 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         }
 
         [Test]
-        public void GetAccountToken_when_TokenNotExists()
+        public void GetAccountToken_when_TokenNotExists_returnNull()
         {
             var accountId = Helper.GetTestAccount().Id;
-
             DeleteTokenOfAccount(accountId);
 
-            Action action = () => apiTokenRepository.GetAccountToken(accountId);
+            var token = apiTokenRepository.GetAccountToken(accountId);
 
-            action.ShouldThrow<ArgumentException>();
+            token.ShouldBeNull();
         }
 
         [Test]

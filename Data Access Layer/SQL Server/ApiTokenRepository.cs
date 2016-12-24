@@ -27,12 +27,7 @@ namespace Monei.DataAccessLayer.SqlServer
         public ApiToken GetAccountToken(int accountId)
         {
             using (var session = OpenSession())
-            {
-                var token = session.Query<ApiToken>().Where(t => t.AccountId == accountId).SingleOrDefault();
-                if (token == null)
-                    throw new ArgumentException("Token not found for the given Account Id");
-                return token;
-            }
+                return session.Query<ApiToken>().Where(t => t.AccountId == accountId).SingleOrDefault();            
         }
 
         void IApiTokenRepository.Create(ApiToken token)

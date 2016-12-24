@@ -8,6 +8,7 @@ using Monei.Core;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
 using Monei.MvcApplication.Core;
+using Monei.Core.BusinessLogic;
 
 namespace Monei.MvcApplication.Api
 {

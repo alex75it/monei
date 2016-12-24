@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Monei.Test.UnitTest.Core.Business_Logic
+namespace Monei.Test.UnitTest.Core.BusinessLogic
 {
     [TestFixture, Category("Business logic"), Category("Category")]
     internal class CategoryManagerTest
@@ -51,6 +51,41 @@ namespace Monei.Test.UnitTest.Core.Business_Logic
 
             Assert.Throws<TooLongCategoryNameException>(() => categoryManager.Update(category));
         }
-        
+
+        [Test]
+        public void Update_when_CategoryHasATooLongName_should_ThrowsSpecificException()
+        {
+            Category category = new Category()
+            {
+                Name = new String('a', 1000)
+            };
+
+            Assert.Throws<TooLongCategoryNameException>(() => categoryManager.Update(category));
+        }
+
+
+        [Test]
+        public void Update_WhenCategoryHasATooShortName_Should_ThrowsException()
+        {            
+            Category category = new Category()
+            {
+                Name = new String('a', Category.NAME_MIN_LENGTH - 1)
+            };
+
+            Assert.Throws<Exception>(() => categoryManager.Update(category));
+        }
+
+        [Test]
+        public void Update_WhenCategoryHasATooLongDescription_Should_ThrowsException()
+        {
+            Category category = new Category()
+            {
+                Name = "aaa",
+                Description = new String('a', Category.DESCRIPTION_MAX_LENGTH + 1)
+            };
+
+            Assert.Throws<Exception>(() => categoryManager.Update(category));
+        }
+
     }
 }

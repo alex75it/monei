@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Monei.DataAccessLayer.Filters;
 using Monei.DataAccessLayer.Interfaces;
 
-namespace Monei.Core
+namespace Monei.Core.BusinessLogic
 {
     public class SubcategoryManager
     {

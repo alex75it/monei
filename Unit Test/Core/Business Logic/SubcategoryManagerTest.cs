@@ -5,9 +5,9 @@ using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using NUnit.Framework;
 using Should;
+using Monei.Core.BusinessLogic;
 
-
-namespace Monei.Test.UnitTest.Core
+namespace Monei.Test.UnitTest.Core.BusinessLogic
 {
 	[TestFixture, Category("Core")]
 	public class SubcategoryManagerTest
