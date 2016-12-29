@@ -28,6 +28,7 @@ namespace Monei.DataAccessLayer.Filters
             StartDate = System.Data.SqlTypes.SqlDateTime.MinValue.Value;
             EndDate = System.Data.SqlTypes.SqlDateTime.MaxValue.Value;		
             SubcategoryIds = new List<int>(0);
+            IncludeSpecialEvent = true;
             OperationTypes = new OperationType[] { OperationType.Income, OperationType.Outcome, OperationType.Transfer };
         }
                 

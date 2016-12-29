@@ -32,6 +32,7 @@ namespace Monei.MvcApplication.Api
             }
 
             return records;
+        }
 
         [HttpPost, Route("")]
         public int Create(RegistryNewRecordPostData postData)

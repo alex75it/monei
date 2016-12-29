@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
-using NUnit.Framework;
-using Should;
-using Assert = NUnit.Framework.Assert;
 using Monei.DataAccessLayer.SqlServer;
+using NUnit.Framework;
+using Assert = NUnit.Framework.Assert;
+using Should;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
@@ -225,6 +223,31 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         }
 
         [Test]
+        public void List_when_AnAccountIsSpecified_should_ReturnTheRightRecords()
+        {
+            DeleteRecordsOfTestAccount();
+
+            Account account = Helper.GetTestAccount();
+
+            RegistryRecord record = new RegistryRecord() {
+                Account = account,
+                Amount = 1,
+                Category = Helper.GetRandomCategory(),
+                CreationAccount = Helper.GetTestAccount(),
+                Date = DateTime.UtcNow
+            };
+
+            record = this.CreateTestRecord(record);
+
+            // act
+            var records = RegistryRepository.ListRecords(new Monei.DataAccessLayer.Filters.RegistryFilters() { AccountId = account.Id });
+            
+            records.ShouldNotBeEmpty();
+            records.Count.ShouldEqual(1);
+            records[0].Account.Id.ShouldEqual(account.Id);
+        }
+
+        [Test]
         public void AddRecord()
         {
             DateTime date = DateTime.Now;
@@ -299,7 +322,10 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
         private void DeleteRecordsOfTestAccount()
         {
-            IList<RegistryRecord> records = RegistryRepository.ListRecords(new RegistryFilters() { AccountId = testAccountId });
+            IList<RegistryRecord> records = RegistryRepository.ListRecords(new RegistryFilters() {
+                AccountId = testAccountId,
+                IncludeSpecialEvent =  true
+                });
 
             foreach (var r in records)
                 RegistryRepository.DeleteRecord(r.Id);

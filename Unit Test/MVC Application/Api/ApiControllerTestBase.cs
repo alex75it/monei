@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Net.Http;
 
 namespace Monei.Test.UnitTest.MvcApplication.Api
 {
@@ -61,6 +62,13 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
             };
             */
         }
+
+        //protected HttpRequestMessage CreateRequest()
+        //{
+        //    var request = new HttpRequestMessage();
+        //    request.Headers.Add("account-guid", Guid.Empty.ToString());
+        //    return request;
+        //}
 
     }
 }

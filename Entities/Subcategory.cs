@@ -23,6 +23,5 @@ namespace Monei.Entities
         {
             return obj is Subcategory && ((Subcategory)obj).GetHashCode() == GetHashCode();
         }
-	}
     }
 }
