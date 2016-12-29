@@ -8,56 +8,48 @@ using Monei.Core;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
 using Monei.MvcApplication.Core;
+using Monei.Core.BusinessLogic;
 
 namespace Monei.MvcApplication.Api
 {
-    
     public class ApiControllerBase :ApiController
-    {		
+    {
+        // injected properties
+        // Inject properties permits to not override the constructor on every derived API controller
+        public IAuthenticationWorker AuthenticationWorker { get; set; }
+        public SubcategoryManager SubcategoryManager { get; set; }
         public IAccountRepository AccountRepository { get; set; }
         public ICategoryRepository CategoryRepository { get; set; }
         public IRegistryRepository RegistryRepository { get; set; }
         public ISubcategoryRepository SubcategoryRepository { get; set; }
+        public ICurrencyRepository CurrencyRepository { get; set; }
 
-        public SubcategoryManager SubcategoryManager { get; set; }
 
-        public const string ACCOUNT_HEADER = "account-guid";
-
-        protected readonly ILog logger; 
+        protected readonly ILog logger;
         private Account currentAccount;
+        
 
         public ApiControllerBase()
         {
             logger = LogManager.GetLogger(this.GetType());
         }
 
-        
         public Account CurrentAccount
         {
             get
             {
                 if (currentAccount == null)
                 {
-                    if (!Request.Headers.Contains("account-guid"))
-                        throw new Exception("Missing \""+ ACCOUNT_HEADER + "\" header");
-                    Guid accountGuid = Guid.Parse(Request.Headers.GetValues(ACCOUNT_HEADER).First());
+                    currentAccount = AuthenticationWorker.GetAccount(Request);
 
-                    currentAccount = AccountRepository.Read(accountGuid);
+                    // http://stackoverflow.com/questions/19793845/authenticating-asp-net-web-api?rq=1
 
-
-                    //System.Security.Principal.IPrincipal principal = RequestContext.Principal;
-                    //if(principal == null)
-                    //	throw new Exception("Principal is null");
-                    //if(principal.Identity.IsAuthenticated == false)
-                    //	throw new Exception("Principal not authenticated");
-                    ////string username = System.Threading.Thread.CurrentPrincipal.Identity.Name;
-                    //string username = principal.Identity.Name;
-                    
-                    //logger.InfoFormat("Thread.CurrentPrincipal: '{0}'.", username);
-                    //currentAccount = AccountRepository.Read(username);
+                    // do not use the User.Identity. It is set by ASP using cookie, so does not work with calls from outside the web site.
+                    // and if you use it you are exposed to CSRF
                 }
                 return currentAccount;
             }
-        }	
+        } 
+
     }
 }

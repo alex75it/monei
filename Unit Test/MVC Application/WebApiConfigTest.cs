@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Monei.MvcApplication;
 using NUnit.Framework;
+using Monei.MvcApplication.Api;
+using Should;
 
-namespace Monei.Test.UnitTest.MVC_Application
+namespace Monei.Test.UnitTest.MvcApplication
 {
-	[TestFixture]
-	public class WebApiConfigTest
-	{
-		[Test]
-		public void Register()
-		{
-			HttpConfiguration config = new HttpConfiguration();
-			WebApiConfig.Register(config);
-		}
-
-	}
+    [TestFixture, Category("Web API")]
+    public class WebApiConfigTest
+    {
+        [Test]
+        public void Register()
+        {
+            HttpConfiguration config = new HttpConfiguration();
+            WebApiConfig.Register(config);
+        }
+    }
 }

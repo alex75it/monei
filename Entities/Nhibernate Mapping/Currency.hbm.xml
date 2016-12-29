@@ -6,8 +6,8 @@
         <id name="Id">
             <generator class="identity" />
         </id>
-        <property name="Code" />
-        <property name="Name" />
-        <property name="Symbol" />
+        <property name="Code" type="AnsiString" length="3" not-null="true" />
+        <property name="Name" type="string" length="3" not-null="true" />
+        <property name="Symbol" type="string" length="3" not-null="true" />
     </class>
 </hibernate-mapping>

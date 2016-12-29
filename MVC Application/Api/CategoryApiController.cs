@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Monei.Entities;
 using Monei.MvcApplication.Api.PostDataObjects;
-using Monei.MvcApplication.Controllers.Api;
-using Monei.MvcApplication.Controllers.Api.PostDataObjects;
 
 namespace Monei.MvcApplication.Api
 {	
@@ -23,11 +19,12 @@ namespace Monei.MvcApplication.Api
         [HttpGet, Route("list")]
         public IEnumerable<Category> Get()
         {
-            IEnumerable<Category> list = base.CategoryRepository.List();
-            foreach(var category in list)
-            {
-                category.Subcategories = null;
-            }
+            IEnumerable<Category> list = CategoryRepository.List();
+            // HACK: remove the items otherwise there is a LazyInitializationException
+            //foreach(var category in list)
+            //{
+            //    category.Subcategories = null;
+            //}
 
             return list;
         }
@@ -35,24 +32,15 @@ namespace Monei.MvcApplication.Api
         [HttpGet, Route("list")]
         public IEnumerable<Category> Get(string orderBy)
         {
-            IEnumerable<Category> list = base.CategoryRepository.List();
-            foreach (var category in list)
-            {
-                category.Subcategories = null;
-            }
+            IEnumerable<Category> list = CategoryRepository.List();
+            // delete subitems to avoid LazyInitializationException
+            //foreach (var category in list)
+            //{
+            //    category.Subcategories = null;
+            //}
 
             return list;
         }
-
-        [HttpGet /*Route("action/Category/Tree", Name = "Tree")*/]
-        public IList<dynamic> Tree()
-        {
-            IList<dynamic> list = CategoryRepository.ListWithSubcategories().Select(c =>
-                new { id = c.Id, name = c.Name, subcategories = c.Subcategories.Select(s => new { id = s.Id, name = s.Name }).ToList() })
-                .ToList<dynamic>();
-            return list;
-        }
-
 
         [HttpPost]
         //public bool MoveSubcategory([FromBody]int subcategoryId, [FromBody]int categoryId)

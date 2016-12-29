@@ -10,7 +10,7 @@ using Monei.MvcApplication.Helpers;
 using Monei.MvcApplication.Models;
 using Monei.MvcApplication;
 using Monei.Entities.Interfaces;
-
+using Monei.Core.BusinessLogic;
 
 namespace Monei.MvcApplication.Controllers
 {
@@ -24,7 +24,13 @@ namespace Monei.MvcApplication.Controllers
         public ICategoryRepository CategoryRepository { get; set; }
         public IRegistryRepository RegistryRepository { get; set; }
         public ISubcategoryRepository SubcategoryRepository { get; set; }
- 
+
+        public RegistryController(IAccountManager accountManager)
+            : base(accountManager)
+        {
+
+        }
+
         public ActionResult Index()
         {		
             //RegistryFilters filters = null;

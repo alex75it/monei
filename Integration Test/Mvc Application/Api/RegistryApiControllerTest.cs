@@ -12,26 +12,27 @@ using Should;
 using Monei.DataAccessLayer.SqlServer;
 using System.Reflection;
 using System.IO;
+using Monei.MvcApplication.Api;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
 
     [TestFixture, Category("Web API"), Category("Registry")]
-    public class RegistryApiControllerTest : ApiControllerTestBase
+    public class RegistryApiControllerTest : ApiControllerTestBase<RegistryApiController>
     {
         private const string baseUri = "/api/registry";
         
         [Test]
-        public void Search_Should_ReturnAList()
+        public void Search_should_ReturnAList()
         {
             RegistrySearchPostData data = new RegistrySearchPostData() { };
 
-            var result = base.CallApi<RegistrySearchPostData, IEnumerable<RegistryRecord>>(baseUri + "/search", HttpMethod.Post, data);
+            var result = base.CallApi<RegistrySearchPostData, IEnumerable<RegistryRecord>>(baseUri + "/search", data);
             result.ShouldNotBeEmpty();
         }
 
         [Test]
-        public void PostNewRecord_should_CreateNewRecord()
+        public void PostNewRecord_should_CreateANewRecord()
         {
             int categoryId = testDataProvider.GetTestCategory().Id;
             int subcategoryId = testDataProvider.GetTestSubcategory(categoryId).Id;
@@ -39,27 +40,30 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             RegistryNewRecordPostData data = new RegistryNewRecordPostData()
             {
                 Date = DateTime.Today,
-                CategoryId = categoryId,
-                SubcategoryId = subcategoryId,
+                Operation = OperationType.Income,
                 Amount = 1.23m,
+                CategoryId = categoryId,
+                SubcategoryId = subcategoryId,                
                 Note = "Note",                
             };
-
-            var newId = base.CallApi<RegistryNewRecordPostData, int>(baseUri, HttpMethod.Post, data);
+            
+            // Execute
+            var newId = base.CallApi<RegistryNewRecordPostData, int>(baseUri, data);
 
             RegistryRecord record = GetRegistryRecord(newId);
             record.ShouldNotBeNull();
             record.Date.ShouldEqual(data.Date);
+            record.OperationType.ShouldEqual(data.Operation);
+            record.Amount.ShouldEqual(data.Amount);
             record.Category.Id.ShouldEqual(data.CategoryId);
             record.Subcategory.Id.ShouldEqual(data.SubcategoryId);
-            record.Amount.ShouldEqual(data.Amount);
-            record.Note.ShouldEqual(data.Note);
+            record.Note.ShouldEqual(data.Note);            
         }
 
-        #region utilities method
+        #region utility methods
         private RegistryRecord GetRegistryRecord(int newId)
         {
-            var repository = new RegistryRepository();
+            var repository = new RegistryRepository(sessionFactoryProvider);
 
             var record = repository.Read(newId);
 

@@ -12,11 +12,11 @@ using Should;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-    [TestFixture]
+    [TestFixture, Category("Data Access Layer")]
     public class AccountRepositoryTest : RepositoryTestBase
     {
         
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void TestFixtureSetUp()
         {
             //Helper.RemoveTestAccount();
@@ -31,7 +31,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             }
             catch (Exception exc)
             {
-                Assert.Inconclusive("FAIL to delete Account test. " + exc.Message);
+                Assert.Inconclusive("FAIL to delete test Account. " + exc.Message);
             }
         }
 
@@ -42,12 +42,11 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         }
 
 
-
         [Test]
         public void CreateUserAndAccount()
         {
             //todo: 6s for run this test?
-            //todo: this test fail (the creation date day is wrong) when executed between 24:00 and 01:00
+            //todo: this test fail (the creation date day is wrong) when executed in Italy between 24:00 and 01:00
 
             string username = Helper.TEST_USERNAME;
             string password = "password_test";
@@ -62,9 +61,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             Assert.AreEqual(role, account.Role);
             Assert.AreEqual(currency.Id, account.Currency.Id);
             Assert.AreEqual(DateTime.Today, account.CreationDate.Date, "CreationDate");
-
         }
-
 
         /// Todo: split this test in more tests
         [Test]
@@ -76,47 +73,32 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             Currency currency = Helper.GetEuroCurrency();
 
             Account account = Account.Create(username, password, role, currency);
-
-            account = AccountRepository.Create(account);
-
-
-            Account loadAccount = AccountRepository.Read(account.Username);
-
-            Assert.AreEqual(username, loadAccount.Username);
-
-            // username exists
-
             Account account_2 = Account.Create(username, password, role, currency);
 
-
-            //Action action = a => AccountRepository.Create(a);
-            //Action<Account> action = a => AccountRepository.Create(a);
-            //Should.ActionAssertionExtensions
-            //action.ShouldThrow();
-
+            account = AccountRepository.Create(account);
+            
             try
             {
                 AccountRepository.Create(account_2);
-                Assert.Fail("Duplicate username haven't tot be permitted.");
+                Assert.Fail("Duplicate username haven't to be permitted.");
             }
-            catch (EntityAlreadyExistsException)
+            catch (EntityAlreadyExistsException exc)
             {
-                // expected
+                exc.PropertyName.ShouldEqual("username");
             }
-
 
             // clean 
             AccountRepository.Delete(account.Id);
         }
 
-
         [Test]
-        public void Read()
+        [TestCase(Account.AccountRole.User, Currency.EUR_CODE)]
+        [TestCase(Account.AccountRole.Administrator, Currency.USD_CODE)]
+        public void Read_using_AccountId(Account.AccountRole role, string currencyCode)
         {
             string username = "Test";
             string password = "test";
-            Account.AccountRole role = Account.AccountRole.User;
-            Currency currency = Helper.GetEuroCurrency();
+            Currency currency = CurrencyRepository.Read(currencyCode);
 
             Helper.DeleteAccount(username);
 
@@ -124,8 +106,8 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
             account = AccountRepository.Create(account);
 
+            // execute
             Account loadedAccount = AccountRepository.Read(account.Id);
-            loadedAccount = AccountRepository.Read(account.Username);
 
             Assert.AreEqual(username, loadedAccount.Username);
             Assert.AreEqual(password, loadedAccount.Password);
@@ -134,6 +116,69 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
             // clean 
             AccountRepository.Delete(account.Id);
+        }
+
+        [Test]
+        public void Read_using_Username()
+        {
+            string username = "Test";
+            string password = "test";
+            Currency currency = CurrencyRepository.Read(Currency.EUR_CODE);
+            Account.AccountRole role = Account.AccountRole.User;
+
+            Helper.DeleteAccount(username);
+
+            Account account = AccountRepository.Create(Account.Create(username, password, role, currency));
+
+            // execute
+            Account loadedAccount = AccountRepository.Read(username);
+
+            loadedAccount.ShouldNotBeNull();
+
+            // clean 
+            AccountRepository.Delete(account.Id);
+        }
+
+        [Test]
+        public void Read_using_Guid()
+        {
+            string username = "Test";
+            string password = "test";
+            Currency currency = CurrencyRepository.Read(Currency.EUR_CODE);
+            Account.AccountRole role = Account.AccountRole.User;
+
+            Helper.DeleteAccount(username);
+
+            Account account = AccountRepository.Create(Account.Create(username, password, role, currency));
+
+            // execute
+            Guid accountGuid = account.Guid;
+            Account loadedAccount = AccountRepository.Read(accountGuid);
+
+            loadedAccount.ShouldNotBeNull();
+
+            // clean 
+            AccountRepository.Delete(account.Id);
+        }
+
+        [Test]
+        public void Read_when_UsernameIsNull_should_RaiseASpecificException()
+        {
+            string username = null;
+
+            Assert.Throws<ArgumentNullException>(() =>
+                AccountRepository.Read(username)
+            );
+        }
+
+        [Test]
+        public void Read_when_GuidIsEmpty_should_RaiseASpecificException()
+        {
+            Guid accountId = Guid.Empty;
+
+            Assert.Throws<ArgumentException>(() =>
+                AccountRepository.Read(accountId)
+            );
         }
 
         [Test]
@@ -167,11 +212,9 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             Assert.AreEqual(newPassword, account.Password);
             Assert.AreEqual(newRole, account.Role);
 
-
             // clean 
             AccountRepository.Delete(account.Id);
         }
-
 
         [Test]
         public void SetLastLoginDate()
@@ -181,7 +224,6 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             int accountId = account.Id;
             DateTime lastLogin = DateTime.Now.AddHours(-2);
             AccountRepository.UpdateLastLogin(accountId, lastLogin);
-
         }
 
         [Test]

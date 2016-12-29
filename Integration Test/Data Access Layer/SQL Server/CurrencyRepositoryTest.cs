@@ -11,51 +11,26 @@ using Should;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-	[TestFixture]
-	public class CurrencyRepositoryTest : RepositoryTestBase
-	{
+    [TestFixture, Category("Data Access Layer")]
+    public class CurrencyRepositoryTest : RepositoryTestBase
+    {
 
-		[Test]
-		public void Delete()
-		{
-			string code = "YYY";
-			string name = "YYY";
-			string symbol = "è";
+        [Test]
+        [TestCase(Currency.EUR_CODE)]
+        [TestCase(Currency.USD_CODE)]
+        public void Read(string code)
+        {
+            var currency = CurrencyRepository.Read(code);
+            currency.ShouldNotBeNull();
+            currency.Code.ShouldEqual(code);
+        }
 
-			Currency currency = new Currency()
-			{
-				Code = code,
-				Name = name,
-				Symbol = symbol,
-			};
+        [Test]
+        public void Reads_when_CurrencyDoesNotExists_should_RaiseSpecificException()
+        {
+            string currencyCode = "YYY";
+            Assert.Throws<ArgumentOutOfRangeException>(() => CurrencyRepository.Read(currencyCode));
+        }
 
-
-			try
-			{
-				//currency = CurrencyRepository.Create(currency);
-
-				throw new Exception("Create method does not exists");
-			}
-			catch (Exception exc)
-			{
-				Assert.Inconclusive("Fail to create Currency: " + exc.ToString());
-				return;
-			}
-
-			try
-			{
-				CurrencyRepository.Delete(currency.Id);
-			}
-			catch (Exception exc)
-			{
-				Assert.Fail(exc.ToString());
-			}
-
-			Currency deletedCurrency = CurrencyRepository.Read(currency.Code);
-
-			Assert.IsNull(deletedCurrency, "Re-loaded Currency is not null");
-
-		}
-
-	}
+    }
 }

@@ -10,27 +10,21 @@ using NHibernate.Linq;
 
 namespace Monei.DataAccessLayer.SqlServer
 {
-	public class CurrencyRepository :AbstractRepository<int, Currency>, ICurrencyRepository
-	{
+    public class CurrencyRepository :RepositoryBase<int, Currency>, ICurrencyRepository
+    {
+        public CurrencyRepository(ISessionFactoryProvider sessionFactoryProvider) : base(sessionFactoryProvider)
+        {
+        }
 
-		public const string EUR_CODE = "EUR";
-
-		public Currency Read(string code)
-		{
-			using (ISession session = OpenSession())
-			{
-				return session.Query<Currency>().Where(c => c.Code == code).FirstOrDefault();
-			}
-		}
-
-		public new Currency Create(Currency currency)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void Delete(string code)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public Currency Read(string code)
+        {
+            using (ISession session = OpenSession())
+            {
+                var currency = session.Query<Currency>().Where(c => c.Code == code).FirstOrDefault();
+                if (currency == null)
+                    throw new ArgumentOutOfRangeException(nameof(code), string.Format($"Currenccy with code {code} does not exists in the system."));
+                return currency;
+            }
+        }
+    }
 }

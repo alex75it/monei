@@ -7,33 +7,21 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Castle.Windsor;
-using Castle.Windsor.Installer;
 using log4net;
-using Monei.MvcApplication.Api;
-using Monei.MvcApplication.Code;
-using Monei.MvcApplication.Controllers;
-using Monei.MvcApplication.Controllers.Api;
-using Monei.MvcApplication.Core.Installers;
-using Monei.MvcApplication.DelegatingHandlers;
+using Monei.MvcApplication.DependencyInjection;
+using Monei.Entities;
+using Monei.DataAccessLayer.Interfaces;
 
 namespace Monei.MvcApplication
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-
     public class MvcApplication : System.Web.HttpApplication
-    {
-        private static IWindsorContainer container;
+    {       
 
-        public IWindsorContainer WindSorContainer { get { return container; } }
-
+        public static WindsorCastleDependencyInjection DependencyInjectionManager { get; private set; }
+              
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
-            //GlobalConfiguration.Configuration.MessageHandlers.Add(new CultureDelegatingHandler());
-            //config.MessageHandlers.Add(new CultureDelegatingHandler());
 
             // http://www.asp.net/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2
             // WebApiConfig.Register(GlobalConfiguration.Configuration);
@@ -43,14 +31,37 @@ namespace Monei.MvcApplication
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            log4net.Config.XmlConfigurator.Configure(); 
+            log4net.Config.XmlConfigurator.Configure();
 
-            InitializeWindsorContainer();	 
+            // http://stackoverflow.com/questions/32852440/dependency-injection-in-asp-net-session-start-method   
+            
+            DependencyInjectionManager = new WindsorCastleDependencyInjection();
+            GlobalConfiguration.Configuration.DependencyResolver = DependencyInjectionManager;
+        }        
+
+        private void Session_Start(object sender, EventArgs e)
+        {
+            Session["Account"] = null;
+        }
+
+        private void MvcApplication_PostAuthenticateRequest(object sender, EventArgs e)
+        {
+            try
+            {
+                IAccountRepository accountRepository = DependencyInjectionManager.Resolve<IAccountRepository>();
+                Account account = accountRepository.Read(Request.LogonUserIdentity.Name);
+                Session["Account"] = account;
+            }
+            catch (Exception exc)
+            {
+                throw new Exception("Fail to obtain Account from authenticated user.", exc);
+            }
         }
 
         protected void Application_End()
         {
-            container.Dispose();
+            if(DependencyInjectionManager != null)
+                DependencyInjectionManager.Dispose();
         }
         
         protected void Application_Error()
@@ -66,28 +77,6 @@ namespace Monei.MvcApplication
             }
             
             Server.TransferRequest("Error", false);
-        }
-
-        public void InitializeWindsorContainer()
-        {
-            // WindsorCastle
-            container = new WindsorContainer().Install(
-                //FromAssembly.This()
-                new RepositoriesInstaller(),
-                new ControllerInstaller()
-                );
-
-            container.Resolve<MoneiControllerBase>();
-            container.Resolve<ApiControllerBase>();
-
-            var controllerFactory = new WindsorControllerFactory(container.Kernel);
-            ControllerBuilder.Current.SetControllerFactory(controllerFactory);
-
-            var httpDependencyResolver = new WindsorDependencyResolver(container);
-            GlobalConfiguration.Configuration.DependencyResolver =  httpDependencyResolver;
-            
-            //container.Install(new RepositoryInstaller());
-        }
-
-    }//class
+        }             
+    }    
 }

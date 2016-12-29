@@ -1,115 +1,167 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using Monei.Entities;
 using Monei.Test.IntegrationTest.DataAccessLayer.SqlServer;
 using Should;
 using NUnit.Framework;
+using NHibernate.Linq;
 
 namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 {
-	[TestFixture, Category("Repository"), Category("Category")]
-	public class CategoryRepositoryTest :RepositoryTestBase
-	{
-		[Test]
-		public void List()
-		{
-			ICategoryRepository repository = new CategoryRepository();
+    [TestFixture, Category("Data Access Layer"), Category("Repository"), Category("Category")]
+    public class CategoryRepositoryTest :RepositoryTestBase
+    {
+        private CategoryRepository repository;
 
-			IEnumerable<Category> list = repository.List();
+        private ISessionFactoryProvider sessionFactoryProvider;
 
-			// Verify
-			list.ShouldNotBeEmpty();
-			
-		}
+        [SetUp]
+        public void SetUp()
+        {
+            sessionFactoryProvider = new SessionFactoryProvider();
+            repository = new CategoryRepository(sessionFactoryProvider);
+        }
 
-		[Test]
-		public void AddCategory()
-		{
-			string name = "Transport and Parking";
-			string description = "Airplane, train and bus tickets, highway tolls, parking fees.";
+        [Test]
+        public void List()
+        {
+            IEnumerable<Category> list = repository.List();
 
-			var category = new Category()
-			{
-				Name = name,
-				Description = description,
-				ImageName = null,
-			};
+            list.ShouldNotBeEmpty();            
+        }
 
-			Helper.GetTestAccount();
+        [Test, Category("NHibernate")]
+        public void List_should_ExecuteOnlyAQuery()
+        {
+            var sessionFactory = sessionFactoryProvider.GetSessionFactory();
 
-			// create
-			category = CategoryRepository.Create(category);
+            if (!sessionFactory.Statistics.IsStatisticsEnabled)
+                Assert.Ignore("Statistics should be enabled");
 
-			Assert.IsNotNull(category);
+            sessionFactory.Statistics.Clear();
 
-			Assert.AreEqual(name, category.Name, "Names are not equal.");
-			Assert.AreEqual(description, category.Description, "Descriptions are not equal.");
+            // Execute
+            repository.List();
 
-			// cleanup
-			CategoryRepository.Delete(category.Id);
+            sessionFactory.Statistics.CloseStatementCount.ShouldEqual(1);
+        }
 
+        [Test]
+        public void Create_should_CreateANewCategory()
+        {
+            string name = "Category";
+            string description = "Category description";
 
-			// test max length for name
-			int maxLength = Category.NAME_MAX_LENGTH;
+            Category category = ExecuteCreateMethod(name, description);
 
-			name = new String('a', maxLength + 1);
-			category.Name = name;
-			try
-			{
-				CategoryRepository.Create(category);
-			}
-			catch (Exception)
-			{
-				//Assert.();
-			}
+            category.ShouldNotBeNull();
+            category.Name.ShouldEqual(name, "Names are not equal.");
+            category.Description.ShouldEqual(description, "Descriptions are not equal.");
+        }
 
-			CategoryRepository.Delete(category.Id);
-		}
+        [Test]
+        public void UpdateCategory()
+        {
+            string newName = "Category B";
+            string newDescription = "Description B";
 
-		[Test]
-		public void UpdateCategory()
-		{
-			string changedName = "Test B";
-			string changedDescription = "Description B";
+            Account account = Helper.GetTestAccount();
+            Category category = new Category()
+            {
+                Name = "Category A",
+                Description = "Description B",
+            };
 
-			Account account = Helper.GetTestAccount();
-			Category category = new Category()
-			{
-				Name = "Test A",
-				Description = "aaa bbb",
-			};
+            // Clean up data
 
-			// Clean up data
+            var categories = CategoryRepository.List().Where(c => c.Name == category.Name || c.Name == newName ).ToList();
+            foreach(var c in categories)
+                CategoryRepository.Delete(c.Id);
 
-			var categories = CategoryRepository.List().Where(c => c.Name == category.Name || c.Name == changedName ).ToList();
-			foreach(var c in categories)
-				CategoryRepository.Delete(c.Id);
-
-			category.CreationAccount = account;
+            category.CreationAccount = account;
 
 
-			int categoryId = CategoryRepository.Create(category).Id;
+            int categoryId = CategoryRepository.Create(category).Id;
 
 
-			category = CategoryRepository.Read(categoryId);
+            category = CategoryRepository.Read(categoryId);
 
-			category.Name = changedName;
-			category.Description = changedDescription;
-			category.CreationAccount = account; //todo: set a new Account, it Creation Account MUST not change with update
+            category.Name = newName;
+            category.Description = newDescription;
+            category.CreationAccount = account; //todo: set a new Account, it Creation Account MUST not change with update
 
-			// Exceute
-			CategoryRepository.Update(category);
+            // Exceute
+            CategoryRepository.Update(category);
 
-			// Verify
-			Category testCategory = CategoryRepository.Read(category.Id);
-			testCategory.Name.ShouldEqual(changedName);
-			testCategory.Description.ShouldEqual(changedDescription);
-			//testCategory.CreationAccount...
-		}
+            // Verify
+            Category testCategory = CategoryRepository.Read(category.Id);
+            testCategory.Name.ShouldEqual(newName);
+            testCategory.Description.ShouldEqual(newDescription);
+            //testCategory.CreationAccount...
+        }
 
-	}
+        [Test]
+        public void MoveSubcategory()
+        {
+            var categories = CategoryRepository.List().ToList();
+            if (categories.Count < 2) Assert.Inconclusive("Almost two categories are required to execute this test");
+            var categoryFrom = categories[0];
+            var categoryTo= categories[1];
+
+            int subcategoryId = SubcategoryRepository.Create(new Subcategory() { Name = "Test", Description="description", Category = categories[0] });
+            try
+            {
+                // execute
+                CategoryRepository.MoveSubcategory(subcategoryId, categoryTo.Id);
+
+                Subcategory subcategoryToCheck = SubcategoryRepository.Read(subcategoryId);
+                subcategoryToCheck.Category.Id.ShouldEqual(categoryTo.Id);
+            }
+            finally
+            {
+                SubcategoryRepository.Delete(subcategoryId);
+            }
+        }
+
+        #region utils
+        private Category ExecuteCreateMethod(string name, string description)
+        {            
+            var category = new Category()
+            {
+                Name = name,
+                Description = description,
+                ImageName = null,
+            };
+
+            DeleteCategoryWithName(category.Name);
+
+            try
+            {
+                // Execute
+                category = CategoryRepository.Create(category);
+            }
+            finally
+            {
+                CategoryRepository.Delete(category.Id);
+            }
+
+            return category;
+        }
+
+        private void DeleteCategoryWithName(string name)
+        {
+            using (var session = sessionFactoryProvider.GetSessionFactory().OpenSession())
+            {
+                var category = session.Query<Category>().Where(c => c.Name == name).SingleOrDefault();
+                if (category != null)
+                    session.Delete(category);
+                session.Flush();
+            }
+        }
+
+        #endregion
+    }
 }

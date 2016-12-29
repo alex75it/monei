@@ -35,10 +35,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FakeItEasy, Version=2.2.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
       <HintPath>..\packages\FakeItEasy.2.2.0\lib\net40\FakeItEasy.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -105,11 +114,13 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Core\Managers\CategoryManagerTest.cs" />
+    <Compile Include="Core\Business Logic\AccountSecurityTests.cs" />
+    <Compile Include="Core\Business Logic\CategoryManagerTest.cs" />
     <Compile Include="Data Access Layer\DateTimeExtensionsTest.cs" />
+    <Compile Include="Data Access Layer\Exceptions\TooLongCategoryNameExceptionTest.cs" />
     <Compile Include="Data Access Layer\Filters\BaseFiltersTest.cs" />
     <Compile Include="Data Access Layer\Filters\RegistryFiltersTest.cs" />
-    <Compile Include="Core\SubcategoryManagerTest.cs" />
+    <Compile Include="Core\Business Logic\SubcategoryManagerTest.cs" />
     <Compile Include="Core\DataAnalysis\BusinessObjects\CategoriesDataTest.cs" />
     <Compile Include="Core\DataAnalysis\BusinessObjects\CategoryDataTest.cs" />
     <Compile Include="Core\DataAnalysis\BusinessObjects\MonthDataTest.cs" />
@@ -122,10 +133,12 @@
     <Compile Include="Entities\RegistryRecordTest.cs" />
     <Compile Include="Entities\SubcategoryTest.cs" />
     <Compile Include="MVC Application\Api\AccountApiControllerTest.cs" />
-    <Compile Include="MVC Application\Api\ApiControllerBaseTest.cs" />
+    <Compile Include="MVC Application\Api\ApiControllerTestBase.cs" />
     <Compile Include="MVC Application\Api\RegistryApiControllerTest.cs" />
     <Compile Include="MVC Application\Api\CategoryApiControllerTest.cs" />
     <Compile Include="MVC Application\Area\Management\Controllers\CategoryControllerTest.cs" />
+    <Compile Include="MVC Application\Controllers\AccountControllerTest.cs" />
+    <Compile Include="MVC Application\Controllers\CategoryControllerTest.cs" />
     <Compile Include="MVC Application\WebApiConfigTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />

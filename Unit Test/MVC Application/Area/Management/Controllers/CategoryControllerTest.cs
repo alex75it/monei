@@ -14,49 +14,50 @@ using Should;
 using System.Security;
 using System.Security.Principal;
 using Monei.DataAccessLayer.Interfaces;
+using Monei.Core.BusinessLogic;
 
-namespace Monei.Test.UnitTest.MVC_Application.Area.Management.Controllers
+namespace Monei.Test.UnitTest.MccApplication.Area.Management.Controllers
 {
-	[TestFixture]
-	public class CategoryControllerTest
-	{
-		
-		[Test]
-		public void Edit_WhenCategoryHasATooLongName_Should_DoesNotThrowException()
-		{
-			CategoryController controller = new CategoryController();
-			string username = "test";
-			controller.AccountRepository = A.Fake<IAccountRepository>();
-			Account account = new Account() {Username=username};
-			A.CallTo(() => controller.AccountRepository.Read(username)).Returns(account);
+    [TestFixture]
+    public class CategoryControllerTest
+    {		
+        [Test]
+        public void Edit_when_CategoryHasATooLongName_should_NotThrowException()
+        {
+            IAccountManager accountManager = A.Fake<IAccountManager>();
+            ICategoryManager categoryManager = A.Fake<ICategoryManager>();
+            CategoryController controller = new CategoryController(accountManager, categoryManager);
+            string username = "test";
+            Account account = new Account() {Username=username};
+            A.CallTo(() => accountManager.Read(username)).Returns(account);
 
-			SetAuthenticationOnController(controller, username);
+            SetAuthenticationOnController(controller, username);
 
-			//controller.CategoryRepository = A.Fake<
+            //controller.CategoryRepository = A.Fake<
 
-			Category category = new Category()
-			{
-				Name = new String('a', 1000)
-			};
-			FormCollection form = new FormCollection();
-			form.Add("id", "1");
+            Category category = new Category()
+            {
+                Name = new String('a', 1000)
+            };
+            FormCollection form = new FormCollection();
+            form.Add("id", "1");
 
-			ActionResult result = controller.Edit(category, form);
-		}
+            ActionResult result = controller.Edit(category, form);
+        }
 
-		private static void SetAuthenticationOnController(Controller controller, string username)
-		{
-			ControllerContext controllerContext = A.Fake<ControllerContext>();
-			HttpContextBase httpContext = A.Fake<HttpContextBase>();
-			A.CallTo(() => controllerContext.HttpContext).Returns(httpContext);
-			IPrincipal principal = A.Fake<IPrincipal>();
-			IIdentity identity = A.Fake<IIdentity>();
-			A.CallTo(() => identity.IsAuthenticated).Returns(true);
-			A.CallTo(() => identity.Name).Returns(username); // username
-			A.CallTo(() => principal.Identity).Returns(identity);
-			A.CallTo(() => httpContext.User).Returns<IPrincipal>(principal);
-			
-			controller.ControllerContext = controllerContext;
-		}
-	}
+        private static void SetAuthenticationOnController(Controller controller, string username)
+        {
+            ControllerContext controllerContext = A.Fake<ControllerContext>();
+            HttpContextBase httpContext = A.Fake<HttpContextBase>();
+            A.CallTo(() => controllerContext.HttpContext).Returns(httpContext);
+            IPrincipal principal = A.Fake<IPrincipal>();
+            IIdentity identity = A.Fake<IIdentity>();
+            A.CallTo(() => identity.IsAuthenticated).Returns(true);
+            A.CallTo(() => identity.Name).Returns(username); // username
+            A.CallTo(() => principal.Identity).Returns(identity);
+            A.CallTo(() => httpContext.User).Returns<IPrincipal>(principal);
+            
+            controller.ControllerContext = controllerContext;
+        }
+    }
 }

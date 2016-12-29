@@ -1,34 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Mvc;
-using Castle.MicroKernel.Registration;
-using Castle.Windsor;
-using Castle.Windsor.Installer;
-using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using Monei.MvcApplication;
-using Monei.MvcApplication.Api;
-using Monei.MvcApplication.Code;
-using Monei.MvcApplication.Core.Installers;
 using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
-using System.Configuration;
-using Monei.Entities;
+using Monei.MvcApplication.DependencyInjection;
+using Monei.MvcApplication.Core;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web.Http.ExceptionHandling;
+using Monei.MvcApplication.Filters;
+using Should;
+using System.Net;
+using Monei.DataAccessLayer.Interfaces;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
     [TestFixture]
-    public class ApiControllerTestBase :IDisposable
+    public class ApiControllerTestBase<TApiController>
     {
+        protected ISessionFactoryProvider sessionFactoryProvider = new SessionFactoryProvider();
+
         public string testAccountGuid = "00000000-0000-0000-0000-000000000000";
+        private const string BASE_URL = "http://www.apitest.com/";
 
         protected HttpMethod GET = HttpMethod.Get;
         protected HttpMethod POST = HttpMethod.Post;
@@ -37,14 +36,12 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         protected TestDataProvider testDataProvider;
 
         private HttpServer server;
-        private const string BASE_URL = "http://www.apitest.com/";
-        private IWindsorContainer container;
-        
+        private HttpClient client;    
 
-        // todo: CLEAN THIS CLASS
+        //private WindsorCastleDependencyInjection dependencyInjectionManager;
 
         public ApiControllerTestBase()
-        {
+        {            
             testDataProvider = new TestDataProvider();
         }
 
@@ -54,75 +51,85 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         /// <returns></returns>
         public HttpServer InitializeServer()
         {
-            //todo: is this needed?
-            if (server != null)
-                server.Dispose();
             server = new HttpServer(GetConfiguration());
             return server;
         }
 
-
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Initialize()
         {			
-            InitializeWindsorContainer();
-            //server = new HttpServer(GetConfiguration());
+            //InitializeWindsorContainer();
         }
+        
+        [TearDown]
+        public void TearDown()
+        {
+            if (server != null)
+                server.Dispose();
 
+            if (client != null)
+                client.Dispose();
+        }
 
         protected HttpClient GetClient()
         {
-            return new HttpClient(InitializeServer());
-        }
-
-
-        private void InitializeWindsorContainer()
-        {
-
-            container = new WindsorContainer();
-
-            container.Register(
-                Component.For(typeof(IAccountRepository)).ImplementedBy(typeof(AccountRepository)), //.LifestylePerWebRequest(),
-                Component.For(typeof(IRegistryRepository)).ImplementedBy(typeof(RegistryRepository)), //.LifestylePerWebRequest(),
-                Component.For(typeof(ICurrencyRepository)).ImplementedBy(typeof(CurrencyRepository)), //.LifestylePerWebRequest(),
-                Component.For(typeof(ICategoryRepository)).ImplementedBy(typeof(CategoryRepository)), //.LifestylePerWebRequest(),
-                Component.For(typeof(ISubcategoryRepository)).ImplementedBy(typeof(SubcategoryRepository)) //.LifestylePerWebRequest(),
-
-                //Component.For(typeof(SubcategoryManager)).ImplementedBy(typeof(SubcategoryManager)), //.LifestylePerWebRequest()
-            );
-            
-            // todo: try to use this...
-            //container.Install(new RepositoriesInstaller());
-            // give this error:
-            /*
-            An exception of type 'Castle.MicroKernel.ComponentResolutionException' occurred in Castle.Windsor.dll but was not handled in user code
-            Additional information: Looks like you forgot to register the http module Castle.MicroKernel.Lifestyle.PerWebRequestLifestyleModule
-            */
-
-            // for check...
-            IAccountRepository accountREpository = container.Resolve<IAccountRepository>();
-
-            container.Install( new ControllerInstaller());
-
-            //container.Resolve<MoneiControllerBase>();
-            //ApiController controller = container.Resolve<ApiControllerBase>();
-
-            var controllerFactory = new WindsorControllerFactory(container.Kernel);
-            ControllerBuilder.Current.SetControllerFactory(controllerFactory);
-            
-
-            var httpDependencyResolver = new WindsorDependencyResolver(container);
-            GlobalConfiguration.Configuration.DependencyResolver = httpDependencyResolver;
+            client = new HttpClient(InitializeServer());
+            return client;
         }
 
         protected HttpConfiguration GetConfiguration()
-        {
-            HttpConfiguration configuration = new HttpConfiguration();		
-            var dependencyResolver = new WindsorDependencyResolver(container);
-            configuration.DependencyResolver = dependencyResolver;
+        {            
+            HttpConfiguration configuration = new HttpConfiguration();
+            // configuration.DependencyResolver = dependencyInjectionManager; // cause error on second call of the same controller. 
+            // probably controller is not resolved. Impossible to debug. 
+
+            // A call on a browser show the full error, ho to replicate this ?
+            /*
+             <Error>
+                <Message>An error has occurred.</Message>
+                <ExceptionMessage>
+                An error occurred when trying to create a controller of type 'TokenApiController'. Make sure that the controller has a parameterless public constructor.
+                </ExceptionMessage>
+                <ExceptionType>System.InvalidOperationException</ExceptionType>
+                <StackTrace>
+                at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType) at System.Web.Http.Controllers.HttpControllerDescriptor.CreateController(HttpRequestMessage request) at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+                </StackTrace>
+                <InnerException>
+                <Message>An error has occurred.</Message>
+                <ExceptionMessage>
+                Type 'Monei.MvcApplication.Api.TokenApiController' does not have a default constructor
+                </ExceptionMessage>
+                <ExceptionType>System.ArgumentException</ExceptionType>
+                <StackTrace>
+                at System.Linq.Expressions.Expression.New(Type type) at System.Web.Http.Internal.TypeActivator.Create[TBase](Type instanceType) at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.GetInstanceOrActivator(HttpRequestMessage request, Type controllerType, Func`1& activator) at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
+                </StackTrace>
+                </InnerException>
+                </Error>
+             */
+
+            configuration.DependencyResolver = new WindsorCastleDependencyInjection(new LifestyleSingletonComponentModelContruction());
             WebApiConfig.Register(configuration);
 
+            // pratically undocumented: http://stackoverflow.com/questions/21901808/need-a-complete-sample-to-handle-unhandled-exceptions-using-exceptionhandler-i
+            configuration.Services.Replace(typeof(IExceptionHandler), new UnitTestExceptionHandler());
+                        
+            configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+
+            configuration.Filters.Add(new ApiControllerExceptionFilterAttribute());
+
+            log4net.Config.XmlConfigurator.Configure();
+
             return configuration;
+        }
+
+        private class UnitTestExceptionHandler : ExceptionHandler
+        {
+            public Task Handle(ExceptionHandlerContext context, CancellationToken cancellationToken)
+            {
+                Console.WriteLine("Error. CatchBlock: " + context.CatchBlock);
+                string name = context.CatchBlock.Name;
+                return null;
+            }
         }
 
         /// <summary>
@@ -156,7 +163,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         protected HttpRequestMessage CreateRequest<T>(string url, HttpMethod method,  T content, string mediaType = "application/json")
         {
             var request = CreateRequest(url, method, mediaType);
-            request.Headers.Add("account-guid", testAccountGuid);
+            request.Headers.Add(AuthenticationWorker.API_TOKEN, testAccountGuid);
             // todo: is this needed? (CamelCasePropertyNameContractResolver)
             JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
             formatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -166,7 +173,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
 
         protected void CallApi(string url, HttpMethod httpMethod)
-            //where TReturn : class
         {
             using (var client = GetClient())
             using (var result = client.SendAsync(CreateRequest(url, httpMethod)).Result)
@@ -174,7 +180,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         }
 
         protected TReturn CallApi<TReturn>(string url, HttpMethod httpMethod)
-            where TReturn : class
         {
             using (var client = GetClient())
             using (var result = client.SendAsync(CreateRequest(url, httpMethod)).Result)
@@ -190,15 +195,13 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         /// <param name="httpMethod"></param>
         /// <param name="data">POST form collection data</param>
         /// <returns></returns>
-        protected TReturn CallApi<TPost, TReturn>(string url, HttpMethod httpMethod, TPost data)
-            where TPost : class
-            //where TReturn : class
+        protected TReturn CallApi<TPost, TReturn>(string url, TPost data)
         {
             using (var client = GetClient())
-            using (var result = client.SendAsync(CreateRequest<TPost>(url, httpMethod, data)).Result)
+            using (var result = client.SendAsync(CreateRequest<TPost>(url, HttpMethod.Post, data)).Result)
                 return LoadReturnValue<TReturn>(url, result);
         }
-
+   
         /// <summary>
         /// Call API
         /// </summary>
@@ -225,6 +228,15 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             CallApi<TPost>(url, POST, data);
         }
 
+        protected void CallApiExpectingError<TPost>(string url, TPost data, HttpStatusCode expectedStatusCode)
+        {
+            using (var client = GetClient())
+            using (var result = client.SendAsync(CreateRequest<TPost>(url, HttpMethod.Post, data)).Result)
+            {
+                result.IsSuccessStatusCode.ShouldBeFalse();
+                result.StatusCode.ShouldEqual(expectedStatusCode, "StatusCode is wrong");
+            }
+        }
 
         private static TReturn LoadReturnValue<TReturn>(string url, HttpResponseMessage result) 
             //where TReturn : class
@@ -239,18 +251,9 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
                 Assert.Fail("Server error. Url: " + url + ".\r\n" + result);
         }
 
-
         protected int RandomInt()
         {
             return random.Next();
         }
-
-
-        public void Dispose()
-        {
-            if (server != null)
-                server.Dispose();
-        }      
-
     }
 }

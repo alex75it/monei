@@ -4,87 +4,74 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using log4net;
-using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
+using Monei.Core.BusinessLogic;
 
 namespace Monei.MvcApplication.Controllers
 {
-	public class MoneiControllerBase : Controller, IController
-	{
+    public abstract class MoneiControllerBase : Controller, IController
+    {
+        public const string SESSION_RETURN_URL = "returnUrl";
+        public const int UNDEFINED_ID = -1;
+        protected ILog logger;
+        private IAccountManager accountManager;
+        private Account account = null;
 
-		public /*static*/ /*readonly*/ ILog logger; // = LogManager.GetLogger(typeof(MoneiControllerBase));
+        public MoneiControllerBase(IAccountManager accountManager)
+        {
+            logger = LogManager.GetLogger(this.GetType());
+            this.accountManager = accountManager;
+        }        
 
-		public const string SESSION_RETURN_URL = "returnUrl";
-		public const int UNDEFINED_ID = -1;
+        /// <summary>
+        /// Account of current logged user 
+        /// </summary>
+        /// <returns></returns>
+        protected Account GetAccount() {
+            if (account != null)
+                return account;
 
-		public IAccountRepository AccountRepository { get; set; }
+            if (User.Identity.IsAuthenticated)
+                return accountManager.Read(User.Identity.Name);
+            else
+            {
+                logger.ErrorFormat("User is not authenticated");
+                throw new Exception("User is not authenticated");
+            }
+        }
 
-		//public Account Account { get {
-		//	if (account != null)
-		//		return account;
-		//} }
+        protected void SetReturnUrl(string returnUrl)
+        {
+            ClearReturnUrl();
+            
+            if (!string.IsNullOrWhiteSpace(returnUrl))				
+                Session.Add(SESSION_RETURN_URL, returnUrl);			
+        }
 
-		public MoneiControllerBase()
-		{
-			logger = LogManager.GetLogger(this.GetType());
-		}
+        protected void ClearReturnUrl()
+        {
+            Session.Remove(SESSION_RETURN_URL);
+        }
 
-		private Account account = null;
-		/// <summary>
-		/// Account of current logged user 
-		/// </summary>
-		/// <returns></returns>
-		protected Account GetAccount() {
-			if (account != null)
-				return account;
+        protected string GetReturnUrl()
+        {
+            return Session[SESSION_RETURN_URL] as string;
+        }
 
-			if (User.Identity.IsAuthenticated)
-				return AccountRepository.Read(User.Identity.Name);
-			else
-			{
-				logger.ErrorFormat("User is not authenticated");
-				throw new Exception("User is not authenticated");
-			}
-		}
+        protected bool IsAuthorized(params Monei.Entities.Account.AccountRole[] roles)
+        {
+            return roles.Contains(GetAccount().Role);
+        }
 
-		protected void SetReturnUrl(string returnUrl)
-		{
-			ClearReturnUrl();
-			
-			if (!string.IsNullOrWhiteSpace(returnUrl))				
-				Session.Add(SESSION_RETURN_URL, returnUrl);			
-		}
+        protected void SetErrorMessage(string message)
+        {
+            ViewBag.ErrorMessage = message;
+        }
 
-		protected void ClearReturnUrl()
-		{
-			Session.Remove(SESSION_RETURN_URL);
-		}
+        protected void SetSuccessMessage(string message)
+        {
+            ViewBag.SuccessMessage = message;
+        }
 
-		protected string GetReturnUrl()
-		{
-			return Session[SESSION_RETURN_URL] as string;
-		}
-
-		protected bool IsAuthorized(params Monei.Entities.Account.AccountRole[] roles)
-		{
-			return roles.Contains(GetAccount().Role);
-		}
-
-		protected void SetErrorMessage(string message)
-		{
-			ViewBag.ErrorMessage = message;
-		}
-
-		protected void SetSuccessMessage(string message)
-		{
-			ViewBag.SuccessMessage = message;
-		}
-
-		//protected bool IsAuthorized(Monei.Entities.Account.AccountRole role)
-		//{
-		//	return role == GetAccount().Role;
-		//}
-
-
-	}//class
+    }
 }

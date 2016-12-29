@@ -39,6 +39,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PublishDatabases>false</PublishDatabases>
+    <CodeAnalysisRuleSet />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,6 +48,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -98,18 +100,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Web.WebPages.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.3.2.3\lib\net45\Microsoft.Web.WebPages.OAuth.dll</HintPath>
       <Private>True</Private>
@@ -117,9 +107,6 @@
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Owin">
-      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -149,10 +136,6 @@
     </Reference>
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -222,6 +205,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\PostDataObjects\NewApiTokenPostData.cs" />
     <Compile Include="Api\PostDataObjects\RegistryNewRecordPostData.cs" />
     <Compile Include="Api\SubcategoryApiController.cs" />
     <Compile Include="Api\CategoryApiController.cs" />
@@ -229,6 +213,7 @@
     <Compile Include="Api\PostDataObjects\RegistrySearchPostData.cs" />
     <Compile Include="Api\RegistryApiController.cs" />
     <Compile Include="Api\ResponseDataObjects\LoginResult.cs" />
+    <Compile Include="Api\TokenApiController.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -241,9 +226,9 @@
     <Compile Include="Areas\Management\Models\SubcategoryModel.cs" />
     <Compile Include="Api\AccountApiController.cs" />
     <Compile Include="Api\ApiControllerBase.cs" />
-    <Compile Include="Controllers\Api\DashboardController.cs" />
+    <Compile Include="Api\DashboardController.cs" />
     <Compile Include="Api\PostDataObjects\MoveSubcategoryPostData.cs" />
-    <Compile Include="Controllers\Api\PostDataObjects\SubcategoryPostData.cs" />
+    <Compile Include="Api\PostDataObjects\SubcategoryPostData.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Core\BaseViewPage.cs" />
@@ -251,15 +236,16 @@
     <Compile Include="Core\ColumnNameForExportAttribute.cs" />
     <Compile Include="Core\CsvFormatter.cs" />
     <Compile Include="Core\ExceptionLogger.cs" />
-    <Compile Include="Core\WinsorInstallers\ControllerInstaller.cs" />
-    <Compile Include="Core\WinsorInstallers\RepositoriesInstaller.cs" />
-    <Compile Include="Core\WinsorInstallers\WindsorDependencyResolver.cs" />
-    <Compile Include="Core\WinsorInstallers\WindsorDependencyScope.cs" />
-    <Compile Include="Core\IWebAuthenticationWorker.cs" />
-    <Compile Include="Core\WebAuthenticationWorker.cs" />
-    <Compile Include="Core\WindsorControllerFactory.cs" />
+    <Compile Include="Core\WebSecurity - Copy.cs" />
+    <Compile Include="Dependency Injection\BusinessLogicInstaller.cs" />
+    <Compile Include="Dependency Injection\ControllersInstaller.cs" />
+    <Compile Include="Dependency Injection\RepositoriesInstaller.cs" />
+    <Compile Include="Dependency Injection\WindsorCastleDependencyInjection.cs" />
+    <Compile Include="Dependency Injection\WindsorDependencyScope.cs" />
+    <Compile Include="Core\IAuthenticationWorker.cs" />
+    <Compile Include="Core\AuthenticationWorker.cs" />
+    <Compile Include="Dependency Injection\WindsorControllerFactory.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ContractsController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegistryController.cs" />
@@ -275,9 +261,8 @@
     <Compile Include="Helpers\ExportResponseCreator.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Helpers\ViewHelper.cs" />
-    <Compile Include="Helpers\WebSecurity.cs" />
+    <Compile Include="Core\WebSecurity.cs" />
     <Compile Include="Models\AccountModel.cs" />
-    <Compile Include="Models\ContractsModel.cs" />
     <Compile Include="Models\RegistryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\bootstrap-select.css" />
@@ -334,39 +319,39 @@
     <Content Include="Images\registry_big_3.png" />
     <Content Include="Images\dashboard_big.png" />
     <Content Include="JavaScriptTests.html" />
-    <Content Include="Scripts for monei\angular controllers\Example of Controller_jasmine.js" />
-    <Content Include="Scripts for monei\angular controllers\HomeController.js" />
-    <Content Include="Scripts for monei\angular controllers\LoginController_jasmine.js" />
-    <Content Include="Scripts for monei\angular controllers\LoginController.js" />
-    <Content Include="Scripts for monei\angular controllers\HomeController_jasmine.js" />
-    <Content Include="Scripts for monei\angular controllers\RegistryController_jasmine.js" />
-    <Content Include="Scripts for monei\angular controllers\RegistryCreateController_jasmine.js" />
-    <Content Include="Scripts for monei\angular directives\CategorySelector_jasmine.js" />
-    <Content Include="Scripts for monei\angular directives\CategorySelector.js" />
-    <Content Include="Scripts for monei\angular directives\DashboardMonthDirective_jasmine.js" />
-    <Content Include="Scripts for monei\angular directives\LoginPanel_jasmine.js" />
-    <Content Include="Scripts for monei\angular directives\LoginPanel.js" />
-    <Content Include="Scripts for monei\angular directives\RegistryCreatePanel_jasmine.js" />
-    <Content Include="Scripts for monei\angular directives\RegistryCreatePanel.js" />
-    <Content Include="Scripts for monei\angular directives\SubcategorySelector_jasmine.js" />
-    <Content Include="Scripts for monei\angular directives\SubcategorySelector.js" />
-    <Content Include="Scripts for monei\angular filters\momentFilter_jasmine.js" />
-    <Content Include="Scripts for monei\angular filters\momentFilter.js" />
-    <Content Include="Scripts for monei\angular providers\AccountProvider_jasmine.js" />
-    <Content Include="Scripts for monei\angular providers\CategoryDataProvider_jasmine.js" />
-    <Content Include="Scripts for monei\angular providers\RegistryDataProvider_jasmine.js" />
-    <Content Include="Scripts for monei\angular providers\SubcategoryDataProvider_jasmine.js" />
-    <Content Include="Scripts for monei\angular providers\SubcategoryDataProvider.js" />
-    <Content Include="Scripts for monei\angular providers\UtilsProvider.js" />
-    <Content Include="Scripts for monei\angular providers\AccountProvider.js" />
-    <Content Include="Scripts for monei\angular providers\RegistryDataProvider.js" />
-    <Content Include="Scripts for monei\angular providers\UtilsProvider_jasmine.js" />
-    <Content Include="Scripts for monei\angular services\NotificationService_jasmine.js" />
-    <Content Include="Scripts for monei\angular services\NotificationService.js" />
-    <Content Include="Scripts for monei\directive-templates\CategorySelector.html" />
-    <Content Include="Scripts for monei\directive-templates\login-panel.html" />
-    <Content Include="Scripts for monei\directive-templates\RegistryCreatePanel.html" />
-    <Content Include="Scripts for monei\directive-templates\SubcategorySelector.html" />
+    <Content Include="Scripts for monei\Angular\controllers\Example of Controller_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\controllers\HomeController.js" />
+    <Content Include="Scripts for monei\Angular\controllers\LoginController_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\controllers\LoginController.js" />
+    <Content Include="Scripts for monei\Angular\controllers\HomeController_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\controllers\RegistryController_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\controllers\RegistryCreateController_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\directives\CategorySelector_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\directives\CategorySelector.js" />
+    <Content Include="Scripts for monei\Angular\directives\DashboardMonthDirective_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\directives\LoginPanel_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\directives\LoginPanel.js" />
+    <Content Include="Scripts for monei\Angular\directives\RegistryCreatePanel_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\directives\RegistryCreatePanel.js" />
+    <Content Include="Scripts for monei\Angular\directives\SubcategorySelector_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\directives\SubcategorySelector.js" />
+    <Content Include="Scripts for monei\Angular\filters\momentFilter_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\filters\momentFilter.js" />
+    <Content Include="Scripts for monei\Angular\providers\AccountProvider_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\providers\CategoryDataProvider_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\providers\RegistryDataProvider_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\providers\SubcategoryDataProvider_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\providers\SubcategoryDataProvider.js" />
+    <Content Include="Scripts for monei\Angular\providers\UtilsProvider.js" />
+    <Content Include="Scripts for monei\Angular\providers\AccountProvider.js" />
+    <Content Include="Scripts for monei\Angular\providers\RegistryDataProvider.js" />
+    <Content Include="Scripts for monei\Angular\providers\UtilsProvider_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\services\NotificationService_jasmine.js" />
+    <Content Include="Scripts for monei\Angular\services\NotificationService.js" />
+    <Content Include="Scripts for monei\Angular\directive-templates\CategorySelector.html" />
+    <Content Include="Scripts for monei\Angular\directive-templates\login-panel.html" />
+    <Content Include="Scripts for monei\Angular\directive-templates\RegistryCreatePanel.html" />
+    <Content Include="Scripts for monei\Angular\directive-templates\SubcategorySelector.html" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
@@ -1381,17 +1366,17 @@
     <Content Include="Scripts\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts for monei\angular controllers\RegistryCreateController.js" />
-    <Content Include="Scripts for monei\angular directives\DashboardMonthDirective.js" />
-    <Content Include="Scripts for monei\angular providers\CategoryDataProvider.js" />
+    <Content Include="Scripts for monei\Angular\controllers\RegistryCreateController.js" />
+    <Content Include="Scripts for monei\Angular\directives\DashboardMonthDirective.js" />
+    <Content Include="Scripts for monei\Angular\providers\CategoryDataProvider.js" />
     <Content Include="Scripts for monei\monei.CategoriesManagement.js" />
     <Content Include="Scripts for monei\monei.utils.js" />
     <Content Include="Scripts for monei\monei.js" />
     <Content Include="Scripts for monei\angular app.js" />
-    <Content Include="Scripts for monei\directive-templates\dashboard-month.html" />
+    <Content Include="Scripts for monei\Angular\directive-templates\dashboard-month.html" />
     <Content Include="Scripts for monei\registry.js" />
-    <Content Include="Scripts for monei\angular controllers\RegistryController.js" />
-    <Content Include="Scripts for monei\angular controllers\DashboardController.js" />
+    <Content Include="Scripts for monei\Angular\controllers\RegistryController.js" />
+    <Content Include="Scripts for monei\Angular\controllers\DashboardController.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
@@ -1476,8 +1461,6 @@
     <Content Include="Views\Account\RemoveExternalLoginsPartial.cshtml" />
     <Content Include="Views\Registry\Registry-Index.cshtml" />
     <Content Include="Views\Registry\Registry-Create.cshtml" />
-    <Content Include="Views\Contracts\Contracts-Index.cshtml" />
-    <Content Include="Views\Contracts\Create.cshtml" />
     <Content Include="Scripts\KoModal.ts" />
     <Content Include="Views\Registry\Registry-Edit-Partial.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />

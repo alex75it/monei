@@ -1,0 +1,3 @@
+## Get Categories ##
+
+GetCategories seems to make a lot of queries on database instead of just one.

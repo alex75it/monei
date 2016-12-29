@@ -2,19 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Monei.Entities
 {
-
     public class Account :EntityBase<int>
     {
-        public const string FIELD_USERNAME = "Username";
-        public const string FIELD_PASSWORD = "Password";
-        public const string FIELD_GUID = "Guid";
-        public const string FIELD_EMAIL = "Email";
-        public const string FIELD_LAST_LOGIN = "LastLogin";
-
         public enum AccountRole {
             Administrator,
             User,
@@ -32,11 +24,10 @@ namespace Monei.Entities
         {
             Account account = new Account()
             {
-                //Id = ObjectId.GenerateNewId(),
                 Guid = Guid.NewGuid(),
                 Username = username,
                 Password = password,
-                Role = AccountRole.User,
+                Role = role,
                 Currency = currency,
                 LastLogin = null,
                 CreationDate = DateTime.UtcNow,
@@ -45,7 +36,6 @@ namespace Monei.Entities
 
             return account;
         }
-
     
-    }//class
+    }
 }

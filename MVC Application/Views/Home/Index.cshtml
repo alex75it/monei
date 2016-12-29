@@ -35,15 +35,11 @@
                     <a href="@Url.Action("Index", "Contracts")" class="btn btn-link">View your contracts</a>
                 </div>
             </div>
+            <monei-registry-create-panel id="moneiCreatePanel" open="openCreatePanel" close="closeCreatePanel" on-record-created="onRecordCreated"></monei-registry-create-panel>
         }
         else
         {
             <monei-login-panel redirect-to-url="home" on-logged-in="loggedInEvent()" on-login-fail="loginFail(cause)" ></monei-login-panel>
-        }
-
-        @*<div class="clearfix"></div>*@
-
-        <monei-registry-create-panel id="moneiCreatePanel" on-record-created="onRecordCreated" me="registryCreatePanel"></monei-registry-create-panel>
-        
+        }     
     </div>
 </div>

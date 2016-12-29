@@ -9,7 +9,7 @@
         <property name="Username" />
         <property name="Password" />
         <property name="Guid" />
-        <property name="Role" />
+        <property name="Role" type="Int32" />
         <property name="CreationDate" type="LocalDateTime" />
         <property name="LastChangeDate" type="LocalDateTime" />
         <many-to-one name="Currency" column="CurrencyId" lazy="false" />

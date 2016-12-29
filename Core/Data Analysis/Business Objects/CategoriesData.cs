@@ -18,20 +18,19 @@ namespace Monei.Core.DataAnalysis.BusinessObjects
 
 		public CategoriesData() {
 			List = new SortedDictionary<int, CategoryData>();
-			//List = new List<CategoriesData>();
 		}
 
 		public void AddValue(int categoryId, CategoryData data)
 		{
 			List.Add(categoryId, data);
-			//List.Add(categoryId, data);
 		}
 
-		public void SetAllCategories(IEnumerable<Category> categories) { 
+		public void AddNewCategories(IEnumerable<Category> categories) { 
 			foreach(var category in categories)
 			{
 				if(!List.ContainsKey(category.Id))
 					List.Add(category.Id, new CategoryData(category, 0m));
+
 			}
 		}
 

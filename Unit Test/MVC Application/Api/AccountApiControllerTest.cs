@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using FakeItEasy;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
@@ -15,33 +14,38 @@ using Should;
 
 namespace Monei.Test.UnitTest.MVC_Application.Api
 {
-	[TestFixture, Category("Web API"), Category("Account")]
-	public class AccountApiControllerTest
-	{
+    [TestFixture, Category("Web API"), Category("Account")]
+    public class AccountApiControllerTest
+    {
 
-		[Test]
-		public void Login_Should_ReturnOkResult()
-		{
-			IAccountRepository accountRepository = A.Fake<IAccountRepository>();
-			IWebAuthenticationWorker webAuthenticationWorker = A.Fake<IWebAuthenticationWorker>();
+        [Test]
+        public void Login_Should_ReturnOkResult()
+        {
+            IAccountRepository accountRepository = A.Fake<IAccountRepository>();
+            ICurrencyRepository currencyRepository = A.Fake<ICurrencyRepository>();
+            IAuthenticationWorker webAuthenticationWorker = A.Fake<IAuthenticationWorker>();
 
-			var account = A.Dummy<Account>();
-			account.Username = "aaa";
-			account.Password = "bbb";
-			A.CallTo(() => accountRepository.Read(account.Username)).Returns(account);
+            var account = A.Dummy<Account>();
+            account.Username = "aaa";
+            account.Password = "bbb";
+            A.CallTo(() => accountRepository.Read(account.Username)).Returns(account);
 
-			AccountApiController controller = new AccountApiController(accountRepository, webAuthenticationWorker);
-			var data = A.Fake<LoginPostData>();
-			data.Username = account.Username;
-			data.Password = account.Password;
-			data.RememberMe = false;
+            AccountApiController controller = new AccountApiController();
+            controller.AuthenticationWorker = webAuthenticationWorker;
+            controller.AccountRepository = accountRepository;
+            controller.CurrencyRepository = currencyRepository;
 
-			// Execute
-			var result = controller.Login(data);
+            var data = A.Fake<LoginPostData>();
+            data.Username = account.Username;
+            data.Password = account.Password;
+            data.RememberMe = false;
 
-			// Verify
-			result.ShouldEqual(LoginResult.Ok);
-		}
+            // Execute
+            var result = controller.Login(data);
 
-	}
+            // Verify
+            result.ShouldEqual(LoginResult.Ok);
+        }
+
+    }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
@@ -22,18 +20,31 @@ namespace Monei.MvcApplication.Api
             filters.EndDate = data.ToDate;
             filters.Categories = data.Categories;
 
-            var list = RegistryRepository.ListRecords(filters);
-            return list;
-        }
+            var records = RegistryRepository.ListRecords(filters);
+
+            // HACK: remove subitems to prevent LazyInitializationException 
+            foreach (var record in records)
+            {
+                //if (record.Category != null)
+                //    record.Category.Subcategories = null;
+                if (record.Subcategory != null)
+                    record.Subcategory.Category = null;
+            }
+
+            return records;
 
         [HttpPost, Route("")]
         public int Create(RegistryNewRecordPostData postData)
         {
+            if (postData.Date == DateTime.MinValue) throw new Exception("Date is not defined");
+            if (postData.Amount == 0) throw new Exception("Amount is zero");
+            if (postData.CategoryId == 0) throw new Exception("Category is not defined");
+
             var record = new RegistryRecord() {
                 CreationAccount = base.CurrentAccount,
-                Account = base.CurrentAccount, // temporary unsettable
+                Account = base.CurrentAccount, // currently is not possible to set data for another account
                 Date = postData.Date,
-                OperationType = postData.OperationType,
+                OperationType = postData.Operation,
                 Amount = postData.Amount,
                 Category = new Category() { Id = postData.CategoryId },
                 Subcategory = new Subcategory() { Id = postData.SubcategoryId },  

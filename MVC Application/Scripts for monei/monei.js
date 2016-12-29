@@ -1,17 +1,11 @@
 ﻿
-
-$(function () {
-	//$('select :not(.no-selectpicker)').selectpicker({style:"btn", size:10});
-});
-
-
-
 var monei = monei || (function(){
 
 	// private properties and methods
-	var version = '0.1.2.1';
+	var _sessionToken = null;
+	var _accountId = null;
 
-	var Constants = /*function()*/{
+	var Constants = {
 		DROPDOWN_SIZE: 10,
 		DEFAULT_CURRENCY_DECIMALS: 2 // number of decimals for currency representation
 	};
@@ -35,6 +29,14 @@ var monei = monei || (function(){
 			}
 
 			noty({ text: message, type: "information", layout: "topCenter", timeout: 5 * 1000 });
+		},
+		
+		setSessionToken: function (sessionToken) {
+			_sessionToken = sessionToken;
+		},
+
+		setAccountId: function (accountId) {
+			_accountId = accountId;
 		},
 
 		// proerties
@@ -89,7 +91,7 @@ var monei = monei || (function(){
 					typeof onLoadComplete === "function" && onLoadComplete();
 
 					monei.setSelectpicker($categorySelect);
-				}
+				}   
 			});
 
 		},
@@ -126,10 +128,6 @@ var monei = monei || (function(){
 					}
 				});
 			}
-
-		},
-
-		formatAmount: function (amount) {
 
 		}
 

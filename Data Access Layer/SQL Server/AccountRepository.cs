@@ -11,20 +11,22 @@ using NHibernate.Linq;
 
 namespace Monei.DataAccessLayer.SqlServer 
 {
-    public class AccountRepository :AbstractRepository<int, Account>, IAccountRepository
+    public class AccountRepository :RepositoryBase<int, Account>, IAccountRepository
     {
-        
+        public AccountRepository(ISessionFactoryProvider sessionFactoryProvider) : base(sessionFactoryProvider)
+        {
+        }
+
         public Account Read(string username)
         {
+            if (username == null)
+                throw new ArgumentNullException(nameof(username));
+
             using (ISession session = OpenSession())
             {
                 Account account = session.Query<Account>()
                     .Where(a => a.Username.ToLowerInvariant() == username.ToLowerInvariant())
                     .FirstOrDefault();
-
-                // todo: load Role from database
-                if (username == "alex")
-                    account.Role = Account.AccountRole.Administrator;
 
                 return account;
             }
@@ -32,18 +34,14 @@ namespace Monei.DataAccessLayer.SqlServer
 
         public Account Read(Guid accountGuid)
         {
+            if (accountGuid == Guid.Empty)
+                throw new ArgumentException(nameof(accountGuid));
+
             using (ISession session = OpenSession())
             {
                 Account account = session.Query<Account>()
                     .Where(a => a.Guid == accountGuid)
                     .FirstOrDefault();
-
-                if (account == null)
-                    throw new Exception("Account not found for Guid " + accountGuid);
-
-                // todo: load Role from database
-                if (account.Username == "alex")
-                    account.Role = Account.AccountRole.Administrator;
 
                 return account;
             }
@@ -66,8 +64,7 @@ namespace Monei.DataAccessLayer.SqlServer
 
             return Create(account);
         }
-
-
+        
         public void UpdateLastLogin(int accountId, DateTime date)
         {
             using (ISession session = OpenSession())
@@ -84,22 +81,14 @@ namespace Monei.DataAccessLayer.SqlServer
                 throw new EntityAlreadyExistsException("username");
 
             int accountId = base.Create(account);
-            account =  Read(accountId);
-            //using (ISession session = OpenSession())
-            //{
-            //	account = session.Get<Account>(accountId);
-            //	account.is
-            //}
-            return account;
-        }
-        
+            return Read(accountId);
+        }        
 
         public new Account Update(Account account)
         {
             base.Update(account);
             return Read(account.Id);
-        }
-        
+        }        
 
         public IList<Account> ListAll()
         {
@@ -109,5 +98,10 @@ namespace Monei.DataAccessLayer.SqlServer
             }
         }
 
-    }//class
+        public Guid GetAccountIdByApiToken(Guid apiToken)
+        {
+            // temporary
+            return apiToken;
+        }
+    }
 }

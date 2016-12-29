@@ -10,107 +10,91 @@ using Monei.MvcApplication.Api.ResponseDataObjects;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Should;
+using Monei.MvcApplication.Api;
+using System.Diagnostics;
 
 namespace Monei.Test.IntegrationTest.MvcApplication.Api
 {
-	[TestFixture, Category("Web API"), Category("Account")]
-	public class AccountApiControllerTest :ApiControllerTestBase
-	{
+    [TestFixture, Category("Web API"), Category("Account")]
+    public class AccountApiControllerTest :ApiControllerTestBase<AccountApiController>
+    {
+        [Test]
+        public void Ping_Should_RespondOk()
+        {
+            using (var request = CreateRequest("api/account/ping", HttpMethod.Get))
+            using (var response = GetClient().SendAsync(request).Result)
+            {
+                response.IsSuccessStatusCode.ShouldBeTrue(@"Status code is not ""Success"".");
+            }
+        }
 
-		[Test]
-		public void Ping_Should_RespondOk()
-		{
-			using (var client = new HttpClient(InitializeServer()))
-			using (var request = CreateRequest("api/account/ping", HttpMethod.Get))
-			using (var response = client.SendAsync(request).Result)
-			{
-				response.IsSuccessStatusCode.ShouldBeTrue();
-			}
-		}
+        [Test]
+        public void Login_Should_ReturnResult()
+        {           
+            string url = "api/account/login";
+            var data = new LoginPostData() { 
+                Username = "username",
+                Password = "password"
+            };
 
-		[Test]
-		public void Login_Should_ReturnResult()
-		{
+            // execute
+            using (var request = CreateRequest<LoginPostData>(url, HttpMethod.Post, data))
+            using (var response = GetClient().SendAsync(request).Result)
+            {
+                response.IsSuccessStatusCode.ShouldEqual(true, @"Status code is not ""Success"".");
+                response.Content.ShouldNotBeNull();
+                response.Content.ShouldNotBeType<HttpError>();
+            }
+        }
 
-			// ref: http://www.strathweb.com/2012/06/asp-net-web-api-integration-testing-with-in-memory-hosting/
-			// this one promise to use ALL the pipeline:
-			//– submitting a request
-			//– a message handler
-			//– custom action filter attribute
-			//– controller action
-			//– JSON formatter applied to the incoming response
-			//– receiving the response
-						
+        [Test]
+        public void Login_Should_ReturnUsernameNotFound()
+        {
+            /* if test fail the only way to find the error is to debug the controller, if the error is in there ... */
 
-			var client = new HttpClient(InitializeServer());
+            string url = "api/account/login";
+            var data = new LoginPostData()
+            {
+                Username = "username",
+                Password = "password"
+            };
 
-			var data = new LoginPostData() { 
-				Username = "pippo",
-				Password = "pluto"
-			};
-			var request = CreateRequest<LoginPostData>("api/account/login", HttpMethod.Post, data);
+            // Execute
+            using (var request = CreateRequest<LoginPostData>(url, HttpMethod.Post, data))
+            using (var response = GetClient().SendAsync(request).Result)
+            {
+                response.IsSuccessStatusCode.ShouldEqual(true, @"Status code is not ""Success"". " + response.ReasonPhrase);
+                response.Content.ShouldNotBeNull();
+                response.Content.ShouldNotBeType<HttpError>();
 
-			using (var response = client.SendAsync(request).Result)
-			{
-				response.IsSuccessStatusCode.ShouldEqual(true);
-				response.Content.ShouldNotBeNull();
-				response.Content.ShouldNotBeType<HttpError>();
-			}
+                LoginResult result = response.Content.ReadAsAsync<LoginResult>().Result;
+                result.ShouldEqual(LoginResult.UsernameNotFound);
+            }         
+        }
 
-			request.Dispose();
-		}
+        [Test]
+        public void Login_Should_ReturnWrongPassword()
+        {
+            string url = "api/account/login";
+            var data = new LoginPostData()
+            {
+                Username = "demo",
+                Password = "wrong"
+            };
 
-		[Test]
-		public void Login_Should_ReturnUsernameNotFound()
-		{
-			var client = new HttpClient(base.InitializeServer());
+            // Execute
+            using (var request = CreateRequest<LoginPostData>(url, HttpMethod.Post, data))
+            using (var response = GetClient().SendAsync(request).Result)
+            {
+                response.IsSuccessStatusCode.ShouldEqual(true, @"Status code is not ""Success"".");
+                response.Content.ShouldNotBeNull("Content is null.");
+                response.Content.ShouldNotBeType<HttpError>();
 
-			var data = new LoginPostData()
-			{
-				Username = "none",
-				Password = "pluto"
-			};
-			var request = CreateRequest<LoginPostData>("api/account/login", HttpMethod.Post, data);
+                LoginResult result = response.Content.ReadAsAsync<LoginResult>().Result;
 
-			using (var response = client.SendAsync(request).Result)
-			{
-				response.IsSuccessStatusCode.ShouldEqual(true);
-				response.Content.ShouldNotBeNull();
-				response.Content.ShouldNotBeType<HttpError>();
+                result.ShouldEqual(LoginResult.WrongPassword);
+            }
+        }
 
-				LoginResult result = response.Content.ReadAsAsync<LoginResult>().Result;
-				result.ShouldEqual(LoginResult.UsernameNotFound);
-			}
-
-			request.Dispose();
-		}
-
-
-		[Test]
-		public void Login_Should_ReturnWrongPassword()
-		{
-			var client = new HttpClient(base.InitializeServer());
-
-			var data = new LoginPostData()
-			{
-				Username = "demo",
-				Password = "wrong"
-			};
-			var request = CreateRequest<LoginPostData>("api/account/login", HttpMethod.Post, data);
-
-			using (var response = client.SendAsync(request).Result)
-			{
-				response.IsSuccessStatusCode.ShouldEqual(true);
-				response.Content.ShouldNotBeNull();
-				response.Content.ShouldNotBeType<HttpError>();
-
-				LoginResult result = response.Content.ReadAsAsync<LoginResult>().Result;
-				result.ShouldEqual(LoginResult.WrongPassword);
-			}
-
-			request.Dispose();
-		}
-
-
-	}
+    }
 }

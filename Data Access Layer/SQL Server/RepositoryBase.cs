@@ -13,53 +13,31 @@ namespace Monei.DataAccessLayer.SqlServer
     /// 
     /// </summary>
     /// <typeparam name="TEntity">Entity managed by this repository</typeparam>
-    public class RepositoryBase<TKey, TEntity>: IRepository<TKey, TEntity> //where TEntity: BaseEntity
+    public abstract class RepositoryBase<TKey, TEntity>: IRepository<TKey, TEntity> //where TEntity: BaseEntity
     {
-        private string connectionString;
-         
-        protected string ConnectionString { get
-            {
-                if (connectionString == null)
-                {
-                    try
-                    {
-                        connectionString = ConfigurationManager.ConnectionStrings["monei"].ConnectionString;
-                    }
-                    catch (Exception exc)
-                    {
-                        throw new Exception("Fail to load \"monei\" connection string from .config file.", exc);
-                    }
-                }
-                return ConnectionString;
-            }
-         }
-                
-        protected ISessionFactory GetSessionFactory()
-        { 
-            var configuration = new NHibernate.Cfg.Configuration();
-            configuration.Configure(); // it fail ONLY in debug mode, just go on !
+        private ISessionFactory sessionFactory;
 
-            ISessionFactory sessionFactory = configuration.BuildSessionFactory();
-    
-            return sessionFactory;
-        }
-
+        public RepositoryBase(ISessionFactoryProvider sessionFactoryProvider)
+        {
+            sessionFactory = sessionFactoryProvider.GetSessionFactory();
+        }  
         protected ISession OpenSession()
         {
-            return GetSessionFactory().OpenSession();
+            return sessionFactory.OpenSession();
         }
 
         protected IStatelessSession OpenStatelessSession()
         {
-            return GetSessionFactory().OpenStatelessSession();
+            return sessionFactory.OpenStatelessSession();
         }
-
 
         public TKey Create(TEntity data)
         {
             using (ISession session = OpenSession())
             {
-                return (TKey)session.Save(data);
+                var key = (TKey)session.Save(data);
+                session.Flush();
+                return key;
             }
         }
 
