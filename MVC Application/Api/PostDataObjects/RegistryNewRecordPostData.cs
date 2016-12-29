@@ -14,5 +14,7 @@ namespace Monei.MvcApplication.Api.PostDataObjects
         public OperationType OperationType { get; set; }
         public decimal Amount { get; set; }
         public string Note { get; set; }
+        public bool IsSpecialEvent { get; set; }
+        public bool IsTaxDeductible { get; set; }
     }
 }

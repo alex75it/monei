@@ -33,10 +33,13 @@ namespace Monei.MvcApplication.Api
                 CreationAccount = base.CurrentAccount,
                 Account = base.CurrentAccount, // temporary unsettable
                 Date = postData.Date,
+                OperationType = postData.OperationType,
+                Amount = postData.Amount,
                 Category = new Category() { Id = postData.CategoryId },
-                Subcategory = new Subcategory() { Id = postData.SubcategoryId },                
-                Amount = postData.Amount,                                
-                Note = postData.Note
+                Subcategory = new Subcategory() { Id = postData.SubcategoryId },  
+                Note = postData.Note,
+                IsTaxDeductible = postData.IsTaxDeductible,
+                IsSpecialEvent = postData.IsSpecialEvent,
             };
 
             record = RegistryRepository.AddRecord(record);

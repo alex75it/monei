@@ -43,7 +43,9 @@
             var date = scope.date;
             var amount = scope.amount;
             var note = scope.note;
-            var operationType = scope.selectedOperationType;   
+            var operationType = scope.selectedOperationType;
+            var isSpecialEvent = scope.specialEvent;
+            var isTaxDeductible = scope.taxDeductible;
 
             scope.error = null;
             try {
@@ -53,7 +55,9 @@
                     subcategoryId: scope.selectedSubcategory,
                     operationType: operationType,
                     amount: amount,
-                    note: note
+                    note: note,
+                    isSpecialEvent: isSpecialEvent,
+                    isTaxDeductible: isTaxDeductible
                 };
 
                 alert(data.categoryId);

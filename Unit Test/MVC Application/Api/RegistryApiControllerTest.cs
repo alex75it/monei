@@ -27,12 +27,25 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
         }
         
         [Test]
-        public void Create/*_should_CallTheRegistryMethodForCreateNewRecord*/ ()
+        [TestCase(OperationType.Income, 123.45, 1, 2, "note", false, false)]
+        [TestCase(OperationType.Outcome, 123.45, 1, 0, null, true, false)]
+        [TestCase(OperationType.Transfer, 123.45, 1, 0, null, true, true)]
+        public void Create_should_CallTheRegistryMethodForCreateNewRecord(
+            OperationType operationType, decimal amount, 
+             int categoryId, int subcategoryId, string note,
+             bool isSpecialEvent, bool isTaxDEductible)
         {
-            // Arrange            
+            // Arrange         
+            DateTime date = DateTime.Now;
+               
             RegistryNewRecordPostData postData = new RegistryNewRecordPostData()
             {
-
+                Date = date,
+                OperationType = operationType,
+                Amount = amount,
+                CategoryId = categoryId,
+                SubcategoryId = subcategoryId,
+                Note = note,                
             };
 
             IRegistryRepository registryRepository = A.Fake<IRegistryRepository>();
@@ -41,7 +54,17 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
             var returnedRegistryRecord = new RegistryRecord();
             returnedRegistryRecord.Id = 1;
 
-            var callToAddRecord = A.CallTo(() => registryRepository.AddRecord(A.Fake<RegistryRecord>()));
+            var callToAddRecord = A.CallTo(() => registryRepository.AddRecord(
+                A<RegistryRecord>.That.Matches(r => 
+                    r.Date == postData.Date
+                    && r.OperationType == operationType
+                    && r.Amount == postData.Amount
+                    && r.Category.Id == postData.CategoryId
+                    && r.Subcategory.Id == postData.SubcategoryId
+                    && r.IsSpecialEvent == isSpecialEvent
+                    && r.IsTaxDeductible == isTaxDEductible
+                    )                
+                ));
             callToAddRecord.Returns(returnedRegistryRecord);
 
             controller.RegistryRepository = registryRepository;
