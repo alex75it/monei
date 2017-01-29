@@ -14,7 +14,6 @@ namespace Monei.MvcApplication
     {
         public static void Register(HttpConfiguration config)
         {
-            // enable RouteAttribute
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
@@ -29,7 +28,7 @@ namespace Monei.MvcApplication
             );
 
             //config.SuppressDefaultHostAuthentication();  // Owin
-            config.SuppressHostPrincipal(); // not set Request User using IIS Web application user
+            config.SuppressHostPrincipal(); // does not set Request User using IIS Web application user
 
 
             // Uncomment the following line of code to enable query support for actions with an IQueryable or IQueryable<T> return type.

@@ -16,24 +16,18 @@ namespace Monei.MvcApplication
 {
     public class MvcApplication : System.Web.HttpApplication
     {       
-
         public static WindsorCastleDependencyInjection DependencyInjectionManager { get; private set; }
               
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
 
-            // http://www.asp.net/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2
-            // WebApiConfig.Register(GlobalConfiguration.Configuration);
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);            
+            BundleConfig.RegisterBundles(BundleTable.Bundles);            
 
             log4net.Config.XmlConfigurator.Configure();
-
-            // http://stackoverflow.com/questions/32852440/dependency-injection-in-asp-net-session-start-method   
             
             DependencyInjectionManager = new WindsorCastleDependencyInjection();
             GlobalConfiguration.Configuration.DependencyResolver = DependencyInjectionManager;

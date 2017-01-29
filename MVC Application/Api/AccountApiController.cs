@@ -13,9 +13,10 @@ namespace Monei.MvcApplication.Api
     public class AccountApiController :ApiControllerBase
     {
         [HttpGet, Route("ping")]
-        public void Ping() {
+        public string Ping() {
 
             var response = "pong";
+            return response;
         }
 
         [HttpPost, Route("login")]

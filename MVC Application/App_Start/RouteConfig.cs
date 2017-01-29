@@ -32,6 +32,5 @@ namespace Monei.MvcApplication
             //	);
 
         }
-
-    }//class
+    }
 }
