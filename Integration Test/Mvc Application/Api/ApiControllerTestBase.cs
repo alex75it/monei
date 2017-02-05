@@ -57,8 +57,8 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
 
         [OneTimeSetUp]
         public void Initialize()
-        {			
-            //InitializeWindsorContainer();
+        {
+            //           
         }
         
         [TearDown]
@@ -89,8 +89,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
             // pratically undocumented: http://stackoverflow.com/questions/21901808/need-a-complete-sample-to-handle-unhandled-exceptions-using-exceptionhandler-i
             configuration.Services.Replace(typeof(IExceptionHandler), new UnitTestExceptionHandler());
                         
-            configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
-            
+            configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;            
 
             return configuration;
         }

@@ -41,7 +41,7 @@ namespace Monei.MvcApplication
         private void MvcApplication_PostAuthenticateRequest(object sender, EventArgs e)
         {
             try
-            {
+            {                
                 IAccountRepository accountRepository = DependencyInjectionManager.Resolve<IAccountRepository>();
                 Account account = accountRepository.Read(Request.LogonUserIdentity.Name);
                 Session["Account"] = account;

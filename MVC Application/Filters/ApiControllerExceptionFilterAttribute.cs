@@ -34,7 +34,7 @@ namespace Monei.MvcApplication.Filters
                 error = actionExecutedContext.Exception.ToString();
             }
 
-            logger.ErrorFormat("Not handled error. {0}", error);
+            logger.ErrorFormat("API controller not handled error. {0}", error);
 
             base.OnException(actionExecutedContext);
         }
