@@ -1,6 +1,4 @@
-﻿var _error;
-
-app.directive("moneiRegistryCreatePanel",
+﻿app.directive("moneiRegistryCreatePanel",
 ["$timeout", "CategoryDataProvider", "RegistryDataProvider", "NotificationService", 
     function ($timeout, CategoryDataProvider, RegistryDataProvider, NotificationService) {
 
@@ -61,7 +59,7 @@ app.directive("moneiRegistryCreatePanel",
             scope.subcategory = null;
             scope.note = "",
             scope.specialEvent = false,
-            scope.taxDeductible = false,
+            scope.taxDeductible = false
         };
 
         scope.save = function () {
@@ -76,8 +74,6 @@ app.directive("moneiRegistryCreatePanel",
                     isSpecialEvent: scope.specialEvent,
                     isTaxDeductible: scope.taxDeductible
                 };
-
-                alert(data.categoryId);
 
                 RegistryDataProvider.save( data,
                     scope.saveRecordSuccess, scope.saveRecordFail, scope.saveRecordFinish
