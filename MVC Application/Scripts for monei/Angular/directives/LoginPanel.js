@@ -1,5 +1,4 @@
-﻿var _moneiLoginPanel_scope;
-app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (AccountProvider, $window) {
+﻿app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (AccountProvider, $window) {
 
 	var directive = {};
 
@@ -14,7 +13,6 @@ app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (Accoun
 	};
 
 	directive.link = function ($scope, $element, $attrs) {
-		_moneiLoginPanel_scope = $scope;
 		$scope.username = null;
 		$scope.password = null;
 		$scope.rememberMe = false;
@@ -26,9 +24,6 @@ app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (Accoun
 			
 			if (!$attrs.redirectToUrl && !onLoggedIn)
 				showError("No action after login?");
-				//console.log("redirect to not set");
-
-			//$scope.onLoginFail({ cause: "pippo" });
 
 			$scope.errors = {};
 			var data = { username: $scope.username, password: $scope.password, rememberMe: $scope.rememberMe };	
@@ -39,7 +34,6 @@ app.directive("moneiLoginPanel", ["AccountProvider", "$window", function (Accoun
 			
 
 			if (!$scope.errors.usernameError && !$scope.errors.passwordError) {
-
 				$scope.isLoading = true;
 				AccountProvider.login(data, 
 					/*success*/

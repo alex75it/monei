@@ -18,7 +18,6 @@
 			},
 
 			loginResults: _loginResults
-
 		};
 	}
 	]);

@@ -28,7 +28,8 @@ namespace Monei.MvcApplication.DependencyInjection
         {
             if (controllerType == null)
             {
-                throw new HttpException(404, string.Format("The controller for path '{0}' could not be found.", requestContext.HttpContext.Request.Path));                
+                string requestedPath = requestContext.HttpContext.Request.Path;
+                throw new HttpException(404, string.Format("The controller for path '{0}' could not be found.", requestedPath));                
             }
             return (IController)kernel.Resolve(controllerType);
         }
