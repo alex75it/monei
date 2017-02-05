@@ -32,7 +32,7 @@ namespace Monei.DataAccessLayer.SqlServer
 
         void IApiTokenRepository.Create(ApiToken token)
         {
-            throw new NotImplementedException();
+            Create(token);
         }
     }
 }
