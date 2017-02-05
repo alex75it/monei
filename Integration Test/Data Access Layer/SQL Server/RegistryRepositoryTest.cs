@@ -343,6 +343,43 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         }
 
 
+        [Test]
+        public void Update_should_UpdateValues()
+        {
+            var record = CreateTestRecord();
+
+            DateTime date = DateTime.UtcNow.AddDays(2);
+            decimal amount = 1.11m;
+            string note = "note update";
+            OperationType operationType = OperationType.Transfer;
+            bool isSpecialEvent = true;
+            bool isTaxDeductible = true;
+
+            record.Date = date;
+            record.Amount = amount;
+            record.Note = note;
+            record.OperationType = operationType;
+            record.IsSpecialEvent = isSpecialEvent;
+            record.IsTaxDeductible = isTaxDeductible;
+
+            try
+            {
+                // execute
+                RegistryRepository.UpdateRecord(record);
+
+                record.Date.ShouldEqual(date, "date");
+                record.Amount.ShouldEqual(amount, "amount");
+                record.Note.ShouldEqual(note, "note");
+                record.OperationType.ShouldEqual(operationType, "operationType");
+                record.IsSpecialEvent.ShouldEqual(isSpecialEvent, "isSpecialEvent");
+                record.IsTaxDeductible.ShouldEqual(isTaxDeductible, "isTaxDeductible");
+            }
+            finally
+            {
+                DeleteTestRecord(record.Id);
+            }
+        }
+
         #region utils methods
 
         private void DeleteRecordsOfTestAccount()
