@@ -20,10 +20,9 @@ namespace Monei.MvcApplication
               
         protected void Application_Start()
         {
+            GlobalConfiguration.Configure(WebApiConfig.Register); // Web API routing must be configured before pages
             AreaRegistration.RegisterAllAreas();
-
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);            
             BundleConfig.RegisterBundles(BundleTable.Bundles);            
 
@@ -63,6 +62,9 @@ namespace Monei.MvcApplication
             ILog logger = LogManager.GetLogger(this.GetType());
             Exception exception = Server.GetLastError();
             logger.Error("Applicaton Error.", exception);
+
+            if (Request.Path.StartsWith("/api"))
+                return;
 
             if (exception is HttpException)
             {
