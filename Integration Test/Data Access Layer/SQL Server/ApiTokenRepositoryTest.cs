@@ -101,11 +101,10 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             ApiToken token = ApiToken.Create(accountId, TimeSpan.FromMinutes(5));
             
             // execute
-            Guid returnedTokenId = apiTokenRepository.Create(token);
+            (apiTokenRepository as IApiTokenRepository).Create(token);
 
             try
             {                
-                returnedTokenId.ShouldEqual(token.Id);
                 ApiToken tokenForCheck = ReadToken(token.Id);
                 tokenForCheck.ShouldNotBeNull();
                 tokenForCheck.Id.ShouldEqual(token.Id);

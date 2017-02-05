@@ -13,7 +13,6 @@ namespace Monei.DataAccessLayer.Interfaces
         ApiToken GetAccountToken(int accountId);
 
         void Delete(Guid tokenId);
-
         void Create(ApiToken token);
     }
 }
