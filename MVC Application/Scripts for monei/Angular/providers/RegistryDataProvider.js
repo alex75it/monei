@@ -1,9 +1,9 @@
 ﻿app.factory("RegistryDataProvider",
-["$http", "utils",
-function ($http, utils) {
-
+["$http", "apiToken", "utils",
+function ($http, apiToken, utils) {
+   
     var baseUrl = "/api/registry";
-    var headers = { "account-guid": "00000000-0000-0000-0000-000000000000" };
+    var headers = { api_token: apiToken };
     var provider = {};
 
     provider.OPERATION_TYPE_TRANSFER = "Transfer";
@@ -26,6 +26,7 @@ function ($http, utils) {
     }
 
     provider.save = function (record, callback, errorCallback, finallyCallback) {
+        alert("api_token: " + headers.api_token);
         $http.post(baseUrl, record, {"headers": headers})
             .success(function (data) { callback && callback(data); })
             .error(function (error, status) { errorCallback && errorCallback(error); })

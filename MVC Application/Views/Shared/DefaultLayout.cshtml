@@ -12,7 +12,6 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/bootstrap-datetimepicker-build.less")
     @RenderSection("css", required: false)
-
 </head>
 <body>
     <header>
@@ -80,6 +79,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/monei")
+    <script>app.value("apiToken", "@ViewBag.ApiToken");</script>
 
     @if (IsSectionDefined("scripts"))
     {

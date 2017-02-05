@@ -1,6 +1,6 @@
-﻿// Angular
+﻿var app = angular.module("monei", []);
 
-var app = angular.module("monei", []);
+// set a factory here does not work (!)
 
 // doesn't be called, I don't know why...
 //app.config(function (utilsProvider) {
@@ -11,13 +11,9 @@ var app = angular.module("monei", []);
 
 // doesn't be called, I don't know why...
 /*app.config(function ($routeProvider) {
-	alert("config $routeProvider");
+    alert("config $routeProvider");
 });*/
 
 app.config(function($httpProvider){
 
 });
-
-
-
-var _scope; // for debug purpose
