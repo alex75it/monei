@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.DataAccessLayer.SqlServer;
 using Monei.Entities;
-using Monei.Test.IntegrationTest.DataAccessLayer.SqlServer;
 using Should;
 using NUnit.Framework;
 using NHibernate.Linq;
@@ -36,7 +35,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         [Test, Category("NHibernate")]
         public void List_should_ExecuteOnlyAQuery()
         {
-            var sessionFactory = sessionFactoryProvider.GetSessionFactory();
+            var sessionFactory = repository.SessionFactory; 
 
             if (!sessionFactory.Statistics.IsStatisticsEnabled)
                 Assert.Ignore("Statistics should be enabled");

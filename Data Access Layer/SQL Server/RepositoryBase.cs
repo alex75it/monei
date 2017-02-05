@@ -16,13 +16,11 @@ namespace Monei.DataAccessLayer.SqlServer
     public abstract class RepositoryBase<TKey, TEntity>: IRepository<TKey, TEntity> //where TEntity: BaseEntity
     {
         private static ISessionFactory sessionFactory;
-
         private ISessionFactoryProvider sessionFactoryProvider;
 
 
         public RepositoryBase(ISessionFactoryProvider sessionFactoryProvider)
         {
-            //sessionFactory = sessionFactoryProvider.GetSessionFactory();
             this.sessionFactoryProvider = sessionFactoryProvider;
         }  
         protected ISession OpenSession()
@@ -73,7 +71,9 @@ namespace Monei.DataAccessLayer.SqlServer
             }
         }
 
-        private ISessionFactory SessionFactory {
+        /*protected internal*/ // InternalsVisibleTo attribute is not working
+        public
+            ISessionFactory SessionFactory {
             get {
                 if(sessionFactory == null)
                     sessionFactory = sessionFactoryProvider.GetSessionFactory();
