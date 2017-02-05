@@ -105,6 +105,31 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         }
 
         [Test]
+        public void List_when_FilterSubcategory_should_ReturnAList()
+        {
+            RegistryFilters filters = new RegistryFilters();
+            var category = Helper.GetRandomCategory();            
+
+            var subcategories = SubcategoryRepository.List(category.Id);
+            if (subcategories.Count < 1)
+                Assert.Inconclusive("Almost a Subcategory is needed");
+
+            filters.SubcategoryIds = new int[] { subcategories[0].Id };
+
+            RegistryRecord registryRecord = new RegistryRecord()
+            {
+                Date = DateTime.Today,
+                Category = category,
+                Subcategory = subcategories[0],
+            };
+
+            CreateTestRecord(registryRecord);
+
+            var list = repository.ListRecords(filters);
+            list.ShouldNotBeEmpty();
+        }
+
+        [Test]
         public void List_when_AmountIsSet_should_ReturnRightRecords()
         {
             var filters = new RegistryFilters() {
