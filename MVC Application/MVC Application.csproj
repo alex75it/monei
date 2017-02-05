@@ -1435,8 +1435,6 @@
     <Content Include="Areas\Management\Views\Subcategory\Subcategory-Create.cshtml" />
     <Content Include="Areas\Management\Views\Subcategory\Subcategory-Edit.cshtml" />
     <Content Include="Areas\Management\Views\Category\Category-Management.cshtml" />
-    <None Include="Properties\PublishProfiles\Publish Local.pubxml" />
-    <None Include="Properties\PublishProfiles\Publish Online.pubxml" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\_references.js" />
