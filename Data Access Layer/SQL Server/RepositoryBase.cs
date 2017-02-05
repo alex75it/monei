@@ -15,20 +15,24 @@ namespace Monei.DataAccessLayer.SqlServer
     /// <typeparam name="TEntity">Entity managed by this repository</typeparam>
     public abstract class RepositoryBase<TKey, TEntity>: IRepository<TKey, TEntity> //where TEntity: BaseEntity
     {
-        private ISessionFactory sessionFactory;
+        private static ISessionFactory sessionFactory;
+
+        private ISessionFactoryProvider sessionFactoryProvider;
+
 
         public RepositoryBase(ISessionFactoryProvider sessionFactoryProvider)
         {
-            sessionFactory = sessionFactoryProvider.GetSessionFactory();
+            //sessionFactory = sessionFactoryProvider.GetSessionFactory();
+            this.sessionFactoryProvider = sessionFactoryProvider;
         }  
         protected ISession OpenSession()
         {
-            return sessionFactory.OpenSession();
+            return SessionFactory.OpenSession();
         }
 
         protected IStatelessSession OpenStatelessSession()
         {
-            return sessionFactory.OpenStatelessSession();
+            return SessionFactory.OpenStatelessSession();
         }
 
         public TKey Create(TEntity data)
@@ -69,5 +73,12 @@ namespace Monei.DataAccessLayer.SqlServer
             }
         }
 
+        private ISessionFactory SessionFactory {
+            get {
+                if(sessionFactory == null)
+                    sessionFactory = sessionFactoryProvider.GetSessionFactory();
+                return sessionFactory;
+            }
+        }
     }
 }
