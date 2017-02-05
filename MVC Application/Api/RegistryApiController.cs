@@ -6,6 +6,7 @@ using Monei.DataAccessLayer.Filters;
 using Monei.Entities;
 using Monei.MvcApplication.Api.PostDataObjects;
 using OfficeOpenXml;
+using Monei.MvcApplication.Filters;
 
 namespace Monei.MvcApplication.Api
 {
@@ -34,6 +35,7 @@ namespace Monei.MvcApplication.Api
             return records;
         }
 
+        [ApiAuthorizationFilter]
         [HttpPost, Route("")]
         public int Create(RegistryNewRecordPostData postData)
         {

@@ -254,6 +254,7 @@
     <Compile Include="Extenders\FormCollectionExtender.cs" />
     <Compile Include="Extenders\HtmlHelperExtender.cs" />
     <Compile Include="Filters\ApiControllerExceptionFilterAttribute.cs" />
+    <Compile Include="Filters\ApiAuthorizationFilterAttribute.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

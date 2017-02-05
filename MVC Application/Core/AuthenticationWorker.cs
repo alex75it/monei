@@ -26,18 +26,19 @@ namespace Monei.MvcApplication.Core
         {
             Guid apiToken = GetApiToken(request);
 
-            //AccountSecurity.GET
             return AccountManager.GetAccountByApiToken(apiToken);
         }
 
         public Guid GetApiToken(HttpRequestMessage request)
         {
             if (!request.Headers.Contains(API_TOKEN))
-            {
                 throw new Exception("Missing API token header");
-            }
 
-            Guid apiToken = Guid.Parse(request.Headers.GetValues(API_TOKEN).First());
+            string tokenString = request.Headers.GetValues(API_TOKEN).First();
+            if (string.IsNullOrWhiteSpace(tokenString))
+                throw new Exception("API token is empty");
+
+            Guid apiToken = Guid.Parse(tokenString);
 
             return apiToken;
         }
