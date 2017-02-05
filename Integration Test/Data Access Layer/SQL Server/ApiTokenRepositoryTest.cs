@@ -29,17 +29,11 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         [Test]
         public void GetAccountId()
         {
-            Guid tokenId = Guid.NewGuid();
             int accountId = Helper.GetTestAccount().Id;
 
             DeleteTokenOfAccount(accountId);
 
-            ApiToken token = new ApiToken() {
-                Id = tokenId,
-                AccountId = accountId,
-                CreateDate = DateTime.UtcNow,
-                ExpiryDate = DateTime.UtcNow.AddMinutes(5)
-            };
+            ApiToken token = ApiToken.Create(accountId, TimeSpan.FromMinutes(5));
 
             using (var session = sessionFactoryProvider.GetSessionFactory().OpenSession())
             {
@@ -49,13 +43,13 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
             try
             {
-                var loadedAccountId = apiTokenRepository.GetAccountId(tokenId);
+                var loadedAccountId = apiTokenRepository.GetAccountId(token.Id);
 
                 loadedAccountId.ShouldEqual(accountId);
             }
             finally
             {
-                DeleteToken(tokenId);
+                DeleteToken(token.Id);
             }            
         }
 
@@ -103,27 +97,18 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         [Test]
         public void Create()
         {
-            Guid tokenId = Guid.NewGuid();
             var accountId = Helper.GetTestAccount().Id;
-
-            ApiToken token = new ApiToken() {
-                Id = tokenId,
-                AccountId = accountId,
-                CreateDate = DateTime.UtcNow,
-                ExpiryDate = DateTime.UtcNow.AddMinutes(5)
-            };
-
+            ApiToken token = ApiToken.Create(accountId, TimeSpan.FromMinutes(5));
+            
             // execute
             Guid returnedTokenId = apiTokenRepository.Create(token);
 
             try
-            {
-                returnedTokenId.ShouldEqual(tokenId);
-
-                ApiToken tokenForCheck = ReadToken(tokenId);
-
+            {                
+                returnedTokenId.ShouldEqual(token.Id);
+                ApiToken tokenForCheck = ReadToken(token.Id);
                 tokenForCheck.ShouldNotBeNull();
-                tokenForCheck.Id.ShouldEqual(tokenId);
+                tokenForCheck.Id.ShouldEqual(token.Id);
             }
             finally
             {
@@ -164,13 +149,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
         }
         private void CreateToken(int accountId, DateTime expiryDate)
         {
-            var token = new ApiToken()
-            {
-                Id = Guid.NewGuid(),
-                AccountId = accountId,
-                CreateDate = DateTime.UtcNow,
-                ExpiryDate = expiryDate,
-            };
+            ApiToken token = ApiToken.Create(accountId, TimeSpan.FromMinutes(5));
 
             using (var session = sessionFactoryProvider.GetSessionFactory().OpenSession())
             {

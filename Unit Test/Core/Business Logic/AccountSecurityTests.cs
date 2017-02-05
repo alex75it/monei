@@ -32,13 +32,7 @@ namespace Monei.Test.UnitTest.Core.BusinessLogic
         {
             int accountId = 1;
 
-            var previousToken = new ApiToken()
-            {
-                Id = Guid.NewGuid(),
-                AccountId = accountId,
-                CreateDate = DateTime.UtcNow,
-                ExpiryDate = DateTime.UtcNow.AddMinutes(5),  // ok
-            };
+            ApiToken previousToken = ApiToken.Create(accountId, TimeSpan.FromMinutes(5));
 
             A.CallTo(() => apiTokenRepository.GetAccountToken(A<int>.Ignored))
                 .Returns(previousToken);
@@ -71,12 +65,8 @@ namespace Monei.Test.UnitTest.Core.BusinessLogic
         {
             int accountId = 1;
 
-            var expiredToken = new ApiToken() {
-                Id = Guid.NewGuid(),
-                AccountId = accountId,
-                CreateDate = DateTime.UtcNow,
-                ExpiryDate = DateTime.UtcNow.AddMinutes(-5),  // expired
-            };
+            ApiToken expiredToken = ApiToken.Create(accountId, TimeSpan.FromMinutes(5));
+            expiredToken.ExpiryDate = DateTime.UtcNow.AddMinutes(-5);  // expired
 
             A.CallTo(() => apiTokenRepository.GetAccountToken(A<int>.Ignored))
                 .Returns(expiredToken);

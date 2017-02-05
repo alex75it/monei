@@ -77,5 +77,28 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
                 return account;
             }
         }
+
+        internal Guid GetValidApiToken()
+        {
+            Account account = GetTestAccount();
+
+            using (ISession session = sessionFactory.OpenSession())
+            {
+                var apiToken = session.QueryOver<ApiToken>().Where(t => t.AccountId == account.Id).SingleOrDefault();
+                if (apiToken == null)
+                {
+                    apiToken = ApiToken.Create(account.Id, TimeSpan.FromHours(2));
+                    session.Save(apiToken);
+                }
+                else if (apiToken.IsExpired)
+                {
+                    apiToken.ExpiryDate = DateTime.UtcNow.AddHours(2);
+                    session.Update(apiToken);                    
+                }
+
+                session.Flush();
+                return apiToken.Id;
+            }            
+        }
     }
 }

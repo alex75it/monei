@@ -20,6 +20,11 @@ namespace Monei.Entities
             }
         }
 
+        private ApiToken()
+        {
+            // private constructor
+        }
+
         public static ApiToken Create(int accountId, TimeSpan lifeLength)
         {
             return new ApiToken() {

@@ -162,6 +162,11 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             if (account == null)
                 return;
 
+            foreach (var record in RegistryRepository.ListRecords(new Monei.DataAccessLayer.Filters.RegistryFilters() { AccountId = account.Id }))
+            {
+                RegistryRepository.DeleteRecord(record.Id);
+            }
+
             AccountRepository.Delete(account.Id);
         }
 

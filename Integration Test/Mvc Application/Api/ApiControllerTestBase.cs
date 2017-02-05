@@ -26,7 +26,6 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
     {
         protected ISessionFactoryProvider sessionFactoryProvider = new SessionFactoryProvider();
 
-        public string testAccountGuid = "00000000-0000-0000-0000-000000000000";
         private const string BASE_URL = "http://www.apitest.com/";
 
         protected HttpMethod GET = HttpMethod.Get;
@@ -115,7 +114,8 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         protected HttpRequestMessage CreateRequest(string url, HttpMethod method, string mediaType = "application/json")
         {
             var request = new HttpRequestMessage(method, BASE_URL + url);
-            request.Headers.Add("account-guid", testAccountGuid);
+
+            request.Headers.Add(AuthenticationWorker.API_TOKEN, GetValidApiToken());
 
             // I don't know what this does. Copied from one example.
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
@@ -132,18 +132,15 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         /// <param name="content">The object data passed in the request</param>
         /// <param name="mediaType">HTTP "Header Accept" value, default is for JSON data</param>
         /// <returns></returns>
-        protected HttpRequestMessage CreateRequest<T>(string url, HttpMethod method,  T content, string mediaType = "application/json")
+        protected HttpRequestMessage CreateRequest<T>(string url, HttpMethod method, T content, string mediaType = "application/json")
         {
             var request = CreateRequest(url, method, mediaType);
-            request.Headers.Add(AuthenticationWorker.API_TOKEN, testAccountGuid);
-            // todo: is this needed? (CamelCasePropertyNameContractResolver)
             JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
             formatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             request.Content = new ObjectContent<T>(content, formatter);
             return request;
         }
-
-
+        
         protected void CallApi(string url, HttpMethod httpMethod)
         {
             using (var client = GetClient())
@@ -221,6 +218,12 @@ namespace Monei.Test.IntegrationTest.MvcApplication.Api
         {
             if (!result.IsSuccessStatusCode)
                 Assert.Fail("Server error. Url: " + url + ".\r\n" + result);
+        }
+
+        private string GetValidApiToken()
+        {
+            string token = testDataProvider.GetValidApiToken().ToString();
+            return token;
         }
 
         protected int RandomInt()

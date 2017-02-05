@@ -12,10 +12,12 @@ namespace Monei.Core.BusinessLogic
 
     {
         private readonly IAccountRepository accountRepository;
+        private readonly IApiTokenRepository apiTokenRepository;
 
-        public AccountManager(IAccountRepository accountRepository)
+        public AccountManager(IAccountRepository accountRepository, IApiTokenRepository apiTokenRepository)
         {
             this.accountRepository = accountRepository;
+            this.apiTokenRepository = apiTokenRepository;
         }
 
         public Account CreateAccount(string username, string password)
@@ -30,7 +32,10 @@ namespace Monei.Core.BusinessLogic
 
         public Account GetAccountByApiToken(Guid apiToken)
         {
-            Guid accountId = accountRepository.GetAccountIdByApiToken(apiToken);
+            if (apiToken == Guid.Empty)
+                throw new ArgumentException(nameof(apiToken));
+
+            int accountId = apiTokenRepository.GetAccountId(apiToken);
 
             return accountRepository.Read(accountId);
         }

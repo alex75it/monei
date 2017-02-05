@@ -96,12 +96,6 @@ namespace Monei.DataAccessLayer.SqlServer
             {
                 return session.Query<Account>().ToList();
             }
-        }
-
-        public Guid GetAccountIdByApiToken(Guid apiToken)
-        {
-            // temporary
-            return apiToken;
-        }
+        }     
     }
 }

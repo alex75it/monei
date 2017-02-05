@@ -14,11 +14,10 @@ namespace Monei.DataAccessLayer.Interfaces
         Account Update(Account account);
         Account Read(string username);
         Account Read(int id);
-        Account Read(Guid token);
+        Account Read(Guid accountGuid);
         void Delete(int id);
 
         void UpdateLastLogin(int accountId, DateTime date);
-        IList<Account> ListAll();
-        Guid GetAccountIdByApiToken(Guid apiToken);
+        IList<Account> ListAll();        
     }
 }
