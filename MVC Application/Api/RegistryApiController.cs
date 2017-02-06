@@ -56,8 +56,8 @@ namespace Monei.MvcApplication.Api
                 IsSpecialEvent = postData.IsSpecialEvent,
             };
 
-            record = RegistryRepository.AddRecord(record);
-            return record.Id;
+            int newId = RegistryRepository.Create(record);
+            return newId;
         }
 
         #region private

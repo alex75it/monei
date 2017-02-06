@@ -205,7 +205,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             Category category = Helper.GetRandomCategory();
 
             record = Helper.CreateRecord(date, amount, note, isTaxDeductible, isSpecialEvent, account, category);
-            RegistryRepository.AddRecord(record);
+            RegistryRepository.Create(record);
 
             filters = new RegistryFilters() { StartDate = startDate, EndDate = endDate };
             records = RegistryRepository.ListRecords(filters);
@@ -235,7 +235,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             record = Helper.CreateRecord(date, amount, note, isTaxDeductible, isSpecialEvent, account, category);
             record.Category = category;
 
-            RegistryRepository.AddRecord(record);
+            RegistryRepository.Create(record);
             filters = new RegistryFilters();
             filters.AccountId = Helper.GetTestAccount().Id;
             filters.Categories = new int[] { category.Id};
@@ -297,7 +297,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
                 OperationType = OperationType.Outcome,
             };
 
-            record = RegistryRepository.AddRecord(record);
+            RegistryRepository.Create(record);
 
             /// Verify
             Assert.IsNotNull(record, "Null");
@@ -328,7 +328,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
 
             var record = Helper.CreateRecord(DateTime.Now, 1.23m, "test", false, false, Helper.GetDemoAccount(), category);
             record.Subcategory = subcategory;
-            record = RegistryRepository.AddRecord(record);
+            RegistryRepository.Create(record);
 
             try
             {
@@ -408,7 +408,7 @@ namespace Monei.Test.IntegrationTest.DataAccessLayer.SqlServer
             if (record.Category == null) record.Category = Helper.GetRandomCategory();
             if (record.Account == null) record.Account = Helper.GetTestAccount();
             
-            record = RegistryRepository.AddRecord(record);
+            RegistryRepository.Create(record);
             return record;
         }
 

@@ -25,8 +25,8 @@ namespace Monei.Core
 
         public int CreateRecord(RegistryRecord record)
         {
-            var newRecord = registryRepository.AddRecord(record);
-            return newRecord.Id;
+            var newId = registryRepository.Create(record);
+            return newId;
         }
     }
 }

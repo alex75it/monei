@@ -213,7 +213,7 @@ namespace Monei.MvcApplication.Controllers
                         IsSpecialEvent = model.Record.IsSpecialEvent,
                     };
 
-                    item = RegistryRepository.AddRecord(item);
+                    RegistryRepository.Create(item);
 
                     // add another?
                     if (collection.GetStringValue("save another") == "True")

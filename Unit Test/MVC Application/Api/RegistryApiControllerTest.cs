@@ -94,7 +94,7 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
             // execute
             controller.Create(postData);
 
-            A.CallTo( () => controller.RegistryRepository.AddRecord(
+            A.CallTo( () => controller.RegistryRepository.Create(
                 A<RegistryRecord>
                 .That.Matches(r =>
                 r.Date == postData.Date

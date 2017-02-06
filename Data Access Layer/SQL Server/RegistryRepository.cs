@@ -50,19 +50,6 @@ namespace Monei.DataAccessLayer.SqlServer
             return records;
         }
 
-
-        public RegistryRecord AddRecord(RegistryRecord record)
-        {
-            // todo: move logic to BL
-
-            record.CreationDate = DateTime.Now;
-
-            int recordId = Create(record);
-            record = Read(recordId);
-            
-            return record;
-        }
-
         public void UpdateRecord(RegistryRecord record)
         {			
             using (ISession session = OpenSession())

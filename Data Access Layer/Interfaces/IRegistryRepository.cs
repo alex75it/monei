@@ -8,11 +8,11 @@ using Monei.Entities;
 
 namespace Monei.DataAccessLayer.Interfaces
 {
-	public interface IRegistryRepository
+	public interface IRegistryRepository :IRepository<int, RegistryRecord>
 	{
-		RegistryRecord Read(int id);
+		//RegistryRecord Read(int id);
 		IList<RegistryRecord> ListRecords(RegistryFilters filters);
-		RegistryRecord AddRecord(RegistryRecord record);
+		//RegistryRecord AddRecord(RegistryRecord record);
 		void UpdateRecord(RegistryRecord record);
 		void DeleteRecord(int recordId);
 		bool IsSubcategoryUsed(int subcategoryId);
