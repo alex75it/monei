@@ -13,20 +13,12 @@ namespace Monei.Core.DataAnalysis
 {
 	public class Engine
 	{
-
 		private IRegistryRepository registryRepository;
-		//private ICategoryRepository categoryRepository;
 
 		public Engine(IRegistryRepository registryRepository)
 		{
 			this.registryRepository = registryRepository;
 		}
-
-		//public YearData GetYearData(int accountId, int year, int[] months)
-		//{ 
-		//	// todo
-		//}
-
 
 		public YearData GetYearData(int accountId, int year)
 		{ 

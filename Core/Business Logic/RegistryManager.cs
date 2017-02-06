@@ -1,4 +1,5 @@
-﻿using Monei.DataAccessLayer.Interfaces;
+﻿using Monei.DataAccessLayer.Filters;
+using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Monei.Core
+namespace Monei.Core.BusinessLogic
 {
 
     public interface IRegistryManager
     {
         int CreateRecord(RegistryRecord record);
+
+        IEnumerable<RegistryRecord> ListRecords(RegistryFilters filters);
     }
 
     public class RegistryManager : IRegistryManager
@@ -27,6 +30,11 @@ namespace Monei.Core
         {
             var newId = registryRepository.Create(record);
             return newId;
+        }
+
+        public IEnumerable<RegistryRecord> ListRecords(RegistryFilters filters)
+        {
+            return registryRepository.ListRecords(filters);
         }
     }
 }

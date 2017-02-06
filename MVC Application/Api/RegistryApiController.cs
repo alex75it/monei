@@ -21,7 +21,7 @@ namespace Monei.MvcApplication.Api
             filters.EndDate = data.ToDate;
             filters.Categories = data.Categories;
 
-            var records = RegistryRepository.ListRecords(filters);
+            var records = RegistryManager.ListRecords(filters);
 
             // HACK: remove subitems to prevent LazyInitializationException 
             foreach (var record in records)
@@ -56,7 +56,7 @@ namespace Monei.MvcApplication.Api
                 IsSpecialEvent = postData.IsSpecialEvent,
             };
 
-            int newId = RegistryRepository.Create(record);
+            int newId = RegistryManager.CreateRecord(record);
             return newId;
         }
 

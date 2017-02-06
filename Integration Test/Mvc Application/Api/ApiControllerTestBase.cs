@@ -14,7 +14,6 @@ using Monei.MvcApplication.Core;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.ExceptionHandling;
-using Monei.MvcApplication.Filters;
 using Should;
 using System.Net;
 using Monei.DataAccessLayer.Interfaces;

@@ -1,18 +1,14 @@
-﻿using FakeItEasy;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Principal;
+using System.Threading;
+using System.Web.Http;
+using FakeItEasy;
 using Monei.Core.BusinessLogic;
 using Monei.DataAccessLayer.Interfaces;
 using Monei.MvcApplication.Api;
 using Monei.MvcApplication.Core;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Net.Http;
 
 namespace Monei.Test.UnitTest.MvcApplication.Api
 {
@@ -29,7 +25,7 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
 
             controller.AccountRepository = A.Fake<IAccountRepository>();
             controller.AuthenticationWorker = A.Fake<IAuthenticationWorker>();
-            controller.RegistryRepository = A.Fake<IRegistryRepository>();
+            controller.RegistryManager = A.Fake<IRegistryManager>();
             controller.CategoryRepository = A.Fake<ICategoryRepository>();            
 
             SetRequestUser(controller);
@@ -62,13 +58,5 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
             };
             */
         }
-
-        //protected HttpRequestMessage CreateRequest()
-        //{
-        //    var request = new HttpRequestMessage();
-        //    request.Headers.Add("account-guid", Guid.Empty.ToString());
-        //    return request;
-        //}
-
     }
 }

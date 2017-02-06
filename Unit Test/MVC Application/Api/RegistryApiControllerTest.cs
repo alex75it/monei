@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using FakeItEasy;
-using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
 using Monei.MvcApplication.Api;
 using Monei.MvcApplication.Api.PostDataObjects;
@@ -94,7 +93,7 @@ namespace Monei.Test.UnitTest.MvcApplication.Api
             // execute
             controller.Create(postData);
 
-            A.CallTo( () => controller.RegistryRepository.Create(
+            A.CallTo( () => controller.RegistryManager.CreateRecord(
                 A<RegistryRecord>
                 .That.Matches(r =>
                 r.Date == postData.Date
