@@ -23,6 +23,8 @@
         scope.noCategorySelectedText = "(select one)";
         scope.noSubategorySelectedText = "(select one)";
 
+        scope.errors = {};
+
         scope.operationTypes = [
             { name: "Income", value: +1 },
             { name: "Outcome", value: -1 },
@@ -48,9 +50,10 @@
         scope.close = function () {
             element.modal("hide");
         };
-            var operationType = scope.selectedOperationType;
-            var isSpecialEvent = scope.specialEvent;
-            var isTaxDeductible = scope.taxDeductible;
+
+        var operationType = scope.selectedOperationType;
+        var isSpecialEvent = scope.specialEvent;
+        var isTaxDeductible = scope.taxDeductible;
 
         scope.reset = function () {
             scope.date = moment().format("L");
@@ -60,10 +63,15 @@
             scope.note = "",
             scope.specialEvent = false,
             scope.taxDeductible = false
+
+            scope.errors = {};
         };
+
+        scope.$watch("amount", function () { scope.errors = null; });
 
         scope.save = function () {
             scope.error = null;
+            scope.errors = {};
             try {
                 var data = {
                     date: scope.date,
@@ -74,6 +82,11 @@
                     isSpecialEvent: scope.specialEvent,
                     isTaxDeductible: scope.taxDeductible
                 };
+
+                // reverse order for focus
+                if (!data.amount) { scope.errors.amountError = "Amount is required"; element.find("#amount").focus(); };
+                if (scope.errors.amountError)
+                    return;
 
                 RegistryDataProvider.save( data,
                     scope.saveRecordSuccess, scope.saveRecordFail, scope.saveRecordFinish
@@ -110,7 +123,7 @@
         };
 
         scope.saveRecordFinish = function () {
-            alert('finish');
+            //alert('finish');
         };
     };
 
