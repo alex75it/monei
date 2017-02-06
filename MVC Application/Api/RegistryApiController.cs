@@ -50,7 +50,7 @@ namespace Monei.MvcApplication.Api
                 OperationType = postData.Operation,
                 Amount = postData.Amount,
                 Category = new Category() { Id = postData.CategoryId },
-                Subcategory = new Subcategory() { Id = postData.SubcategoryId },  
+                Subcategory = postData.SubcategoryId == 0 ? null : new Subcategory() { Id = postData.SubcategoryId },
                 Note = postData.Note,
                 IsTaxDeductible = postData.IsTaxDeductible,
                 IsSpecialEvent = postData.IsSpecialEvent,
@@ -58,11 +58,6 @@ namespace Monei.MvcApplication.Api
 
             record = RegistryRepository.AddRecord(record);
             return record.Id;
-        }
-
-        public RegistryRecord CreateRecord(RegistryNewRecordPostData postData)
-        {
-            throw new NotImplementedException();
         }
 
         #region private
