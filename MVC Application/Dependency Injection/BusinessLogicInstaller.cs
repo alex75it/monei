@@ -8,6 +8,7 @@ using Castle.Windsor;
 using Monei.Core;
 using Monei.Core.BusinessLogic;
 using Castle.Core;
+using Monei.Core.DataAnalysis;
 
 namespace Monei.MvcApplication.DependencyInjection
 {
@@ -20,7 +21,8 @@ namespace Monei.MvcApplication.DependencyInjection
                 Component.For<ISecurityManager>().ImplementedBy<SecurityManager>().LifestylePerWebRequest(),
                 Component.For<SubcategoryManager>().ImplementedBy<SubcategoryManager>().LifestylePerWebRequest(),                
                 Component.For<ICategoryManager>().ImplementedBy<CategoryManager>().LifestylePerWebRequest(),
-                Component.For<IRegistryManager>().ImplementedBy<RegistryManager>().LifestylePerWebRequest()
+                Component.For<IRegistryManager>().ImplementedBy<RegistryManager>().LifestylePerWebRequest(),
+                Component.For<Engine>().ImplementedBy<Engine>().LifestylePerWebRequest()
             );            
         }
     }
