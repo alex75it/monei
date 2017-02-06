@@ -236,7 +236,6 @@
     <Compile Include="Core\ColumnNameForExportAttribute.cs" />
     <Compile Include="Core\CsvFormatter.cs" />
     <Compile Include="Core\ExceptionLogger.cs" />
-    <Compile Include="Core\WebSecurity - Copy.cs" />
     <Compile Include="Dependency Injection\BusinessLogicInstaller.cs" />
     <Compile Include="Dependency Injection\ControllersInstaller.cs" />
     <Compile Include="Dependency Injection\RepositoriesInstaller.cs" />

@@ -92,14 +92,13 @@
 
         scope.showError = function (error) {  
             scope.error = error.exceptionMessage || error.message || error;
-            $timeout(function () { scope.error = null; }, 3 * 1000);
+            $timeout(function () { scope.error = null; }, 5 * 1000);
         };
 
         // call reset
         scope.reset();
 
         scope.saveRecordSuccess = function () {
-            alert("saveRecordSuccess");
             NotificationService.info("Record saved");
             scope.onRecordCreated();
             scope.close();

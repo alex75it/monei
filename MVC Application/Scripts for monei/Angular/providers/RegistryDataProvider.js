@@ -17,8 +17,7 @@ function ($http, apiToken, utils) {
 
     provider.validateData = function (data)
     {
-        if (!data) throw Error("Data is null");
-        
+        if (!data) throw Error("Data is null");        
         if (!data.date) throw Error("Date must be specified");
         if (!data.categoryId) throw new Error("Category must be specified");
         if ((!data.amount || data.amount == 0) && data.operation != provider.OPERATION_TYPE_TRANSFER) throw Error("Amount must be specified");
@@ -26,7 +25,6 @@ function ($http, apiToken, utils) {
     }
 
     provider.save = function (record, callback, errorCallback, finallyCallback) {
-        alert("api_token: " + headers.api_token);
         $http.post(baseUrl, record, {"headers": headers})
             .success(function (data) { callback && callback(data); })
             .error(function (error, status) { errorCallback && errorCallback(error); })
