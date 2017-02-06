@@ -30,6 +30,7 @@ namespace Monei.MvcApplication.Controllers
         public AccountController(ISecurityManager securityManager, IAccountManager accountManager, ICurrencyRepository currencyRepository, IAuthenticationWorker webAuthenticationWorker)
             :base(securityManager)
         {
+            this.securityManager = securityManager;
             this.accountManager = accountManager;
             this.currencyRepository = currencyRepository;
             this.webAuthenticationWorker = webAuthenticationWorker;

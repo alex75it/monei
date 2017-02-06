@@ -16,8 +16,6 @@ namespace Monei.MvcApplication.Core
         /// </summary>
         /// <param name="request">The HTTP request</param>
         Account GetAccount(HttpRequestMessage request);
-
         Guid GetApiToken(HttpRequestMessage request);
-        Guid GetApiToken(HttpRequestBase request);
     }
 }

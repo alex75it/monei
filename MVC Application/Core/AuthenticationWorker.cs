@@ -20,7 +20,6 @@ namespace Monei.MvcApplication.Core
             FormsAuthentication.SetAuthCookie(username, persistCookie);
         }
 
-
         public Account GetAccount(HttpRequestMessage request)
         {
             Guid apiToken = GetApiToken(request);
@@ -31,20 +30,6 @@ namespace Monei.MvcApplication.Core
         public Guid GetApiToken(HttpRequestMessage request)
         {
             if (!request.Headers.Contains(API_TOKEN))
-                throw new Exception("Missing API token header");
-
-            string tokenString = request.Headers.GetValues(API_TOKEN).First();
-            if (string.IsNullOrWhiteSpace(tokenString))
-                throw new Exception("API token is empty");
-
-            Guid apiToken = Guid.Parse(tokenString);
-
-            return apiToken;
-        }
-
-        public Guid GetApiToken(HttpRequestBase request)
-        {
-            if (!request.Headers.AllKeys.Contains(API_TOKEN))
                 throw new Exception("Missing API token header");
 
             string tokenString = request.Headers.GetValues(API_TOKEN).First();
