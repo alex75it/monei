@@ -1,4 +1,5 @@
 ﻿using Monei.Core.Enums;
+using Monei.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Monei.Core.BusinessLogic
 {
-    public interface IAccountSecurity
+    public interface ISecurityManager
     {
         LoginResult Login(string username, string password);
-        void ChangePassword(string name, string oldPassword, string newPassword);
-        string GeneratePassword();
+
+        Account GetAccountByUsername(string username);
 
         /// <summary>
         /// Return the API token assigned to the Account.
@@ -20,5 +21,7 @@ namespace Monei.Core.BusinessLogic
         /// <param name="id"></param>
         /// <returns></returns>
         Guid GetApiTokenForAccount(int id);
+
+        Account GetAccountByApiToken(Guid apiToken);
     }
 }

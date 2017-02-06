@@ -16,8 +16,7 @@ namespace Monei.MvcApplication.Areas.Management.Controllers
         public ICategoryRepository CategoryRepository { get; set; }
         public ISubcategoryRepository SubcategoryRepository { get; set; }
 
-        public SubcategoryController(IAccountManager accountyManager)
-            :base(accountyManager)
+        public SubcategoryController(ISecurityManager securityManager) :base(securityManager)
         {
 
         }

@@ -14,7 +14,7 @@ namespace Monei.MvcApplication.Api
     public class TokenApiController : ApiController
     {
         public IAccountManager AccountManager { get; set; }
-        public IAccountSecurity AccountSecurity { get; set; }
+        public ISecurityManager AccountSecurity { get; set; }
         private ILog logger;
 
         public TokenApiController()          

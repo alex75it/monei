@@ -1,44 +1,34 @@
-﻿using Monei.DataAccessLayer.Interfaces;
+﻿using System;
+using Monei.DataAccessLayer.Interfaces;
 using Monei.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Monei.Core.BusinessLogic
 {
     public class AccountManager : IAccountManager
-
     {
         private readonly IAccountRepository accountRepository;
-        private readonly IApiTokenRepository apiTokenRepository;
 
-        public AccountManager(IAccountRepository accountRepository, IApiTokenRepository apiTokenRepository)
+        public AccountManager(IAccountRepository accountRepository)
         {
             this.accountRepository = accountRepository;
-            this.apiTokenRepository = apiTokenRepository;
         }
-
-        public Account CreateAccount(string username, string password)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public Account Read(string username)
         {
             return accountRepository.Read(username);
         }
 
-        public Account GetAccountByApiToken(Guid apiToken)
+        public Account CreateAccount(string username, string password, Currency currency)
         {
-            if (apiToken == Guid.Empty)
-                throw new ArgumentException(nameof(apiToken));
+            Account account = accountRepository.Read(username.ToLowerInvariant());
+            if (account != null)
+                throw new Exception("Another account with this username already exists");
 
-            int accountId = apiTokenRepository.GetAccountId(apiToken);
+            account = Account.Create(username, password, Account.AccountRole.User, currency);
+            
+            account = accountRepository.Create(account);
 
-            return accountRepository.Read(accountId);
+            return account;
         }
-
     }
 }

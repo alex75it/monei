@@ -22,10 +22,10 @@ namespace Monei.Test.UnitTest.MVC_Application.Controllers
         [SetUp]
         public void SetUp()
         {           
-            IAccountManager accountManager = A.Fake<IAccountManager>();
+            ISecurityManager securityManager = A.Fake<ISecurityManager>();
             ICategoryManager categoryManager = A.Fake<ICategoryManager>();
 
-            categoryController = new CategoryController(accountManager, categoryManager);
+            categoryController = new CategoryController(securityManager, categoryManager);
         }
 
         [Test]

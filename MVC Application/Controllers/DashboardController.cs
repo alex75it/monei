@@ -7,10 +7,9 @@ using System.Web.Mvc;
 
 namespace Monei.MvcApplication.Controllers
 {
-	public class DashboardController : MoneiControllerBase
+    public class DashboardController : MoneiControllerBase
     {
-        public DashboardController(IAccountManager accountyManager)
-            :base(accountyManager)
+        public DashboardController(ISecurityManager securityManager) :base(securityManager)
         {
 
         }

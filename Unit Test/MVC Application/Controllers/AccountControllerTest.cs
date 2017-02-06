@@ -21,7 +21,7 @@ namespace Monei.Test.UnitTest.MVC_Application.Controllers
         [SetUp]
         public void SetUp()
         {
-            IAccountSecurity accountSecurity = A.Fake<IAccountSecurity>();
+            ISecurityManager accountSecurity = A.Fake<ISecurityManager>();
             IAccountManager accountManager = A.Fake<IAccountManager>();
             ICurrencyRepository currencyRepository = A.Fake<ICurrencyRepository>();
             IAuthenticationWorker webAuthenticationWorker = A.Fake<IAuthenticationWorker>();

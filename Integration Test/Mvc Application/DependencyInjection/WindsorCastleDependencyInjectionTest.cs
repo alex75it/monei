@@ -32,7 +32,7 @@ namespace Monei.Test.IntegrationTest.MvcApplication.DependencyInjection
             {
                 IAccountManager accountManager = dependencyInjection.Resolve<IAccountManager>();
                 IAuthenticationWorker webAuthenticationWorker = dependencyInjection.Resolve<IAuthenticationWorker>();
-                IAccountSecurity accountSecurity = dependencyInjection.Resolve<IAccountSecurity>();
+                ISecurityManager accountSecurity = dependencyInjection.Resolve<ISecurityManager>();
                 accountManager.ShouldNotBeNull();
                 webAuthenticationWorker.ShouldNotBeNull();
             }

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using log4net;
 using Monei.Entities;
 using Monei.Core.BusinessLogic;
+using System.Web.Routing;
 
 namespace Monei.MvcApplication.Controllers
 {
@@ -14,14 +15,20 @@ namespace Monei.MvcApplication.Controllers
         public const string SESSION_RETURN_URL = "returnUrl";
         public const int UNDEFINED_ID = -1;
         protected ILog logger;
-        private IAccountManager accountManager;
+        private ISecurityManager securityManager;
         private Account account = null;
 
-        public MoneiControllerBase(IAccountManager accountManager)
+        public MoneiControllerBase(ISecurityManager securityManager)
         {
             logger = LogManager.GetLogger(this.GetType());
-            this.accountManager = accountManager;
-        }        
+            this.securityManager = securityManager;
+        }
+
+        protected override void OnResultExecuting(ResultExecutingContext filterContext)
+        {
+            ViewBag.ApiToken = securityManager.GetApiTokenForAccount(GetAccount().Id);
+            base.OnResultExecuting(filterContext);
+        }
 
         /// <summary>
         /// Account of current logged user 
@@ -32,7 +39,10 @@ namespace Monei.MvcApplication.Controllers
                 return account;
 
             if (User.Identity.IsAuthenticated)
-                return accountManager.Read(User.Identity.Name);
+            {
+                account = securityManager.GetAccountByUsername(User.Identity.Name);
+                return account;
+            }
             else
             {
                 logger.ErrorFormat("User is not authenticated");

@@ -13,7 +13,7 @@ namespace Monei.Test.UnitTest.Core.BusinessLogic
     [TestFixture]
     public class AccountSecurityTests
     {
-        AccountSecurity accountSecurity;
+        SecurityManager accountSecurity;
         private IAccountRepository accountRepository;
         private IApiTokenRepository apiTokenRepository;                  
 
@@ -22,7 +22,7 @@ namespace Monei.Test.UnitTest.Core.BusinessLogic
         {
             accountRepository = A.Fake<IAccountRepository>();
             apiTokenRepository = A.Fake<IApiTokenRepository>();
-            accountSecurity = new AccountSecurity(accountRepository, apiTokenRepository);
+            accountSecurity = new SecurityManager(accountRepository, apiTokenRepository);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Monei.Test.UnitTest.Core.BusinessLogic
 
             A.CallTo(() => apiTokenRepository.GetAccountToken(A<int>.Ignored))
                 .Returns(previousToken);
-            accountSecurity = new AccountSecurity(accountRepository, apiTokenRepository);
+            accountSecurity = new SecurityManager(accountRepository, apiTokenRepository);
 
             // execute
             Guid token = accountSecurity.GetApiTokenForAccount(accountId);
@@ -49,7 +49,7 @@ namespace Monei.Test.UnitTest.Core.BusinessLogic
 
             A.CallTo( () => apiTokenRepository.GetAccountToken(A<int>.Ignored))
                 .Returns(null);
-            accountSecurity = new AccountSecurity(accountRepository, apiTokenRepository);
+            accountSecurity = new SecurityManager(accountRepository, apiTokenRepository);
 
             // execute
             Guid token = accountSecurity.GetApiTokenForAccount(accountId);
@@ -68,7 +68,7 @@ namespace Monei.Test.UnitTest.Core.BusinessLogic
 
             A.CallTo(() => apiTokenRepository.GetAccountToken(A<int>.Ignored))
                 .Returns(expiredToken);
-            accountSecurity = new AccountSecurity(accountRepository, apiTokenRepository);
+            accountSecurity = new SecurityManager(accountRepository, apiTokenRepository);
 
             // execute
             Guid token = accountSecurity.GetApiTokenForAccount(accountId);

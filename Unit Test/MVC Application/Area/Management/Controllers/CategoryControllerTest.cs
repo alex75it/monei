@@ -24,12 +24,12 @@ namespace Monei.Test.UnitTest.MccApplication.Area.Management.Controllers
         [Test]
         public void Edit_when_CategoryHasATooLongName_should_NotThrowException()
         {
-            IAccountManager accountManager = A.Fake<IAccountManager>();
+            ISecurityManager securityManager = A.Fake<ISecurityManager>();
             ICategoryManager categoryManager = A.Fake<ICategoryManager>();
-            CategoryController controller = new CategoryController(accountManager, categoryManager);
+            CategoryController controller = new CategoryController(securityManager, categoryManager);
             string username = "test";
             Account account = new Account() {Username=username};
-            A.CallTo(() => accountManager.Read(username)).Returns(account);
+            A.CallTo(() => securityManager.GetAccountByUsername(username)).Returns(account);
 
             SetAuthenticationOnController(controller, username);
 

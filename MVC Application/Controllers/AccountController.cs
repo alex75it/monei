@@ -22,15 +22,14 @@ namespace Monei.MvcApplication.Controllers
     //[InitializeSimpleMembership]
     public class AccountController : MoneiControllerBase
     {
-        private readonly IAccountSecurity accountSecurity;
+        private readonly ISecurityManager securityManager;
         private readonly IAccountManager accountManager;
         private readonly ICurrencyRepository currencyRepository;
         private readonly IAuthenticationWorker webAuthenticationWorker;
 
-        public AccountController(IAccountSecurity accountSecurity, IAccountManager accountManager, ICurrencyRepository currencyRepository, IAuthenticationWorker webAuthenticationWorker)
-            :base(accountManager)
+        public AccountController(ISecurityManager securityManager, IAccountManager accountManager, ICurrencyRepository currencyRepository, IAuthenticationWorker webAuthenticationWorker)
+            :base(securityManager)
         {
-            this.accountSecurity = accountSecurity;
             this.accountManager = accountManager;
             this.currencyRepository = currencyRepository;
             this.webAuthenticationWorker = webAuthenticationWorker;
@@ -53,7 +52,7 @@ namespace Monei.MvcApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                LoginResult result = accountSecurity.Login(model.username, model.Password);
+                LoginResult result = securityManager.Login(model.username, model.Password);
    
                 switch (result)
                 { 
@@ -110,8 +109,9 @@ namespace Monei.MvcApplication.Controllers
             {
                 // attempt to register the user
                 try
-                {                    
-                    Account account = accountManager.CreateAccount(model.username, model.Password);
+                {
+                    Currency currency = currencyRepository.Read(Currency.EUR_CODE);
+                    Account account = accountManager.CreateAccount(model.username, model.Password, currency);
                     bool persistCookie = true; // model.RememberMe
                     webAuthenticationWorker.SetAuthenticationCookie(model.username, persistCookie: persistCookie);
                     
@@ -177,55 +177,55 @@ namespace Monei.MvcApplication.Controllers
             return View();
         }
 
-        // POST: /Account/Manage
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Manage(LocalPasswordModel model)
-        {
-            // todo use a MembershipProvider that extends ExtendedMembershipProvider or make work in a different way
+        //// POST: /Account/Manage
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Manage(LocalPasswordModel model)
+        //{
+        //    // todo use a MembershipProvider that extends ExtendedMembershipProvider or make work in a different way
 
-            //bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-            bool hasLocalAccount = true;
-            ViewBag.HasLocalPassword = hasLocalAccount;
-            ViewBag.ReturnUrl = Url.Action("Manage");
+        //    //bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+        //    bool hasLocalAccount = true;
+        //    ViewBag.HasLocalPassword = hasLocalAccount;
+        //    ViewBag.ReturnUrl = Url.Action("Manage");
 
-            if (hasLocalAccount)
-            {
-                try
-                {                        
-                    accountSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
-                    return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
-                }
-                catch (Exception exc)
-                {
-                    ModelState.AddModelError("", "Fail to change password. " + exc.Message);
-                }                
-            }
-            //else
-            //{ 
-            //    // User does not have a local password so remove any validation errors caused by missing
-            //    // OldPassword field
-            //    ModelState state = ModelState["OldPassword"];
-            //    if (state != null)
-            //        state.Errors.Clear();
+        //    if (hasLocalAccount)
+        //    {
+        //        try
+        //        {                        
+        //            accountSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
+        //            return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+        //        }
+        //        catch (Exception exc)
+        //        {
+        //            ModelState.AddModelError("", "Fail to change password. " + exc.Message);
+        //        }                
+        //    }
+        //    //else
+        //    //{ 
+        //    //    // User does not have a local password so remove any validation errors caused by missing
+        //    //    // OldPassword field
+        //    //    ModelState state = ModelState["OldPassword"];
+        //    //    if (state != null)
+        //    //        state.Errors.Clear();
 
-            //    if (ModelState.IsValid)
-            //    {
-            //        try
-            //        {
-            //            new WebSecurity(accountRepository, webAuthenticationWorker).CreateAccount(User.Identity.Name, model.NewPassword);
-            //            return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
-            //        }
-            //        catch (Exception)
-            //        {
-            //            ModelState.AddModelError("", String.Format("Unable to create local account, An account with the name \"{0}\" may already exists.", User.Identity.Name));
-            //        }
-            //    }
-            //}
+        //    //    if (ModelState.IsValid)
+        //    //    {
+        //    //        try
+        //    //        {
+        //    //            new WebSecurity(accountRepository, webAuthenticationWorker).CreateAccount(User.Identity.Name, model.NewPassword);
+        //    //            return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
+        //    //        }
+        //    //        catch (Exception)
+        //    //        {
+        //    //            ModelState.AddModelError("", String.Format("Unable to create local account, An account with the name \"{0}\" may already exists.", User.Identity.Name));
+        //    //        }
+        //    //    }
+        //    //}
 
-            // If we got so far, something failed, redisplay form
-            return View(model);
-        }
+        //    // If we got so far, something failed, redisplay form
+        //    return View(model);
+        //}
 
         // POST: /Account/ExternalLogin
         [HttpPost]
@@ -285,8 +285,8 @@ namespace Monei.MvcApplication.Controllers
            
                 if (account == null)
                 {
-                    string password = accountSecurity.GeneratePassword();
-                    accountManager.CreateAccount(model.username, password);
+                    //string password = securityManager.GeneratePassword();
+                    //accountManager.CreateAccount(model.username, password);
 
                     OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.username);
                     OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);

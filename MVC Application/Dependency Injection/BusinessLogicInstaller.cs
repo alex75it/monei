@@ -17,7 +17,7 @@ namespace Monei.MvcApplication.DependencyInjection
         {
             IWindsorContainer thisContainer = container.Register(
                 Component.For<IAccountManager>().ImplementedBy<AccountManager>().LifestylePerWebRequest(),
-                Component.For<IAccountSecurity>().ImplementedBy<AccountSecurity>().LifestylePerWebRequest(),
+                Component.For<ISecurityManager>().ImplementedBy<SecurityManager>().LifestylePerWebRequest(),
                 Component.For<SubcategoryManager>().ImplementedBy<SubcategoryManager>().LifestylePerWebRequest(),                
                 Component.For<ICategoryManager>().ImplementedBy<CategoryManager>().LifestylePerWebRequest(),
                 Component.For<IRegistryManager>().ImplementedBy<RegistryManager>().LifestylePerWebRequest()

@@ -15,7 +15,7 @@ namespace Monei.MvcApplication.Areas.Management.Controllers
     {
         private ICategoryManager categoryManager;
 
-        public CategoryController(IAccountManager accountManager, ICategoryManager categoryManager)
+        public CategoryController(ISecurityManager accountManager, ICategoryManager categoryManager)
             :base(accountManager)
         {
             this.categoryManager = categoryManager;

@@ -8,9 +8,8 @@ namespace Monei.Core.BusinessLogic
     using DataAccessLayer.Interfaces;
     using Entities;
     using Enums;
-    using Exceptions;
 
-    public class AccountSecurity : IAccountSecurity
+    public class SecurityManager : ISecurityManager
     {
         private const int TokenLifeInMinutes = 120;
 
@@ -18,7 +17,7 @@ namespace Monei.Core.BusinessLogic
         private IAccountRepository accountRepository;
         private IApiTokenRepository apiTokenRepository;
 
-        public AccountSecurity(IAccountRepository accountRepository, IApiTokenRepository apiTokenRepository)
+        public SecurityManager(IAccountRepository accountRepository, IApiTokenRepository apiTokenRepository)
         {
             this.accountRepository = accountRepository;
             this.apiTokenRepository = apiTokenRepository;
@@ -54,14 +53,10 @@ namespace Monei.Core.BusinessLogic
                 return LoginResult.InternalError;
             }
         }
-        public void ChangePassword(string username, string oldPassword, string newPassword)
-        {
-            throw new NotImplementedException();
-        }
 
-        public string GeneratePassword()
+        public Account GetAccountByUsername(string username)
         {
-            return Guid.NewGuid().ToString().Substring(0,8);
+            return accountRepository.Read(username);
         }
 
         public Guid GetApiTokenForAccount(int accountId)
@@ -88,6 +83,16 @@ namespace Monei.Core.BusinessLogic
         private ApiToken GenerateNewToken(int accountId, TimeSpan duration)
         {
             return ApiToken.Create(accountId, duration);
+        }
+
+        public Account GetAccountByApiToken(Guid apiToken)
+        {
+            if (apiToken == Guid.Empty)
+                throw new ArgumentException(nameof(apiToken));
+
+            int accountId = apiTokenRepository.GetAccountId(apiToken);
+
+            return accountRepository.Read(accountId);
         }
     }
 }

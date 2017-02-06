@@ -25,8 +25,7 @@ namespace Monei.MvcApplication.Controllers
         public IRegistryRepository RegistryRepository { get; set; }
         public ISubcategoryRepository SubcategoryRepository { get; set; }
 
-        public RegistryController(IAccountManager accountManager)
-            : base(accountManager)
+        public RegistryController(ISecurityManager securityManager) : base(securityManager)
         {
 
         }

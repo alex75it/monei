@@ -56,13 +56,13 @@
     <Compile Include="Common\Enumerators.cs" />
     <Compile Include="Business Logic\AccountManager.cs" />
     <Compile Include="Business Logic\IAccountManager.cs" />
-    <Compile Include="Business Logic\IAccountSecurity.cs" />
+    <Compile Include="Business Logic\ISecurityManager.cs" />
     <Compile Include="Data Analysis\Business Objects\CategoriesData.cs" />
     <Compile Include="Data Analysis\Business Objects\CategoryData.cs" />
     <Compile Include="Data Analysis\Business Objects\MonthData.cs" />
     <Compile Include="Data Analysis\Business Objects\YearData.cs" />
     <Compile Include="Data Analysis\Engine.cs" />
-    <Compile Include="Business Logic\AccountSecurity.cs" />
+    <Compile Include="Business Logic\SecurityManager.cs" />
     <Compile Include="Business Logic\CategoryManager.cs" />
     <Compile Include="Business Logic\RegistryManager.cs" />
     <Compile Include="Enums\LoginResult.cs" />
